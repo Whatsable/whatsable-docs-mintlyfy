@@ -300,6 +300,17 @@ The <span className="font-bold">Notifier API</span> supports sending attachments
 - **Attachment URL**: Ensure the attachment URL is public and accessible.
 - **Authorization Token**: Include the `Bearer` token in the `Authorization` header.
 - **Error Handling**: Check the `message` field in the response for detailed error information.
+-  **Line Break**: In the message for line break or for starting a new line, `\n` needs to be added before the new line. Example:
+
+Input:
+`Hi there,\nThis is John from Acme Co.`
+
+Output:
+<RequestExample>
+Hi there,
+This is John from Acme Co.
+<RequestExample/>
+
 </div>
 
 ---
