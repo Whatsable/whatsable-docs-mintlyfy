@@ -1,0 +1,110 @@
+---
+sidebar_label: "Webhooks"
+sidebar_position: 2
+---
+
+# Webhooks
+
+Webhooks allow you to receive real-time notifications about message status and incoming messages.
+
+## Overview
+
+Webhooks provide a way for our system to send data to your application in real-time whenever:
+- A message status changes
+- A recipient replies to your message
+- A new message is received
+
+## Setting Up Webhooks
+
+1. Go to your WhatsAble dashboard
+2. Navigate to Developer Settings
+3. Click "Add Webhook"
+4. Enter your webhook URL
+5. Select the events you want to receive
+
+## Webhook Events
+
+### Message Status Events
+```json
+{
+  "event": "message_status",
+  "data": {
+    "message_id": "wamid.123456789",
+    "status": "delivered",
+    "timestamp": "2024-03-23T21:41:44.477Z"
+  }
+}
+```
+
+### Incoming Message Events
+```json
+{
+  "event": "incoming_message",
+  "data": {
+    "last_messages": "[{\"type\":\"user\",\"content\":\"Hello!\",\"timestamp\":\"2024-03-23T21:41:44.477Z\",\"content_type\":\"text\"}]",
+    "conversation_paragraph": "User (9:41:44 PM): Hello!",
+    "phone_number": "8801734363287",
+    "recipient_name": "John Doe",
+    "user_id": "6fb11ff2-d9b2-4560-8437-0fe58ec9f4a6",
+    "last_message_of_user": "Hello!",
+    "last_message_of_bot": "Hi there!",
+    "message_type": "text",
+    "user_timestamp": 1234567890,
+    "bot_timestamp": 1234567890,
+    "attachment_url": "https://api.insightssystem.com/vault/attachment.jpg"
+  }
+}
+```
+
+## Webhook Security
+
+1. **HTTPS Required**: All webhook endpoints must be accessible via HTTPS
+2. **Authentication**: Verify webhook signatures
+3. **IP Whitelisting**: Configure allowed IP addresses
+4. **Rate Limiting**: Handle multiple events efficiently
+
+## Best Practices
+
+1. **Idempotency**: Handle duplicate events gracefully
+2. **Error Handling**: Return appropriate HTTP status codes
+3. **Logging**: Log all incoming webhook events
+4. **Monitoring**: Set up alerts for webhook failures
+5. **Testing**: Use the webhook testing tool in dashboard
+
+## Example Webhook Handler
+
+```javascript
+const express = require('express');
+const app = express();
+
+app.post('/webhook', express.json(), (req, res) => {
+  const { event, data } = req.body;
+
+  switch (event) {
+    case 'message_status':
+      handleMessageStatus(data);
+      break;
+    case 'incoming_message':
+      handleIncomingMessage(data);
+      break;
+    default:
+      console.log('Unknown event type:', event);
+  }
+
+  res.status(200).send('OK');
+});
+
+function handleMessageStatus(data) {
+  console.log('Message status update:', data);
+  // Process message status
+}
+
+function handleIncomingMessage(data) {
+  console.log('Incoming message:', data);
+  // Process incoming message
+}
+
+app.listen(3000, () => {
+  console.log('Webhook server running on port 3000');
+});
+``` 

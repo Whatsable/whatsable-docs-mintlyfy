@@ -1,0 +1,58 @@
+---
+sidebar_label: "Authentication"
+sidebar_position: 3
+---
+
+# Authentication
+
+All WhatsAble APIs require authentication using API keys. This guide explains how to authenticate your requests.
+
+## API Keys
+
+Each API solution uses a different authentication method:
+
+### WhatsAble API
+Uses an API key in the `X-API-Key` header:
+```bash
+curl -X POST https://api.whatsable.app/v1/messages \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"to": "+1234567890", "message": "Hello!"}'
+```
+
+### Notifier by WhatsAble
+Uses a Bearer token in the Authorization header:
+```bash
+curl -X POST https://api.insightssystem.com/api:-GWQv5aM/send \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"phone": "+1234567890", "text": "Hello!"}'
+```
+
+### Notifier System
+Uses a Bearer token in the Authorization header:
+```bash
+curl -X POST https://api.insightssystem.com/api:hFrjh8a1/send_template_message_by_api \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"template": "template_id", "variables": {}, "phone_number": "+1234567890"}'
+```
+
+## Getting Your API Keys
+
+1. Log in to your WhatsAble dashboard
+2. Navigate to the API section
+3. Generate a new API key or token
+4. Store it securely - it won't be shown again!
+
+## Security Best Practices
+
+- Never share your API keys
+- Use environment variables to store keys
+- Rotate keys periodically
+- Use HTTPS for all API requests
+- Implement proper error handling
+
+## Rate Limits
+
+Each API has different rate limits based on your plan. See our [Rate Limits](/guides/rate-limits) guide for details. 
