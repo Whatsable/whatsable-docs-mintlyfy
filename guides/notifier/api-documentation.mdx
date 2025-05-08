@@ -1,0 +1,273 @@
+---
+title: 'API Documentation'
+description: 'Notifier by WhatsAble API Documentation'
+---
+
+# API
+
+# 📚 Notifier by WhatsAble API Documentation
+
+Welcome to the **Notifier by WhatsAble API Documentation**! This guide provides comprehensive details on how to use the **Notifier API** to send WhatsApp messages programmatically. Below, you'll find information on the API endpoint, authentication, request and response structures, error handling, and supported attachment types.
+
+---
+
+## 🚀 **API Overview**
+
+The **Notifier API** allows you to send WhatsApp messages, including text and attachments, to customers. It's designed to be simple and easy to integrate into your applications or workflows.
+
+---
+
+## 📌 **API Endpoint**
+
+- **POST**: `https://api.insightssystem.com/api:-GWQv5aM/send`
+
+---
+
+## 🔑 **Authentication**
+
+To use the API, you need to include an **Authorization Token** in the request headers. The token must be prefixed with `Bearer`.
+
+### **Headers**
+
+- `Content-Type`: `application/json`
+- `Authorization`: `Bearer YOUR_TOKEN_HERE`
+
+---
+
+## 📤 **Request Payload**
+
+The request body should be a JSON object with the following fields:
+
+| Field        | Type   | Description                                                                     |
+| ------------ | ------ | ------------------------------------------------------------------------------- |
+| `phone`      | String | The recipient's phone number in **international format** (e.g., `+1234567890`). |
+| `text`       | String | The message content you want to send.                                           |
+| `attachment` | String | (Optional) A public URL to an attachment (e.g., image, PDF, video).             |
+| `filename`   | String | (Optional) The name of the attachment file.                                     |
+
+### **Example Request Body**
+
+```json
+{
+  "phone": "+1234567890",
+  "text": "Hello, this is a test message from Notifier!",
+  "attachment": "https://example.com/image.jpg",
+  "filename": "image.jpg"
+}
+```
+
+---
+
+## 📥 **Response Structure**
+
+The API responds with a JSON object. Below are examples of **success** and **error** responses.
+
+### **Success Response**
+
+```json
+{
+  "message": "Message sent successfully"
+}
+```
+
+### **Error Response**
+
+```json
+{
+  "message": "Message sending failed | Reason: Message limit for this number reached."
+}
+```
+
+---
+
+## 🛠️ **Error Handling**
+
+The API provides detailed error messages to help you troubleshoot issues. Common errors include:
+
+1. **Invalid Phone Number**: Ensure the phone number is in **E.164 format**.
+2. **Message Limit Reached**: You've exceeded the allowed number of messages for a specific phone number.
+3. **Attachment Issues**: Ensure the attachment URL is public and accessible.
+4. **Authentication Failure**: Verify that the `Authorization` token is correct.
+5. **Insufficient Credits**: Your account balance is insufficient to send the message.
+6. **Subscription Expired**: Your subscription has ended, and you need to renew it.
+7. **Rate Limit Exceeded**: You've exceeded the allowed number of messages per minute or hour.
+8. **Unique Number Limit Reached**: You've reached the limit of unique phone numbers you can message.
+9. **File Size or Type Error**: The attachment does not meet WhatsApp's size or type requirements.
+10. **No WhatsApp Account**: The recipient does not have an active WhatsApp account.
+
+---
+
+## 📋 **Code Examples**
+
+### **1. cURL**
+
+```bash
+curl -X POST https://api.insightssystem.com/api:-GWQv5aM/send \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer YOUR_TOKEN_HERE" \
+-d '{
+  "phone": "+1234567890",
+  "text": "Hello, this is a test message from Notifier!",
+  "attachment": "https://example.com/image.jpg",
+  "filename": "image.jpg"
+}'
+```
+
+### **2. JavaScript (Fetch API)**
+
+```javascript
+fetch("https://api.insightssystem.com/api:-GWQv5aM/send", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: "Bearer YOUR_TOKEN_HERE",
+  },
+  body: JSON.stringify({
+    phone: "+1234567890",
+    text: "Hello, this is a test message from Notifier!",
+    attachment: "https://example.com/image.jpg",
+    filename: "image.jpg",
+  }),
+})
+  .then((response) => response.json())
+  .then((data) => console.log(data))
+  .catch((error) => console.error(error));
+```
+
+### **3. Python (Requests Library)**
+
+```python
+import requests
+import json
+
+url = "https://api.insightssystem.com/api:-GWQv5aM/send"
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer YOUR_TOKEN_HERE"
+}
+payload = {
+    "phone": "+1234567890",
+    "text": "Hello, this is a test message from Notifier!",
+    "attachment": "https://example.com/image.jpg",
+    "filename": "image.jpg"
+}
+
+response = requests.post(url, headers=headers, data=json.dumps(payload))
+print(response.json())
+```
+
+### **4. Go**
+
+```go
+package main
+
+import (
+	"bytes"
+	"fmt"
+	"net/http"
+)
+
+func main() {
+	url := "https://api.insightssystem.com/api:-GWQv5aM/send"
+	payload := []byte(`{
+		"phone": "+1234567890",
+		"text": "Hello, this is a test message from Notifier!",
+		"attachment": "https://example.com/image.jpg",
+		"filename": "image.jpg"
+	}`)
+
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payload))
+	if err != nil {
+		fmt.Println("Error creating request:", err)
+		return
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer YOUR_TOKEN_HERE")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error sending request:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	fmt.Println("Response Status:", resp.Status)
+}
+```
+
+### **5. Java (HttpURLConnection)**
+
+```java
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class Main {
+    public static void main(String[] args) {
+        try {
+            URL url = new URL("https://api.insightssystem.com/api:-GWQv5aM/send");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Authorization", "Bearer YOUR_TOKEN_HERE");
+            conn.setDoOutput(true);
+
+            String payload = "{\"phone\": \"+1234567890\", \"text\": \"Hello, this is a test message from Notifier!\", \"attachment\": \"https://example.com/image.jpg\", \"filename\": \"image.jpg\"}";
+
+            try (OutputStream os = conn.getOutputStream()) {
+                byte[] input = payload.getBytes("utf-8");
+                os.write(input, 0, input.length);
+            }
+
+            int responseCode = conn.getResponseCode();
+            System.out.println("Response Code: " + responseCode);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+---
+
+## 📌 **Attachment Support**
+
+The **Notifier API** supports sending attachments with WhatsApp messages. Below are the supported file types and their size limits:
+
+### **Supported Media Types**
+
+| **Media Type** | **File Extensions**                    | **MIME Types**                                                                                                     | **Max Size** |
+| -------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------ |
+| **Images**     | `.jpeg`, `.png`                        | `image/jpeg`, `image/png`                                                                                          | 5 MB         |
+| **Videos**     | `.mp4`, `.3gp`                         | `video/mp4`, `video/3gpp`                                                                                          | 16 MB        |
+| **Documents**  | `.pdf`, `.doc`, `.xls`, `.ppt`, `.txt` | `application/pdf`, `application/msword`, `application/vnd.ms-excel`, `application/vnd.ms-powerpoint`, `text/plain` | 100 MB       |
+| **Audio**      | `.mp3`, `.aac`, `.m4a`, `.ogg`         | `audio/mpeg`, `audio/aac`, `audio/mp4`, `audio/ogg`                                                                | 16 MB        |
+
+---
+
+## 📌 **Key Points to Remember**
+
+- **Phone Number Format**: Always use the **E.164 format** (e.g., `+1234567890`).
+- **Attachment URL**: Ensure the attachment URL is public and accessible.
+- **Authorization Token**: Include the `Bearer` token in the `Authorization` header.
+- **Error Handling**: Check the `message` field in the response for detailed error information.
+
+---
+
+## ❓ **Need Help?**
+
+If you encounter any issues or need further assistance, feel free to reach out to our support team:
+
+- **Email Support**: support@whatsable.app
+- **Documentation**: [Notifier API Documentation](https://www.notion.so/Documentation-for-Whatsable-Notifier-API-871f707adcd1451bb437f47db27e8abb?pvs=21)
+
+---
+
+🚀 **Start Sending WhatsApp Messages Today!**  
+👉 [Sign Up for Notifier by WhatsAble](https://notifier.whatsable.app/)
+
+---
+
+**Disclaimer**: This service is not affiliated with nor endorsed by WhatsApp Inc. The tool uses the WhatsApp API but is not affiliated with WhatsApp. 

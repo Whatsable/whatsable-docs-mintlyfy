@@ -1,0 +1,96 @@
+---
+title: 'Message Templates'
+description: 'Learn how to use and manage message templates in Notifier by WhatsAble'
+---
+
+# Message Templates
+
+Message templates are pre-approved message formats that you can use to send WhatsApp messages to your customers.
+
+## Template Types
+
+### Text Templates
+```json
+{
+  "name": "welcome_message",
+  "language": "en",
+  "category": "UTILITY",
+  "components": [
+    {
+      "type": "BODY",
+      "text": "Welcome to {{company}}! We're excited to have you on board, {{name}}."
+    }
+  ]
+}
+```
+
+### Media Templates
+```json
+{
+  "name": "product_announcement",
+  "language": "en",
+  "category": "MARKETING",
+  "components": [
+    {
+      "type": "HEADER",
+      "format": "IMAGE",
+      "example": {
+        "header_url": ["https://example.com/image.jpg"]
+      }
+    },
+    {
+      "type": "BODY",
+      "text": "Check out our new product: {{product_name}}! Only {{price}} for a limited time."
+    },
+    {
+      "type": "BUTTON",
+      "sub_type": "URL",
+      "index": "0",
+      "parameters": [
+        {
+          "type": "text",
+          "text": "Shop Now"
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Template Management
+
+### Creating Templates
+1. Go to the Templates section in your dashboard
+2. Click "Create New Template"
+3. Choose the template type
+4. Add your content and variables
+5. Submit for approval
+
+### Template Variables
+- Use `{{variable_name}}` syntax
+- Variables are case-sensitive
+- Maximum 10 variables per template
+- Supported types: text, currency, date, time
+
+### Best Practices
+- Keep templates concise
+- Use clear variable names
+- Test templates before submission
+- Monitor template performance
+- Update templates regularly
+
+## Template Analytics
+
+Track your template performance:
+- Delivery rates
+- Response rates
+- Conversion rates
+- User engagement
+- Error rates
+
+## Next Steps
+
+- Learn about [Automation](/guides/notifier/advanced/automation)
+- Explore [Analytics](/guides/notifier/advanced/analytics)
+- Check out our [API Reference](/api-reference/notifier)
+- Read our [Getting Started](/guides/notifier/getting-started) guide 

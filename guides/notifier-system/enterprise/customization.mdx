@@ -1,0 +1,173 @@
+---
+title: 'Enterprise Customization'
+description: 'Learn how to customize Notifier System for your enterprise needs'
+---
+
+# Enterprise Customization
+
+Notifier System provides extensive customization options for enterprise-level WhatsApp messaging.
+
+## Customization Features
+
+### Branding
+- Custom templates
+- Brand colors
+- Logo integration
+- Custom fonts
+- Brand voice
+- Message styling
+- Media assets
+
+### Workflow
+- Custom workflows
+- Business rules
+- Automation rules
+- Integration points
+- Custom scripts
+- Event handlers
+- Process automation
+
+### Integration
+- Custom APIs
+- Webhook endpoints
+- SDK customization
+- Plugin system
+- Custom connectors
+- Data mapping
+- Format conversion
+
+## Customization Implementation
+
+### Custom Template
+```javascript
+// Example: Creating a custom template
+const createCustomTemplate = async (template) => {
+  try {
+    const response = await axios.post(
+      'https://api.notifiersystem.com/v1/templates',
+      {
+        name: template.name,
+        language: template.language,
+        category: template.category,
+        components: [
+          {
+            type: 'HEADER',
+            format: 'IMAGE',
+            example: {
+              header_url: [template.headerImage]
+            }
+          },
+          {
+            type: 'BODY',
+            text: template.body,
+            variables: template.variables
+          },
+          {
+            type: 'BUTTON',
+            sub_type: 'URL',
+            index: '0',
+            parameters: template.buttonParameters
+          }
+        ],
+        customizations: {
+          branding: template.branding,
+          styling: template.styling,
+          metadata: template.metadata
+        }
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${process.env.NOTIFIER_SYSTEM_API_KEY}`,
+          'Content-Type': 'application/json',
+          'X-Tenant-ID': process.env.TENANT_ID
+        }
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error creating template:', error);
+    throw error;
+  }
+};
+```
+
+### Custom Workflow
+```javascript
+// Example: Implementing a custom workflow
+const processCustomWorkflow = async (message) => {
+  try {
+    // Apply business rules
+    const rules = await getBusinessRules(message.tenant_id);
+    const processedMessage = applyBusinessRules(message, rules);
+
+    // Apply custom transformations
+    const transformedMessage = await applyCustomTransformations(processedMessage);
+
+    // Apply automation rules
+    const automationRules = await getAutomationRules(message.tenant_id);
+    const automatedMessage = applyAutomationRules(transformedMessage, automationRules);
+
+    // Send the message
+    return await sendMessage(automatedMessage);
+  } catch (error) {
+    console.error('Error processing workflow:', error);
+    throw error;
+  }
+};
+```
+
+## Best Practices
+
+### Branding
+- Maintain consistency
+- Follow guidelines
+- Test templates
+- Monitor performance
+- Update regularly
+- Document changes
+- Version control
+
+### Workflow
+- Keep it simple
+- Document processes
+- Test thoroughly
+- Monitor performance
+- Handle errors
+- Regular review
+- Continuous improvement
+
+### Integration
+- Use standards
+- Document APIs
+- Version control
+- Test integration
+- Monitor performance
+- Handle errors
+- Regular updates
+
+## Monitoring
+
+### Customization Monitoring
+- Template performance
+- Workflow efficiency
+- Integration status
+- Error rates
+- Response times
+- User feedback
+- ROI metrics
+
+### Business Impact
+- Message effectiveness
+- User engagement
+- Conversion rates
+- Cost efficiency
+- Process efficiency
+- Business goals
+- Success metrics
+
+## Next Steps
+
+- Learn about [Security](/guides/notifier-system/enterprise/security)
+- Explore [Scaling](/guides/notifier-system/enterprise/scaling)
+- Check out our [API Reference](/api-reference/notifier-system)
+- Read our [Getting Started](/guides/notifier-system/getting-started) guide 

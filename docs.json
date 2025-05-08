@@ -14,19 +14,35 @@
         "tab": "Guides",
         "groups": [
           {
-            "group": "Get Started",
+            "group": "WhatsAble",
             "pages": [
-              "introduction",
-              "quickstart",
-              "authentication"
+              "guides/whatsable/zapier",
+              "guides/whatsable/make",
+              "guides/whatsable/api-documentation"
             ]
           },
           {
-            "group": "Essentials",
+            "group": "Notifier by WhatsAble",
             "pages": [
-              "guides/error-handling",
-              "guides/webhooks",
-              "guides/rate-limits"
+              "guides/notifier/zapier",
+              "guides/notifier/make",
+              "guides/notifier/api-documentation"
+            ]
+          },
+          {
+            "group": "Notifier System",
+            "pages": [
+              "guides/notifier-system/embedding-process",
+              "guides/notifier-system/make-overview",
+              "guides/notifier-system/zapier-overview",
+              {
+                "group": "API",
+                "pages": [
+                  "guides/notifier-system/api/get-templates",
+                  "guides/notifier-system/api/template-message",
+                  "guides/notifier-system/api/incoming-message"
+                ]
+              }
             ]
           }
         ]
@@ -70,16 +86,11 @@
     "dark": "/logo/dark.svg"
   },
   "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "https://whatsable.com/support"
-      }
-    ],
+    "links": [],
     "primary": {
       "type": "button",
       "label": "Get Started",
-      "href": "https://whatsable.com/signup"
+      "href": "https://www.whatsable.app/pricing"
     }
   },
   "footer": {

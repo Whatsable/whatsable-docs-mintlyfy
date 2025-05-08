@@ -1,0 +1,137 @@
+---
+title: 'Message Analytics'
+description: 'Learn how to track and analyze your WhatsApp messages with Notifier by WhatsAble'
+---
+
+# Message Analytics
+
+Track and analyze your WhatsApp messaging performance with comprehensive analytics.
+
+## Key Metrics
+
+### Message Performance
+- Delivery rates
+- Read rates
+- Response rates
+- Response times
+- Error rates
+
+### Template Performance
+- Usage by template
+- Success rates
+- Response patterns
+- Conversion rates
+- Cost per message
+
+### User Engagement
+- Active users
+- Message frequency
+- Response patterns
+- User segments
+- Retention rates
+
+## Analytics Dashboard
+
+### Real-time Monitoring
+```javascript
+// Example: Track message status
+app.post('/webhook/message-status', async (req, res) => {
+  const { message_id, status, timestamp } = req.body;
+  
+  await updateMessageStatus({
+    message_id,
+    status,
+    timestamp,
+    metrics: {
+      delivery_time: calculateDeliveryTime(message_id),
+      response_time: calculateResponseTime(message_id)
+    }
+  });
+});
+```
+
+### Custom Reports
+```javascript
+// Example: Generate daily report
+async function generateDailyReport() {
+  const report = {
+    date: new Date(),
+    metrics: {
+      total_messages: await getTotalMessages(),
+      delivered_messages: await getDeliveredMessages(),
+      read_messages: await getReadMessages(),
+      response_rate: await calculateResponseRate(),
+      average_response_time: await calculateAverageResponseTime()
+    },
+    templates: await getTemplatePerformance(),
+    errors: await getErrorSummary()
+  };
+  
+  return report;
+}
+```
+
+## Data Export
+
+### Export Formats
+- CSV
+- JSON
+- Excel
+- PDF
+- API endpoints
+
+### Export Options
+- Date range
+- Metrics selection
+- Template filtering
+- User segmentation
+- Custom fields
+
+## Best Practices
+
+### Data Collection
+- Track all relevant metrics
+- Use consistent naming
+- Validate data quality
+- Store historical data
+- Implement data retention
+
+### Analysis
+- Set clear KPIs
+- Monitor trends
+- Compare performance
+- Identify patterns
+- Make data-driven decisions
+
+## Integration
+
+### Third-party Tools
+- Google Analytics
+- Mixpanel
+- Amplitude
+- Custom dashboards
+- Business intelligence tools
+
+### API Access
+```javascript
+// Example: Fetch analytics data
+const getAnalytics = async (params) => {
+  const response = await axios.get(
+    'https://api.insightssystem.com/api:-GWQv5aM/analytics',
+    {
+      params,
+      headers: {
+        'Authorization': `Bearer ${process.env.NOTIFIER_API_KEY}`
+      }
+    }
+  );
+  return response.data;
+};
+```
+
+## Next Steps
+
+- Learn about [Templates](/guides/notifier/advanced/templates)
+- Explore [Automation](/guides/notifier/advanced/automation)
+- Check out our [API Reference](/api-reference/notifier)
+- Read our [Getting Started](/guides/notifier/getting-started) guide 

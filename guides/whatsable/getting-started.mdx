@@ -1,0 +1,40 @@
+---
+title: 'Getting Started with WhatsAble'
+description: 'Learn how to get started with WhatsAble, the simple WhatsApp messaging solution'
+---
+
+# Getting Started with WhatsAble
+
+WhatsAble is the simplest way to send WhatsApp messages programmatically. This guide will help you get started with WhatsAble in minutes.
+
+## Prerequisites
+
+- A WhatsApp account
+- Basic understanding of API integration
+- Your WhatsAble API key
+
+## Quick Setup
+
+1. Sign up for a WhatsAble account
+2. Get your API key from the dashboard
+3. Start sending messages using our simple API
+
+## First Message
+
+Here's a quick example of sending your first message:
+
+```bash
+curl -X POST https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "to": "+1234567890",
+    "message": "Hello from WhatsAble!"
+  }'
+```
+
+## Next Steps
+
+- Learn about [Features](/guides/whatsable/features)
+- Explore [Integrations](/guides/whatsable/integrations)
+- Check out our [API Reference](/api-reference/whatsable) 

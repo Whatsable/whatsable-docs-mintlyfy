@@ -1,0 +1,48 @@
+---
+title: 'Getting Started with Notifier by WhatsAble'
+description: 'Learn how to get started with Notifier by WhatsAble, the complex WhatsApp messaging solution'
+---
+
+# Getting Started with Notifier by WhatsAble
+
+Notifier by WhatsAble provides advanced WhatsApp messaging capabilities for businesses. This guide will help you get started with our complex solution.
+
+## Prerequisites
+
+- A WhatsApp Business account
+- Understanding of API integration
+- Your Notifier API key
+- Basic knowledge of webhooks
+
+## Quick Setup
+
+1. Sign up for a Notifier by WhatsAble account
+2. Configure your WhatsApp Business account
+3. Get your API key from the dashboard
+4. Set up webhooks for message status updates
+
+## First Message
+
+Here's a quick example of sending your first message:
+
+```bash
+curl -X POST https://api.insightssystem.com/api:-GWQv5aM/send \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "to": "+1234567890",
+    "message": "Hello from Notifier by WhatsAble!",
+    "template": "welcome_message",
+    "variables": {
+      "name": "John",
+      "company": "Acme Inc"
+    }
+  }'
+```
+
+## Next Steps
+
+- Learn about [Features](/guides/notifier/features)
+- Explore [Integrations](/guides/notifier/integrations)
+- Check out [Advanced Features](/guides/notifier/advanced/templates)
+- Review our [API Reference](/api-reference/notifier) 

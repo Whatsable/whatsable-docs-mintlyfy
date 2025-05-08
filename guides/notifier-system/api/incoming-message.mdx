@@ -1,0 +1,100 @@
+---
+title: 'Incoming Message'
+description: 'How to receive incoming WhatsApp messages via webhooks in Notifyer System.'
+---
+
+# Incoming Message
+
+The incoming message system allows you to configure endpoints where your application will receive real-time message from recipient reply. 
+
+## Overview:
+
+Webhooks provide a way for our system to send data to your application in real-time whenever your recipient replies. This enables you to build integrations that react immediately to user interactions.
+
+After clicking "More" from the right sidebar below, a menu will appear. From there, select the "Developer" option. Currently, we are focusing on incoming messages, and we plan to add more features in the future. 
+
+![Webhook Management Dashboard](https://i.ibb.co/9kFcXNrG/Screenshot-2025-04-02-at-11-55-07-AM.png)
+_Figure 1: Main webhook management dashboard showing the list of configured webhook endpoints_
+
+## Managing Webhook Endpoints:
+
+### Viewing Webhook Endpoints
+
+The Webhook dashboard displays all your configured webhook endpoints with their current status:
+
+- **URL**: The destination where event data (recipient reply) will be sent
+- **Status**: Indicates if the webhook is active or disabled
+
+### Adding a New Webhook Endpoint
+
+To add a new webhook endpoint:
+
+1. Click the **Add endpoint** button in the top-right corner of the Webhook endpoints section
+2. Enter the endpoint URL where you want to receive webhook data
+3. Ensure your endpoint is accessible via HTTPS and configured to accept **POST requests** with JSON payloads
+4. Click **Save Endpoint** to add the webhook
+
+![Add Webhook Dialog](https://i.ibb.co/BVtqGNnr/Screenshot-2025-04-02-at-11-55-56-AM.png)
+_Figure 2: Dialog for adding a new webhook endpoint_
+
+### Managing Existing Webhooks
+
+Each webhook endpoint has a menu with the following options:
+
+- **Edit**: Modify the webhook URL
+- **Disable/Enable**: Click the webhook's active status
+- **Delete**: Permanently remove the webhook endpoint
+
+![Webhook Management Options](https://i.ibb.co/35Qwpfjp/Screenshot-2025-04-02-at-11-56-26-AM.png)
+_Figure 3: Menu options for managing an existing webhook endpoint_
+
+## Webhook Payload Structure
+
+When an event occurs, our system will send a POST request to your configured endpoint with a JSON payload containing the event data.
+
+### Message Notification Example
+
+When a new message is received, your webhook endpoint will receive a payload similar to this:
+
+```json
+{
+  "last_messages": "[{\"type\":\"user\",\"content\":\"How can I use notifier by whatsable api?\",\"timestamp\":\"2025-03-23T21:41:44.477Z\",\"content_type\":\"text\"},{\"type\":\"bot\",\"content\":\"Hello! How can I assist you today?\",\"timestamp\":\"2025-03-23T20:47:45.000Z\",\"content_type\":\"text\"}]",
+  "conversation_paragraph": "User (9:41:44 PM): How can I use notifier by whatsable api? ; Bot (8:47:45 PM): Hello! How can I assist you today?",
+  "phone_number": "8801734363287",
+  "recipient_name": "John Doe",
+  "user_id": "6fb11ff2-d9b2-4560-8437-0fe58ec9f4a6",
+  "last_message_of_user": "How can I use notifier by whatsable api?",
+  "last_message_of_bot": "Hello! How can I assist you today?",
+  "message_type": "text",
+  "user_timestamp": 1234567890,
+  "bot_timestamp": 1234567890,
+  "attachment_url": "https://api.insightssystem.com/vault/LSMumRx1/VR-1aHOci6nP28eHWHJH7JauJkc/Ew7R9w../whatsapp_media_706123978455438.jpg"
+}
+```
+
+### Payload Fields
+
+| Field                    | Description                                                                                                                       |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| `last_messages`          | JSON string containing the recent message history (type, content, timestamp, content_type). Actually this is the last 10 messages |
+| `conversation_paragraph` | Formatted string of the recent conversation history. This is also last 10 messages.                                               |
+| `phone_number`           | The phone number associated with the conversation                                                                                 |
+| `recipient_name`         | The name of the recipient                                                                                                         |
+| `user_id`                | Unique identifier for the user                                                                                                    |
+| `last_message_of_user`   | The last message sent by your recipient                                                                                           |
+| `last_message_of_bot`    | The most recent message sent by the you or your automation system                                                                 |
+| `message_type`           | The type of the message (e.g., "text")                                                                                            |
+| `user_timestamp`         | Timestamp of the user's last message                                                                                              |
+| `bot_timestamp`          | Timestamp of the bot's last message                                                                                               |
+| `attachment_url`         | URL to any media attachment sent in the conversation                                                                              |
+
+## Technical Requirements
+
+For your webhook endpoint to properly receive and process notifications:
+
+1. **HTTPS Required**: All webhook endpoints must be accessible via HTTP/HTTPS
+2. **POST Method**: Your endpoint must accept POST requests
+3. **JSON Support**: Your endpoint must be able to parse JSON payloads
+4. **Response Code**: Your endpoint should return a 2xx HTTP response code to acknowledge receipt
+
+> **Note:** As shown in Figure 2, your webhook endpoint must be accessible via HTTP/HTTPS and configured to accept POST requests with JSON payloads. 

@@ -1,0 +1,301 @@
+---
+title: 'API Documentation'
+description: 'Comprehensive WhatsAble API Documentation (Version 2)'
+---
+
+# API
+
+# 📚 WhatsAble API Documentation (Version 2)
+
+Welcome to the **WhatsAble API Documentation**! This guide provides comprehensive details on how to integrate and use the **WhatsAble API** to send WhatsApp messages programmatically. Whether you're a developer or a non-technical user, this documentation will walk you through the process step-by-step.
+
+---
+
+## 📌 Key Features of WhatsAble API
+
+- **Send WhatsApp Messages**: Automate WhatsApp messages with text, images, videos, and documents.
+- **Template-Based Messaging**: Use pre-defined templates for structured messages.
+- **Attachment Support**: Send files like PDFs, images, and videos.
+- **Zapier & Make.com Integration**: Easily integrate with no-code platforms like Zapier and Make.com.
+- **Scalable**: Send messages to multiple numbers with ease.
+
+---
+
+## 🚀 Getting Started
+
+### 1. **Prerequisites**
+
+- A **WhatsApp-enabled phone number** (this will be used to send messages).
+- A **WhatsAble account** with an active subscription or free trial.
+- An **API Key** from your WhatsAble dashboard.
+
+### 2. **API Endpoint**
+
+- **Version 1**: `https://dashboard.whatsable.app/api/whatsapp/messages/send`
+- **Version 2**: `https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send`
+
+---
+
+## 🔑 Authentication
+
+To use the WhatsAble API, you need to authenticate your requests using your **API Key**. Include the API Key in the `Authorization` header of your HTTP request.
+
+```http
+Authorization: YOUR_API_KEY
+```
+
+---
+
+## 📤 Sending a WhatsApp Message
+
+### **Request Structure**
+
+Send a **POST** request to the API endpoint with the following parameters:
+
+#### **Headers**
+
+- `Authorization`: Your API Key.
+- `Content-Type`: `application/json`.
+
+#### **Body Parameters**
+
+| Parameter    | Type   | Description                                                                   |
+| ------------ | ------ | ----------------------------------------------------------------------------- |
+| `to`         | String | The recipient's phone number in **E.164 format** (e.g., `+1234567890`).       |
+| `text`       | String | The message content you want to send.                                         |
+| `attachment` | String | (Optional) URL or base64-encoded file for attachments (images, videos, PDFs). |
+| `filename`   | String | (Optional) Name of the file if sending a document.                            |
+
+#### **Example Request (cURL)**
+
+```bash
+curl -X POST https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send \
+-H 'Authorization: YOUR_API_KEY' \
+-H 'Content-Type: application/json' \
+-d '{
+  "to": "+1234567890",
+  "text": "Hello, this is a test message from WhatsAble!",
+  "attachment": "https://example.com/image.jpg",
+  "filename": "image.jpg"
+}'
+```
+
+---
+
+## 📥 Response Structure
+
+### **Success Response**
+
+If the message is sent successfully, you will receive a **200 OK** response with the following structure:
+
+```json
+{
+  "success": true,
+  "message": "Message sent successfully to +1234567890",
+  "details": {
+    "messages": [
+      {
+        "id": "wamid.XXXXXX",
+        "message_status": "accepted"
+      }
+    ]
+  }
+}
+```
+
+#### **Response Fields**
+
+| Field     | Type    | Description                                                          |
+| --------- | ------- | -------------------------------------------------------------------- |
+| `success` | Boolean | Indicates if the message was sent successfully (`true` or `false`).  |
+| `message` | String  | A human-readable message describing the result.                      |
+| `details` | Object  | Contains details about the sent message, including the `message_id`. |
+
+---
+
+### **Error Responses**
+
+If the request fails, you will receive an error response with the following structure:
+
+#### **400 Bad Request**
+
+```json
+{
+  "success": false,
+  "message": "Invalid phone number format",
+  "details": "Phone number must be in E.164 format."
+}
+```
+
+#### **401 Unauthorized**
+
+```json
+{
+  "success": false,
+  "message": "API key is required"
+}
+```
+
+#### **403 Forbidden**
+
+```json
+{
+  "success": false,
+  "message": "Invalid API Key"
+}
+```
+
+#### **404 Not Found**
+
+```json
+{
+  "success": false,
+  "message": "The number +1234567890 is not registered."
+}
+```
+
+---
+
+## 🛠️ Code Examples
+
+### **JavaScript (Fetch API)**
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "YOUR_API_KEY");
+myHeaders.append("Content-Type", "application/json");
+
+var raw = JSON.stringify({
+  to: "+1234567890",
+  text: "Hello, this is a test message from WhatsAble!",
+});
+
+var requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+  body: raw,
+  redirect: "follow",
+};
+
+fetch(
+  "https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send",
+  requestOptions
+)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+### **Python (Requests Library)**
+
+```python
+import requests
+import json
+
+url = "https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send"
+
+payload = json.dumps({
+  "to": "+1234567890",
+  "text": "Hello, this is a test message from WhatsAble!"
+})
+
+headers = {
+  'Authorization': 'YOUR_API_KEY',
+  'Content-Type': 'application/json'
+}
+
+response = requests.post(url, headers=headers, data=payload)
+print(response.text)
+```
+
+---
+
+## 📂 Supported Media Types
+
+WhatsAble API supports a wide range of media types for sending rich messages via WhatsApp. Below is a detailed breakdown of the supported file formats, extensions, MIME types, and maximum file sizes.
+
+### 🎧 **Audio**
+
+You can send audio files in various formats. The maximum file size for audio files is **16 MB**.
+
+| **Audio Type**        | **Extension** | **MIME Type** | **Max Size** |
+| --------------------- | ------------- | ------------- | ------------ |
+| AAC                   | `.aac`        | `audio/aac`   | 16 MB        |
+| AMR                   | `.amr`        | `audio/amr`   | 16 MB        |
+| MP3                   | `.mp3`        | `audio/mpeg`  | 16 MB        |
+| MP4 Audio             | `.m4a`        | `audio/mp4`   | 16 MB        |
+| OGG Audio (OPUS only) | `.ogg`        | `audio/ogg`   | 16 MB        |
+
+### 📄 **Documents**
+
+You can send documents in various formats, including text files, PDFs, and Microsoft Office files. The maximum file size for documents is **100 MB**.
+
+| **Document Type**    | **Extension** | **MIME Type**                                                               | **Max Size** |
+| -------------------- | ------------- | --------------------------------------------------------------------------- | ------------ |
+| Text                 | `.txt`        | `text/plain`                                                                | 100 MB       |
+| Microsoft Excel      | `.xls`        | `application/vnd.ms-excel`                                                  | 100 MB       |
+| Microsoft Excel      | `.xlsx`       | `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`         | 100 MB       |
+| Microsoft Word       | `.doc`        | `application/msword`                                                        | 100 MB       |
+| Microsoft Word       | `.docx`       | `application/vnd.openxmlformats-officedocument.wordprocessingml.document`   | 100 MB       |
+| Microsoft PowerPoint | `.ppt`        | `application/vnd.ms-powerpoint`                                             | 100 MB       |
+| Microsoft PowerPoint | `.pptx`       | `application/vnd.openxmlformats-officedocument.presentationml.presentation` | 100 MB       |
+| PDF                  | `.pdf`        | `application/pdf`                                                           | 100 MB       |
+
+### 🖼️ **Images**
+
+You can send images in JPEG or PNG formats. Images must be **8-bit, RGB, or RGBA**. The maximum file size for images is **5 MB**.
+
+| **Image Type** | **Extension** | **MIME Type** | **Max Size** |
+| -------------- | ------------- | ------------- | ------------ |
+| JPEG           | `.jpeg`       | `image/jpeg`  | 5 MB         |
+| PNG            | `.png`        | `image/png`   | 5 MB         |
+
+### 🎞️ **Stickers**
+
+Stickers can be sent as **WebP** files. Animated stickers are also supported. The maximum file size for stickers is **500 KB** for animated stickers and **100 KB** for static stickers.
+
+| **Sticker Type** | **Extension** | **MIME Type** | **Max Size** |
+| ---------------- | ------------- | ------------- | ------------ |
+| Animated Sticker | `.webp`       | `image/webp`  | 500 KB       |
+| Static Sticker   | `.webp`       | `image/webp`  | 100 KB       |
+
+### 🎥 **Videos**
+
+You can send videos in 3GPP or MP4 formats. Only **H.264 video codec** and **AAC audio codec** are supported. The maximum file size for videos is **16 MB**.
+
+| **Video Type** | **Extension** | **MIME Type** | **Max Size** |
+| -------------- | ------------- | ------------- | ------------ |
+| 3GPP           | `.3gp`        | `video/3gpp`  | 16 MB        |
+| MP4 Video      | `.mp4`        | `video/mp4`   | 16 MB        |
+
+---
+
+## 📜 Template-Based Messaging
+
+WhatsAble supports **template-based messaging** for structured messages. The API automatically selects the appropriate template based on the message content and attachment type.
+
+#### **Template Selection Logic**
+
+- **Text-Only Messages**: Templates like `standard_1_line_textonly`, `standard_2_line2_textonly`, etc.
+- **Image Attachments**: Templates like `standard_image_notification_1_lines`, `standard_image_notification_2_lines`, etc.
+- **Video Attachments**: Templates like `standard_video_notification_1_lines`, `standard_video_notification_2_lines`, etc.
+- **Document Attachments**: Templates like `standard_doc_message_1_line`, `standard_doc_message_2_lines`, etc.
+
+---
+
+## ❓ Need Help?
+
+If you encounter any issues or need further assistance, feel free to reach out to our support team:
+
+- **Chat Support**: Click the green chat button in the bottom right corner of the WhatsAble dashboard.
+- **Email Support**: support@whatsable.app
+
+---
+
+🚀 **Start Automating WhatsApp Messages Today!**  
+👉 [Visit WhatsAble's Website](https://whatsable.app/)  
+👉 [Try WhatsAble on Zapier](https://zapier.com/apps/whatsable-ca185063/integrations)
+
+---
+
+**Disclaimer**: This service is not affiliated with nor endorsed by WhatsApp Inc. The tool uses the WhatsApp API but is not affiliated with WhatsApp. 

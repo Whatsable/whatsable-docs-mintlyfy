@@ -1,0 +1,102 @@
+---
+title: 'Message Automation'
+description: 'Learn how to automate your WhatsApp messages with Notifier by WhatsAble'
+---
+
+# Message Automation
+
+Automate your WhatsApp messaging workflows to save time and improve efficiency.
+
+## Workflow Types
+
+### Event-Based Triggers
+```javascript
+// Example: Send welcome message on user signup
+app.post('/webhook/signup', async (req, res) => {
+  const { user } = req.body;
+  
+  await sendTemplateMessage({
+    to: user.phone,
+    template: 'welcome_message',
+    variables: {
+      name: user.name,
+      company: 'Acme Inc'
+    }
+  });
+});
+```
+
+### Scheduled Messages
+```javascript
+// Example: Send appointment reminder
+const schedule = require('node-schedule');
+
+schedule.scheduleJob('0 9 * * *', async () => {
+  const appointments = await getTodaysAppointments();
+  
+  for (const appointment of appointments) {
+    await sendTemplateMessage({
+      to: appointment.patient.phone,
+      template: 'appointment_reminder',
+      variables: {
+        name: appointment.patient.name,
+        time: appointment.time,
+        doctor: appointment.doctor.name
+      }
+    });
+  }
+});
+```
+
+## Automation Features
+
+### Conditional Logic
+- If/else conditions
+- Switch statements
+- Multiple conditions
+- Nested conditions
+
+### Workflow Steps
+1. Trigger
+2. Conditions
+3. Actions
+4. Delays
+5. Notifications
+
+### Integration Points
+- Webhooks
+- API endpoints
+- Database triggers
+- Third-party services
+
+## Best Practices
+
+### Workflow Design
+- Keep workflows simple
+- Use clear naming conventions
+- Document your workflows
+- Test thoroughly
+- Monitor performance
+
+### Error Handling
+- Implement retry logic
+- Set up error notifications
+- Log all actions
+- Handle timeouts
+- Validate inputs
+
+## Monitoring
+
+Track your automated workflows:
+- Success rates
+- Error rates
+- Response times
+- Resource usage
+- Cost analysis
+
+## Next Steps
+
+- Learn about [Templates](/guides/notifier/advanced/templates)
+- Explore [Analytics](/guides/notifier/advanced/analytics)
+- Check out our [API Reference](/api-reference/notifier)
+- Read our [Getting Started](/guides/notifier/getting-started) guide 

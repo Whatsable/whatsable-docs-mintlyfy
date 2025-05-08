@@ -1,0 +1,144 @@
+---
+title: 'Get Templates'
+description: 'API documentation for retrieving WhatsApp templates in Notifyer System.'
+---
+
+# Get Templates API Documentation
+
+## Overview
+
+The Get Templates API allows users to retrieve a list of all templates associated with their account. Templates are pre-defined message formats that can be used for various communication purposes such as marketing alerts, utility messages, and delivery notifications.
+
+## Endpoint
+
+```
+GET https://api.insightssystem.com/api:AFRA_QCy/get_templates
+```
+
+## Authentication
+
+Authentication is required for this endpoint. Include your API key in the request headers using Bearer authentication.
+
+### Headers
+
+| Header        | Value               | Description                              |
+| ------------- | ------------------- | ---------------------------------------- |
+| Content-Type  | application/json    | Specifies the format of the request body |
+| Authorization | Bearer YOUR_API_KEY | Your API key prefixed with "Bearer "     |
+
+## Request Parameters
+
+This endpoint does not require any request parameters. All templates associated with the authenticated user will be returned.
+
+## Response
+
+### Response Format
+
+The response is a JSON array containing template objects.
+
+### Response Fields
+
+Each template object contains the following fields:
+
+| Field Name       | Type    | Description                                                    |
+| ---------------- | ------- | -------------------------------------------------------------- |
+| id               | Integer | The unique identifier for the template                         |
+| user_id          | String  | UUID of the user who owns the template                         |
+| name             | String  | Descriptive name of the template                               |
+| category         | String  | Category of the template (e.g., "MARKETING", "UTILITY")        |
+| type             | String  | The type of template (e.g., "text")                            |
+| language         | String  | Language code of the template (e.g., "en", "en_US")            |
+| status           | String  | Approval status of the template (e.g., "APPROVED", "REJECTED") |
+| variable_counts  | Integer | Number of variable placeholders in the template                |
+| template_formate | String  | Format string showing variable placement (e.g., "[b:7]")       |
+| template_id      | String  | UUID of the template                                           |
+
+### Response Codes
+
+| Status Code | Description                                           |
+| ----------- | ----------------------------------------------------- |
+| 200         | Success                                               |
+| 401         | Unauthorized - Invalid or missing API key             |
+| 403         | Forbidden - Account does not have access to templates |
+| 500         | Server Error                                          |
+
+## Example
+
+### Example Request
+
+```bash
+curl -X GET \
+  https://api.insightssystem.com/api:AFRA_QCy/get_templates \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer YOUR_API_KEY'
+```
+
+### Example Response
+
+```json
+[
+  {
+    "id": 300,
+    "user_id": "a9d7c221-62d2-43b5-810a-8a1a71c7820c",
+    "name": "exclusive_offer_alert",
+    "category": "MARKETING",
+    "type": "text",
+    "language": "en",
+    "status": "APPROVED",
+    "variable_counts": 7,
+    "template_formate": "[b:7]",
+    "template_id": "6f6e4113-cc8a-4fbe-b98d-2c631d299c6b"
+  },
+  {
+    "id": 150,
+    "user_id": "a9d7c221-62d2-43b5-810a-8a1a71c7820c",
+    "name": "general_communication_message",
+    "category": "UTILITY",
+    "type": "text",
+    "language": "en",
+    "status": "REJECTED",
+    "variable_counts": 0,
+    "template_formate": "[]",
+    "template_id": "75521873-72cd-4c33-9072-c8b901d6f687"
+  }
+  // Additional templates omitted for brevity
+]
+```
+
+## Notes
+
+- The `status` field indicates whether the template has been approved for use.
+- The `template_formate` field shows the variable placeholders in the template. For example, "[b:7]" indicates there are 7 variables.
+- Templates are returned in descending order by ID.
+
+## Error Responses
+
+### Authentication Error (401)
+
+```json
+{
+  "error": {
+    "code": "unauthorized",
+    "message": "Invalid API key provided"
+  }
+}
+```
+
+### Server Error (500)
+
+```json
+{
+  "error": {
+    "code": "server_error",
+    "message": "An internal server error occurred"
+  }
+}
+```
+
+## Rate Limiting
+
+This API is subject to rate limiting. If you exceed the rate limit, you will receive a 429 Too Many Requests response.
+
+## Support
+
+If you encounter any issues or have questions about this API, please contact our support team at support@insightssystem.com. 
