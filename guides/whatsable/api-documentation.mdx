@@ -7,57 +7,71 @@ description: 'Comprehensive WhatsAble API Documentation (Version 2)'
 
 # 📚 WhatsAble API Documentation (Version 2)
 
-Welcome to the **WhatsAble API Documentation**! This guide provides comprehensive details on how to integrate and use the **WhatsAble API** to send WhatsApp messages programmatically. Whether you're a developer or a non-technical user, this documentation will walk you through the process step-by-step.
+<div className="bg-blue-50 p-6 rounded-lg my-6">
+  <p className="text-lg">
+    Welcome to <span className="font-bold text-blue-600">WhatsAble API Documentation</span>! This guide provides comprehensive details on how to integrate and use the <span className="font-bold">WhatsAble API</span> to send WhatsApp messages programmatically. Whether you're a developer or a non-technical user, this documentation will walk you through the process step-by-step.
+  </p>
+</div>
 
 ---
 
-## 📌 Key Features of WhatsAble API
+## 🧩 Key Features of WhatsAble API
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 - **Send WhatsApp Messages**: Automate WhatsApp messages with text, images, videos, and documents.
 - **Template-Based Messaging**: Use pre-defined templates for structured messages.
 - **Attachment Support**: Send files like PDFs, images, and videos.
 - **Zapier & Make.com Integration**: Easily integrate with no-code platforms like Zapier and Make.com.
 - **Scalable**: Send messages to multiple numbers with ease.
+</div>
 
 ---
 
 ## 🚀 Getting Started
 
-### 1. **Prerequisites**
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+
+### 1. <span className="font-bold">Prerequisites</span>
 
 - A **WhatsApp-enabled phone number** (this will be used to send messages).
 - A **WhatsAble account** with an active subscription or free trial.
 - An **API Key** from your WhatsAble dashboard.
 
-### 2. **API Endpoint**
+### 2. <span className="font-bold">API Endpoint</span>
 
 - **Version 1**: `https://dashboard.whatsable.app/api/whatsapp/messages/send`
 - **Version 2**: `https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send`
 
+</div>
+
 ---
 
-## 🔑 Authentication
+## 🗝️ Authentication
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 To use the WhatsAble API, you need to authenticate your requests using your **API Key**. Include the API Key in the `Authorization` header of your HTTP request.
 
 ```http
 Authorization: YOUR_API_KEY
 ```
+</div>
 
 ---
 
 ## 📤 Sending a WhatsApp Message
 
-### **Request Structure**
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+
+### <span className="font-bold">Request Structure</span>
 
 Send a **POST** request to the API endpoint with the following parameters:
 
-#### **Headers**
+#### <span className="font-bold">Headers</span>
 
 - `Authorization`: Your API Key.
 - `Content-Type`: `application/json`.
 
-#### **Body Parameters**
+#### <span className="font-bold">Body Parameters</span>
 
 | Parameter    | Type   | Description                                                                   |
 | ------------ | ------ | ----------------------------------------------------------------------------- |
@@ -66,7 +80,9 @@ Send a **POST** request to the API endpoint with the following parameters:
 | `attachment` | String | (Optional) URL or base64-encoded file for attachments (images, videos, PDFs). |
 | `filename`   | String | (Optional) Name of the file if sending a document.                            |
 
-#### **Example Request (cURL)**
+#### <span className="font-bold">Example Request (cURL)</span>
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```bash
 curl -X POST https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send \
@@ -79,14 +95,21 @@ curl -X POST https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send \
   "filename": "image.jpg"
 }'
 ```
+</div>
+
+</div>
 
 ---
 
 ## 📥 Response Structure
 
-### **Success Response**
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+
+### <span className="font-bold">Success Response</span>
 
 If the message is sent successfully, you will receive a **200 OK** response with the following structure:
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```json
 {
@@ -102,8 +125,9 @@ If the message is sent successfully, you will receive a **200 OK** response with
   }
 }
 ```
+</div>
 
-#### **Response Fields**
+#### <span className="font-bold">Response Fields</span>
 
 | Field     | Type    | Description                                                          |
 | --------- | ------- | -------------------------------------------------------------------- |
@@ -111,13 +135,18 @@ If the message is sent successfully, you will receive a **200 OK** response with
 | `message` | String  | A human-readable message describing the result.                      |
 | `details` | Object  | Contains details about the sent message, including the `message_id`. |
 
+</div>
+
 ---
 
-### **Error Responses**
+### ❌ Error Responses
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 If the request fails, you will receive an error response with the following structure:
 
-#### **400 Bad Request**
+#### <span className="font-bold">400 Bad Request</span>
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```json
 {
@@ -126,8 +155,11 @@ If the request fails, you will receive an error response with the following stru
   "details": "Phone number must be in E.164 format."
 }
 ```
+</div>
 
-#### **401 Unauthorized**
+#### <span className="font-bold">401 Unauthorized</span>
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```json
 {
@@ -135,8 +167,11 @@ If the request fails, you will receive an error response with the following stru
   "message": "API key is required"
 }
 ```
+</div>
 
-#### **403 Forbidden**
+#### <span className="font-bold">403 Forbidden</span>
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```json
 {
@@ -144,8 +179,11 @@ If the request fails, you will receive an error response with the following stru
   "message": "Invalid API Key"
 }
 ```
+</div>
 
-#### **404 Not Found**
+#### <span className="font-bold">404 Not Found</span>
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```json
 {
@@ -153,12 +191,18 @@ If the request fails, you will receive an error response with the following stru
   "message": "The number +1234567890 is not registered."
 }
 ```
+</div>
+</div>
 
 ---
 
 ## 🛠️ Code Examples
 
-### **JavaScript (Fetch API)**
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+
+### <span className="font-bold">JavaScript (Fetch API)</span>
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```javascript
 var myHeaders = new Headers();
@@ -185,8 +229,11 @@ fetch(
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
 ```
+</div>
 
-### **Python (Requests Library)**
+### <span className="font-bold">Python (Requests Library)</span>
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```python
 import requests
@@ -207,14 +254,18 @@ headers = {
 response = requests.post(url, headers=headers, data=payload)
 print(response.text)
 ```
+</div>
+
+</div>
 
 ---
 
 ## 📂 Supported Media Types
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 WhatsAble API supports a wide range of media types for sending rich messages via WhatsApp. Below is a detailed breakdown of the supported file formats, extensions, MIME types, and maximum file sizes.
 
-### 🎧 **Audio**
+### 🎧 <span className="font-bold">Audio</span>
 
 You can send audio files in various formats. The maximum file size for audio files is **16 MB**.
 
@@ -226,7 +277,7 @@ You can send audio files in various formats. The maximum file size for audio fil
 | MP4 Audio             | `.m4a`        | `audio/mp4`   | 16 MB        |
 | OGG Audio (OPUS only) | `.ogg`        | `audio/ogg`   | 16 MB        |
 
-### 📄 **Documents**
+### 📄 <span className="font-bold">Documents</span>
 
 You can send documents in various formats, including text files, PDFs, and Microsoft Office files. The maximum file size for documents is **100 MB**.
 
@@ -241,7 +292,7 @@ You can send documents in various formats, including text files, PDFs, and Micro
 | Microsoft PowerPoint | `.pptx`       | `application/vnd.openxmlformats-officedocument.presentationml.presentation` | 100 MB       |
 | PDF                  | `.pdf`        | `application/pdf`                                                           | 100 MB       |
 
-### 🖼️ **Images**
+### 🖼️ <span className="font-bold">Images</span>
 
 You can send images in JPEG or PNG formats. Images must be **8-bit, RGB, or RGBA**. The maximum file size for images is **5 MB**.
 
@@ -250,7 +301,7 @@ You can send images in JPEG or PNG formats. Images must be **8-bit, RGB, or RGBA
 | JPEG           | `.jpeg`       | `image/jpeg`  | 5 MB         |
 | PNG            | `.png`        | `image/png`   | 5 MB         |
 
-### 🎞️ **Stickers**
+### 🎞️ <span className="font-bold">Stickers</span>
 
 Stickers can be sent as **WebP** files. Animated stickers are also supported. The maximum file size for stickers is **500 KB** for animated stickers and **100 KB** for static stickers.
 
@@ -259,7 +310,7 @@ Stickers can be sent as **WebP** files. Animated stickers are also supported. Th
 | Animated Sticker | `.webp`       | `image/webp`  | 500 KB       |
 | Static Sticker   | `.webp`       | `image/webp`  | 100 KB       |
 
-### 🎥 **Videos**
+### 🎥 <span className="font-bold">Videos</span>
 
 You can send videos in 3GPP or MP4 formats. Only **H.264 video codec** and **AAC audio codec** are supported. The maximum file size for videos is **16 MB**.
 
@@ -268,33 +319,48 @@ You can send videos in 3GPP or MP4 formats. Only **H.264 video codec** and **AAC
 | 3GPP           | `.3gp`        | `video/3gpp`  | 16 MB        |
 | MP4 Video      | `.mp4`        | `video/mp4`   | 16 MB        |
 
+</div>
+
 ---
 
 ## 📜 Template-Based Messaging
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 WhatsAble supports **template-based messaging** for structured messages. The API automatically selects the appropriate template based on the message content and attachment type.
 
-#### **Template Selection Logic**
+#### <span className="font-bold">Template Selection Logic</span>
 
 - **Text-Only Messages**: Templates like `standard_1_line_textonly`, `standard_2_line2_textonly`, etc.
 - **Image Attachments**: Templates like `standard_image_notification_1_lines`, `standard_image_notification_2_lines`, etc.
 - **Video Attachments**: Templates like `standard_video_notification_1_lines`, `standard_video_notification_2_lines`, etc.
 - **Document Attachments**: Templates like `standard_doc_message_1_line`, `standard_doc_message_2_lines`, etc.
 
+</div>
+
 ---
 
 ## ❓ Need Help?
 
+<div className="bg-blue-50 p-6 rounded-lg my-6">
 If you encounter any issues or need further assistance, feel free to reach out to our support team:
 
 - **Chat Support**: Click the green chat button in the bottom right corner of the WhatsAble dashboard.
 - **Email Support**: support@whatsable.app
+</div>
 
 ---
 
-🚀 **Start Automating WhatsApp Messages Today!**  
-👉 [Visit WhatsAble's Website](https://whatsable.app/)  
-👉 [Try WhatsAble on Zapier](https://zapier.com/apps/whatsable-ca185063/integrations)
+<div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-8 rounded-lg my-8">
+  <h2 className="text-2xl font-bold mb-4">🚀 Start Automating WhatsApp Messages Today!</h2>
+  <div className="space-y-4">
+    <a href="https://whatsable.app/" className="block bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
+      Visit WhatsAble's Website
+    </a>
+    <a href="https://zapier.com/apps/whatsable-ca185063/integrations" className="block bg-blue-400 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-500 transition-colors">
+      Try WhatsAble on Zapier
+    </a>
+  </div>
+</div>
 
 ---
 
