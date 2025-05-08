@@ -1,0 +1,180 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Notifier by WhatsAble API",
+    "description": "Advanced WhatsApp notification system with templates and scheduling",
+    "version": "2.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.notifier.whatsable.com/v2",
+      "description": "Notifier API v2"
+    }
+  ],
+  "paths": {
+    "/templates": {
+      "get": {
+        "summary": "List message templates",
+        "description": "Get all available message templates",
+        "operationId": "listTemplates",
+        "tags": ["Templates"],
+        "responses": {
+          "200": {
+            "description": "List of templates",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Template"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create message template",
+        "description": "Create a new message template",
+        "operationId": "createTemplate",
+        "tags": ["Templates"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TemplateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Template created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Template"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notifications": {
+      "post": {
+        "summary": "Send notification",
+        "description": "Send a notification using a template",
+        "operationId": "sendNotification",
+        "tags": ["Notifications"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Notification sent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Template": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "variables": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "TemplateRequest": {
+        "type": "object",
+        "required": ["name", "content"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "variables": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "NotificationRequest": {
+        "type": "object",
+        "required": ["to", "templateId", "variables"],
+        "properties": {
+          "to": {
+            "type": "string"
+          },
+          "templateId": {
+            "type": "string"
+          },
+          "variables": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "schedule": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "NotificationResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "notificationId": {
+            "type": "string"
+          },
+          "scheduledFor": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+} 

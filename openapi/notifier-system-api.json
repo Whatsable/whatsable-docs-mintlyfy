@@ -1,0 +1,385 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Notifier System API",
+    "description": "Enterprise-grade WhatsApp notification system with advanced features",
+    "version": "3.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.notifier-system.com/v3",
+      "description": "Notifier System API v3"
+    }
+  ],
+  "paths": {
+    "/templates": {
+      "get": {
+        "summary": "List message templates",
+        "description": "Get all available message templates with pagination",
+        "operationId": "listTemplates",
+        "tags": ["Templates"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of templates",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedTemplates"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create message template",
+        "description": "Create a new message template with advanced options",
+        "operationId": "createTemplate",
+        "tags": ["Templates"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TemplateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Template created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Template"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notifications": {
+      "post": {
+        "summary": "Send notification",
+        "description": "Send a notification with advanced features",
+        "operationId": "sendNotification",
+        "tags": ["Notifications"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Notification sent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/campaigns": {
+      "post": {
+        "summary": "Create campaign",
+        "description": "Create a new notification campaign",
+        "operationId": "createCampaign",
+        "tags": ["Campaigns"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Campaign created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Campaign"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Template": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "variables": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "category": {
+            "type": "string",
+            "enum": ["marketing", "transactional", "service"]
+          },
+          "language": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "PaginatedTemplates": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Template"
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "integer"
+              },
+              "page": {
+                "type": "integer"
+              },
+              "limit": {
+                "type": "integer"
+              },
+              "pages": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "TemplateRequest": {
+        "type": "object",
+        "required": ["name", "content", "category"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "variables": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "category": {
+            "type": "string",
+            "enum": ["marketing", "transactional", "service"]
+          },
+          "language": {
+            "type": "string"
+          }
+        }
+      },
+      "NotificationRequest": {
+        "type": "object",
+        "required": ["to", "templateId", "variables"],
+        "properties": {
+          "to": {
+            "type": "string"
+          },
+          "templateId": {
+            "type": "string"
+          },
+          "variables": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "schedule": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "priority": {
+            "type": "string",
+            "enum": ["high", "normal", "low"]
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "NotificationResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "notificationId": {
+            "type": "string"
+          },
+          "scheduledFor": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "estimatedDeliveryTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Campaign": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "templateId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["draft", "scheduled", "running", "completed", "failed"]
+          },
+          "schedule": {
+            "type": "object",
+            "properties": {
+              "startDate": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "endDate": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "timezone": {
+                "type": "string"
+              }
+            }
+          },
+          "targeting": {
+            "type": "object",
+            "properties": {
+              "segments": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "filters": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CampaignRequest": {
+        "type": "object",
+        "required": ["name", "templateId", "schedule", "targeting"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "templateId": {
+            "type": "string"
+          },
+          "schedule": {
+            "type": "object",
+            "required": ["startDate"],
+            "properties": {
+              "startDate": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "endDate": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "timezone": {
+                "type": "string"
+              }
+            }
+          },
+          "targeting": {
+            "type": "object",
+            "required": ["segments"],
+            "properties": {
+              "segments": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "filters": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+} 

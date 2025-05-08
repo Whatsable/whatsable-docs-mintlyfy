@@ -1,0 +1,79 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "WhatsAble API",
+    "description": "Simple WhatsApp messaging API for basic integration needs",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.whatsable.com/v1",
+      "description": "WhatsAble API v1"
+    }
+  ],
+  "paths": {
+    "/messages": {
+      "post": {
+        "summary": "Send a WhatsApp message",
+        "description": "Send a simple WhatsApp message to a phone number",
+        "operationId": "sendMessage",
+        "tags": ["Messages"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Message sent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "MessageRequest": {
+        "type": "object",
+        "required": ["to", "message"],
+        "properties": {
+          "to": {
+            "type": "string",
+            "description": "Recipient's phone number in international format"
+          },
+          "message": {
+            "type": "string",
+            "description": "Message content to send"
+          }
+        }
+      },
+      "MessageResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "messageId": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+} 

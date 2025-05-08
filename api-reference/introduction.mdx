@@ -1,33 +1,167 @@
 ---
 title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+description: 'WhatsAble API Documentation - Choose between WhatsAble API, Notifier by WhatsAble, and Notifier System'
 ---
 
 <Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
+  WhatsAble offers three different API solutions: WhatsAble API (Simple), Notifier by WhatsAble (Complex), and Notifier System (Flagship). Each solution is designed for different use cases and integration needs.
 </Note>
 
-## Welcome
+# 📚 API Solutions
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+<CardGroup cols={3}>
+  <Card title="WhatsAble API" icon="code" href="#whatsable-api">
+    <div className="space-y-2">
+      <p>Our simple and straightforward API solution for basic WhatsApp messaging needs.</p>
+      <ul className="space-y-1">
+        <li className="flex items-center">
+          <CheckIcon className="w-4 h-4 text-green-500 mr-2" />
+          <span>Quick setup</span>
+        </li>
+        <li className="flex items-center">
+          <CheckIcon className="w-4 h-4 text-green-500 mr-2" />
+          <span>Basic messaging</span>
+        </li>
+        <li className="flex items-center">
+          <CheckIcon className="w-4 h-4 text-green-500 mr-2" />
+          <span>Perfect for small projects</span>
+        </li>
+      </ul>
+    </div>
+  </Card>
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+  <Card title="Notifier by WhatsAble" icon="bell" href="#notifier-api">
+    <div className="space-y-2">
+      <p>Our complex API solution for advanced WhatsApp messaging integration.</p>
+      <ul className="space-y-1">
+        <li className="flex items-center">
+          <CheckIcon className="w-4 h-4 text-green-500 mr-2" />
+          <span>Advanced features</span>
+        </li>
+        <li className="flex items-center">
+          <CheckIcon className="w-4 h-4 text-green-500 mr-2" />
+          <span>Custom integrations</span>
+        </li>
+        <li className="flex items-center">
+          <CheckIcon className="w-4 h-4 text-green-500 mr-2" />
+          <span>Full API control</span>
+        </li>
+      </ul>
+    </div>
+  </Card>
 
-## Authentication
+  <Card title="Notifier System" icon="message-square" href="#notifier-system">
+    <div className="space-y-2">
+      <p>Our flagship Meta WhatsApp Business integration with comprehensive features.</p>
+      <ul className="space-y-1">
+        <li className="flex items-center">
+          <CheckIcon className="w-4 h-4 text-green-500 mr-2" />
+          <span>Meta Business integration</span>
+        </li>
+        <li className="flex items-center">
+          <CheckIcon className="w-4 h-4 text-green-500 mr-2" />
+          <span>Template management</span>
+        </li>
+        <li className="flex items-center">
+          <CheckIcon className="w-4 h-4 text-green-500 mr-2" />
+          <span>Advanced webhooks</span>
+        </li>
+      </ul>
+    </div>
+  </Card>
+</CardGroup>
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+<Note type="info">
+  <strong>Not sure which API to choose?</strong> 
+  - WhatsAble API: For simple messaging needs and quick implementation
+  - Notifier by WhatsAble: For complex integrations and full control
+  - Notifier System: Our flagship solution for Meta WhatsApp Business integration
+</Note>
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
-```
+## 📌 Key Features Comparison
+
+<CardGroup cols={3}>
+  <Card title="WhatsAble API">
+    <ul className="space-y-2">
+      <li className="flex items-center">
+        <CheckIcon className="w-5 h-5 text-green-500 mr-2" />
+        <span>Basic messaging</span>
+      </li>
+      <li className="flex items-center">
+        <CheckIcon className="w-5 h-5 text-green-500 mr-2" />
+        <span>Simple setup</span>
+      </li>
+      <li className="flex items-center">
+        <CheckIcon className="w-5 h-5 text-green-500 mr-2" />
+        <span>Quick integration</span>
+      </li>
+    </ul>
+  </Card>
+
+  <Card title="Notifier by WhatsAble">
+    <ul className="space-y-2">
+      <li className="flex items-center">
+        <CheckIcon className="w-5 h-5 text-green-500 mr-2" />
+        <span>Advanced features</span>
+      </li>
+      <li className="flex items-center">
+        <CheckIcon className="w-5 h-5 text-green-500 mr-2" />
+        <span>Custom integrations</span>
+      </li>
+      <li className="flex items-center">
+        <CheckIcon className="w-5 h-5 text-green-500 mr-2" />
+        <span>Full API control</span>
+      </li>
+    </ul>
+  </Card>
+
+  <Card title="Notifier System">
+    <ul className="space-y-2">
+      <li className="flex items-center">
+        <CheckIcon className="w-5 h-5 text-green-500 mr-2" />
+        <span>Meta Business Suite</span>
+      </li>
+      <li className="flex items-center">
+        <CheckIcon className="w-5 h-5 text-green-500 mr-2" />
+        <span>Template management</span>
+      </li>
+      <li className="flex items-center">
+        <CheckIcon className="w-5 h-5 text-green-500 mr-2" />
+        <span>Advanced webhooks</span>
+      </li>
+    </ul>
+  </Card>
+</CardGroup>
+
+<CardGroup cols={3}>
+  <Card title="WhatsAble API" icon="code">
+    <div className="text-2xl font-bold text-green-500 mb-2">v1.0.0</div>
+    Simple Solution
+  </Card>
+  <Card title="Notifier API" icon="bell">
+    <div className="text-2xl font-bold text-blue-500 mb-2">v2.0.0</div>
+    Complex Solution
+  </Card>
+  <Card title="Notifier System" icon="message-square">
+    <div className="text-2xl font-bold text-purple-500 mb-2">v1.0.0</div>
+    Flagship Solution
+  </Card>
+</CardGroup>
+
+<Note type="warning">
+  <strong>Important:</strong> All APIs require proper authentication. Make sure to keep your API keys secure and never expose them in client-side code.
+</Note>
+
+<CardGroup cols={3}>
+  <Card title="WhatsAble API Documentation" icon="book" href="#whatsable-api">
+    View documentation for our simple messaging solution
+  </Card>
+  <Card title="Notifier API Documentation" icon="book" href="#notifier-api">
+    View documentation for our complex integration solution
+  </Card>
+  <Card title="Notifier System Documentation" icon="book" href="#notifier-system">
+    View documentation for our flagship Meta Business solution
+  </Card>
+</CardGroup>
+
+Welcome to the **WhatsAble API Documentation**! This guide provides comprehensive details on how to integrate and use the **WhatsAble API** to send WhatsApp messages programmatically. Whether you're a developer or a non-technical user, this documentation will walk you through the process step-by-step.
