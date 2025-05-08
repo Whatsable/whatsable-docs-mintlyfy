@@ -1,0 +1,144 @@
+{
+  "asyncapi": "3.0.0",
+  "info": {
+    "title": "Notifier System WebSocket API",
+    "version": "1.0.0",
+    "description": "Real-time WebSocket API for Notifier System, enabling live message updates and notifications"
+  },
+  "servers": {
+    "production": {
+      "url": "wss://api.insightssystem.com/ws",
+      "protocol": "wss",
+      "description": "Production WebSocket server"
+    },
+    "development": {
+      "url": "ws://localhost:8080/ws",
+      "protocol": "ws",
+      "description": "Development WebSocket server"
+    }
+  },
+  "channels": {
+    "/messages": {
+      "subscribe": {
+        "summary": "Subscribe to incoming messages",
+        "description": "Receive real-time updates for incoming messages",
+        "message": {
+          "name": "IncomingMessage",
+          "title": "Incoming Message",
+          "summary": "A message received from a recipient",
+          "payload": {
+            "$ref": "#/components/schemas/IncomingMessageWebhook"
+          }
+        }
+      }
+    },
+    "/status": {
+      "subscribe": {
+        "summary": "Subscribe to message status updates",
+        "description": "Receive real-time updates about message delivery status",
+        "message": {
+          "name": "MessageStatus",
+          "title": "Message Status Update",
+          "summary": "Status update for a sent message",
+          "payload": {
+            "type": "object",
+            "properties": {
+              "message_id": {
+                "type": "string",
+                "description": "The ID of the message"
+              },
+              "status": {
+                "type": "string",
+                "enum": ["sent", "delivered", "read", "failed"],
+                "description": "The current status of the message"
+              },
+              "timestamp": {
+                "type": "integer",
+                "description": "Unix timestamp of the status update"
+              },
+              "error": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "Error code if status is failed"
+                  },
+                  "message": {
+                    "type": "string",
+                    "description": "Error message if status is failed"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "IncomingMessageWebhook": {
+        "type": "object",
+        "properties": {
+          "last_messages": {
+            "type": "string",
+            "description": "JSON string containing the recent message history (type, content, timestamp, content_type). Contains the last 10 messages"
+          },
+          "conversation_paragraph": {
+            "type": "string",
+            "description": "Formatted string of the recent conversation history. Contains the last 10 messages"
+          },
+          "phone_number": {
+            "type": "string",
+            "description": "The phone number associated with the conversation"
+          },
+          "recipient_name": {
+            "type": "string",
+            "description": "Name of the message recipient"
+          },
+          "user_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique identifier for the user"
+          },
+          "last_message_of_user": {
+            "type": "string",
+            "description": "The last message sent by your recipient"
+          },
+          "last_message_of_bot": {
+            "type": "string",
+            "description": "The most recent message sent by you or your automation system"
+          },
+          "message_type": {
+            "type": "string",
+            "description": "The type of the message (e.g., text, image, video, document)"
+          },
+          "user_timestamp": {
+            "type": "integer",
+            "description": "Unix timestamp of the user's last message"
+          },
+          "bot_timestamp": {
+            "type": "integer",
+            "description": "Unix timestamp of the bot's last message"
+          },
+          "attachment_url": {
+            "type": "string",
+            "description": "URL of the attachment (if message contains media)"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Bearer token authentication"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+} 

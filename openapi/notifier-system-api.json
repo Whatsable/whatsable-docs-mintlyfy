@@ -2,42 +2,25 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Notifier System API",
-    "description": "Enterprise-grade WhatsApp notification system with advanced features",
-    "version": "3.0.0"
+    "description": "Notifier System API Documentation - A comprehensive API for sending WhatsApp messages and managing templates",
+    "version": "1.0.0"
   },
   "servers": [
     {
-      "url": "https://api.notifier-system.com/v3",
-      "description": "Notifier System API v3"
+      "url": "https://api.insightssystem.com",
+      "description": "Notifier System API"
     }
   ],
   "paths": {
-    "/templates": {
+    "/api:AFRA_QCy/get_templates": {
       "get": {
-        "summary": "List message templates",
-        "description": "Get all available message templates with pagination",
-        "operationId": "listTemplates",
+        "summary": "Get Templates",
+        "description": "Retrieve a list of all templates associated with your account",
+        "operationId": "getTemplates",
         "tags": ["Templates"],
-        "parameters": [
+        "security": [
           {
-            "name": "page",
-            "in": "query",
-            "description": "Page number",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 1
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Number of items per page",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 10
-            }
+            "BearerAuth": []
           }
         ],
         "responses": {
@@ -46,335 +29,289 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PaginatedTemplates"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Template"
+                  }
                 }
               }
             }
-          }
-        }
-      },
-      "post": {
-        "summary": "Create message template",
-        "description": "Create a new message template with advanced options",
-        "operationId": "createTemplate",
-        "tags": ["Templates"],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TemplateRequest"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Account does not have access to templates",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           }
         },
-        "responses": {
-          "201": {
-            "description": "Template created successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Template"
-                }
-              }
-            }
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl -X GET \\\n  'https://api.insightssystem.com/api:AFRA_QCy/get_templates' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Authorization: Bearer YOUR_API_KEY'"
           }
-        }
+        ]
       }
     },
-    "/notifications": {
+    "/api:hFrjh8a1/send_template_message_by_api": {
       "post": {
-        "summary": "Send notification",
-        "description": "Send a notification with advanced features",
-        "operationId": "sendNotification",
-        "tags": ["Notifications"],
+        "summary": "Send Template Message",
+        "description": "Send a template-based message to users via their phone numbers",
+        "operationId": "sendTemplateMessage",
+        "tags": ["Templates"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NotificationRequest"
+                "$ref": "#/components/schemas/TemplateMessageRequest"
+              },
+              "examples": {
+                "withVariablesAndMedia": {
+                  "value": {
+                    "template": "f10695a9-38d6-4f5f-8444-1f7bf52c6164",
+                    "variables": {
+                      "body1": "Axel",
+                      "body2": "Shampoo",
+                      "body3": "$1",
+                      "media": "https://drive.google.com/file/d/1D35uTbceRPmCgwxVfBJZ2yxD2lQgs0bi/view?usp=sharing",
+                      "visit_website": "1"
+                    },
+                    "phone_number": "+123476529999"
+                  }
+                },
+                "singleVariable": {
+                  "value": {
+                    "template": "b65081ed-a0f6-4aaf-b148-31719b5bc567",
+                    "variables": {
+                      "body1": "Edith Mireles"
+                    },
+                    "phone_number": "+123476529999"
+                  }
+                }
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Notification sent successfully",
+            "description": "Message sent successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/NotificationResponse"
+                  "$ref": "#/components/schemas/TemplateMessageResponse"
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/campaigns": {
-      "post": {
-        "summary": "Create campaign",
-        "description": "Create a new notification campaign",
-        "operationId": "createCampaign",
-        "tags": ["Campaigns"],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CampaignRequest"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
               }
             }
           }
         },
-        "responses": {
-          "201": {
-            "description": "Campaign created successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Campaign"
-                }
-              }
-            }
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl -X POST \\\n  'https://api.insightssystem.com/api:hFrjh8a1/send_template_message_by_api' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Authorization: Bearer YOUR_API_KEY' \\\n  -d '{\n    \"template\": \"f10695a9-38d6-4f5f-8444-1f7bf52c6164\",\n    \"variables\": {\n      \"body1\": \"Axel\",\n      \"body2\": \"Shampoo\",\n      \"body3\": \"$1\",\n      \"media\": \"https://drive.google.com/file/d/1D35uTbceRPmCgwxVfBJZ2yxD2lQgs0bi/view?usp=sharing\"\n    },\n    \"phone_number\": \"123476529999\"\n  }'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const fetch = require(\"node-fetch\");\n\nasync function sendMessage() {\n  const response = await fetch(\n    \"https://api.insightssystem.com/api:hFrjh8a1/send_template_message_by_api\",\n    {\n      method: \"POST\",\n      headers: {\n        \"Content-Type\": \"application/json\",\n        Authorization: \"Bearer YOUR_API_KEY\",\n      },\n      body: JSON.stringify({\n        template: \"f10695a9-38d6-4f5f-8444-1f7bf52c6164\",\n        variables: {\n          body1: \"Axel\",\n          body2: \"Shampoo\",\n          body3: \"$1\",\n          media: \"https://drive.google.com/file/d/1D35uTbceRPmCgwxVfBJZ2yxD2lQgs0bi/view?usp=sharing\",\n        },\n        phone_number: \"123476529999\",\n      }),\n    }\n  );\n  const data = await response.json();\n  console.log(data);\n}\n\nsendMessage();"
+          },
+          {
+            "lang": "Go",
+            "source": "package main\n\nimport (\n    \"bytes\"\n    \"encoding/json\"\n    \"fmt\"\n    \"net/http\"\n)\n\ntype RequestBody struct {\n    Template    string            `json:\"template\"`\n    Variables   map[string]string `json:\"variables\"`\n    PhoneNumber string            `json:\"phone_number\"`\n}\n\nfunc main() {\n    requestBody := RequestBody{\n        Template: \"f10695a9-38d6-4f5f-8444-1f7bf52c6164\",\n        Variables: map[string]string{\n            \"body1\": \"Axel\",\n            \"body2\": \"Shampoo\",\n            \"body3\": \"$1\",\n            \"media\": \"https://drive.google.com/file/d/1D35uTbceRPmCgwxVfBJZ2yxD2lQgs0bi/view?usp=sharing\"\n        },\n        PhoneNumber: \"123476529999\",\n    }\n\n    jsonData, _ := json.Marshal(requestBody)\n    resp, err := http.Post(\"https://api.insightssystem.com/api:hFrjh8a1/send_template_message_by_api\", \"application/json\", bytes.NewBuffer(jsonData))\n    if err != nil {\n        fmt.Println(\"Error:\", err)\n        return\n    }\n    defer resp.Body.Close()\n    fmt.Println(\"Response Status:\", resp.Status)\n}"
           }
-        }
+        ]
       }
     }
   },
   "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Your Notifier System API Token"
+      }
+    },
     "schemas": {
       "Template": {
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "integer",
+            "description": "The unique identifier for the template"
+          },
+          "user_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "UUID of the user who owns the template"
           },
           "name": {
-            "type": "string"
-          },
-          "content": {
-            "type": "string"
-          },
-          "variables": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+            "type": "string",
+            "description": "Descriptive name of the template"
           },
           "category": {
             "type": "string",
-            "enum": ["marketing", "transactional", "service"]
+            "description": "Category of the template (e.g., MARKETING, UTILITY)"
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of template (e.g., text)"
           },
           "language": {
-            "type": "string"
-          },
-          "createdAt": {
             "type": "string",
-            "format": "date-time"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "PaginatedTemplates": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Template"
-            }
-          },
-          "pagination": {
-            "type": "object",
-            "properties": {
-              "total": {
-                "type": "integer"
-              },
-              "page": {
-                "type": "integer"
-              },
-              "limit": {
-                "type": "integer"
-              },
-              "pages": {
-                "type": "integer"
-              }
-            }
-          }
-        }
-      },
-      "TemplateRequest": {
-        "type": "object",
-        "required": ["name", "content", "category"],
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "content": {
-            "type": "string"
-          },
-          "variables": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "category": {
-            "type": "string",
-            "enum": ["marketing", "transactional", "service"]
-          },
-          "language": {
-            "type": "string"
-          }
-        }
-      },
-      "NotificationRequest": {
-        "type": "object",
-        "required": ["to", "templateId", "variables"],
-        "properties": {
-          "to": {
-            "type": "string"
-          },
-          "templateId": {
-            "type": "string"
-          },
-          "variables": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
-            }
-          },
-          "schedule": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "priority": {
-            "type": "string",
-            "enum": ["high", "normal", "low"]
-          },
-          "metadata": {
-            "type": "object",
-            "additionalProperties": true
-          }
-        }
-      },
-      "NotificationResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "notificationId": {
-            "type": "string"
-          },
-          "scheduledFor": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "estimatedDeliveryTime": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "Campaign": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "templateId": {
-            "type": "string"
+            "description": "Language code of the template (e.g., en, en_US)"
           },
           "status": {
             "type": "string",
-            "enum": ["draft", "scheduled", "running", "completed", "failed"]
+            "description": "Approval status of the template (e.g., APPROVED, REJECTED)"
           },
-          "schedule": {
-            "type": "object",
-            "properties": {
-              "startDate": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "endDate": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "timezone": {
-                "type": "string"
-              }
-            }
+          "variable_counts": {
+            "type": "integer",
+            "description": "Number of variable placeholders in the template"
           },
-          "targeting": {
-            "type": "object",
-            "properties": {
-              "segments": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "filters": {
-                "type": "object",
-                "additionalProperties": true
-              }
-            }
-          },
-          "createdAt": {
+          "template_formate": {
             "type": "string",
-            "format": "date-time"
+            "description": "Format string showing variable placement (e.g., [b:7])"
+          },
+          "template_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "UUID of the template"
           }
         }
       },
-      "CampaignRequest": {
+      "TemplateMessageRequest": {
         "type": "object",
-        "required": ["name", "templateId", "schedule", "targeting"],
+        "required": ["template", "variables", "phone_number"],
         "properties": {
-          "name": {
-            "type": "string"
+          "template": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The unique template ID used for sending the message"
           },
-          "templateId": {
-            "type": "string"
-          },
-          "schedule": {
+          "variables": {
             "type": "object",
-            "required": ["startDate"],
-            "properties": {
-              "startDate": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "endDate": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "timezone": {
-                "type": "string"
-              }
+            "description": "A JSON object containing dynamic placeholders for the message template. The keys should match the variables in your template. Common variable keys include:\n- body1, body2, body3: Text variables for message content\n- media: URL for image, video, or document attachments\n- visit_website: URL's parameter for the dynamic button link",
+            "additionalProperties": {
+              "type": "string",
+              "description": "Value for the template variable"
             }
           },
-          "targeting": {
+          "phone_number": {
+            "type": "string",
+            "description": "The recipient's phone number in international format (e.g., +123476529999)"
+          }
+        }
+      },
+      "TemplateMessageResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Indicates if the message was sent successfully"
+          },
+          "whatsapp_response_info": {
             "type": "object",
-            "required": ["segments"],
             "properties": {
-              "segments": {
+              "contacts": {
                 "type": "array",
                 "items": {
-                  "type": "string"
+                  "type": "object",
+                  "properties": {
+                    "input": {
+                      "type": "string",
+                      "description": "The input phone number"
+                    },
+                    "wa_id": {
+                      "type": "string",
+                      "description": "The WhatsApp ID"
+                    }
+                  }
                 }
               },
-              "filters": {
-                "type": "object",
-                "additionalProperties": true
+              "messages": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The WhatsApp message ID"
+                    },
+                    "message_status": {
+                      "type": "string",
+                      "description": "The status of the message"
+                    }
+                  }
+                }
+              },
+              "messaging_product": {
+                "type": "string",
+                "description": "The messaging product (e.g., whatsapp)"
+              }
+            }
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code"
+              },
+              "message": {
+                "type": "string",
+                "description": "Error message"
               }
             }
           }

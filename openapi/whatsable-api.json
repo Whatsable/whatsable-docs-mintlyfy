@@ -2,28 +2,49 @@
   "openapi": "3.0.0",
   "info": {
     "title": "WhatsAble API",
-    "description": "Simple WhatsApp messaging API for basic integration needs",
-    "version": "1.0.0"
+    "description": "WhatsAble API Documentation (Version 2) - A comprehensive API for sending WhatsApp messages programmatically",
+    "version": "2.0.0"
   },
   "servers": [
     {
-      "url": "https://api.whatsable.com/v1",
-      "description": "WhatsAble API v1"
+      "url": "https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0",
+      "description": "WhatsAble API v2"
     }
   ],
   "paths": {
-    "/messages": {
+    "/send": {
       "post": {
         "summary": "Send a WhatsApp message",
-        "description": "Send a simple WhatsApp message to a phone number",
+        "description": "Send a WhatsApp message with optional attachments (images, videos, documents)",
         "operationId": "sendMessage",
         "tags": ["Messages"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/MessageRequest"
+              },
+              "examples": {
+                "textOnly": {
+                  "value": {
+                    "to": "+1234567890",
+                    "text": "Hello, this is a test message from WhatsAble!"
+                  }
+                },
+                "withAttachment": {
+                  "value": {
+                    "to": "+1234567890",
+                    "text": "Hello, this is a test message with an attachment!",
+                    "attachment": "https://example.com/image.jpg",
+                    "filename": "image.jpg"
+                  }
+                }
               }
             }
           }
@@ -38,24 +59,110 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
-        }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl -X POST \\\n  'https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send' \\\n  -H 'Authorization: YOUR_API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"to\": \"+1234567890\",\n    \"text\": \"Hello, this is a test message from WhatsAble!\"\n  }'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const axios = require('axios');\n\nconst sendMessage = async () => {\n  try {\n    const response = await axios.post(\n      'https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send',\n      {\n        to: '+1234567890',\n        text: 'Hello, this is a test message from WhatsAble!'\n      },\n      {\n        headers: {\n          'Authorization': 'YOUR_API_KEY',\n          'Content-Type': 'application/json'\n        }\n      }\n    );\n    console.log(response.data);\n  } catch (error) {\n    console.error(error.response.data);\n  }\n};\n\nsendMessage();"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\ndef send_message():\n    url = 'https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send'\n    headers = {\n        'Authorization': 'YOUR_API_KEY',\n        'Content-Type': 'application/json'\n    }\n    data = {\n        'to': '+1234567890',\n        'text': 'Hello, this is a test message from WhatsAble!'\n    }\n    \n    try:\n        response = requests.post(url, headers=headers, json=data)\n        response.raise_for_status()\n        print(response.json())\n    except requests.exceptions.RequestException as e:\n        print(f'Error: {e.response.json() if e.response else e}')"
+          },
+          {
+            "lang": "Go",
+            "source": "package main\n\nimport (\n    \"bytes\"\n    \"encoding/json\"\n    \"fmt\"\n    \"net/http\"\n)\n\ntype Message struct {\n    To   string `json:\"to\"`\n    Text string `json:\"text\"`\n}\n\nfunc main() {\n    url := \"https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send\"\n    message := Message{\n        To:   \"+1234567890\",\n        Text: \"Hello, this is a test message from WhatsAble!\",\n    }\n    \n    jsonData, err := json.Marshal(message)\n    if err != nil {\n        fmt.Printf(\"Error marshaling JSON: %v\\n\", err)\n        return\n    }\n    \n    req, err := http.NewRequest(\"POST\", url, bytes.NewBuffer(jsonData))\n    if err != nil {\n        fmt.Printf(\"Error creating request: %v\\n\", err)\n        return\n    }\n    \n    req.Header.Set(\"Authorization\", \"YOUR_API_KEY\")\n    req.Header.Set(\"Content-Type\", \"application/json\")\n    \n    client := &http.Client{}\n    resp, err := client.Do(req)\n    if err != nil {\n        fmt.Printf(\"Error making request: %v\\n\", err)\n        return\n    }\n    defer resp.Body.Close()\n    \n    var result map[string]interface{}\n    if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {\n        fmt.Printf(\"Error decoding response: %v\\n\", err)\n        return\n    }\n    \n    fmt.Printf(\"Response: %+v\\n\", result)\n}"
+          },
+          {
+            "lang": "PHP",
+            "source": "<?php\n\n$url = 'https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send';\n$data = [\n    'to' => '+1234567890',\n    'text' => 'Hello, this is a test message from WhatsAble!'\n];\n\n$options = [\n    'http' => [\n        'header' => [\n            'Authorization: YOUR_API_KEY',\n            'Content-Type: application/json'\n        ],\n        'method' => 'POST',\n        'content' => json_encode($data)\n    ]\n];\n\n$context = stream_context_create($options);\n\ntry {\n    $result = file_get_contents($url, false, $context);\n    $response = json_decode($result, true);\n    print_r($response);\n} catch (Exception $e) {\n    echo 'Error: ' . $e->getMessage();\n}"
+          },
+          {
+            "lang": "Ruby",
+            "source": "require 'net/http'\nrequire 'json'\nrequire 'uri'\n\nurl = URI('https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send')\n\ndata = {\n  to: '+1234567890',\n  text: 'Hello, this is a test message from WhatsAble!'\n}\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest['Authorization'] = 'YOUR_API_KEY'\nrequest['Content-Type'] = 'application/json'\nrequest.body = data.to_json\n\nbegin\n  response = http.request(request)\n  puts JSON.parse(response.body)\nrescue => e\n  puts \"Error: #{e.message}\"\nend"
+          },
+          {
+            "lang": "Java",
+            "source": "import java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\nimport java.net.URI;\nimport org.json.JSONObject;\n\npublic class WhatsAbleClient {\n    public static void main(String[] args) {\n        try {\n            HttpClient client = HttpClient.newHttpClient();\n            \n            JSONObject data = new JSONObject();\n            data.put(\"to\", \"+1234567890\");\n            data.put(\"text\", \"Hello, this is a test message from WhatsAble!\");\n            \n            HttpRequest request = HttpRequest.newBuilder()\n                .uri(URI.create(\"https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send\"))\n                .header(\"Authorization\", \"YOUR_API_KEY\")\n                .header(\"Content-Type\", \"application/json\")\n                .POST(HttpRequest.BodyPublishers.ofString(data.toString()))\n                .build();\n            \n            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());\n            System.out.println(response.body());\n            \n        } catch (Exception e) {\n            System.out.println(\"Error: \" + e.getMessage());\n        }\n    }\n}"
+          }
+        ]
       }
     }
   },
   "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Your WhatsAble API Key"
+      }
+    },
     "schemas": {
       "MessageRequest": {
         "type": "object",
-        "required": ["to", "message"],
+        "required": ["to", "text"],
         "properties": {
           "to": {
             "type": "string",
-            "description": "Recipient's phone number in international format"
+            "description": "The recipient's phone number in E.164 format (e.g., +1234567890)"
           },
-          "message": {
+          "text": {
             "type": "string",
-            "description": "Message content to send"
+            "description": "The message content you want to send"
+          },
+          "attachment": {
+            "type": "string",
+            "description": "URL or base64-encoded file for attachments (images, videos, PDFs)"
+          },
+          "filename": {
+            "type": "string",
+            "description": "Name of the file if sending a document"
           }
         }
       },
@@ -63,14 +170,215 @@
         "type": "object",
         "properties": {
           "success": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Indicates if the message was sent successfully"
           },
-          "messageId": {
-            "type": "string"
-          },
-          "timestamp": {
+          "message": {
             "type": "string",
-            "format": "date-time"
+            "description": "A human-readable message describing the result"
+          },
+          "details": {
+            "type": "object",
+            "properties": {
+              "messages": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The WhatsApp message ID"
+                    },
+                    "message_status": {
+                      "type": "string",
+                      "description": "The status of the message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": false
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message"
+          },
+          "details": {
+            "type": "string",
+            "description": "Additional error details"
+          }
+        }
+      },
+      "MediaTypes": {
+        "type": "object",
+        "description": "Supported media types and their specifications",
+        "properties": {
+          "audio": {
+            "type": "object",
+            "description": "Audio file specifications",
+            "properties": {
+              "maxSize": {
+                "type": "string",
+                "example": "16 MB"
+              },
+              "formats": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "AAC"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "example": ".aac"
+                    },
+                    "mimeType": {
+                      "type": "string",
+                      "example": "audio/aac"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "documents": {
+            "type": "object",
+            "description": "Document file specifications",
+            "properties": {
+              "maxSize": {
+                "type": "string",
+                "example": "100 MB"
+              },
+              "formats": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "PDF"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "example": ".pdf"
+                    },
+                    "mimeType": {
+                      "type": "string",
+                      "example": "application/pdf"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "images": {
+            "type": "object",
+            "description": "Image file specifications",
+            "properties": {
+              "maxSize": {
+                "type": "string",
+                "example": "5 MB"
+              },
+              "formats": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "JPEG"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "example": ".jpeg"
+                    },
+                    "mimeType": {
+                      "type": "string",
+                      "example": "image/jpeg"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "stickers": {
+            "type": "object",
+            "description": "Sticker file specifications",
+            "properties": {
+              "maxSize": {
+                "type": "object",
+                "properties": {
+                  "animated": {
+                    "type": "string",
+                    "example": "500 KB"
+                  },
+                  "static": {
+                    "type": "string",
+                    "example": "100 KB"
+                  }
+                }
+              },
+              "formats": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "WebP"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "example": ".webp"
+                    },
+                    "mimeType": {
+                      "type": "string",
+                      "example": "image/webp"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "videos": {
+            "type": "object",
+            "description": "Video file specifications",
+            "properties": {
+              "maxSize": {
+                "type": "string",
+                "example": "16 MB"
+              },
+              "formats": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "MP4"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "example": ".mp4"
+                    },
+                    "mimeType": {
+                      "type": "string",
+                      "example": "video/mp4"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }

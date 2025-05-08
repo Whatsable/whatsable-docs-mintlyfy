@@ -2,176 +2,276 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Notifier by WhatsAble API",
-    "description": "Advanced WhatsApp notification system with templates and scheduling",
-    "version": "2.0.0"
+    "description": "Notifier by WhatsAble API Documentation - A comprehensive API for sending WhatsApp messages programmatically",
+    "version": "1.0.0"
   },
   "servers": [
     {
-      "url": "https://api.notifier.whatsable.com/v2",
-      "description": "Notifier API v2"
+      "url": "https://api.insightssystem.com/api:-GWQv5aM",
+      "description": "Notifier API"
     }
   ],
   "paths": {
-    "/templates": {
-      "get": {
-        "summary": "List message templates",
-        "description": "Get all available message templates",
-        "operationId": "listTemplates",
-        "tags": ["Templates"],
-        "responses": {
-          "200": {
-            "description": "List of templates",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Template"
+    "/send": {
+      "post": {
+        "summary": "Send a WhatsApp message",
+        "description": "Send a WhatsApp message with optional attachments (images, videos, documents)",
+        "operationId": "sendMessage",
+        "tags": ["Messages"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageRequest"
+              },
+              "examples": {
+                "textOnly": {
+                  "value": {
+                    "phone": "+1234567890",
+                    "text": "Hello, this is a test message from Notifier!"
+                  }
+                },
+                "withAttachment": {
+                  "value": {
+                    "phone": "+1234567890",
+                    "text": "Hello, this is a test message from Notifier!",
+                    "attachment": "https://example.com/image.jpg",
+                    "filename": "image.jpg"
                   }
                 }
               }
             }
           }
-        }
-      },
-      "post": {
-        "summary": "Create message template",
-        "description": "Create a new message template",
-        "operationId": "createTemplate",
-        "tags": ["Templates"],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TemplateRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Template created successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Template"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/notifications": {
-      "post": {
-        "summary": "Send notification",
-        "description": "Send a notification using a template",
-        "operationId": "sendNotification",
-        "tags": ["Notifications"],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NotificationRequest"
-              }
-            }
-          }
         },
         "responses": {
           "200": {
-            "description": "Notification sent successfully",
+            "description": "Message sent successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/NotificationResponse"
+                  "$ref": "#/components/schemas/MessageResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
           }
-        }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl -X POST https://api.insightssystem.com/api:-GWQv5aM/send \\\n-H \"Content-Type: application/json\" \\\n-H \"Authorization: Bearer YOUR_TOKEN_HERE\" \\\n-d '{\n  \"phone\": \"+1234567890\",\n  \"text\": \"Hello, this is a test message from Notifier!\",\n  \"attachment\": \"https://example.com/image.jpg\",\n  \"filename\": \"image.jpg\"\n}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "fetch(\"https://api.insightssystem.com/api:-GWQv5aM/send\", {\n  method: \"POST\",\n  headers: {\n    \"Content-Type\": \"application/json\",\n    \"Authorization\": \"Bearer YOUR_TOKEN_HERE\"\n  },\n  body: JSON.stringify({\n    phone: \"+1234567890\",\n    text: \"Hello, this is a test message from Notifier!\",\n    attachment: \"https://example.com/image.jpg\",\n    filename: \"image.jpg\"\n  })\n})\n  .then((response) => response.json())\n  .then((data) => console.log(data))\n  .catch((error) => console.error(error));"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\nimport json\n\nurl = \"https://api.insightssystem.com/api:-GWQv5aM/send\"\nheaders = {\n    \"Content-Type\": \"application/json\",\n    \"Authorization\": \"Bearer YOUR_TOKEN_HERE\"\n}\npayload = {\n    \"phone\": \"+1234567890\",\n    \"text\": \"Hello, this is a test message from Notifier!\",\n    \"attachment\": \"https://example.com/image.jpg\",\n    \"filename\": \"image.jpg\"\n}\n\nresponse = requests.post(url, headers=headers, data=json.dumps(payload))\nprint(response.json())"
+          },
+          {
+            "lang": "Go",
+            "source": "package main\n\nimport (\n    \"bytes\"\n    \"fmt\"\n    \"net/http\"\n)\n\nfunc main() {\n    url := \"https://api.insightssystem.com/api:-GWQv5aM/send\"\n    payload := []byte(`{\n        \"phone\": \"+1234567890\",\n        \"text\": \"Hello, this is a test message from Notifier!\",\n        \"attachment\": \"https://example.com/image.jpg\",\n        \"filename\": \"image.jpg\"\n    }`)\n\n    req, err := http.NewRequest(\"POST\", url, bytes.NewBuffer(payload))\n    if err != nil {\n        fmt.Println(\"Error creating request:\", err)\n        return\n    }\n\n    req.Header.Set(\"Content-Type\", \"application/json\")\n    req.Header.Set(\"Authorization\", \"Bearer YOUR_TOKEN_HERE\")\n\n    client := &http.Client{}\n    resp, err := client.Do(req)\n    if err != nil {\n        fmt.Println(\"Error sending request:\", err)\n        return\n    }\n    defer resp.Body.Close()\n\n    fmt.Println(\"Response Status:\", resp.Status)\n}"
+          },
+          {
+            "lang": "Java",
+            "source": "import java.io.OutputStream;\nimport java.net.HttpURLConnection;\nimport java.net.URL;\n\npublic class Main {\n    public static void main(String[] args) {\n        try {\n            URL url = new URL(\"https://api.insightssystem.com/api:-GWQv5aM/send\");\n            HttpURLConnection conn = (HttpURLConnection) url.openConnection();\n            conn.setRequestMethod(\"POST\");\n            conn.setRequestProperty(\"Content-Type\", \"application/json\");\n            conn.setRequestProperty(\"Authorization\", \"Bearer YOUR_TOKEN_HERE\");\n            conn.setDoOutput(true);\n\n            String payload = \"{\\\"phone\\\": \\\"+1234567890\\\", \\\"text\\\": \\\"Hello, this is a test message from Notifier!\\\", \\\"attachment\\\": \\\"https://example.com/image.jpg\\\", \\\"filename\\\": \\\"image.jpg\\\"}\";\n\n            try (OutputStream os = conn.getOutputStream()) {\n                byte[] input = payload.getBytes(\"utf-8\");\n                os.write(input, 0, input.length);\n            }\n\n            int responseCode = conn.getResponseCode();\n            System.out.println(\"Response Code: \" + responseCode);\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n    }\n}"
+          }
+        ]
       }
     }
   },
   "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Your Notifier API Token"
+      }
+    },
     "schemas": {
-      "Template": {
+      "MessageRequest": {
         "type": "object",
+        "required": ["phone", "text"],
         "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "content": {
-            "type": "string"
-          },
-          "variables": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "createdAt": {
+          "phone": {
             "type": "string",
-            "format": "date-time"
+            "description": "The recipient's phone number in E.164 format (e.g., +1234567890)"
+          },
+          "text": {
+            "type": "string",
+            "description": "The message content you want to send"
+          },
+          "attachment": {
+            "type": "string",
+            "description": "A public URL to an attachment (e.g., image, PDF, video)"
+          },
+          "filename": {
+            "type": "string",
+            "description": "The name of the attachment file"
           }
         }
       },
-      "TemplateRequest": {
+      "MessageResponse": {
         "type": "object",
-        "required": ["name", "content"],
         "properties": {
-          "name": {
-            "type": "string"
-          },
-          "content": {
-            "type": "string"
-          },
-          "variables": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "message": {
+            "type": "string",
+            "description": "A message describing the result of the operation"
           }
         }
       },
-      "NotificationRequest": {
+      "ErrorResponse": {
         "type": "object",
-        "required": ["to", "templateId", "variables"],
         "properties": {
-          "to": {
-            "type": "string"
-          },
-          "templateId": {
-            "type": "string"
-          },
-          "variables": {
+          "message": {
+            "type": "string",
+            "description": "Error message with details about what went wrong"
+          }
+        }
+      },
+      "MediaTypes": {
+        "type": "object",
+        "description": "Supported media types and their specifications",
+        "properties": {
+          "images": {
             "type": "object",
-            "additionalProperties": {
-              "type": "string"
+            "description": "Image file specifications",
+            "properties": {
+              "maxSize": {
+                "type": "string",
+                "example": "5 MB"
+              },
+              "formats": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "extension": {
+                      "type": "string",
+                      "example": ".jpeg"
+                    },
+                    "mimeType": {
+                      "type": "string",
+                      "example": "image/jpeg"
+                    }
+                  }
+                }
+              }
             }
           },
-          "schedule": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "NotificationResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean"
+          "videos": {
+            "type": "object",
+            "description": "Video file specifications",
+            "properties": {
+              "maxSize": {
+                "type": "string",
+                "example": "16 MB"
+              },
+              "formats": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "extension": {
+                      "type": "string",
+                      "example": ".mp4"
+                    },
+                    "mimeType": {
+                      "type": "string",
+                      "example": "video/mp4"
+                    }
+                  }
+                }
+              }
+            }
           },
-          "notificationId": {
-            "type": "string"
+          "documents": {
+            "type": "object",
+            "description": "Document file specifications",
+            "properties": {
+              "maxSize": {
+                "type": "string",
+                "example": "100 MB"
+              },
+              "formats": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "extension": {
+                      "type": "string",
+                      "example": ".pdf"
+                    },
+                    "mimeType": {
+                      "type": "string",
+                      "example": "application/pdf"
+                    }
+                  }
+                }
+              }
+            }
           },
-          "scheduledFor": {
-            "type": "string",
-            "format": "date-time"
+          "audio": {
+            "type": "object",
+            "description": "Audio file specifications",
+            "properties": {
+              "maxSize": {
+                "type": "string",
+                "example": "16 MB"
+              },
+              "formats": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "extension": {
+                      "type": "string",
+                      "example": ".mp3"
+                    },
+                    "mimeType": {
+                      "type": "string",
+                      "example": "audio/mpeg"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
