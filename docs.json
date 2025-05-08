@@ -9,6 +9,10 @@
   },
   "favicon": "/favicon.svg",
   "homepage": "introduction",
+  "appearance": {
+    "default": "light",
+    "strict": true
+  },
   "navigation": {
     "tabs": [
       {
@@ -38,7 +42,7 @@
             ]
           },
           {
-            "group": "Notifier System",
+            "group": "Notifyer System",
             "pages": [
               "guides/notifier-system/embedding-process",
               "guides/notifier-system/make-overview",
