@@ -11,57 +11,16 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Getting Started",
+        "tab": "Guides",
         "groups": [
           {
-            "group": "Introduction",
+            "group": "Get Started",
             "pages": [
               "introduction",
               "quickstart",
               "authentication"
             ]
-          }
-        ]
-      },
-      {
-        "tab": "WhatsAble API",
-        "groups": [
-          {
-            "group": "Endpoints",
-            "openapi": {
-              "source": "openapi/whatsable-api.json",
-              "directory": "api-reference/whatsable"
-            }
-          }
-        ]
-      },
-      {
-        "tab": "Notifier by WhatsAble",
-        "groups": [
-          {
-            "group": "Endpoints",
-            "openapi": {
-              "source": "openapi/notifier-api.json",
-              "directory": "api-reference/notifier"
-            }
-          }
-        ]
-      },
-      {
-        "tab": "Notifier System",
-        "groups": [
-          {
-            "group": "Endpoints",
-            "openapi": {
-              "source": "openapi/notifier-system-api.json",
-              "directory": "api-reference/notifier-system"
-            }
-          }
-        ]
-      },
-      {
-        "tab": "Guides",
-        "groups": [
+          },
           {
             "group": "Essentials",
             "pages": [
@@ -69,6 +28,38 @@
               "guides/webhooks",
               "guides/rate-limits"
             ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "API Documentation",
+            "pages": [
+              "api-reference/introduction"
+            ]
+          },
+          {
+            "group": "WhatsAble API",
+            "openapi": {
+              "source": "openapi/whatsable-api.json",
+              "directory": "api-reference/whatsable"
+            }
+          },
+          {
+            "group": "Notifier by WhatsAble",
+            "openapi": {
+              "source": "openapi/notifier-api.json",
+              "directory": "api-reference/notifier"
+            }
+          },
+          {
+            "group": "Notifier System",
+            "openapi": {
+              "source": "openapi/notifier-system-api.json",
+              "directory": "api-reference/notifier-system"
+            }
           }
         ]
       }
