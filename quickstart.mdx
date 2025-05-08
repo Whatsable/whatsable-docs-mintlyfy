@@ -9,28 +9,98 @@ WhatsAble offers two straightforward options to integrate our communication tool
 
 ### Option 1: No-Code Integration Platforms
 Connect WhatsAble to your existing tools without writing a single line of code using our seamless integration with popular automation platforms:
-<Card
-  title="Make (formerly Integromat)"
-  icon="/images/leaf-icon.svg"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  Create powerful workflows linking WhatsAble with over 1,000 apps
-</Card>
-<Card
-  title="Zapier"
-  icon="/images/leaf-icon.svg"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  Automate message sending based on triggers from 3,000+ connected applications
-</Card>
-<Card
-  title="n8n"
-  icon="/images/leaf-icon.svg"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-   Leverage this open-source automation tool for custom workflow creation with WhatsAble
-</Card>
 
+<div className="space-y-6">
+  <Card
+    title="Make (formerly Integromat)"
+    href="/guides/whatsable/make"
+    className="hover:shadow-lg transition-all duration-300"
+  >
+    <div className="flex flex-col h-full">
+      <div className="flex items-center space-x-6 mb-6">
+        <div className="bg-white p-3 rounded-xl shadow-sm">
+          <img 
+            src="https://www.make.com/en/apple-touch-icon.png" 
+            alt="Make Logo" 
+            className="h-16 w-16 object-contain"
+          />
+        </div>
+        <div className="flex-1">
+          <p className="text-gray-600 text-lg mb-4">Create powerful workflows linking WhatsAble with over 1,000 apps</p>
+          <div className="flex flex-wrap gap-6">
+            <a href="/guides/whatsable/make" className="text-gray-500 hover:text-black no-underline !border-0">
+              WhatsAble
+            </a>
+            <a href="/guides/notifier/make" className="text-gray-500 hover:text-black no-underline !border-0">
+              Notifier
+            </a>
+            <a href="/guides/notifier-system/make-overview" className="text-gray-500 hover:text-black no-underline !border-0">
+              Notifier System
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Card>
+
+  <Card
+    title="Zapier"
+    href="/guides/whatsable/zapier"
+    className="hover:shadow-lg transition-all duration-300"
+  >
+    <div className="flex flex-col h-full">
+      <div className="flex items-center space-x-6 mb-6">
+        <div className="bg-white p-3 rounded-xl shadow-sm">
+          <img 
+            src="https://images.ctfassets.net/lzny33ho1g45/7sYLMymQDinPKZQS77P4BX/9545150792946dbb3c3d48f0fd18b55a/Zapier_logo.jpg" 
+            alt="Zapier Logo" 
+            className="h-16 w-16 object-contain rounded"
+          />
+        </div>
+        <div className="flex-1">
+          <p className="text-gray-600 text-lg mb-4">Automate message sending based on triggers from 3,000+ connected applications</p>
+          <div className="flex flex-wrap gap-6">
+            <a href="/guides/whatsable/zapier" className="text-gray-500 hover:text-black no-underline !border-0">
+              WhatsAble
+            </a>
+            <a href="/guides/notifier/zapier" className="text-gray-500 hover:text-black no-underline !border-0">
+              Notifier
+            </a>
+            <a href="/guides/notifier-system/zapier-overview" className="text-gray-500 hover:text-black no-underline !border-0">
+              Notifier System
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Card>
+
+  <Card
+    title="n8n"
+    href="/guides/whatsable/n8n"
+    className="hover:shadow-lg transition-all duration-300"
+  >
+    <div className="flex flex-col h-full">
+      <div className="flex items-center space-x-6 mb-6">
+        <div className="bg-white p-3 rounded-xl shadow-sm">
+          <img 
+            src="https://images.opencollective.com/n8n/40721f5/logo/256.png" 
+            alt="n8n Logo" 
+            className="h-16 w-16 object-contain"
+          />
+        </div>
+        <div className="flex-1">
+          <p className="text-gray-600 text-lg mb-4">Leverage this open-source automation tool for custom workflow creation with WhatsAble</p>
+          <div className="flex flex-wrap gap-6">
+            <a href="/guides/whatsable/n8n" className="text-gray-500 hover:text-black no-underline !border-0">
+              WhatsAble Combined Node
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Card>
+</div>
 
 ### Option 2: Direct API Access
 For developers and businesses requiring custom solutions, our robust API provides complete control:
