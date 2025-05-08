@@ -9,18 +9,23 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "groups": [
+    "tabs": [
       {
-        "group": "Getting Started",
-        "pages": [
-          "introduction",
-          "quickstart",
-          "authentication"
+        "tab": "Getting Started",
+        "groups": [
+          {
+            "group": "Introduction",
+            "pages": [
+              "introduction",
+              "quickstart",
+              "authentication"
+            ]
+          }
         ]
       },
       {
-        "group": "WhatsAble API",
-        "pages": [
+        "tab": "WhatsAble API",
+        "groups": [
           {
             "group": "Endpoints",
             "openapi": {
@@ -31,8 +36,8 @@
         ]
       },
       {
-        "group": "Notifier by WhatsAble",
-        "pages": [
+        "tab": "Notifier by WhatsAble",
+        "groups": [
           {
             "group": "Endpoints",
             "openapi": {
@@ -43,8 +48,8 @@
         ]
       },
       {
-        "group": "Notifier System",
-        "pages": [
+        "tab": "Notifier System",
+        "groups": [
           {
             "group": "Endpoints",
             "openapi": {
@@ -55,11 +60,16 @@
         ]
       },
       {
-        "group": "Guides",
-        "pages": [
-          "guides/error-handling",
-          "guides/webhooks",
-          "guides/rate-limits"
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Essentials",
+            "pages": [
+              "guides/error-handling",
+              "guides/webhooks",
+              "guides/rate-limits"
+            ]
+          }
         ]
       }
     ]
