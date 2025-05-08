@@ -3,165 +3,289 @@ title: 'Introduction'
 description: 'WhatsAble API Documentation - Choose between WhatsAble API, Notifier by WhatsAble, and Notifier System'
 ---
 
+# Welcome to WhatsAble!
+
 <Note>
-  WhatsAble offers three different API solutions: WhatsAble API (Simple), Notifier by WhatsAble (Complex), and Notifier System (Flagship). Each solution is designed for different use cases and integration needs.
+  Transform your business communication with WhatsAble's powerful WhatsApp messaging solutions. Choose from our suite of products designed for seamless integration, whether you're a developer or a business user. Connect effortlessly through Zapier, Make, n8n, or our direct API access.
 </Note>
 
-# 📚 API Solutions
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl">
+    <h3 className="text-xl font-semibold text-blue-800 mb-3">For Developers</h3>
+    <ul className="space-y-2 text-gray-700">
+      <li className="flex items-center">
+        <CheckIcon className="w-5 h-5 text-blue-500 mr-2" />
+        <span>RESTful API with comprehensive documentation</span>
+      </li>
+      <li className="flex items-center">
+        <CheckIcon className="w-5 h-5 text-blue-500 mr-2" />
+        <span>SDK support for multiple languages</span>
+      </li>
+      <li className="flex items-center">
+        <CheckIcon className="w-5 h-5 text-blue-500 mr-2" />
+        <span>Webhook support for real-time updates</span>
+      </li>
+    </ul>
+  </div>
 
-<CardGroup cols={3}>
-  <Card title="WhatsAble API" icon="code" href="#whatsable-api">
+  <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl">
+    <h3 className="text-xl font-semibold text-purple-800 mb-3">For Business Users</h3>
+    <ul className="space-y-2 text-gray-700">
+      <li className="flex items-center">
+        <CheckIcon className="w-5 h-5 text-purple-500 mr-2" />
+        <span>No-code integration with popular platforms</span>
+      </li>
+      <li className="flex items-center">
+        <CheckIcon className="w-5 h-5 text-purple-500 mr-2" />
+        <span>Ready-to-use automation templates</span>
+      </li>
+      <li className="flex items-center">
+        <CheckIcon className="w-5 h-5 text-purple-500 mr-2" />
+        <span>User-friendly dashboard and analytics</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+# Our Solutions
+
+<CardGroup cols={2}>
+  <Card title="WhatsAble" href="/api-reference/whatsable-api">
     <div className="space-y-2">
-      <p>Our simple and straightforward API solution for basic WhatsApp messaging needs.</p>
-      <ul className="space-y-1">
-        <li className="flex items-center">
-          <CheckIcon className="w-4 h-4 text-green-500 mr-2" />
-          <span>Quick setup</span>
-        </li>
-        <li className="flex items-center">
-          <CheckIcon className="w-4 h-4 text-green-500 mr-2" />
-          <span>Basic messaging</span>
-        </li>
-        <li className="flex items-center">
-          <CheckIcon className="w-4 h-4 text-green-500 mr-2" />
-          <span>Perfect for small projects</span>
-        </li>
-      </ul>
+      <div className="flex justify-center mb-4">
+        <img 
+          src="https://d1pnnwteuly8z3.cloudfront.net/images/acc1c175-2e05-4bab-805e-64536550fa04/393f0ca5-e904-41f3-8eee-b2dab6bd4e0d.png" 
+          alt="WhatsAble Logo" 
+          className="h-16 w-auto"
+        />
+      </div>
+      <p>Send unlimited WhatsApp messages to yourself or your team with any important business update.</p>
+      <div className="bg-blue-50 p-4 rounded-lg">
+        <h4 className="font-semibold text-blue-700 mb-3">Key Features</h4>
+        <ul className="list-disc pl-5 space-y-2 text-gray-700">
+          <li>Unlimited Messaging</li>
+          <li>Team Updates</li>
+          <li>Business Alerts</li>
+          <li>Zapier & Make Integration</li>
+        </ul>
+      </div>
+      <div className="mt-4">
+        <a href="/api-reference/whatsable-api" className="text-blue-500 hover:text-blue-700 flex items-center">
+          <span>View API Documentation</span>
+          <ArrowRightIcon className="w-4 h-4 ml-1" />
+        </a>
+      </div>
     </div>
   </Card>
 
-  <Card title="Notifier by WhatsAble" icon="bell" href="#notifier-api">
+  <Card title="Notifier by WhatsAble" href="/api-reference/notifier-api">
     <div className="space-y-2">
-      <p>Our complex API solution for advanced WhatsApp messaging integration.</p>
-      <ul className="space-y-1">
-        <li className="flex items-center">
-          <CheckIcon className="w-4 h-4 text-green-500 mr-2" />
-          <span>Advanced features</span>
-        </li>
-        <li className="flex items-center">
-          <CheckIcon className="w-4 h-4 text-green-500 mr-2" />
-          <span>Custom integrations</span>
-        </li>
-        <li className="flex items-center">
-          <CheckIcon className="w-4 h-4 text-green-500 mr-2" />
-          <span>Full API control</span>
-        </li>
-      </ul>
+      <div className="flex justify-center mb-4">
+        <img 
+          src="https://res.cloudinary.com/subframe/image/upload/v1727799617/uploads/4086/sncxr9zsrsaeaork7pbk.svg" 
+          alt="Notifier by WhatsAble Logo" 
+          className="h-16 w-auto"
+        />
+      </div>
+      <p>Send notifications to any WhatsApp number with advanced analytics and tracking.</p>
+      <div className="bg-purple-50 p-4 rounded-lg">
+        <h4 className="font-semibold text-purple-700 mb-3">Key Features</h4>
+        <ul className="list-disc pl-5 space-y-2 text-gray-700">
+          <li>Message Analytics</li>
+          <li>Open Tracking</li>
+          <li>Custom Notifications</li>
+          <li>Advanced API Access</li>
+        </ul>
+      </div>
+      <div className="mt-4">
+        <a href="/api-reference/notifier-api" className="text-purple-500 hover:text-purple-700 flex items-center">
+          <span>View API Documentation</span>
+          <ArrowRightIcon className="w-4 h-4 ml-1" />
+        </a>
+      </div>
     </div>
   </Card>
 
-  <Card title="Notifier System" icon="message-square" href="#notifier-system">
+  <Card title="Notifier System" href="/api-reference/notifier-system">
     <div className="space-y-2">
-      <p>Our flagship Meta WhatsApp Business integration with comprehensive features.</p>
-      <ul className="space-y-1">
-        <li className="flex items-center">
-          <CheckIcon className="w-4 h-4 text-green-500 mr-2" />
-          <span>Meta Business integration</span>
-        </li>
-        <li className="flex items-center">
-          <CheckIcon className="w-4 h-4 text-green-500 mr-2" />
-          <span>Template management</span>
-        </li>
-        <li className="flex items-center">
-          <CheckIcon className="w-4 h-4 text-green-500 mr-2" />
-          <span>Advanced webhooks</span>
-        </li>
-      </ul>
+      <div className="flex justify-center mb-4">
+        <img 
+          src="https://res.cloudinary.com/subframe/image/upload/v1732805023/uploads/4086/ugfj4rhxhdoo4kvhbbg5.png" 
+          alt="Notifier System Logo" 
+          className="h-16 w-auto"
+        />
+      </div>
+      <p>Complete business messaging solution with real-time chat capabilities.</p>
+      <div className="bg-green-50 p-4 rounded-lg">
+        <h4 className="font-semibold text-green-700 mb-3">Key Features</h4>
+        <ul className="list-disc pl-5 space-y-2 text-gray-700">
+          <li>Real-time Chat</li>
+          <li>Brand Messaging</li>
+          <li>Two-way Communication</li>
+          <li>Business Integration</li>
+    </ul>
+      </div>
+      <div className="mt-4">
+        <a href="/api-reference/notifier-system" className="text-green-500 hover:text-green-700 flex items-center">
+          <span>View API Documentation</span>
+          <ArrowRightIcon className="w-4 h-4 ml-1" />
+        </a>
+      </div>
     </div>
   </Card>
 </CardGroup>
 
-<Note type="info">
-  <strong>Not sure which API to choose?</strong> 
-  - WhatsAble API: For simple messaging needs and quick implementation
-  - Notifier by WhatsAble: For complex integrations and full control
-  - Notifier System: Our flagship solution for Meta WhatsApp Business integration
-</Note>
+# Why Choose WhatsAble?
 
-## 📌 Key Features Comparison
-
-<CardGroup cols={3}>
-  <Card title="WhatsAble API">
-    <ul className="space-y-2">
-      <li className="flex items-center">
-        <CheckIcon className="w-5 h-5 text-green-500 mr-2" />
-        <span>Basic messaging</span>
-      </li>
-      <li className="flex items-center">
-        <CheckIcon className="w-5 h-5 text-green-500 mr-2" />
-        <span>Simple setup</span>
-      </li>
-      <li className="flex items-center">
-        <CheckIcon className="w-5 h-5 text-green-500 mr-2" />
-        <span>Quick integration</span>
-      </li>
-    </ul>
+<CardGroup cols={2}>
+  <Card title="Meta-Approved Tech Provider" icon="shield">
+    <p>Reliable and secure integration with WhatsApp, backed by Meta's approval.</p>
   </Card>
-
-  <Card title="Notifier by WhatsAble">
-    <ul className="space-y-2">
-      <li className="flex items-center">
-        <CheckIcon className="w-5 h-5 text-green-500 mr-2" />
-        <span>Advanced features</span>
-      </li>
-      <li className="flex items-center">
-        <CheckIcon className="w-5 h-5 text-green-500 mr-2" />
-        <span>Custom integrations</span>
-      </li>
-      <li className="flex items-center">
-        <CheckIcon className="w-5 h-5 text-green-500 mr-2" />
-        <span>Full API control</span>
-      </li>
-    </ul>
+  <Card title="Instant & Automated Messaging" icon="zap">
+    <p>Send customized WhatsApp messages in real-time with powerful automation.</p>
   </Card>
-
-  <Card title="Notifier System">
-    <ul className="space-y-2">
-      <li className="flex items-center">
-        <CheckIcon className="w-5 h-5 text-green-500 mr-2" />
-        <span>Meta Business Suite</span>
-      </li>
-      <li className="flex items-center">
-        <CheckIcon className="w-5 h-5 text-green-500 mr-2" />
-        <span>Template management</span>
-      </li>
-      <li className="flex items-center">
-        <CheckIcon className="w-5 h-5 text-green-500 mr-2" />
-        <span>Advanced webhooks</span>
-      </li>
-    </ul>
+  <Card title="No-Code & Developer-Friendly" icon="code">
+    <p>Flexible integration options for both developers and non-technical users.</p>
+  </Card>
+  <Card title="Enhanced Business Communication" icon="message-square">
+    <p>Send alerts, confirmations, reminders, and team updates efficiently.</p>
   </Card>
 </CardGroup>
 
+# Integration Options
+
+<div className="space-y-8">
+  <div className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50 rounded-2xl">
+    <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+    <div className="relative p-4 md:p-6">
+      <div className="max-w-3xl mx-auto text-center mb-6">
+        <span className="inline-block px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-2">Integration Options</span>
+        <h3 className="text-2xl font-bold text-gray-800 mb-2">Connect Your Way</h3>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <a href="/api-reference/integrations/zapier" className="group block relative rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-blue-200 transition-all duration-300">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <img src="https://images.ctfassets.net/lzny33ho1g45/7sYLMymQDinPKZQS77P4BX/9545150792946dbb3c3d48f0fd18b55a/Zapier_logo.jpg" alt="Zapier" className="w-36 h-36 opacity-20 object-contain object-center scale-100 group-hover:scale-110 transition-transform duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-t from-white/60 to-white/30"></div>
+          </div>
+          <div className="relative flex flex-col items-center justify-center h-32 z-10">
+            <h4 className="font-bold text-gray-900 text-base drop-shadow-sm group-hover:text-blue-600 transition-colors">Zapier</h4>
+          </div>
+        </a>
+        <a href="/api-reference/integrations/make" className="group block relative rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-purple-200 transition-all duration-300">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <img src="https://www.make.com/en/apple-touch-icon.png" alt="Make" className="w-36 h-36 opacity-20 object-contain object-center scale-100 group-hover:scale-110 transition-transform duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-t from-white/60 to-white/30"></div>
+          </div>
+          <div className="relative flex flex-col items-center justify-center h-32 z-10">
+            <h4 className="font-bold text-gray-900 text-base drop-shadow-sm group-hover:text-purple-600 transition-colors">Make</h4>
+          </div>
+        </a>
+        <a href="/api-reference/integrations/n8n" className="group block relative rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-green-200 transition-all duration-300">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <img src="https://images.opencollective.com/n8n/40721f5/logo/256.png" alt="n8n" className="w-36 h-36 opacity-20 object-contain object-center scale-100 group-hover:scale-110 transition-transform duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-t from-white/60 to-white/30"></div>
+          </div>
+          <div className="relative flex flex-col items-center justify-center h-32 z-10">
+            <h4 className="font-bold text-gray-900 text-base drop-shadow-sm group-hover:text-green-600 transition-colors">n8n</h4>
+          </div>
+        </a>
+        <a href="/api-reference/authentication" className="group block relative rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-gray-300 transition-all duration-300">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <img src="https://logowik.com/content/uploads/images/api1791.jpg" alt="API" className="w-36 h-36 opacity-20 object-contain object-center scale-100 group-hover:scale-110 transition-transform duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-t from-white/60 to-white/30"></div>
+          </div>
+          <div className="relative flex flex-col items-center justify-center h-32 z-10">
+            <h4 className="font-bold text-gray-900 text-base drop-shadow-sm group-hover:text-gray-600 transition-colors">Direct API</h4>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+      <h3 className="text-xl font-semibold text-gray-800 mb-4">Popular Triggers</h3>
+      <div className="grid grid-cols-2 gap-4">
+        <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+          <img src="https://cdn.worldvectorlogo.com/logos/google-forms.svg" alt="Google Forms" className="h-6 w-6" />
+          <span className="text-sm font-medium">Google Forms</span>
+        </div>
+        <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+          <img src="https://www.jotform.com/resources/assets/icon/jotform-icon-transparent-560x560.png" alt="Jotform" className="h-6 w-6" />
+          <span className="text-sm font-medium">Jotform</span>
+        </div>
+        <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAilBMVEVHcEzqQzXuYyrFIh/GIRv8vQPuPzQyqFNChfTpSzDqQzXqQzXqQzVChfRChfRChfT5vQPqQzVChfT7vAT7vAT2OwM0qFM0qFP7vASTVZE0iv6wszHrQzUzqFNChfTFIh77vATCHxvqNTf8wwA4iPr/vQDLFwUeqFVedtZdq0mIXJ+dsTetPV3Ttx+fS93FAAAAHHRSTlMAcQddta+zsbYlaXrBuH233MnEcEe4eHNesLeohNumBwAAANtJREFUOI3N0dkSgjAMBdCAgqAi476FUrDF/f9/T0INIlR99T6F3jNkOgX4j4Q967G7CM3QT9PUQuZSSo+GXkrpt3tPUjbPH5TB8G1rfqiAV4MMcfjqHbQB9LkfYxNsCwZo1oQ0VUDrffm9O2UFA1rjIAMtz4MSBErcCgbo+8hA349JBYRQl4IBJz/o6zFhINSpC85lXwOh1PId+FQ3gBAwavYOJB1grod8XQsAmJp6TLMVmDUOfAa05vloHwC4LnwHdV4g/gWiX2DyDaxpnERxEMzaYEBZtU//NA+SXS8p5NKJkwAAAABJRU5ErkJggg==" alt="Gmail" className="h-6 w-6" />
+          <span className="text-sm font-medium">Gmail</span>
+        </div>
+        <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+          <img src="https://cdn.worldvectorlogo.com/logos/clickup.svg" alt="ClickUp" className="h-6 w-6" />
+          <span className="text-sm font-medium">ClickUp</span>
+        </div>
+        <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+          <img src="https://cdn.worldvectorlogo.com/logos/typeform.svg" alt="Typeform" className="h-6 w-6" />
+          <span className="text-sm font-medium">Typeform</span>
+        </div>
+      </div>
+    </div>
+
+    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+      <h3 className="text-xl font-semibold text-gray-800 mb-4">Automation Tools</h3>
+      <div className="space-y-4">
+        <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+          <img src="https://images.ctfassets.net/lzny33ho1g45/7sYLMymQDinPKZQS77P4BX/9545150792946dbb3c3d48f0fd18b55a/Zapier_logo.jpg" alt="Zapier" className="h-6 w-6 rounded" />
+          <span className="text-sm font-medium">Zapier Workflows</span>
+        </div>
+        <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+          <img src="https://www.make.com/en/apple-touch-icon.png" alt="Make" className="h-6 w-6 rounded" />
+          <span className="text-sm font-medium">Make.com Scenarios</span>
+        </div>
+        <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+          <img src="https://images.opencollective.com/n8n/40721f5/logo/256.png" alt="n8n" className="h-6 w-6 rounded" />
+          <span className="text-sm font-medium">n8n Workflows</span>
+        </div>
+        <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+          <CodeIcon className="h-6 w-6 text-gray-600" />
+          <span className="text-sm font-medium">Custom API Integration</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+# Getting Started
+
 <CardGroup cols={3}>
-  <Card title="WhatsAble API" icon="code">
-    <div className="text-2xl font-bold text-green-500 mb-2">v1.0.0</div>
-    Simple Solution
+  <Card title="1. Choose Your Solution" icon="check-circle" href="#our-solutions">
+    <p>Select the WhatsAble solution that best fits your needs</p>
+    <div className="mt-2">
+      <a href="#our-solutions" className="text-blue-500 hover:text-blue-700 flex items-center">
+        <span>View Solutions</span>
+        <ArrowRightIcon className="w-4 h-4 ml-1" />
+      </a>
+    </div>
   </Card>
-  <Card title="Notifier API" icon="bell">
-    <div className="text-2xl font-bold text-blue-500 mb-2">v2.0.0</div>
-    Complex Solution
+  <Card title="2. Get Your API Key" icon="key" href="/api-reference/authentication">
+    <p>Generate your secure API key for authentication</p>
+    <div className="mt-2">
+      <a href="/api-reference/authentication" className="text-blue-500 hover:text-blue-700 flex items-center">
+        <span>Learn More</span>
+        <ArrowRightIcon className="w-4 h-4 ml-1" />
+      </a>
+    </div>
   </Card>
-  <Card title="Notifier System" icon="message-square">
-    <div className="text-2xl font-bold text-purple-500 mb-2">v1.0.0</div>
-    Flagship Solution
+  <Card title="3. Start Integrating" icon="plug" href="/api-reference/integration-guides">
+    <p>Use our API endpoints or connect via no-code tools</p>
+    <div className="mt-2">
+      <a href="/api-reference/integration-guides" className="text-blue-500 hover:text-blue-700 flex items-center">
+        <span>View Guides</span>
+        <ArrowRightIcon className="w-4 h-4 ml-1" />
+      </a>
+    </div>
   </Card>
 </CardGroup>
 
 <Note type="warning">
-  <strong>Important:</strong> All APIs require proper authentication. Make sure to keep your API keys secure and never expose them in client-side code.
+  <strong>Important:</strong> Keep your API keys secure and never expose them in client-side code.
 </Note>
-
-<CardGroup cols={3}>
-  <Card title="WhatsAble API Documentation" icon="book" href="#whatsable-api">
-    View documentation for our simple messaging solution
-  </Card>
-  <Card title="Notifier API Documentation" icon="book" href="#notifier-api">
-    View documentation for our complex integration solution
-  </Card>
-  <Card title="Notifier System Documentation" icon="book" href="#notifier-system">
-    View documentation for our flagship Meta Business solution
-  </Card>
-</CardGroup>
-
-Welcome to the **WhatsAble API Documentation**! This guide provides comprehensive details on how to integrate and use the **WhatsAble API** to send WhatsApp messages programmatically. Whether you're a developer or a non-technical user, this documentation will walk you through the process step-by-step.
