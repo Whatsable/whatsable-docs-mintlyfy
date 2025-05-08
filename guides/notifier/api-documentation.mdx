@@ -7,35 +7,46 @@ description: 'Notifier by WhatsAble API Documentation'
 
 # 📚 Notifier by WhatsAble API Documentation
 
-Welcome to the **Notifier by WhatsAble API Documentation**! This guide provides comprehensive details on how to use the **Notifier API** to send WhatsApp messages programmatically. Below, you'll find information on the API endpoint, authentication, request and response structures, error handling, and supported attachment types.
+<div className="bg-blue-50 p-6 rounded-lg my-6">
+  <p className="text-lg">
+    Welcome to the <span className="font-bold text-blue-600">Notifier by WhatsAble API Documentation</span>! This guide provides comprehensive details on how to use the <span className="font-bold">Notifier API</span> to send WhatsApp messages programmatically. Below, you'll find information on the API endpoint, authentication, request and response structures, error handling, and supported attachment types.
+  </p>
+</div>
 
 ---
 
-## 🚀 **API Overview**
+## 🚀 API Overview
 
-The **Notifier API** allows you to send WhatsApp messages, including text and attachments, to customers. It's designed to be simple and easy to integrate into your applications or workflows.
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+The <span className="font-bold">Notifier API</span> allows you to send WhatsApp messages, including text and attachments, to customers. It's designed to be simple and easy to integrate into your applications or workflows.
+</div>
 
 ---
 
-## 📌 **API Endpoint**
+## 📌 API Endpoint
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 - **POST**: `https://api.insightssystem.com/api:-GWQv5aM/send`
+</div>
 
 ---
 
-## 🔑 **Authentication**
+## 🔑 Authentication
 
-To use the API, you need to include an **Authorization Token** in the request headers. The token must be prefixed with `Bearer`.
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+To use the API, you need to include an <span className="font-bold">Authorization Token</span> in the request headers. The token must be prefixed with <span className="font-bold">Bearer</span>.
 
-### **Headers**
+### Headers
 
 - `Content-Type`: `application/json`
 - `Authorization`: `Bearer YOUR_TOKEN_HERE`
+</div>
 
 ---
 
-## 📤 **Request Payload**
+## 📤 Request Payload
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 The request body should be a JSON object with the following fields:
 
 | Field        | Type   | Description                                                                     |
@@ -45,7 +56,9 @@ The request body should be a JSON object with the following fields:
 | `attachment` | String | (Optional) A public URL to an attachment (e.g., image, PDF, video).             |
 | `filename`   | String | (Optional) The name of the attachment file.                                     |
 
-### **Example Request Body**
+### Example Request Body
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```json
 {
@@ -55,51 +68,67 @@ The request body should be a JSON object with the following fields:
   "filename": "image.jpg"
 }
 ```
+</div>
+</div>
 
 ---
 
-## 📥 **Response Structure**
+## 📥 Response Structure
 
-The API responds with a JSON object. Below are examples of **success** and **error** responses.
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+The API responds with a JSON object. Below are examples of <span className="font-bold">success</span> and <span className="font-bold">error</span> responses.
 
-### **Success Response**
+### Success Response
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```json
 {
   "message": "Message sent successfully"
 }
 ```
+</div>
 
-### **Error Response**
+### Error Response
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```json
 {
   "message": "Message sending failed | Reason: Message limit for this number reached."
 }
 ```
+</div>
+</div>
 
 ---
 
-## 🛠️ **Error Handling**
+## 🛠️ Error Handling
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 The API provides detailed error messages to help you troubleshoot issues. Common errors include:
 
-1. **Invalid Phone Number**: Ensure the phone number is in **E.164 format**.
-2. **Message Limit Reached**: You've exceeded the allowed number of messages for a specific phone number.
-3. **Attachment Issues**: Ensure the attachment URL is public and accessible.
-4. **Authentication Failure**: Verify that the `Authorization` token is correct.
-5. **Insufficient Credits**: Your account balance is insufficient to send the message.
-6. **Subscription Expired**: Your subscription has ended, and you need to renew it.
-7. **Rate Limit Exceeded**: You've exceeded the allowed number of messages per minute or hour.
-8. **Unique Number Limit Reached**: You've reached the limit of unique phone numbers you can message.
-9. **File Size or Type Error**: The attachment does not meet WhatsApp's size or type requirements.
-10. **No WhatsApp Account**: The recipient does not have an active WhatsApp account.
+1. <span className="font-bold">Invalid Phone Number</span>: Ensure the phone number is in <span className="font-bold">E.164 format</span>.
+2. <span className="font-bold">Message Limit Reached</span>: You've exceeded the allowed number of messages for a specific phone number.
+3. <span className="font-bold">Attachment Issues</span>: Ensure the attachment URL is public and accessible.
+4. <span className="font-bold">Authentication Failure</span>: Verify that the `Authorization` token is correct.
+5. <span className="font-bold">Insufficient Credits</span>: Your account balance is insufficient to send the message.
+6. <span className="font-bold">Subscription Expired</span>: Your subscription has ended, and you need to renew it.
+7. <span className="font-bold">Rate Limit Exceeded</span>: You've exceeded the allowed number of messages per minute or hour.
+8. <span className="font-bold">Unique Number Limit Reached</span>: You've reached the limit of unique phone numbers you can message.
+9. <span className="font-bold">File Size or Type Error</span>: The attachment does not meet WhatsApp's size or type requirements.
+10. <span className="font-bold">No WhatsApp Account</span>: The recipient does not have an active WhatsApp account.
+</div>
 
 ---
 
-## 📋 **Code Examples**
+## 📋 Code Examples
 
-### **1. cURL**
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+
+### 1. cURL
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```bash
 curl -X POST https://api.insightssystem.com/api:-GWQv5aM/send \
@@ -112,8 +141,11 @@ curl -X POST https://api.insightssystem.com/api:-GWQv5aM/send \
   "filename": "image.jpg"
 }'
 ```
+</div>
 
-### **2. JavaScript (Fetch API)**
+### 2. JavaScript (Fetch API)
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```javascript
 fetch("https://api.insightssystem.com/api:-GWQv5aM/send", {
@@ -133,8 +165,11 @@ fetch("https://api.insightssystem.com/api:-GWQv5aM/send", {
   .then((data) => console.log(data))
   .catch((error) => console.error(error));
 ```
+</div>
 
-### **3. Python (Requests Library)**
+### 3. Python (Requests Library)
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```python
 import requests
@@ -155,8 +190,11 @@ payload = {
 response = requests.post(url, headers=headers, data=json.dumps(payload))
 print(response.json())
 ```
+</div>
 
-### **4. Go**
+### 4. Go
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```go
 package main
@@ -196,8 +234,11 @@ func main() {
 	fmt.Println("Response Status:", resp.Status)
 }
 ```
+</div>
 
-### **5. Java (HttpURLConnection)**
+### 5. Java (HttpURLConnection)
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```java
 import java.io.OutputStream;
@@ -229,14 +270,18 @@ public class Main {
     }
 }
 ```
+</div>
+
+</div>
 
 ---
 
-## 📌 **Attachment Support**
+## 📌 Attachment Support
 
-The **Notifier API** supports sending attachments with WhatsApp messages. Below are the supported file types and their size limits:
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+The <span className="font-bold">Notifier API</span> supports sending attachments with WhatsApp messages. Below are the supported file types and their size limits:
 
-### **Supported Media Types**
+### Supported Media Types
 
 | **Media Type** | **File Extensions**                    | **MIME Types**                                                                                                     | **Max Size** |
 | -------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------ |
@@ -244,29 +289,40 @@ The **Notifier API** supports sending attachments with WhatsApp messages. Below 
 | **Videos**     | `.mp4`, `.3gp`                         | `video/mp4`, `video/3gpp`                                                                                          | 16 MB        |
 | **Documents**  | `.pdf`, `.doc`, `.xls`, `.ppt`, `.txt` | `application/pdf`, `application/msword`, `application/vnd.ms-excel`, `application/vnd.ms-powerpoint`, `text/plain` | 100 MB       |
 | **Audio**      | `.mp3`, `.aac`, `.m4a`, `.ogg`         | `audio/mpeg`, `audio/aac`, `audio/mp4`, `audio/ogg`                                                                | 16 MB        |
+</div>
 
 ---
 
-## 📌 **Key Points to Remember**
+## 📌 Key Points to Remember
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 - **Phone Number Format**: Always use the **E.164 format** (e.g., `+1234567890`).
 - **Attachment URL**: Ensure the attachment URL is public and accessible.
 - **Authorization Token**: Include the `Bearer` token in the `Authorization` header.
 - **Error Handling**: Check the `message` field in the response for detailed error information.
+</div>
 
 ---
 
-## ❓ **Need Help?**
+## ❓ Need Help?
 
+<div className="bg-blue-50 p-6 rounded-lg my-6">
 If you encounter any issues or need further assistance, feel free to reach out to our support team:
 
 - **Email Support**: support@whatsable.app
 - **Documentation**: [Notifier API Documentation](https://www.notion.so/Documentation-for-Whatsable-Notifier-API-871f707adcd1451bb437f47db27e8abb?pvs=21)
+</div>
 
 ---
 
-🚀 **Start Sending WhatsApp Messages Today!**  
-👉 [Sign Up for Notifier by WhatsAble](https://notifier.whatsable.app/)
+<div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-8 rounded-lg my-8">
+  <h2 className="text-2xl font-bold mb-4">🚀 Start Sending WhatsApp Messages Today!</h2>
+  <div className="space-y-4">
+    <a href="https://notifier.whatsable.app/" className="block bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
+      Sign Up for Notifier by WhatsAble
+    </a>
+  </div>
+</div>
 
 ---
 

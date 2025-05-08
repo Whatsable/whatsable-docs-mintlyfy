@@ -5,27 +5,33 @@ description: 'Notifier by WhatsAble Documentation for Make'
 
 # Make
 
-# 📺 Watch: Automate WhatsApp with WhatsAble & Make
-
-<iframe 
-  width="100%" 
-  height="500" 
-  src="https://www.youtube.com/embed/8fVFnZbFVgg"
-  title="WhatsAble + Make.com Integration" 
-  frameborder="0" 
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-  allowfullscreen>
-</iframe>
+<div className="video-container">
+  <iframe 
+    width="100%" 
+    height="500" 
+    src="https://www.youtube.com/embed/8fVFnZbFVgg"
+    title="WhatsAble + Make.com Integration" 
+    frameBorder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowFullScreen
+    className="rounded-lg shadow-lg"
+  ></iframe>
+</div>
 
 # 📚 Notifier by WhatsAble Documentation for Make
 
-Welcome to the **Notifier by WhatsAble Documentation for Make**! This guide will walk you through a use case on how to use **Notifier by WhatsAble** to send WhatsApp reminders when someone books an appointment on your **Supersaas** platform. We'll also cover common error messages and how to resolve them.
+<div className="bg-blue-50 p-6 rounded-lg my-6">
+  <p className="text-lg">
+    Welcome to the <span className="font-bold text-blue-600">Notifier by WhatsAble Documentation for Make</span>! This guide will walk you through a use case on how to use <span className="font-bold">Notifier by WhatsAble</span> to send WhatsApp reminders when someone books an appointment on your <span className="font-bold">Supersaas</span> platform. We'll also cover common error messages and how to resolve them.
+  </p>
+</div>
 
 ---
 
-## 🚀 **Introduction to Notifier by WhatsAble**
+## 🚀 Introduction to Notifier by WhatsAble
 
-Notifier by WhatsAble allows you to send **WhatsApp reminders** to customers without needing to use the **WhatsApp API**. It's perfect for sending appointment reminders, notifications, and other automated messages.
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+Notifier by WhatsAble allows you to send <span className="font-bold">WhatsApp reminders</span> to customers without needing to use the <span className="font-bold">WhatsApp API</span>. It's perfect for sending appointment reminders, notifications, and other automated messages.
 
 ### Key Features:
 
@@ -35,170 +41,215 @@ Notifier by WhatsAble allows you to send **WhatsApp reminders** to customers wit
 - **Multi-language Support**: Messages and buttons are translated into the language of your choice.
 - **Analytics**: Track message statuses such as Sent, Delivered, Read, and download detailed reports.
 - **Chatbot**: Build and customize your own AI-powered assistant.
+</div>
 
 ---
 
-## 📌 **Use Case: Sending WhatsApp Reminders for Supersaas Appointments**
+## 📌 Use Case: Sending WhatsApp Reminders for Supersaas Appointments
 
-In this use case, we'll show you how to send WhatsApp reminders to customers who book appointments on your **Supersaas** platform. You can adapt this process for other scheduling tools like **Calendly** or **Google Calendar**.
-
----
-
-## 📋 **Prerequisites**
-
-1. **Notifier by WhatsAble Account**: Sign up at [Notifier by WhatsAble](https://notifier.whatsable.app/).
-2. **Supersaas Account**: Ensure you have a Supersaas account with appointments set up.
-3. **Make Account**: Create or log in to your Make account.
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+In this use case, we'll show you how to send WhatsApp reminders to customers who book appointments on your <span className="font-bold">Supersaas</span> platform. You can adapt this process for other scheduling tools like <span className="font-bold">Calendly</span> or <span className="font-bold">Google Calendar</span>.
+</div>
 
 ---
 
-## 📤 **Step 1: Set Up Notifier by WhatsAble**
+## 📋 Prerequisites
 
-1. **Sign Up**: Go to [Notifier by WhatsAble](https://notifier.whatsable.app/) and create an account.
-2. **Business Information**: Fill in your business details, including the language for your messages.
-3. **Connect Phone Number**: Connect the WhatsApp number that will send the reminders.
-4. **Purchase a Plan**: Choose a plan (e.g., $49 for 1,000 messages with no subscription).
-5. **Get API Key**: After purchasing, retrieve your API key from the **API Keys** section.
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+1. <span className="font-bold">Notifier by WhatsAble Account</span>: Sign up at [Notifier by WhatsAble](https://notifier.whatsable.app/).
+2. <span className="font-bold">Supersaas Account</span>: Ensure you have a Supersaas account with appointments set up.
+3. <span className="font-bold">Make Account</span>: Create or log in to your Make account.
+</div>
 
 ---
 
-## 📥 **Step 2: Integrate with Make**
+## 📤 Step 1: Set Up Notifier by WhatsAble
 
-### **1. Create a Make Scenario**
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+1. <span className="font-bold">Sign Up</span>: Go to [Notifier by WhatsAble](https://notifier.whatsable.app/) and create an account.
+2. <span className="font-bold">Business Information</span>: Fill in your business details, including the language for your messages.
+3. <span className="font-bold">Connect Phone Number</span>: Connect the WhatsApp number that will send the reminders.
+4. <span className="font-bold">Purchase a Plan</span>: Choose a plan (e.g., $49 for 1,000 messages with no subscription).
+5. <span className="font-bold">Get API Key</span>: After purchasing, retrieve your API key from the <span className="font-bold">API Keys</span> section.
+</div>
 
-1. **Trigger**: Set up a trigger for **New Appointment** in Supersaas.
+---
+
+## 📥 Step 2: Integrate with Make
+
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+
+### 1. Create a Make Scenario
+
+1. <span className="font-bold">Trigger</span>: Set up a trigger for <span className="font-bold">New Appointment</span> in Supersaas.
    - Create a webhook for your demo schedule.
-2. **Action**: Add an action for **Notifier by WhatsAble**.
-   - Select the **Send WhatsApp Message** action.
+2. <span className="font-bold">Action</span>: Add an action for <span className="font-bold">Notifier by WhatsAble</span>.
+   - Select the <span className="font-bold">Send WhatsApp Message</span> action.
    - Connect your Notifier account using the API key.
 
-### **2. Configure the Message**
+### 2. Configure the Message
 
-1. **Phone Number**: Map the phone number from the Supersaas appointment.
-2. **Message Content**: Customize the message (e.g., "Hi [Name], reminder of your appointment at [Time].").
-3. **Attachments (Optional)**: Add a public Google Drive link for attachments.
-4. **Test**: Run the scenario to ensure the message is sent successfully.
+1. <span className="font-bold">Phone Number</span>: Map the phone number from the Supersaas appointment.
+2. <span className="font-bold">Message Content</span>: Customize the message (e.g., "Hi [Name], reminder of your appointment at [Time].").
+3. <span className="font-bold">Attachments (Optional)</span>: Add a public Google Drive link for attachments.
+4. <span className="font-bold">Test</span>: Run the scenario to ensure the message is sent successfully.
 
-### **3. Customer Experience**
+### 3. Customer Experience
 
-- Customers will receive a WhatsApp message with options to **reply** or **unsubscribe**.
+- Customers will receive a WhatsApp message with options to <span className="font-bold">reply</span> or <span className="font-bold">unsubscribe</span>.
 - If they reply, they will be redirected to a chat with your personal WhatsApp number.
+</div>
 
 ---
 
-## 📌 **Common Error Messages and Resolutions**
+## 📌 Common Error Messages and Resolutions
 
-### **1. Phone Number Validation Error**
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+
+### 1. Phone Number Validation Error
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```plaintext
 The phone number (+1234567890123456) exceeds the maximum of 15 digits. Please enter a valid phone number.
 ```
+</div>
 
 **Resolution**: Ensure the phone number is in **E.164 format** (e.g., `+1234567890`) and does not exceed 15 digits.
 
 ---
 
-### **2. Insufficient Credits**
+### 2. Insufficient Credits
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```plaintext
 Insufficient credits in your account. We could not send the message. Your current balance is $0.00 and you need at least $0.50 to continue sending messages.
 ```
+</div>
 
 **Resolution**: Purchase additional credits or upgrade your plan.
 
 ---
 
-### **3. Subscription Expired**
+### 3. Subscription Expired
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```plaintext
 Failed to send your message because your subscription has ended. Your subscription began on Jan 1, 2023 and expired on Jan 31, 2023.
 ```
+</div>
 
 **Resolution**: Renew your subscription or purchase a new plan.
 
 ---
 
-### **4. Rate Limit Exceeded**
+### 4. Rate Limit Exceeded
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```plaintext
 Could not send message to +1234567890. To avoid getting marked as spam by WhatsApp, you can only send up to 4 messages per minute.
 ```
+</div>
 
 **Resolution**: Reduce the frequency of messages or upgrade your plan for higher limits.
 
 ---
 
-### **5. Unique Number Limit Reached**
+### 5. Unique Number Limit Reached
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```plaintext
 Message Not Sent. You've reached the limit of phone numbers you can message with your current plan. Your plan allows messaging to 100 numbers, but you've already sent messages to 100 numbers. Please upgrade your plan or contact team@whatsable.app to send messages to more numbers.
 ```
+</div>
 
 **Resolution**: Upgrade your plan or contact support to increase the limit.
 
 ---
 
-### **6. File Size or Type Error**
+### 6. File Size or Type Error
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```plaintext
 File does not meet the WhatsApp Business API media validation criteria. Your file type is "image/jpeg" and size is 10485760 bytes which is approximately 10.00 MB. Please follow this link to review the file validation criteria for WhatsApp: https://www.whatsable.app/blog/what-message-types-does-the-whatsapp-api-support-and-what-file-size-limit.
 ```
+</div>
 
 **Resolution**: Ensure the file meets WhatsApp's size and type requirements. For example, images should be less than 5 MB.
 
 ---
 
-### **7. Messaging Limit per Number**
+### 7. Messaging Limit per Number
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```plaintext
 Could not send message to this number: +1234567890 because it would exceed the number of times you can message this same number. Your purchased plan allows you to message this number 5 times and you have already messaged it 5 times. Upgrade or contact team@whatsable.app to increase this limit.
 ```
+</div>
 
 **Resolution**: Upgrade your plan or contact support to increase the messaging limit.
 
 ---
 
-### **8. Message Too Long**
+### 8. Message Too Long
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```plaintext
 Message too long. The total character count exceeds the 1024 character limit. Your message text has 1200 characters, Please make your message shorter.
 ```
+</div>
 
 **Resolution**: Shorten the message to fit within the 1024-character limit.
 
 ---
 
-### **9. No WhatsApp Account**
+### 9. No WhatsApp Account
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```plaintext
 This phone number (+1234567890) does not have a WhatsApp account.
 ```
+</div>
 
 **Resolution**: Verify that the recipient has an active WhatsApp account.
 
+</div>
+
 ---
 
-## 📌 **Key Points to Remember**
+## 📌 Key Points to Remember
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 - **API Key**: Keep your API key secure and use it to connect Notifier with Make.
 - **Language**: Choose the language for your messages during the Notifier setup.
 - **Attachments**: Ensure any attachments (e.g., Google Drive links) are publicly accessible.
 - **Testing**: Always test your automation to ensure messages are sent correctly.
+</div>
 
 ---
 
-## ❓ **Need Help?**
+## ❓ Need Help?
 
+<div className="bg-blue-50 p-6 rounded-lg my-6">
 If you encounter any issues or need further assistance, feel free to reach out to our support team:
 
 - **Email Support**: support@whatsable.app
 - **Video Tutorial**: Watch the full tutorial [here](https://youtu.be/8fVFnZbFVgg).
+</div>
 
 ---
 
-🚀 **Start Sending WhatsApp Reminders Today!**  
-👉 [Sign Up for Notifier by WhatsAble](https://notifier.whatsable.app/)  
-👉 [Watch the Full Video Tutorial](https://youtu.be/8fVFnZbFVgg)
+<div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-8 rounded-lg my-8">
+  <h2 className="text-2xl font-bold mb-4">🚀 Start Sending WhatsApp Reminders Today!</h2>
+</div>
 
 ---
 
