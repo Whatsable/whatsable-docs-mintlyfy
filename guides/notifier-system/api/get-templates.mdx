@@ -5,18 +5,29 @@ description: 'API documentation for retrieving WhatsApp templates in Notifyer Sy
 
 # Get Templates API Documentation
 
-## Overview
+<div className="bg-blue-50 p-6 rounded-lg my-6">
+  <p className="text-lg">
+    The Get Templates API allows users to retrieve a list of all templates associated with their account. Templates are pre-defined message formats that can be used for various communication purposes such as marketing alerts, utility messages, and delivery notifications.
+  </p>
+</div>
 
-The Get Templates API allows users to retrieve a list of all templates associated with their account. Templates are pre-defined message formats that can be used for various communication purposes such as marketing alerts, utility messages, and delivery notifications.
+---
 
 ## Endpoint
+
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 
 ```
 GET https://api.insightssystem.com/api:AFRA_QCy/get_templates
 ```
 
+</div>
+
+---
+
 ## Authentication
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 Authentication is required for this endpoint. Include your API key in the request headers using Bearer authentication.
 
 ### Headers
@@ -26,11 +37,21 @@ Authentication is required for this endpoint. Include your API key in the reques
 | Content-Type  | application/json    | Specifies the format of the request body |
 | Authorization | Bearer YOUR_API_KEY | Your API key prefixed with "Bearer "     |
 
+</div>
+
+---
+
 ## Request Parameters
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 This endpoint does not require any request parameters. All templates associated with the authenticated user will be returned.
+</div>
+
+---
 
 ## Response
+
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 
 ### Response Format
 
@@ -62,9 +83,17 @@ Each template object contains the following fields:
 | 403         | Forbidden - Account does not have access to templates |
 | 500         | Server Error                                          |
 
+</div>
+
+---
+
 ## Example
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+
 ### Example Request
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```bash
 curl -X GET \
@@ -72,8 +101,11 @@ curl -X GET \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer YOUR_API_KEY'
 ```
+</div>
 
 ### Example Response
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```json
 [
@@ -104,16 +136,29 @@ curl -X GET \
   // Additional templates omitted for brevity
 ]
 ```
+</div>
+
+</div>
+
+---
 
 ## Notes
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 - The `status` field indicates whether the template has been approved for use.
 - The `template_formate` field shows the variable placeholders in the template. For example, "[b:7]" indicates there are 7 variables.
 - Templates are returned in descending order by ID.
+</div>
+
+---
 
 ## Error Responses
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+
 ### Authentication Error (401)
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```json
 {
@@ -123,8 +168,11 @@ curl -X GET \
   }
 }
 ```
+</div>
 
 ### Server Error (500)
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```json
 {
@@ -134,11 +182,24 @@ curl -X GET \
   }
 }
 ```
+</div>
+
+</div>
+
+---
 
 ## Rate Limiting
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 This API is subject to rate limiting. If you exceed the rate limit, you will receive a 429 Too Many Requests response.
+</div>
+
+---
 
 ## Support
 
-If you encounter any issues or have questions about this API, please contact our support team at support@insightssystem.com. 
+<div className="bg-blue-50 p-6 rounded-lg my-6">
+If you encounter any issues or have questions about this API, please contact our support team at support@insightssystem.com.
+</div>
+
+--- 

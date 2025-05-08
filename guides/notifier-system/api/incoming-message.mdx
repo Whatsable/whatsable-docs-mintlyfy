@@ -5,18 +5,30 @@ description: 'How to receive incoming WhatsApp messages via webhooks in Notifyer
 
 # Incoming Message
 
-The incoming message system allows you to configure endpoints where your application will receive real-time message from recipient reply. 
+<div className="bg-blue-50 p-6 rounded-lg my-6">
+  <p className="text-lg">
+    The incoming message system allows you to configure endpoints where your application will receive real-time message from recipient reply.
+  </p>
+</div>
 
-## Overview:
+---
 
+## Overview
+
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 Webhooks provide a way for our system to send data to your application in real-time whenever your recipient replies. This enables you to build integrations that react immediately to user interactions.
 
 After clicking "More" from the right sidebar below, a menu will appear. From there, select the "Developer" option. Currently, we are focusing on incoming messages, and we plan to add more features in the future. 
 
 ![Webhook Management Dashboard](https://i.ibb.co/9kFcXNrG/Screenshot-2025-04-02-at-11-55-07-AM.png)
 _Figure 1: Main webhook management dashboard showing the list of configured webhook endpoints_
+</div>
 
-## Managing Webhook Endpoints:
+---
+
+## Managing Webhook Endpoints
+
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 
 ### Viewing Webhook Endpoints
 
@@ -47,14 +59,20 @@ Each webhook endpoint has a menu with the following options:
 
 ![Webhook Management Options](https://i.ibb.co/35Qwpfjp/Screenshot-2025-04-02-at-11-56-26-AM.png)
 _Figure 3: Menu options for managing an existing webhook endpoint_
+</div>
+
+---
 
 ## Webhook Payload Structure
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 When an event occurs, our system will send a POST request to your configured endpoint with a JSON payload containing the event data.
 
 ### Message Notification Example
 
 When a new message is received, your webhook endpoint will receive a payload similar to this:
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```json
 {
@@ -71,6 +89,7 @@ When a new message is received, your webhook endpoint will receive a payload sim
   "attachment_url": "https://api.insightssystem.com/vault/LSMumRx1/VR-1aHOci6nP28eHWHJH7JauJkc/Ew7R9w../whatsapp_media_706123978455438.jpg"
 }
 ```
+</div>
 
 ### Payload Fields
 
@@ -87,9 +106,13 @@ When a new message is received, your webhook endpoint will receive a payload sim
 | `user_timestamp`         | Timestamp of the user's last message                                                                                              |
 | `bot_timestamp`          | Timestamp of the bot's last message                                                                                               |
 | `attachment_url`         | URL to any media attachment sent in the conversation                                                                              |
+</div>
+
+---
 
 ## Technical Requirements
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 For your webhook endpoint to properly receive and process notifications:
 
 1. **HTTPS Required**: All webhook endpoints must be accessible via HTTP/HTTPS
@@ -98,3 +121,6 @@ For your webhook endpoint to properly receive and process notifications:
 4. **Response Code**: Your endpoint should return a 2xx HTTP response code to acknowledge receipt
 
 > **Note:** As shown in Figure 2, your webhook endpoint must be accessible via HTTP/HTTPS and configured to accept POST requests with JSON payloads. 
+</div>
+
+---

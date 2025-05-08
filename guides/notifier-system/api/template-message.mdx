@@ -5,29 +5,42 @@ description: 'API documentation for sending template-based WhatsApp messages via
 
 # API Documentation: Sending Template Messages
 
-This API allows you to send template-based messages to users via their phone numbers. You can personalize messages using variables and attach media files when applicable.
+<div className="bg-blue-50 p-6 rounded-lg my-6">
+  <p className="text-lg">
+    This API allows you to send template-based messages to users via their phone numbers. You can personalize messages using variables and attach media files when applicable.
+  </p>
+</div>
 
 ---
 
 ## Endpoint
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+
 ```
 POST https://api.insightssystem.com/api:hFrjh8a1/send_template_message_by_api
 ```
 
+</div>
+
 ---
 
 ## Request Headers
+
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 
 | Header        | Value               | Description              |
 | ------------- | ------------------- | ------------------------ |
 | Content-Type  | application/json    | Specifies JSON format    |
 | Authorization | Bearer YOUR_API_KEY | API authentication token |
 
+</div>
+
 ---
 
 ## Request Body
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 The request body must be in JSON format and include the following parameters:
 
 ### Parameters:
@@ -50,11 +63,17 @@ The `variables` object contains placeholders for dynamic text replacements in th
 | media         | string | Yes      | A public URL pointing to an image, video, or document to be attached to the message. Good for Google drive shareable link |
 | visit_website | string | Yes      | This is the dynamic url button                                                                                            |
 
+</div>
+
 ---
 
 ## Example Requests
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+
 ### Example 1: Sending a Template Message with Variables and Media
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```json
 {
@@ -69,8 +88,11 @@ The `variables` object contains placeholders for dynamic text replacements in th
   "phone_number": "+123476529999"
 }
 ```
+</div>
 
 ### Example 2: Sending a Template Message with Only One Variable
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```json
 {
@@ -81,12 +103,19 @@ The `variables` object contains placeholders for dynamic text replacements in th
   "phone_number": "+123476529999"
 }
 ```
+</div>
+
+</div>
 
 ---
 
 ## Response
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+
 ### Success Response
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```json
 {
@@ -108,12 +137,19 @@ The `variables` object contains placeholders for dynamic text replacements in th
   }
 }
 ```
+</div>
+
+</div>
 
 ---
 
 ## Code Examples
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+
 ### cURL
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```
 curl -X POST "https://api.insightssystem.com/api:hFrjh8a1/send_template_message_by_api" \
@@ -130,8 +166,11 @@ curl -X POST "https://api.insightssystem.com/api:hFrjh8a1/send_template_message_
           "phone_number": "123476529999"
         }'
 ```
+</div>
 
 ### JavaScript (Node.js)
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```javascript
 const fetch = require("node-fetch");
@@ -164,8 +203,11 @@ async function sendMessage() {
 
 sendMessage();
 ```
+</div>
 
 ### Go
+
+<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
 
 ```go
 package main
@@ -205,15 +247,22 @@ func main() {
     fmt.Println("Response Status:", resp.Status)
 }
 ```
+</div>
+
+</div>
 
 ---
 
 ## Notes & Best Practices
 
+<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
 - Ensure that your API key is valid and has the required permissions to send messages.
 - Phone numbers must be formatted in the international format, including the country code.
 - Templates must be pre-approved and exist in your system before sending messages.
 - For media attachments, use a public, direct-access URL (e.g., Google Drive shareable link).
 - Handle API errors and check the response for `success: true` before assuming delivery.
 
-For further assistance, contact API support. 
+For further assistance, contact API support.
+</div>
+
+--- 
