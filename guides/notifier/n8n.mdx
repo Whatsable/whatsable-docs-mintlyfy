@@ -3,11 +3,11 @@ title: 'n8n'
 description: 'Connect Notifier with n8n to automate powerful WhatsApp messaging workflows'
 ---
 
-<Frame caption="Automate your WhatsApp messaging workflows with n8n and Notifier">
-  <img src="https://mintlify-assets.b-cdn.net/bigbend.jpg" className="rounded-xl" />
-</Frame>
-
 # Notifier Integration with n8n
+
+<Frame caption="Automate your WhatsApp messaging workflows with n8n and WhatsAble">
+  <img src="/images/notifier_n8n_svg.svg" className="rounded-xl" />
+</Frame>
 
 <Info>
   Notifier enables you to send automated WhatsApp messages through your favorite workflow automation tools. This guide walks you through integrating Notifier with n8n to create powerful messaging workflows.
@@ -21,13 +21,13 @@ Before getting started, make sure you have:
   <Card title="Notifier Account" icon="user">
     Active Notifier account with a subscription plan (Monthly or Pay-as-you-go)
   </Card>
-  <Card title="n8n Account" icon="gear">
-    Access to n8n workflow automation platform
+  <Card title="n8n Account" icon="user">
+    Access to [n8n](https://app.n8n.cloud/login) workflow automation platform
   </Card>
 </CardGroup>
 
 <Tip>
-  New to Notifier? [Sign up here](https://notifier.app/signup)
+  New to Notifier? [Sign up here](https://notifier.whatsable.app/)
 </Tip>
 
 ## Set up your Notifier account
@@ -55,9 +55,6 @@ Before getting started, make sure you have:
     
     Once saved, you'll see a preview of how your messages will appear to recipients. The actual message structure may vary slightly based on variables and attachments you include.
     
-    <Accordion title="Multiple WhatsApp numbers?">
-      You only need to verify your primary business number. Additional numbers can be added without verification.
-    </Accordion>
   </Step>
   
   <Step title="Get your API key">
@@ -86,31 +83,22 @@ Now that you have your Notifier account configured, let's connect it to n8n to a
        - Connect and configure your trigger according to your use case
   </Step>
   
-  <Step title="Add the Notifier node">
+  <Step title="Add the WhatsAble node">
     1. Click the **+** button to add a new node
-    2. Search for "Notifier" in the node library
-    3. Select the node with the official Notifier logo
+    2. Search for "WhatsAble" in the node library
+    3. Select the node with the official WhatsAble logo
     
-    <Frame caption="Notifier node selection">
+    <Frame caption="WhatsAble node selection">
       <img src="https://notifier.app/docs/images/n8n-node-selection.png" />
     </Frame>
   </Step>
   
   <Step title="Configure Notifier credentials">
-    1. In the Notifier node settings, find the **Credential to connect with** dropdown
+    1. In the WhatsAble node settings, find the **Credential to connect with** dropdown
     2. Select **+ Create new credential**
     3. Enter your Notifier API key that you copied earlier
     4. Name your credential (e.g., "Notifier Production")
     5. Click **Save** to store your credential
-    
-    <CodeGroup>
-      ```json Configuration Example
-      {
-        "api_key": "your_notifier_api_key_here",
-        "name": "Notifier Production"
-      }
-      ```
-    </CodeGroup>
   </Step>
   
   <Step title="Configure your message">
@@ -204,7 +192,7 @@ For optimal results when using Notifier with n8n:
 ## Troubleshooting
 
 <AccordionGroup>
-  <Accordion title="Message not being sent?" icon="circle-xmark">
+  <Accordion title="Message not being sent?" icon="circle-exclamation">
     <Steps>
       <Step title="Check account status">
         Verify that your Notifier account is active and has available credits
@@ -241,17 +229,17 @@ For optimal results when using Notifier with n8n:
 Our support team is ready to assist you:
 
 <CardGroup cols={3}>
-  <Card title="Live chat" icon="message-dots" href="https://notifier.app">
-    Click the green chat button in the bottom right corner of the Notifier dashboard
+  <Card title="Email support" icon="envelope" href="mailto:team@whatsable.app">
+    Contact team@whatsable.app
   </Card>
-  <Card title="Email support" icon="envelope" href="mailto:support@notifier.app">
-    Contact support@notifier.app
-  </Card>
-  <Card title="Schedule a demo" icon="calendar" href="https://notifier.app/demo">
+  <Card title="Schedule a demo" icon="calendar" href="https://tidycal.com/axelmeta/notifier-systems-demo">
     Book a personalized walkthrough
+  </Card>
+  <Card title="Live chat" icon="message-dots" href="">
+    Click the green chat button in the bottom right corner of the Notifier dashboard
   </Card>
 </CardGroup>
 
 <Info>
-  For additional automation platform integrations (Make.com, Zapier, etc.), please contact our support team or check our [integration documentation](https://notifier.app/docs/integrations).
+  For additional automation platform integrations (Make.com, Zapier, etc.), please contact our support team or check our integration documentation.
 </Info>

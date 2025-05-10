@@ -5,8 +5,8 @@ description: 'Learn how to automate WhatsApp messaging through n8n with WhatsAbl
 
 # WhatsAble Integration with n8n
 
-<Frame>
-  <img src="https://whatsable.com/docs/images/whatsable-n8n-banner.jpg" alt="WhatsAble n8n Integration" />
+<Frame caption="Automate your WhatsApp messaging workflows with n8n and WhatsAble">
+  <img src="/images/whatsable_n8n_svg.svg" className="rounded-xl" />
 </Frame>
 
 <Info>
@@ -17,11 +17,18 @@ description: 'Learn how to automate WhatsApp messaging through n8n with WhatsAbl
 
 Before getting started, make sure you have:
 
-<Card title="Required Accounts" icon="check">
-  - A WhatsAble account ([Sign up here](https://whatsable.com/signup))
-  - An active subscription with WhatsAble
-  - An n8n account ([Create one if needed](https://n8n.io))
-</Card>
+<CardGroup cols={2}>
+  <Card title="WhatsAble Account" icon="user">
+    An active subscription with WhatsAble
+  </Card>
+  <Card title="n8n Account" icon="user">
+    Access to [n8n](https://app.n8n.cloud/login) workflow automation platform
+  </Card>
+</CardGroup>
+
+<Tip>
+  New to WhatsAble? [Sign up here](https://dashboard.whatsable.app/signin)
+</Tip>
 
 ## Get started with WhatsAble
 
@@ -47,6 +54,10 @@ Before getting started, make sure you have:
     4. You'll receive a WhatsApp verification code
     5. Enter the verification code in the WhatsAble dashboard
     
+    <Frame caption="Adding and verifying a phone number">
+      <img src="/images/verify_number1.gif" alt="WhatsAble node selection" />
+    </Frame>
+    
     <Note>
       **Multiple numbers?** You only need to complete the verification process for your first phone number. For additional numbers, simply add them and save—no verification required.
     </Note>
@@ -58,6 +69,10 @@ Before getting started, make sure you have:
     1. In your WhatsAble dashboard, go to **API Keys**
     2. Copy your unique API key
     3. Store it securely—you'll need it for the integration
+    
+    <Frame>
+      <img src="/images/whatsable_apikey.png" alt="WhatsAble Api Keys" />
+    </Frame>
   </Step>
 </Steps>
 
@@ -137,7 +152,7 @@ Now that you have WhatsAble set up, let's connect it to n8n to automate your wor
     Send a welcome message when a new customer signs up
   </Card>
   
-  <Card title="Order Notifications" icon="shopping-cart">
+  <Card title="Order Notifications" icon="box-check">
     Update customers when their order status changes
   </Card>
   
@@ -172,34 +187,54 @@ Now that you have WhatsAble set up, let's connect it to n8n to automate your wor
 ## Troubleshooting
 
 <AccordionGroup>
-  <Accordion title="Message not being sent?" icon="message-circle-question">
-    <ul>
-      <li>Verify that your WhatsAble account is active</li>
-      <li>Check that your phone number is properly verified</li>
-      <li>Ensure your API key is entered correctly in n8n</li>
-      <li>Confirm that the recipient's phone number is in the correct format (including country code)</li>
-    </ul>
+  <Accordion title="Message not being sent?" icon="circle-exclamation">
+    <Steps>
+      <Step title="Verify Account Active">
+      Verify that your WhatsAble account is active.
+      </Step>
+      <Step title="Phone Number Verification">
+      Check that your phone number is properly verified.
+      </Step>
+      <Step title="API Key in n8n">
+      Ensure your API key is entered correctly in n8n.
+      </Step>
+      <Step title="Recipient Number Format">
+      Confirm that the recipient's phone number is in the correct format (including country code).
+      </Step>
+    </Steps>
   </Accordion>
   
   <Accordion title="File attachments not working?" icon="file-exclamation">
-    <ul>
-      <li>Check that the file size is under 16MB</li>
-      <li>Verify the file type is supported by WhatsApp</li>
-      <li>Ensure the file path or URL is accessible</li>
-    </ul>
+    <Steps>
+      <Step title="File Size Limit">
+      Check that the file size is under 16 MB.
+      </Step>
+      <Step title="Supported File Type">
+      Verify the file type is supported by WhatsApp.
+      </Step>
+      <Step title="Accessibility">
+      Ensure the file path or URL is accessible.
+      </Step>
+    </Steps>
   </Accordion>
 </AccordionGroup>
 
 ## Need help?
 
-<Card title="Contact Support" icon="headset" horizontal>
-  Our support team is ready to assist you:
-  
-  - **Live chat**: Click the green chat button in the bottom right corner of the WhatsAble dashboard
-  - **Email support**: Contact <Tooltip tip="We typically respond within 24 hours">support@whatsable.com</Tooltip>
-  - **Schedule a demo**: Book a personalized walkthrough at [whatsable.com/demo](https://whatsable.com/demo)
-</Card>
+Our support team is ready to assist you:
 
-<Warning>
-  For additional automation platform integrations (Make.com, Zapier etc.), please contact our support team or check our [integration documentation](https://whatsable.com/docs/integrations).
-</Warning>
+<CardGroup cols={3}>
+  <Card title="Email support" icon="envelope" href="mailto:team@whatsable.app">
+    Contact team@whatsable.app
+  </Card>
+  <Card title="Schedule a demo" icon="calendar" href="https://tidycal.com/axelmeta/whatsapp-notifications-by-whatsable">
+    Book a personalized walkthrough
+  </Card>
+  <Card title="Live chat" icon="message-dots" href="">
+    Click the green chat button in the bottom right corner of the Notifier dashboard
+  </Card>
+</CardGroup>
+
+<Info>
+  For additional automation platform integrations (Make.com, Zapier, etc.), please contact our support team or check our integration documentation.
+</Info>
