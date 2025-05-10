@@ -5,7 +5,7 @@ description: 'Connect Notifier with n8n to automate powerful WhatsApp messaging 
 
 # Notifier Integration with n8n
 
-<Frame caption="Automate your WhatsApp messaging workflows with n8n and WhatsAble">
+<Frame caption="Automate your WhatsApp messaging workflows with n8n and Notifier">
   <img src="/images/notifier_n8n_svg.svg" className="rounded-xl" />
 </Frame>
 
@@ -44,11 +44,11 @@ Before getting started, make sure you have:
        - **Preferred Language**: Select the language for standard WhatsApp message elements
        - **Default Reply Text**: Create a template message that appears when recipients click "Reply"
        - **WhatsApp Number**: Add your business WhatsApp number where replies will be directed
-    
-    <Frame caption="Business Information Setup">
-      <img src="https://notifier.app/docs/images/business-information.png" />
+
+    <Frame caption="Configuring business information">
+      <img src="/images/notifier_business_info.gif" alt="Configuring business information" />
     </Frame>
-    
+
     <Note>
       After entering your WhatsApp number, Notifier will send a verification code to this number. Enter the code to verify ownership.
     </Note>
@@ -87,18 +87,24 @@ Now that you have your Notifier account configured, let's connect it to n8n to a
     1. Click the **+** button to add a new node
     2. Search for "WhatsAble" in the node library
     3. Select the node with the official WhatsAble logo
-    
+
     <Frame caption="WhatsAble node selection">
-      <img src="https://notifier.app/docs/images/n8n-node-selection.png" />
+      <img src="/images/whatsable_n8n_node.gif" alt="WhatsAble node selection" />
     </Frame>
+
   </Step>
   
   <Step title="Configure Notifier credentials">
-    1. In the WhatsAble node settings, find the **Credential to connect with** dropdown
+    1. In the WhatsAble node **Parameters**, find the **Credential to connect with** dropdown
     2. Select **+ Create new credential**
     3. Enter your Notifier API key that you copied earlier
     4. Name your credential (e.g., "Notifier Production")
     5. Click **Save** to store your credential
+
+    <Frame caption="Configuring Notifier credentials">
+      <img src="/images/notifier_n8n_apikey.gif" alt="Configuring Notifier credentials" />
+    </Frame>
+
   </Step>
   
   <Step title="Configure your message">
@@ -126,6 +132,10 @@ Now that you have your Notifier account configured, let's connect it to n8n to a
         Customize advanced options as needed
       </ResponseField>
     </Expandable>
+     
+    <Frame caption="Configuring message">
+      <img src="/images/notfier_n8n_config_msg.gif" alt="Configuring Notifier credentials" />
+    </Frame>  
   </Step>
   
   <Step title="Test and activate your workflow">
@@ -134,7 +144,7 @@ Now that you have your Notifier account configured, let's connect it to n8n to a
     3. Click **Done** to return to your workflow
     4. Click **Save** to save your entire workflow
     5. Toggle the **Active** switch in the top-right corner to activate your workflow
-    
+
     <Check>
       Congratulations! Your Notifier and n8n integration is now complete and active.
     </Check>
