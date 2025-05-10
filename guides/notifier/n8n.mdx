@@ -1,138 +1,257 @@
 ---
 title: 'n8n'
-description: 'Learn how to integrate n8n with the Notifier system for automated notifications'
+description: 'Connect Notifier with n8n to automate powerful WhatsApp messaging workflows'
 ---
+
+<Frame caption="Automate your WhatsApp messaging workflows with n8n and Notifier">
+  <img src="https://mintlify-assets.b-cdn.net/bigbend.jpg" className="rounded-xl" />
+</Frame>
 
 # Notifier Integration with n8n
 
-Notifier enables you to send automated WhatsApp messages through your favorite workflow automation tools. This guide walks you through integrating Notifier with n8n to create powerful messaging workflows.
+<Info>
+  Notifier enables you to send automated WhatsApp messages through your favorite workflow automation tools. This guide walks you through integrating Notifier with n8n to create powerful messaging workflows.
+</Info>
 
 ## Prerequisites
 
 Before getting started, make sure you have:
 
-- A Notifier account ([Sign up here](https://notifier.app/signup))
-- An active Notifier plan (Monthly subscription or Pay-as-you-go)
-- An n8n account ([Create one if needed](https://n8n.io))
+<CardGroup cols={2}>
+  <Card title="Notifier Account" icon="user">
+    Active Notifier account with a subscription plan (Monthly or Pay-as-you-go)
+  </Card>
+  <Card title="n8n Account" icon="gear">
+    Access to n8n workflow automation platform
+  </Card>
+</CardGroup>
+
+<Tip>
+  New to Notifier? [Sign up here](https://notifier.app/signup)
+</Tip>
 
 ## Set up your Notifier account
 
-### Step 1: Configure your business information
-
-First, let's set up your business profile in Notifier:
-
-1. Log in to your Notifier dashboard
-2. Navigate to **Business Information**
-3. Complete all required fields:
-   - **Business Name**: Enter the name that will appear in messages sent to recipients
-   - **Business Website or Social Media**: Add your website or social media URL
-   - **Preferred Language**: Select the language for standard WhatsApp message elements
-   - **Default Reply Text**: Create a template message that appears when recipients click "Reply"
-   - **WhatsApp Number**: Add your business WhatsApp number where replies will be directed
-
-![Business Information Setup](https://notifier.app/docs/images/business-information.png)
-
-> **Note:** After entering your WhatsApp number, Notifier will send a verification code to this number. Enter the code to verify ownership.
-
-Once saved, you'll see a preview of how your messages will appear to recipients. The actual message structure may vary slightly based on variables and attachments you include.
-
-**Multiple WhatsApp numbers?** You only need to verify your primary business number. Additional numbers can be added without verification.
-
-### Step 2: Get your API key
-
-To connect Notifier with n8n, you'll need your API key:
-
-1. In your Notifier dashboard, go to **API Keys**
-2. Copy your unique API key
-3. Store it securely—you'll need it for the integration
+<Steps>
+  <Step title="Configure your business information">
+    First, let's set up your business profile in Notifier:
+    
+    1. Log in to your Notifier dashboard
+    2. Navigate to **Business Information**
+    3. Complete all required fields:
+       - **Business Name**: Enter the name that will appear in messages sent to recipients
+       - **Business Website or Social Media**: Add your website or social media URL
+       - **Preferred Language**: Select the language for standard WhatsApp message elements
+       - **Default Reply Text**: Create a template message that appears when recipients click "Reply"
+       - **WhatsApp Number**: Add your business WhatsApp number where replies will be directed
+    
+    <Frame caption="Business Information Setup">
+      <img src="https://notifier.app/docs/images/business-information.png" />
+    </Frame>
+    
+    <Note>
+      After entering your WhatsApp number, Notifier will send a verification code to this number. Enter the code to verify ownership.
+    </Note>
+    
+    Once saved, you'll see a preview of how your messages will appear to recipients. The actual message structure may vary slightly based on variables and attachments you include.
+    
+    <Accordion title="Multiple WhatsApp numbers?">
+      You only need to verify your primary business number. Additional numbers can be added without verification.
+    </Accordion>
+  </Step>
+  
+  <Step title="Get your API key">
+    To connect Notifier with n8n, you'll need your API key:
+    
+    1. In your Notifier dashboard, go to **API Keys**
+    2. Copy your unique API key
+    3. Store it securely—you'll need it for the integration
+    
+    <Warning>
+      Never share your API key publicly or commit it to version control systems.
+    </Warning>
+  </Step>
+</Steps>
 
 ## Connect Notifier to n8n
 
 Now that you have your Notifier account configured, let's connect it to n8n to automate your messaging workflows.
 
-### Step 1: Set up your n8n workflow
-
-1. Log in to your n8n account
-2. Create a new workflow by clicking **+ New Workflow**
-3. Add a trigger node of your choice:
-   - Popular triggers include Google Forms, Jotform, ClickUp, or a Schedule trigger
-   - Connect and configure your trigger according to your use case
-
-### Step 2: Add the Notifier node
-
-1. Click the **+** button to add a new node
-2. Search for "Notifier" in the node library
-3. Select the node with the official Notifier logo
-
-![Notifier node selection](https://notifier.app/docs/images/n8n-node-selection.png)
-
-### Step 3: Configure Notifier credentials
-
-1. In the Notifier node settings, find the **Credential to connect with** dropdown
-2. Select **+ Create new credential**
-3. Enter your Notifier API key that you copied earlier
-4. Name your credential (e.g., "Notifier Production")
-5. Click **Save** to store your credential
-
-### Step 4: Configure your message
-
-1. In the **Operation Name or ID** dropdown, select **Send Message (Notifier)**
-2. Complete the required fields:
-   - **Phone Number**: Enter the recipient's phone number (with country code) or use dynamic data from previous nodes
-   - **Message Content**: Type your message text or use variables from previous nodes
-
-3. Configure optional parameters (if needed):
-   - **Attachment**: Upload a file, image, or video to send with your message
-   - **File Name**: Specify a custom filename for your attachment
-   - **Additional Parameters**: Customize advanced options as needed
-
-### Step 5: Test and activate your workflow
-
-1. Click **Test Step** on the Notifier node to verify it's working correctly
-2. If the test is successful, you'll see a confirmation message
-3. Click **Done** to return to your workflow
-4. Click **Save** to save your entire workflow
-5. Toggle the **Active** switch in the top-right corner to activate your workflow
+<Steps>
+  <Step title="Set up your n8n workflow">
+    1. Log in to your n8n account
+    2. Create a new workflow by clicking **+ New Workflow**
+    3. Add a trigger node of your choice:
+       - Popular triggers include Google Forms, Jotform, ClickUp, or a Schedule trigger
+       - Connect and configure your trigger according to your use case
+  </Step>
+  
+  <Step title="Add the Notifier node">
+    1. Click the **+** button to add a new node
+    2. Search for "Notifier" in the node library
+    3. Select the node with the official Notifier logo
+    
+    <Frame caption="Notifier node selection">
+      <img src="https://notifier.app/docs/images/n8n-node-selection.png" />
+    </Frame>
+  </Step>
+  
+  <Step title="Configure Notifier credentials">
+    1. In the Notifier node settings, find the **Credential to connect with** dropdown
+    2. Select **+ Create new credential**
+    3. Enter your Notifier API key that you copied earlier
+    4. Name your credential (e.g., "Notifier Production")
+    5. Click **Save** to store your credential
+    
+    <CodeGroup>
+      ```json Configuration Example
+      {
+        "api_key": "your_notifier_api_key_here",
+        "name": "Notifier Production"
+      }
+      ```
+    </CodeGroup>
+  </Step>
+  
+  <Step title="Configure your message">
+    1. In the **Operation Name or ID** dropdown, select **Send Message (Notifier)**
+    2. Complete the required fields:
+    
+    <ResponseField name="Phone Number" type="string" required>
+      Enter the recipient's phone number (with country code) or use dynamic data from previous nodes
+    </ResponseField>
+    
+    <ResponseField name="Message Content" type="string" required>
+      Type your message text or use variables from previous nodes
+    </ResponseField>
+    
+    <Expandable title="Optional Parameters">
+      <ResponseField name="Attachment" type="file">
+        Upload a file, image, or video to send with your message
+      </ResponseField>
+      
+      <ResponseField name="File Name" type="string">
+        Specify a custom filename for your attachment
+      </ResponseField>
+      
+      <ResponseField name="Additional Parameters" type="object">
+        Customize advanced options as needed
+      </ResponseField>
+    </Expandable>
+  </Step>
+  
+  <Step title="Test and activate your workflow">
+    1. Click **Test Step** on the Notifier node to verify it's working correctly
+    2. If the test is successful, you'll see a confirmation message
+    3. Click **Done** to return to your workflow
+    4. Click **Save** to save your entire workflow
+    5. Toggle the **Active** switch in the top-right corner to activate your workflow
+    
+    <Check>
+      Congratulations! Your Notifier and n8n integration is now complete and active.
+    </Check>
+  </Step>
+</Steps>
 
 ## Example workflows
 
 Here are some powerful automation workflows you can build with Notifier and n8n:
 
-- **Lead Nurturing**: Send personalized WhatsApp messages to new leads who fill out your contact form
-- **Order Confirmations**: Automatically notify customers when their order is placed, shipped, or delivered
-- **Event Reminders**: Send timely WhatsApp reminders before scheduled events or appointments
-- **Customer Feedback**: Request feedback via WhatsApp after a customer interaction or purchase
-- **Support Ticket Updates**: Keep customers informed about the status of their support requests
+<CardGroup cols={2}>
+  <Card title="Lead Nurturing" icon="user-plus">
+    Send personalized WhatsApp messages to new leads who fill out your contact form
+  </Card>
+  <Card title="Order Confirmations" icon="box-check">
+    Automatically notify customers when their order is placed, shipped, or delivered
+  </Card>
+  <Card title="Event Reminders" icon="calendar">
+    Send timely WhatsApp reminders before scheduled events or appointments
+  </Card>
+  <Card title="Customer Feedback" icon="message-dots">
+    Request feedback via WhatsApp after a customer interaction or purchase
+  </Card>
+  <Card title="Support Ticket Updates" icon="ticket">
+    Keep customers informed about the status of their support requests
+  </Card>
+</CardGroup>
 
 ## Best practices
 
 For optimal results when using Notifier with n8n:
 
-- **Personalize messages** using data from previous nodes in your workflow
-- **Keep messages concise** and focused on a single call-to-action
-- **Test thoroughly** before activating production workflows
-- **Monitor delivery rates** in your Notifier dashboard
-- **Respect recipient privacy** and provide clear opt-out instructions
+<AccordionGroup>
+  <Accordion title="Personalize your messages" icon="user-check">
+    Use data from previous nodes in your workflow to create personalized, relevant messages for each recipient.
+  </Accordion>
+  
+  <Accordion title="Keep messages concise" icon="text-size">
+    Focus on a single call-to-action and keep your messages brief to maintain recipient engagement.
+  </Accordion>
+  
+  <Accordion title="Test thoroughly" icon="flask">
+    Always run complete tests of your workflow before deploying to production to catch any potential issues.
+  </Accordion>
+  
+  <Accordion title="Monitor performance" icon="chart-line">
+    Regularly check your Notifier dashboard to monitor delivery rates and optimize your messaging strategy.
+  </Accordion>
+  
+  <Accordion title="Respect privacy" icon="shield-check">
+    Always provide clear opt-out instructions and respect recipient preferences regarding messaging.
+  </Accordion>
+</AccordionGroup>
 
 ## Troubleshooting
 
-**Message not being sent?**
-- Verify that your Notifier account is active and has available credits
-- Check that your business information is complete and verified
-- Ensure your API key is entered correctly in n8n
-- Confirm that the recipient's phone number is in the correct format (including country code)
-
-**Formatting issues in messages?**
-- Review your message template for any invalid characters
-- Ensure variables from previous nodes are properly formatted
-- Check that your message doesn't exceed WhatsApp's length limitations
+<AccordionGroup>
+  <Accordion title="Message not being sent?" icon="circle-xmark">
+    <Steps>
+      <Step title="Check account status">
+        Verify that your Notifier account is active and has available credits
+      </Step>
+      <Step title="Verify business information">
+        Ensure your business information is complete and properly verified
+      </Step>
+      <Step title="Confirm API key">
+        Double-check that your API key is entered correctly in n8n
+      </Step>
+      <Step title="Validate phone number">
+        Confirm that the recipient's phone number is in the correct format (including country code)
+      </Step>
+    </Steps>
+  </Accordion>
+  
+  <Accordion title="Formatting issues in messages?" icon="text-slash">
+    <Steps>
+      <Step title="Review template">
+        Check your message template for any invalid characters or formatting issues
+      </Step>
+      <Step title="Variable formatting">
+        Ensure variables from previous nodes are properly formatted
+      </Step>
+      <Step title="Message length">
+        Verify your message doesn't exceed WhatsApp's length limitations
+      </Step>
+    </Steps>
+  </Accordion>
+</AccordionGroup>
 
 ## Need help?
 
 Our support team is ready to assist you:
 
-- **Live chat**: Click the green chat button in the bottom right corner of the Notifier dashboard
-- **Email support**: Contact support@notifier.app
-- **Schedule a demo**: Book a personalized walkthrough at [notifier.app/demo](https://notifier.app/demo)
+<CardGroup cols={3}>
+  <Card title="Live chat" icon="message-dots" href="https://notifier.app">
+    Click the green chat button in the bottom right corner of the Notifier dashboard
+  </Card>
+  <Card title="Email support" icon="envelope" href="mailto:support@notifier.app">
+    Contact support@notifier.app
+  </Card>
+  <Card title="Schedule a demo" icon="calendar" href="https://notifier.app/demo">
+    Book a personalized walkthrough
+  </Card>
+</CardGroup>
 
-For additional automation platform integrations (Make.com, Zapier, etc.), please contact our support team or check our [integration documentation](https://notifier.app/docs/integrations).
+<Info>
+  For additional automation platform integrations (Make.com, Zapier, etc.), please contact our support team or check our [integration documentation](https://notifier.app/docs/integrations).
+</Info>

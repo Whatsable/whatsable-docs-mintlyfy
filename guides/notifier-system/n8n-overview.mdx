@@ -1,198 +1,391 @@
 ---
-title: 'n8n Overview'
-description: 'Learn how to integrate n8n with the Notifyer System for enterprise-level automation'
+title: 'n8n'
+description: 'Learn how to seamlessly integrate n8n with the Notifyer System for enterprise-level WhatsApp automation'
 ---
+
+<img
+  className="block dark:hidden"
+  src="https://notifyer.app/docs/images/notifyer-n8n-light.png"
+  alt="Notifyer + n8n Integration"
+/>
+<img
+  className="hidden dark:block"
+  src="https://notifyer.app/docs/images/notifyer-n8n-dark.png"
+  alt="Notifyer + n8n Integration"
+/>
 
 # Notifyer System Integration with n8n
 
-This guide explains how to connect Notifyer System with n8n to create powerful automated WhatsApp messaging workflows.
+<Tip>
+  This guide walks you through connecting Notifyer System with n8n to create powerful automated WhatsApp messaging workflows for your business.
+</Tip>
 
 ## Prerequisites
 
-Before you begin, make sure you have:
+<Card>
+  Before proceeding with the integration, ensure you have:
 
-- A Notifyer System account ([Sign up](https://notifyer.app/signup))
-- An active subscription plan with Notifyer (Monthly or Pay-as-you-go)
-- An n8n account ([Create one if needed](https://n8n.io))
+  - A Notifyer System account ([Sign up](https://notifyer.app/signup))
+  - An active subscription plan with Notifyer (Monthly or Pay-as-you-go)
+  - An n8n account ([Create one if needed](https://n8n.io))
+</Card>
 
 ## Setting up your Notifyer System account
 
-### Step 1: Complete the Embedding Process
+<Steps>
+  <Step title="Complete the Embedding Process">
+    Before sending WhatsApp messages, you must complete the platform embedding process, which connects your WhatsApp Business account to Notifyer System.
 
-Before you can send WhatsApp messages, you must first complete the platform embedding process, which connects your WhatsApp Business account to Notifyer System.
+    <Info>
+      The embedding process is required by Meta to ensure proper business verification and compliance with WhatsApp Business Platform policies.
+    </Info>
+  </Step>
+  
+  <Step title="Set up message templates">
+    Notifyer System provides two methods for sending WhatsApp messages:
 
-> **Note**: The embedding process is required by Meta to ensure proper business verification and compliance with WhatsApp Business Platform policies.
+    <Accordion title="Option A: Template messages" defaultOpen={true}>
+      <p>WhatsApp templates are pre-approved message formats that allow for personalization while maintaining compliance with WhatsApp policies.</p>
+      
+      <Steps>
+        <Step title="Navigate to Templates">
+          Go to **Your Templates** in your Notifyer dashboard
+        </Step>
+        <Step title="Create Template">
+          Click the **Create Template** tab at the top of the page
+        </Step>
+        <Step title="Fill out the form">
+          Complete the template creation form with the following details:
+          
+          <ResponseField name="Template Name" type="string" required>
+            Choose a descriptive name for internal reference
+          </ResponseField>
+          <ResponseField name="Category" type="string" required>
+            Select the appropriate message category
+          </ResponseField>
+          <ResponseField name="Language" type="string" required>
+            Choose your template's primary language
+          </ResponseField>
+          <ResponseField name="Message Body" type="string" required>
+            Craft your message content
+          </ResponseField>
+          <ResponseField name="Variables" type="string">
+            Add placeholders using `{{1}}`, `{{2}}` format for personalization
+          </ResponseField>
+          <ResponseField name="Header" type="image | document | video">
+            Optional: Add an image, document, or video header
+          </ResponseField>
+          <ResponseField name="Footer" type="string">
+            Optional: Add a standard footer message
+          </ResponseField>
+          <ResponseField name="Buttons" type="button[]">
+            Optional: Configure call-to-action buttons
+          </ResponseField>
+        </Step>
+        <Step title="Submit for review">
+          Click **Preview and Submit**
+        </Step>
+      </Steps>
 
-### Step 2: Set up message templates
+      <Frame caption="Template Creation Interface">
+        <img src="https://notifyer.app/docs/images/template-creation.png" alt="Template Creation Interface" />
+      </Frame>
 
-Notifyer System provides two methods for sending WhatsApp messages:
+      <Warning>
+        Templates typically get reviewed within 24 hours. Creating compliant templates that avoid promotional language increases approval chances.
+      </Warning>
+    </Accordion>
 
-#### Option A: Template messages
+    <Accordion title="Option B: Non-template messages">
+      <p>For simpler communications, you can send non-template messages that include:</p>
+      
+      <CardGroup cols={2}>
+        <Card title="Text" icon="message-text">
+          Plain text messages within the 24-hour window
+        </Card>
+        <Card title="Images" icon="image">
+          Photos and graphics in supported formats
+        </Card>
+        <Card title="Documents" icon="file-pdf">
+          PDFs, Word docs, and other file types
+        </Card>
+        <Card title="Videos" icon="video">
+          MP4 and other supported video formats
+        </Card>
+      </CardGroup>
 
-WhatsApp templates are pre-approved message formats that allow for personalization while maintaining compliance with WhatsApp policies.
+      <Note>
+        Non-template messages can only be sent within the 24-hour customer service window after a customer initiates contact with your business.
+      </Note>
+    </Accordion>
+  </Step>
+  
+  <Step title="Get your API key">
+    To connect Notifyer System with n8n, you'll need an API key:
 
-1. Navigate to **Your Templates** in your Notifyer dashboard
-2. Click the **Create Template** tab at the top of the page
-3. Fill out the template creation form:
-   - **Template Name**: Choose a descriptive name for internal reference
-   - **Category**: Select the appropriate message category
-   - **Language**: Choose your template's primary language
-   - **Message Body**: Craft your message content
-   - **Variables**: Add placeholders using `{{1}}`, `{{2}}` format for personalization
-   - **Header** (Optional): Add an image, document, or video header
-   - **Footer** (Optional): Add a standard footer message
-   - **Buttons** (Optional): Configure call-to-action buttons
+    1. In your Notifyer dashboard, navigate to **API Keys**
+    2. Copy your unique API key (keep this secure - it provides access to your WhatsApp messaging)
 
-4. Click **Preview and Submit**
-
-![Template Creation Interface](https://notifyer.app/docs/images/template-creation.png)
-
-After submission, Facebook will review your template. Once approved, it will appear in the **Templates** tab adjacent to the **Create Template** tab.
-
-> **Tip**: Templates typically get reviewed within 24 hours. Creating compliant templates that avoid promotional language increases approval chances.
-
-#### Option B: Non-template messages
-
-For simpler communications, you can send non-template messages that include:
-- Plain text
-- Images
-- Documents
-- Videos
-
-> **Note**: Non-template messages can only be sent within the 24-hour customer service window after a customer initiates contact with your business.
-
-### Step 3: Get your API key
-
-To connect Notifyer System with n8n, you'll need an API key:
-
-1. In your Notifyer dashboard, navigate to **API Keys**
-2. Copy your unique API key (keep this secure - it provides access to your WhatsApp messaging)
-
-![API Key Location](https://notifyer.app/docs/images/api-key-location.png)
+    <Frame caption="API Key Location">
+      <img src="https://notifyer.app/docs/images/api-key-location.png" alt="API Key Location" />
+    </Frame>
+  </Step>
+</Steps>
 
 ## Integrating with n8n
 
-Now that your Notifyer System account is configured, let's connect it to n8n.
+<Steps>
+  <Step title="Create a new n8n workflow">
+    1. Log in to your n8n account
+    2. Create a new workflow by clicking **+ Create Workflow**
+    3. Give your workflow a descriptive name
+  </Step>
+  
+  <Step title="Configure a trigger">
+    Choose an event that will trigger your WhatsApp message:
 
-### Step 1: Create a new n8n workflow
+    1. Click the **+** button in the workflow editor
+    2. Search for and select a trigger app (e.g., Google Forms, Jotform, ClickUp, or HTTP Request)
+    3. Configure the trigger settings according to your use case
 
-1. Log in to your n8n account
-2. Create a new workflow by clicking **+ Create Workflow**
-3. Give your workflow a descriptive name
+    <Frame caption="Trigger Configuration">
+      <img src="https://notifyer.app/docs/images/n8n-trigger-config.png" alt="Trigger Configuration" />
+    </Frame>
+  </Step>
+  
+  <Step title="Add the Notifyer System node">
+    1. Click the **+** button after your trigger node
+    2. Search for "Notifyer" in the nodes panel
+    3. Select the **Notifyer System** node with the official logo
+  </Step>
+  
+  <Step title="Set up Notifyer System credentials">
+    <Steps>
+      <Step title="Create new credential">
+        In the Notifyer System node settings, find the **Credential to connect with** dropdown and select **+ Create new credential**
+      </Step>
+      <Step title="Enter API key">
+        Enter your Notifyer API key copied from Step 3 of the previous section
+      </Step>
+      <Step title="Name and save">
+        Name your credential (e.g., "Notifyer Production") and click **Save** to store it
+      </Step>
+    </Steps>
 
-### Step 2: Configure a trigger
+    <Frame caption="Credential Setup">
+      <img src="https://notifyer.app/docs/images/n8n-credential-setup.png" alt="Credential Setup" />
+    </Frame>
+  </Step>
+  
+  <Step title="Configure your message">
+    Depending on your messaging needs, choose one of the following operations:
 
-Choose an event that will trigger your WhatsApp message:
+    <Tabs>
+      <Tab title="Template Messages">
+        <Steps>
+          <Step title="Select operation">
+            In the **Operation Name or ID** dropdown, select **Send Template (Notifyer)**
+          </Step>
+          <Step title="Configure message">
+            Complete the required fields:
+            
+            <ResponseField name="Phone Number" type="string" required>
+              Enter the recipient's phone number with country code (e.g., +14155552671) or use dynamic data from previous nodes
+            </ResponseField>
+            <ResponseField name="Template Name or ID" type="string" required>
+              Select from your pre-approved templates in the dropdown
+            </ResponseField>
+            <ResponseField name="Template Variables" type="string[]">
+              Fill in values for each variable in your template, mapping them to dynamic data when applicable
+            </ResponseField>
+          </Step>
+        </Steps>
 
-1. Click the **+** button in the workflow editor
-2. Search for and select a trigger app (e.g., Google Forms, Jotform, ClickUp, or HTTP Request)
-3. Configure the trigger settings according to your use case
+        <Frame caption="Template Message Configuration">
+          <img src="https://notifyer.app/docs/images/n8n-template-config.png" alt="Template Message Configuration" />
+        </Frame>
+      </Tab>
+      <Tab title="Non-Template Messages">
+        <Steps>
+          <Step title="Select operation">
+            In the **Operation Name or ID** dropdown, select **Send Non Template Message**
+          </Step>
+          <Step title="Enter phone number">
+            Enter the **Phone Number** with country code
+          </Step>
+          <Step title="Select message type">
+            Choose from the following message types:
+            
+            <CardGroup cols={2}>
+              <Card title="Text Message" icon="message">
+                For plain text messages
+              </Card>
+              <Card title="Document Message" icon="file">
+                For sending documents (PDF, Word, etc.)
+              </Card>
+              <Card title="Image Message" icon="image">
+                For sending images (JPEG, PNG, etc.)
+              </Card>
+              <Card title="Video Message" icon="video">
+                For sending videos (MP4, 3GP, etc.)
+              </Card>
+            </CardGroup>
+          </Step>
+          <Step title="Complete message details">
+            Based on your selected message type, fill in the required fields:
+            - For text messages: Enter your message content
+            - For media messages: Provide a publicly accessible URL to your file
+            - Optional caption (for media files)
+          </Step>
+        </Steps>
 
-![Trigger Configuration](https://notifyer.app/docs/images/n8n-trigger-config.png)
+        <Warning>
+          For all media types, ensure your file URLs are publicly accessible and match the supported file formats.
+        </Warning>
 
-### Step 3: Add the Notifyer System node
-
-1. Click the **+** button after your trigger node
-2. Search for "Notifyer" in the nodes panel
-3. Select the **Notifyer System** node with the official logo
-
-### Step 4: Set up Notifyer System credentials
-
-1. In the Notifyer System node settings, find the **Credential to connect with** dropdown
-2. Select **+ Create new credential**
-3. Enter your Notifyer API key
-4. Name your credential (e.g., "Notifyer Production")
-5. Click **Save** to store your credential
-
-![Credential Setup](https://notifyer.app/docs/images/n8n-credential-setup.png)
-
-### Step 5: Configure your message
-
-Depending on your messaging needs, choose one of the following operations:
-
-#### Option A: Sending template messages
-
-1. In the **Operation Name or ID** dropdown, select **Send Template (Notifyer)**
-2. Complete the required fields:
-   - **Phone Number**: Enter the recipient's phone number with country code (e.g., +14155552671) or use dynamic data from previous nodes with the data mapping feature
-   - **Template Name or ID**: Select from your pre-approved templates in the dropdown
-   - **Template Variables**: Fill in values for each variable in your template, mapping them to dynamic data when applicable
-
-![Template Message Configuration](https://notifyer.app/docs/images/n8n-template-config.png)
-
-#### Option B: Sending non-template messages
-
-1. In the **Operation Name or ID** dropdown, select **Send Non Template Message**
-2. Enter the **Phone Number** with country code
-3. Select the **Message Type**:
-   - **Text Message**: For plain text messages
-   - **Document Message**: For sending documents (PDF, Word, etc.)
-   - **Image Message**: For sending images (JPEG, PNG, etc.)
-   - **Video Message**: For sending videos (MP4, 3GP, etc.)
-
-4. Based on your selected message type, fill in the required fields:
-   - For text messages: Enter your message content
-   - For media messages: Provide a publicly accessible URL to your file
-   - Optional caption (for media files)
-
-> **Important**: For all media types, ensure your file URLs are publicly accessible and match the supported file formats.
-
-![Non-Template Message Configuration](https://notifyer.app/docs/images/n8n-non-template-config.png)
-
-### Step 6: Test your configuration
-
-1. Click **Test Step** on the Notifyer System node to verify the connection and message delivery
-2. Check for a successful response in the test output
-3. Verify receipt on a test device
-
-### Step 7: Activate your workflow
-
-1. Connect any additional nodes needed for your complete workflow
-2. Click **Save** to save your workflow
-3. Toggle the **Active** switch in the top-right corner to activate your workflow
-
-Your automated messaging workflow is now operational! Whenever your trigger conditions are met, n8n will automatically send WhatsApp messages through Notifyer System.
+        <Frame caption="Non-Template Message Configuration">
+          <img src="https://notifyer.app/docs/images/n8n-non-template-config.png" alt="Non-Template Message Configuration" />
+        </Frame>
+      </Tab>
+    </Tabs>
+  </Step>
+  
+  <Step title="Test your configuration">
+    <Steps>
+      <Step title="Run test">
+        Click **Test Step** on the Notifyer System node to verify the connection and message delivery
+      </Step>
+      <Step title="Check response">
+        Check for a successful response in the test output
+      </Step>
+      <Step title="Verify receipt">
+        Verify receipt on a test device
+      </Step>
+    </Steps>
+  </Step>
+  
+  <Step title="Activate your workflow">
+    1. Connect any additional nodes needed for your complete workflow
+    2. Click **Save** to save your workflow
+    3. Toggle the **Active** switch in the top-right corner to activate your workflow
+    
+    <Check>
+      Your automated messaging workflow is now operational! Whenever your trigger conditions are met, n8n will automatically send WhatsApp messages through Notifyer System.
+    </Check>
+  </Step>
+</Steps>
 
 ## Example use cases
 
-- **Order confirmations**: Send automatic order confirmations when new orders are placed
-- **Appointment reminders**: Schedule reminders before upcoming appointments
-- **Lead notifications**: Alert your sales team when new leads come in
-- **Customer support**: Route support inquiries to the appropriate team member
-- **Delivery updates**: Keep customers informed about their delivery status
+<CardGroup cols={3}>
+  <Card title="Order confirmations" icon="shopping-cart">
+    Send automatic order confirmations when new orders are placed
+  </Card>
+  <Card title="Appointment reminders" icon="calendar">
+    Schedule reminders before upcoming appointments
+  </Card>
+  <Card title="Lead notifications" icon="user-plus">
+    Alert your sales team when new leads come in
+  </Card>
+  <Card title="Customer support" icon="headset">
+    Route support inquiries to the appropriate team member
+  </Card>
+  <Card title="Delivery updates" icon="truck">
+    Keep customers informed about their delivery status
+  </Card>
+  <Card title="Payment reminders" icon="credit-card">
+    Send automatic payment reminders for overdue accounts
+  </Card>
+</CardGroup>
 
 ## Best practices
 
-- **Test thoroughly**: Always test your workflows with test numbers before activating them
-- **Use templates**: Whenever possible, use pre-approved templates for better deliverability
-- **Add personalization**: Include customer names and specific details to increase engagement
-- **Follow WhatsApp policies**: Ensure all message content complies with WhatsApp Business policies
-- **Monitor performance**: Regularly check your message delivery rates in your Notifyer dashboard
+<AccordionGroup>
+  <Accordion title="Test thoroughly" icon="vial">
+    Always test your workflows with test phone numbers before activating them for production use.
+  </Accordion>
+  <Accordion title="Use templates" icon="file-lines">
+    Whenever possible, use pre-approved templates for better deliverability and compliance.
+  </Accordion>
+  <Accordion title="Add personalization" icon="user">
+    Include customer names and specific details to increase engagement and response rates.
+  </Accordion>
+  <Accordion title="Follow WhatsApp policies" icon="shield-check">
+    Ensure all message content complies with WhatsApp Business policies to avoid account restrictions.
+  </Accordion>
+  <Accordion title="Monitor performance" icon="chart-line">
+    Regularly check your message delivery rates in your Notifyer dashboard.
+  </Accordion>
+</AccordionGroup>
 
 ## Troubleshooting
 
-**Messages not sending?**
-- Verify your API key is entered correctly
-- Check that phone numbers are in the correct international format (e.g., +14155552671)
-- Confirm your Notifyer subscription is active
-- For template messages, ensure you're using an approved template
-
-**Template errors?**
-- Verify all required variables are included
-- Check that variable formats match the expected values
-- Ensure you're using the correct template name
-
-**Media not displaying?**
-- Confirm your media URLs are publicly accessible
-- Verify the file format is supported by WhatsApp
-- Check that file sizes are within WhatsApp limits
+<AccordionGroup>
+  <Accordion title="Messages not sending?" icon="circle-exclamation">
+    <Steps>
+      <Step title="Verify API key">
+        Ensure your API key is entered correctly in the n8n credentials
+      </Step>
+      <Step title="Check phone numbers">
+        Confirm phone numbers are in the correct international format (e.g., +14155552671)
+      </Step>
+      <Step title="Check subscription">
+        Verify your Notifyer subscription is active and has available credits
+      </Step>
+      <Step title="Template verification">
+        For template messages, ensure you're using an approved template
+      </Step>
+    </Steps>
+  </Accordion>
+  
+  <Accordion title="Template errors?" icon="file-exclamation">
+    <Steps>
+      <Step title="Variable check">
+        Verify all required variables are included in your template message
+      </Step>
+      <Step title="Format verification">
+        Check that variable formats match the expected values (text, number, date, etc.)
+      </Step>
+      <Step title="Template name">
+        Ensure you're using the correct template name exactly as it appears in your dashboard
+      </Step>
+    </Steps>
+  </Accordion>
+  
+  <Accordion title="Media not displaying?" icon="image">
+    <Steps>
+      <Step title="URL access">
+        Confirm your media URLs are publicly accessible (test in an incognito browser)
+      </Step>
+      <Step title="File format">
+        Verify the file format is supported by WhatsApp
+      </Step>
+      <Step title="File size">
+        Check that file sizes are within WhatsApp limits:
+        - Images: up to 5MB
+        - Videos: up to 16MB
+        - Documents: up to 100MB
+      </Step>
+    </Steps>
+  </Accordion>
+</AccordionGroup>
 
 ## Need help?
 
-Our support team is ready to assist you:
+<Card title="Our support team is ready to assist you" icon="headset">
+  <CardGroup cols={3}>
+    <Card title="Live chat" icon="comments" href="https://notifyer.app">
+      Click the green chat button in the bottom right corner of the Notifyer dashboard
+    </Card>
+    <Card title="Email support" icon="envelope" href="mailto:support@notifyer.app">
+      Contact support@notifyer.app
+    </Card>
+    <Card title="Schedule a demo" icon="calendar" href="https://notifyer.app/demo">
+      Book a personalized walkthrough
+    </Card>
+  </CardGroup>
+</Card>
 
-- **Live chat**: Click the green chat button in the bottom right corner of the Notifyer dashboard
-- **Email support**: Contact support@notifyer.app
-- **Schedule a demo**: Book a personalized walkthrough at [notifyer.app/demo](https://notifyer.app/demo)
-
-For assistance with other integration platforms like Make.com or Zapier, our team is also available to help guide you through the process.
+<Info>
+  For assistance with other integration platforms like Make.com or Zapier, our team is also available to help guide you through the process.
+</Info>
