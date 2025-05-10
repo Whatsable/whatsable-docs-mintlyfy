@@ -30,6 +30,7 @@
             "pages": [
               "guides/whatsable/zapier",
               "guides/whatsable/make",
+              "guides/whatsable/n8n",
               "guides/whatsable/api-documentation"
             ]
           },
@@ -38,6 +39,7 @@
             "pages": [
               "guides/notifier/zapier",
               "guides/notifier/make",
+              "guides/notifier/n8n",
               "guides/notifier/api-documentation"
             ]
           },
@@ -47,6 +49,7 @@
               "guides/notifier-system/embedding-process",
               "guides/notifier-system/make-overview",
               "guides/notifier-system/zapier-overview",
+              "guides/notifier-system/n8n-overview",
               {
                 "group": "API",
                 "pages": [

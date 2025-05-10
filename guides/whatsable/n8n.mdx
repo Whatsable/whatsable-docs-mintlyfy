@@ -1,0 +1,129 @@
+---
+title: 'n8n'
+description: 'Learn how to integrate n8n with WhatsAble for automated messaging workflows'
+---
+
+# WhatsAble Integration with n8n
+
+WhatsAble lets you automate WhatsApp messaging through your favorite workflow automation platforms. This guide walks you through connecting WhatsAble with n8n to create powerful WhatsApp messaging workflows.
+
+## Prerequisites
+
+Before getting started, make sure you have:
+
+- A WhatsAble account ([Sign up here](https://whatsable.com/signup))
+- An active subscription with WhatsAble
+- An n8n account ([Create one if needed](https://n8n.io))
+
+## Get started with WhatsAble
+
+### Step 1: Subscribe to WhatsAble
+
+To use the WhatsAble API, you'll need an active subscription:
+
+1. Log in to your WhatsAble dashboard
+2. Click the **Subscribe** button
+3. Start your 7-day free trial
+
+> **Note:** During your trial, you can add unlimited phone numbers to test the service. After the trial period, pricing is $8.99 per month per phone number.
+
+### Step 2: Add and verify your phone number
+
+For WhatsAble to send messages through your WhatsApp account:
+
+1. In your WhatsAble dashboard, navigate to **Verified Numbers**
+2. Click **Add New Number**
+3. Enter your phone number (with country code)
+4. You'll receive a WhatsApp verification code
+5. Enter the verification code in the WhatsAble dashboard
+
+**Multiple numbers?** You only need to complete the verification process for your first phone number. For additional numbers, simply add them and save—no verification required.
+
+### Step 3: Get your API key
+
+To connect WhatsAble with n8n, you'll need your API key:
+
+1. In your WhatsAble dashboard, go to **API Keys**
+2. Copy your unique API key
+3. Store it securely—you'll need it for the integration
+
+## Connect WhatsAble to n8n
+
+Now that you have WhatsAble set up, let's connect it to n8n to automate your workflows.
+
+### Step 1: Set up your n8n workflow
+
+1. Log in to your n8n account
+2. Create a new workflow by clicking **+ New Workflow**
+3. Add a trigger node of your choice:
+   - Popular triggers include Google Forms, Jotform, ClickUp, or a Schedule trigger
+   - Connect and configure your trigger according to your use case
+
+### Step 2: Add the WhatsAble node
+
+1. Click the **+** button to add a new node
+2. Search for "WhatsAble" in the node library
+3. Select the node with the official WhatsAble logo
+
+![WhatsAble node selection](https://whatsable.com/docs/images/n8n-node-selection.png)
+
+### Step 3: Configure WhatsAble credentials
+
+1. In the WhatsAble node settings, find the **Credential to connect with** dropdown
+2. Select **+ Create new credential**
+3. Enter your WhatsAble API key that you copied earlier
+4. Name your credential (e.g., "WhatsAble Production")
+5. Click **Save** to store your credential
+
+### Step 4: Configure your message
+
+1. In the **Operation Name or ID** dropdown, select **Send Message (WhatsAble)**
+2. Complete the required fields:
+   - **Phone Number**: Enter the recipient's phone number (with country code) or use dynamic data from previous nodes
+   - **Message Content**: Type your message text or use variables from previous nodes
+
+3. Configure optional parameters (if needed):
+   - **Attachment**: Upload a file, image, or video to send with your message
+   - **File Name**: Specify a custom filename for your attachment
+   - **Additional Parameters**: Customize advanced options as needed
+
+### Step 5: Test and activate your workflow
+
+1. Click **Test Step** on the WhatsAble node to verify it's working correctly
+2. If the test is successful, you'll see a confirmation message
+3. Click **Done** to return to your workflow
+4. Click **Save** to save your entire workflow
+5. Toggle the **Active** switch in the top-right corner to activate your workflow
+
+## Example use cases
+
+Here are some popular automation workflows you can build with WhatsAble and n8n:
+
+- **Customer Onboarding**: Send a welcome message when a new customer signs up
+- **Order Notifications**: Update customers when their order status changes
+- **Appointment Reminders**: Automatically send reminders before scheduled appointments
+- **Lead Follow-up**: Send personalized messages to new leads from your form submissions
+- **Support Ticket Updates**: Notify customers when their support ticket status changes
+
+## Troubleshooting
+
+**Message not being sent?**
+- Verify that your WhatsAble account is active
+- Check that your phone number is properly verified
+- Ensure your API key is entered correctly in n8n
+- Confirm that the recipient's phone number is in the correct format (including country code)
+
+**File attachments not working?**
+- Check that the file size is under 16MB
+- Verify the file type is supported by WhatsApp
+- Ensure the file path or URL is accessible
+
+## Need help?
+
+Our support team is ready to assist you:
+
+- **Live chat**: Click the green chat button in the bottom right corner of the WhatsAble dashboard
+- **Email support**: Contact support@whatsable.com
+- **Schedule a demo**: Book a personalized walkthrough at [whatsable.com/demo](https://whatsable.com/demo)
+
+For additional automation platform integrations (Make.com, Zapier, etc.), please contact our support team or check our [integration documentation](https://whatsable.com/docs/integrations).
