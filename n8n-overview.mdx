@@ -1,0 +1,416 @@
+---
+title: 'WhatsAble Suite with n8n'
+description: 'Integrate n8n with the WhatsAble Suite (WhatsAble, Notifier, and Notifyer System) for powerful messaging automation'
+---
+
+# WhatsAble Suite Integration with n8n
+
+<Frame caption="Automate your WhatsApp messaging workflows with n8n and WhatsAble">
+  <img src="/images/connect_automate_scale.svg" className="rounded-xl" />
+</Frame>
+
+<Tip>
+  The WhatsAble Suite offers a comprehensive set of messaging tools that integrate seamlessly with n8n, enabling powerful automation workflows for businesses of all sizes.
+</Tip>
+
+## Overview
+
+The WhatsAble Suite comprises three powerful messaging platforms—WhatsAble, Notifier, and Notifyer System—each designed to meet different business needs while integrating perfectly with n8n's workflow automation capabilities.
+
+<Info>
+  This guide introduces the WhatsAble Suite and its integration with n8n, helping you select the right platform from the suite for your specific business requirements.
+</Info>
+
+## The WhatsAble Suite
+
+The WhatsAble Suite consists of three complementary messaging platforms that integrate with n8n, each designed for different business needs:
+
+<CardGroup cols={2}>
+  <Card href="https://docs.whatsable.app/guides/whatsable/n8n" className="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-50 to-white hover:shadow-lg transition-all duration-300 h-full">
+    <div className="absolute top-0 right-0 w-64 h-64 bg-blue-100 rounded-full -mr-32 -mt-32 opacity-50"></div>
+    <div className="relative p-6 space-y-4">
+      <div className="flex justify-center mb-6">
+        <img 
+          src="https://d1pnnwteuly8z3.cloudfront.net/images/acc1c175-2e05-4bab-805e-64536550fa04/393f0ca5-e904-41f3-8eee-b2dab6bd4e0d.png" 
+          alt="WhatsAble Logo" 
+          className="h-20 w-auto transform hover:scale-105 transition-transform duration-300"
+        />
+      </div>
+      <h3 className="text-2xl font-bold text-center text-blue-700 mb-4">WhatsAble</h3>
+      <p className="text-gray-700 leading-relaxed">The WhatsAble Bot seamlessly delivers important notifications and alerts to you and your team members, ensuring everyone stays informed.</p>
+    </div>
+  </Card>
+
+  <Card href="https://docs.whatsable.app/guides/notifier/n8n" className="relative overflow-hidden rounded-xl bg-gradient-to-br from-purple-50 to-white hover:shadow-lg transition-all duration-300 h-full">
+    <div className="absolute top-0 right-0 w-64 h-64 bg-purple-100 rounded-full -mr-32 -mt-32 opacity-50"></div>
+    <div className="relative p-6 space-y-4">
+      <div className="flex justify-center mb-6">
+        <img 
+          src="https://res.cloudinary.com/subframe/image/upload/v1727799617/uploads/4086/sncxr9zsrsaeaork7pbk.svg" 
+          alt="Notifier by WhatsAble Logo" 
+          className="h-20 w-auto transform hover:scale-105 transition-transform duration-300"
+        />
+      </div>
+      <h3 className="text-2xl font-bold text-center text-purple-700 mb-4">Notifier by WhatsAble</h3>
+      <p className="text-gray-700 leading-relaxed">The Notifier Bot offers an accessible entry point for businesses looking to automate their WhatsApp communications with external contacts.</p>
+    </div>
+  </Card>
+
+  <Card href="https://docs.whatsable.app/guides/notifier-system/n8n-overview" className="relative overflow-hidden rounded-xl bg-gradient-to-br from-green-50 to-white hover:shadow-lg transition-all duration-300 h-full">
+    <div className="absolute top-0 right-0 w-64 h-64 bg-green-100 rounded-full -mr-32 -mt-32 opacity-50"></div>
+    <div className="relative p-6 space-y-4">
+      <div className="flex justify-center mb-6">
+        <img 
+          src="https://res.cloudinary.com/subframe/image/upload/v1732805023/uploads/4086/ugfj4rhxhdoo4kvhbbg5.png" 
+          alt="Notifier System Logo" 
+          className="h-20 w-auto transform hover:scale-105 transition-transform duration-300"
+        />
+      </div>
+      <h3 className="text-2xl font-bold text-center text-green-700 mb-4">Notifyer System</h3>
+      <p className="text-gray-700 leading-relaxed">Our most comprehensive solution, the Notifier System provides complete messaging capabilities for businesses seeking to communicate with customers and leads while maintaining professional branding.</p>
+    </div>
+  </Card>
+  {/*<Card title="Get Inspiration" icon="stars" href="https://mintlify.com/customers">
+    Check out our showcase of our favorite documentation
+  </Card>*/}
+</CardGroup>
+
+# Why Choose WhatsAble?
+
+<CardGroup cols={2}>
+  <Card title="Meta-Approved Tech Provider" icon="shield">
+    <p>Reliable and secure integration with WhatsApp, backed by Meta's approval.</p>
+  </Card>
+  <Card title="Instant & Automated Messaging" icon="zap">
+    <p>Send customized WhatsApp messages in real-time with powerful automation.</p>
+  </Card>
+  <Card title="No-Code & Developer-Friendly" icon="code">
+    <p>Flexible integration options for both developers and non-technical users.</p>
+  </Card>
+  <Card title="Enhanced Business Communication" icon="message-square">
+    <p>Send alerts, confirmations, reminders, and team updates efficiently.</p>
+  </Card>
+</CardGroup>
+
+## Choosing the Right Platform from the Suite
+
+Selecting the optimal platform from the WhatsAble Suite depends on your specific business requirements:
+
+<AccordionGroup>
+  <Accordion title="WhatsAble" icon="rocket" defaultOpen>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="md:col-span-2">
+        <p><strong>Best for:</strong> Small businesses, solopreneurs, and startups looking for a simple, cost-effective solution with minimal setup requirements.</p>
+        <p><strong>Key advantages:</strong></p>
+        <ul className="list-disc pl-6">
+          <li>Quick setup with personal WhatsApp numbers</li>
+          <li>Simple verification process</li>
+          <li>Affordable monthly subscription ($8.99 per phone number)</li>
+          <li>No business verification required</li>
+          <li>7-day free trial available</li>
+        </ul>
+      </div>
+      <div className="flex items-center justify-center">
+        <a href="https://docs.whatsable.app/guides/whatsable/n8n" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">View WhatsAble Guide</a>
+      </div>
+    </div>
+  </Accordion>
+  
+  <Accordion title="Notifier" icon="store">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="md:col-span-2">
+        <p><strong>Best for:</strong> Growing businesses that need more customization options and want to establish an official business presence on WhatsApp.</p>
+        <p><strong>Key advantages:</strong></p>
+        <ul className="list-disc pl-6">
+          <li>Business profile customization</li>
+          <li>Multiple payment options (Monthly or Pay-as-you-go)</li>
+          <li>Business verification for increased trust</li>
+          <li>Default reply text configuration</li>
+          <li>Simple media attachments</li>
+        </ul>
+      </div>
+      <div className="flex items-center justify-center">
+        <a href="https://docs.whatsable.app/guides/notifier/n8n" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">View Notifier Guide</a>
+      </div>
+    </div>
+  </Accordion>
+  
+  <Accordion title="Notifyer System" icon="building-columns">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="md:col-span-2">
+        <p><strong>Best for:</strong> Enterprises and larger organizations requiring official WhatsApp Business API integration with advanced templating and compliance features.</p>
+        <p><strong>Key advantages:</strong></p>
+        <ul className="list-disc pl-6">
+          <li>Full WhatsApp Business API integration</li>
+          <li>Pre-approved message templates</li>
+          <li>Official Meta business verification</li>
+          <li>24-hour customer service window for non-template messages</li>
+          <li>Advanced media capabilities</li>
+          <li>Enterprise-grade reliability</li>
+        </ul>
+      </div>
+      <div className="flex items-center justify-center">
+        <a href="https://docs.whatsable.app/guides/notifier-system/n8n-overview" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">View Notifyer System Guide</a>
+      </div>
+    </div>
+  </Accordion>
+</AccordionGroup>
+
+## WhatsAble Suite Comparison
+
+<div className="overflow-x-auto">
+  <table className="min-w-full divide-y divide-gray-200">
+    <thead className="bg-gray-50">
+      <tr>
+        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Feature</th>
+        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">WhatsAble</th>
+        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Notifier</th>
+        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Notifyer System</th>
+      </tr>
+    </thead>
+    <tbody className="bg-white divide-y divide-gray-200">
+      <tr>
+        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Target Business Size</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Small & Startups</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Medium</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Enterprise</td>
+      </tr>
+      <tr>
+        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">n8n Integration Ease</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Very Simple</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Simple</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Moderate</td>
+      </tr>
+      <tr>
+        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Business Verification</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Not Required</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Basic</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Full Official Verification</td>
+      </tr>
+      <tr>
+        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Message Templates</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">No</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Basic</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Advanced</td>
+      </tr>
+      <tr>
+        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Media Support</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Basic</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Standard</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Advanced</td>
+      </tr>
+      <tr>
+        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Pricing Model</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Subscription</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Subscription or Pay-as-you-go</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Enterprise Pricing</td>
+      </tr>
+      <tr>
+        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Free Trial</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">7 days</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Available</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Contact Sales</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## Integrating the WhatsAble Suite with n8n
+
+All three platforms in the WhatsAble Suite integrate with n8n through a similar workflow pattern:
+
+<Steps>
+  <Step title="Set up platform account">
+    Create and configure your account on your chosen WhatsApp platform.
+  </Step>
+  <Step title="Verify phone number">
+    Complete the required verification steps for your WhatsApp number.
+  </Step>
+  <Step title="Obtain API key">
+    Generate an API key from your platform's dashboard.
+  </Step>
+  <Step title="Configure n8n">
+    Add the platform's node in n8n and enter your API credentials.
+  </Step>
+  <Step title="Build workflow">
+    Design your automation workflow with triggers and actions.
+  </Step>
+  <Step title="Test and activate">
+    Test your workflow configuration and activate it for production use.
+  </Step>
+</Steps>
+
+## Common Use Cases
+
+<CardGroup cols={2}>
+  <Card title="Lead Qualification" icon="user-check">
+    <p>Send automated follow-up messages to new leads based on form submissions or website interactions.</p>
+  </Card>
+  <Card title="Order Notifications" icon="box">
+    <p>Keep customers informed at every stage of their order from confirmation to delivery.</p>
+  </Card>
+  <Card title="Appointment Reminders" icon="calendar">
+    <p>Reduce no-shows with automated appointment reminders and confirmations.</p>
+  </Card>
+  <Card title="Customer Support" icon="headset">
+    <p>Route support requests to the right team members and provide instant responses to common questions.</p>
+  </Card>
+  <Card title="Payment Reminders" icon="credit-card">
+    <p>Send timely payment reminders for invoices and subscriptions.</p>
+  </Card>
+  <Card title="Feedback Collection" icon="star">
+    <p>Gather customer feedback after purchases or service interactions.</p>
+  </Card>
+</CardGroup>
+
+## Sample Workflow: Order Confirmation with WhatsAble Suite
+
+Here's how a simple order confirmation workflow might look using the WhatsAble Suite with n8n:
+
+<Frame caption="Sample Order Confirmation with WhatsAble Suite">
+  ```mermaid
+  flowchart LR
+    A[Order Placed Trigger] --> B[Get Order Details]
+    B --> C[Format Message]
+    C --> D{Select Suite Platform}
+    D -->|WhatsAble| E[WhatsAble Node]
+    D -->|Notifier| F[Notifier Node]
+    D -->|Notifyer System| G[Notifyer System Node]
+    E --> H[Send Confirmation]
+    F --> H
+    G --> H
+    H --> I[Update Order Status]
+  ```
+</Frame>
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Message Content">
+    <ul className="list-disc pl-6">
+      <li>Keep messages concise and focused on a single call-to-action</li>
+      <li>Personalize content with customer names and order details</li>
+      <li>Use emojis sparingly for emphasis, not decoration</li>
+      <li>Include clear opt-out instructions in marketing communications</li>
+      <li>Avoid sending multiple messages in quick succession</li>
+    </ul>
+  </Accordion>
+  
+  <Accordion title="Workflow Design">
+    <ul className="list-disc pl-6">
+      <li>Add error handling for failed message delivery</li>
+      <li>Include conditional logic for different customer segments</li>
+      <li>Test thoroughly with sample data before activating</li>
+      <li>Configure appropriate retry logic for temporary failures</li>
+      <li>Document your workflow design for future reference</li>
+    </ul>
+  </Accordion>
+  
+  <Accordion title="Compliance">
+    <ul className="list-disc pl-6">
+      <li>Ensure you have explicit consent before messaging customers</li>
+      <li>Follow WhatsApp's Business Policy for all communications</li>
+      <li>Provide clear opt-out mechanisms in your messaging</li>
+      <li>Store customer data securely and in compliance with privacy regulations</li>
+      <li>Keep records of consent for compliance purposes</li>
+    </ul>
+  </Accordion>
+</AccordionGroup>
+
+## Getting Started with the WhatsAble Suite
+
+Ready to enhance your messaging capabilities with the WhatsAble Suite and n8n? Follow our platform-specific integration guides:
+
+<CardGroup cols={3}>
+  <Card title="WhatsAble + n8n" icon="rocket" href="https://docs.whatsable.app/guides/whatsable/n8n">
+    Quick setup with personal numbers - ideal for small businesses and solopreneurs looking for simple integration.
+  </Card>
+  <Card title="Notifier + n8n" icon="bell" href="https://docs.whatsable.app/guides/notifier/n8n">
+    Business-focused messaging with customization options for growing companies requiring more advanced features.
+  </Card>
+  <Card title="Notifyer System + n8n" icon="building" href="https://docs.whatsable.app/guides/notifier-system/n8n-overview">
+    Enterprise-grade messaging solution with advanced template capabilities and robust API features.
+  </Card>
+</CardGroup>
+
+## Need Help Choosing?
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+  <div className="bg-blue-50 p-6 rounded-lg border border-blue-100">
+    <h3 className="text-lg font-medium text-blue-800">Schedule a WhatsAble Suite Demo</h3>
+    <p className="mt-2 text-blue-600">Not sure which platform in the WhatsAble Suite is right for your business? Our experts can help you make the right choice.</p>
+    <a href="https://tidycal.com/axelmeta/whatsapp-notifications-by-whatsable" className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
+      Book a Free Consultation
+    </a>
+  </div>
+  
+  <div className="bg-green-50 p-6 rounded-lg border border-green-100">
+    <h3 className="text-lg font-medium text-green-800">Compare Suite Features</h3>
+    <p className="mt-2 text-green-600">Want to see a detailed comparison of all platforms in the WhatsAble Suite and their n8n integration capabilities?</p>
+    <a href="/integrations/whatsable-suite-comparison" className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700">
+      View Full Comparison
+    </a>
+  </div>
+</div>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Do I need a business account for the WhatsAble Suite?">
+    <p>It depends on which platform in the WhatsAble Suite you choose:</p>
+    <ul className="list-disc pl-6">
+      <li><strong>WhatsAble:</strong> Works with regular numbers - no business account required</li>
+      <li><strong>Notifier:</strong> Requires a business number for full functionality</li>
+      <li><strong>Notifyer System:</strong> Requires complete business API integration</li>
+    </ul>
+  </Accordion>
+  
+  <Accordion title="How does n8n connect to the WhatsAble Suite?">
+    <p>The WhatsAble Suite integrates with n8n through dedicated nodes:</p>
+    <ul className="list-disc pl-6">
+      <li>Each platform has its own dedicated node in the n8n library</li>
+      <li>API credentials from your chosen platform are required for connection</li>
+      <li>Once connected, you can trigger messaging actions from any n8n workflow</li>
+      <li>All platforms support dynamic variables from previous nodes in your workflow</li>
+    </ul>
+  </Accordion>
+  
+  <Accordion title="What media types can I send through the n8n integration?">
+    <p>All platforms in the WhatsAble Suite support standard media types when integrated with n8n:</p>
+    <ul className="list-disc pl-6">
+      <li><strong>Images:</strong> JPG, PNG (up to 5MB)</li>
+      <li><strong>Videos:</strong> MP4, 3GP (up to 16MB)</li>
+      <li><strong>Documents:</strong> PDF, DOC, XLSX, etc. (up to 100MB)</li>
+      <li><strong>Audio:</strong> MP3, OGG, etc.</li>
+    </ul>
+  </Accordion>
+  
+  <Accordion title="Can I use dynamic content from my n8n workflows?">
+    <p>Yes, all platforms in the WhatsAble Suite support dynamic content from n8n workflows:</p>
+    <ul className="list-disc pl-6">
+      <li><strong>WhatsAble:</strong> Use variables directly in message content with no restrictions</li>
+      <li><strong>Notifier:</strong> Supports variables in message body and media captions</li>
+      <li><strong>Notifyer System:</strong> Offers template variables for approved templates and regular variables for non-template messages</li>
+    </ul>
+  </Accordion>
+</AccordionGroup>
+
+## WhatsAble Suite Support Resources
+
+Need help with your n8n integration with the WhatsAble Suite? We've got you covered:
+
+<CardGroup cols={3}>
+  <Card title="Email Support" icon="envelope" href="mailto:team@whatsable.app">
+    Contact our dedicated support team for technical assistance with any platform in the WhatsAble Suite
+  </Card>
+  <Card title="Video Tutorials" icon="video" href="https://www.youtube.com/@nocodeshare/videos">
+    Watch step-by-step integration guides for connecting n8n with the WhatsAble Suite
+  </Card>
+  <Card title="Implementation Help" icon="code" href="https://tidycal.com/axelmeta/whatsapp-notifications-by-whatsable">
+    Get expert assistance with implementing your n8n workflows with the WhatsAble Suite
+  </Card>
+</CardGroup>
+
+<Note>
+  Looking for custom integration solutions or enterprise-level support? Contact our solution engineers at [team@whatsable.app](mailto:team@whatsable.app) for personalized assistance with the WhatsAble Suite.
+</Note>

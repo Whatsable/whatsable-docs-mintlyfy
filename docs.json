@@ -22,7 +22,8 @@
             "group": "Get Started",
             "pages": [
               "introduction",
-              "quickstart"
+              "quickstart",
+              "n8n-overview"
             ]
           },
           {
