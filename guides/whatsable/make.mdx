@@ -1,138 +1,255 @@
 ---
 title: 'Make'
-description: 'Automate WhatsApp with WhatsAble & Make.com'
+description: 'Learn how to automate WhatsApp messaging through Make with WhatsAble'
 ---
 
-# Make
+# WhatsAble Integration with Make
 
-<div className="video-container">
-  <iframe 
-    width="100%" 
-    height="500" 
-    src="https://www.youtube.com/embed/_KBMLJKXfwI?end=222" 
-    title="WhatsAble + Make.com Integration" 
-    frameBorder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowFullScreen
-    className="rounded-lg shadow-lg"
-  ></iframe>
-</div>
+<Frame caption="Automate your WhatsApp messaging workflows with Make and WhatsAble">
+  <img src="/images/whatsable_make_svg.svg" className="rounded-xl" />
+</Frame>
 
-# 🚀 Getting Started with WhatsAble & Make.com
+<Info>
+  WhatsAble lets you automate WhatsApp messaging through your favorite workflow automation platforms. This guide walks you through connecting WhatsAble with Make to create powerful WhatsApp messaging workflows.
+</Info>
 
-<div className="bg-blue-50 p-6 rounded-lg my-6">
-  <p className="text-lg">
-    Welcome to <span className="font-bold text-blue-600">WhatsAble</span>, the easiest way to <span className="font-bold">automate WhatsApp messages</span>! This guide will walk you through setting up your account, subscribing, and integrating WhatsAble with <span className="font-bold">Make.com</span> for seamless messaging automation.
-  </p>
-</div>
+## Prerequisites
 
-## 📝 Step 1: Subscribe to WhatsAble
+Before getting started, make sure you have:
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-  To start using WhatsAble, you need to <span className="font-bold text-green-600">subscribe</span> with a <span className="bg-green-100 px-2 py-1 rounded">7-day free trial</span>.
+<CardGroup cols={2}>
+  <Card title="WhatsAble Account" icon="user">
+    An active subscription with WhatsAble
+  </Card>
+  <Card title="Make" icon="user">
+    Access to [Make](https://www.make.com/en/register/) workflow automation platform
+  </Card>
+</CardGroup>
 
-  - You won't be charged during the trial period.
-  - After 7 days, the cost is **$8.99 per month per phone number**.
-  - You can add **unlimited numbers** during your trial.
+<Tip>
+  New to WhatsAble? [Sign up here](https://dashboard.whatsable.app/signin)
+</Tip>
 
-  <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-    ✅ <span className="font-semibold">To subscribe:</span> Click the <span className="bg-blue-100 px-2 py-1 rounded">Subscribe</span> button in your WhatsAble dashboard.
-  </div>
-</div>
+## Get started with WhatsAble
 
----
+<Steps>
+  <Step title="Subscribe to WhatsAble">
+    To use the WhatsAble API, you'll need an active subscription:
+    
+    1. Log in to your WhatsAble dashboard
+    2. Click the **Subscribe** button
+    3. Start your 7-day free trial
+    
+    <Tip>
+      During your trial, you can add unlimited phone numbers to test the service. After the trial period, pricing is $8.99 per month per phone number.
+    </Tip>
+  </Step>
+  
+  <Step title="Add and verify your phone number">
+    For WhatsAble to send messages through your WhatsApp account:
+    
+    1. In your WhatsAble dashboard, navigate to **Verified Numbers**
+    2. Click **Add New Number**
+    3. Enter your phone number (with country code)
+    4. You'll receive a WhatsApp verification code
+    5. Enter the verification code in the WhatsAble dashboard
+    
+    <Frame caption="Adding and verifying a phone number">
+      <img src="/images/verify_number1.gif" alt="WhatsAble node selection" />
+    </Frame>
+    
+    <Note>
+      **Multiple numbers?** You only need to complete the verification process for your first phone number. For additional numbers, simply add them and save—no verification required.
+    </Note>
+  </Step>
+  
+  <Step title="Get your API key">
+    To connect WhatsAble with Make, you'll need your API key:
+    
+    1. In your WhatsAble dashboard, go to **API Keys**
+    2. Copy your unique API key
+    3. Store it securely—you'll need it for the integration
+    
+    <Frame>
+      <img src="/images/whatsable_apikey.png" alt="WhatsAble Api Keys" />
+    </Frame>
+  </Step>
+</Steps>
 
-## 📱 Step 2: Add & Verify Your Phone Number
+## Connect WhatsAble to Make
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-  <ol className="list-decimal list-inside text-base text-gray-800">
-    <li>Go to <span className="font-bold">Verified Numbers</span> in your WhatsAble dashboard.</li>
-    <li>Add your phone number and receive a <span className="font-bold">WhatsApp verification code</span>.</li>
-    <li>Copy and paste the verification code into WhatsAble.</li>
-    <li>✅ <span className="font-bold">Done! Your number is verified.</span></li>
-  </ol>
+Now that you have WhatsAble set up, let's connect it to Make to automate your workflows.
 
-  <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-    <p className="font-semibold text-blue-800">Additional Numbers:</p>
-    - You only need to verify the **first phone number**.
-    - For additional numbers, simply **add and save** without verification.
-  </div>
-</div>
+<Steps>
+  <Step title="Set up your Make Zaps">
+    1. Log in to your Make account
+    2. Create a new workflow by clicking **+ Create a new scenario**
+    3. (Optional) Add a trigger module of your choice:
+       - Popular triggers include Google Forms, Jotform, ClickUp, or a Schedule trigger
+       - Connect and configure your trigger according to your use case
 
----
+    <Frame caption="Setting up Make module">
+      <img src="/images/whatsable_make1.gif" alt="Setting up Make module" />
+    </Frame>
+  </Step>
+  
+  <Step title="Add the WhatsAble module">
+    1. Click the **+** button to add a new module
+    2. Search for "WhatsAble" in the apps or modules library
+    3. Select the app with the official WhatsAble logo
 
-## 🗝️ Step 3: Get Your API Key
+    <Frame caption="Adding the WhatsAble module">
+      <img src="/images/whatsable_make2.gif" alt="Adding the WhatsAble module" />
+    </Frame>
+  </Step>
+  
+  <Step title="Configure WhatsAble credentials">
+    <Accordion title="Credential Setup" defaultOpen>
+      1. Once you click on WhatsAble module, select **Send a WhatsApp Message** from the **ACTIONS** list
+      2. Click **Create a connection** in the **Connection** section of WhatsAble module and you will be prompted to enter your API Key
+      3. Enter your WhatsAble API key that you copied earlier
+      4. Rename your connection name if needed
+      4. Click **Save** to store your credential
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-  <ol className="list-decimal list-inside text-base text-gray-800">
-    <li>Navigate to <span className="font-bold">API Keys</span> in your dashboard.</li>
-    <li>Copy your <span className="font-bold">unique API key</span> – you'll need this for integration.</li>
-  </ol>
-</div>
+    <Frame caption="Configuring WhatsAble credentials">
+      <img src="/images/whatsable_make3.gif" alt="Configuring WhatsAble credentials" />
+    </Frame>
+    </Accordion>
+  </Step>
+  
+  <Step title="Configure your message">
+    Complete the required fields:
+    
+    <ResponseField name="Phone" type="string" required>
+      Select the recipient's phone number (In **Your verified WhatsApp number exactly as listed in the dashboard** dropdown, you'll see all phone numbers added in your WhatsAble dashboard's **Verified Numbers** menu.)
+    </ResponseField>
+    
+    <ResponseField name="Message Body" type="string" required>
+      Type your message text or use variables from previous steps
+    </ResponseField>
+    
+    <Expandable title="Optional Parameters">
+      <ResponseField name="File > Attachment URL (must be publicly available)" type="file">
+        Enter public URL of a file, image, or video to send with your message
+      </ResponseField>
+      
+      <ResponseField name="File Name" type="string">
+        Specify a custom filename for your attachment
+      </ResponseField>
+      
+      <ResponseField name="Additional Parameters" type="object">
+        Customize advanced options as needed
+      </ResponseField>
+    </Expandable>
 
----
+    <Frame caption="Configuring message">
+      <img src="/images/whatsable_make4.gif" alt="Configuring message" />
+    </Frame>
+  </Step>
+  
+  <Step title="Test and activate your workflow">
+    1. Click **Save** to save your message configuration
+    2. Right click on the WhatsAble module and select **Run this module only** to verify the module is working correctly
+        - or click **Run once** in the bottom-left corner of the screen to test the entire scenario
+    3. If the test is successful, you'll see a confirmation message
+    4. Click **Save** icon in the bottom-left corner to save your scenario (You can also set timer intarval for the workflow)
+    5. Toggle the **Active** switch in the bottom-left corner with time to activate your workflow
+    <Frame caption="Testing and activating your workflow">
+      <img src="/images/whatsable_make5.gif" alt="Testing and activating your workflow" />
+    </Frame>
+  </Step>
+</Steps>
 
-## ⚡️ Step 4: Connect WhatsAble to Make.com
+## Example use cases
 
-### 🛠️ 1️⃣ Set Up Your Make.com Scenario
+<CardGroup cols={2}>
+  <Card title="Customer Onboarding" icon="user-plus">
+    Send a welcome message when a new customer signs up
+  </Card>
+  
+  <Card title="Order Notifications" icon="box-check">
+    Update customers when their order status changes
+  </Card>
+  
+  <Card title="Appointment Reminders" icon="calendar">
+    Automatically send reminders before scheduled appointments
+  </Card>
+  
+  <Card title="Lead Follow-up" icon="user-check">
+    Send personalized messages to new leads from your form submissions
+  </Card>
+  
+  <Card title="Support Ticket Updates" icon="ticket">
+    Notify customers when their support ticket status changes
+  </Card>
+</CardGroup>
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-  <ol className="list-decimal list-inside text-base text-gray-800">
-    <li>Go to <span className="font-bold">Make.com</span> and create a new scenario.</li>
-    <li>Search for <span className="font-bold">WhatsAble</span> and select the <span className="font-bold">Send Message</span> action.</li>
-    <li>Click <span className="bg-blue-100 px-2 py-1 rounded">Connect New Account</span> and enter your <span className="font-bold">WhatsAble API Key</span>.</li>
-  </ol>
-</div>
+## Workflow Diagram
 
-### 💬 2️⃣ Configure Your Message
+<Frame caption="Sample WhatsAble Make Workflow">
+  ```mermaid
+  flowchart LR
+    A[Trigger Node] --> B[Data Transformation]
+    B --> C[WhatsAble Node]
+    C --> D{Message Sent?}
+    D -->|Yes| E[Success Path]
+    D -->|No| F[Error Handling]
+    E --> G[Additional Actions]
+    F --> H[Retry Logic]
+  ```
+</Frame>
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-  <ol className="list-decimal list-inside text-base text-gray-800">
-    <li>Select the <span className="font-bold">phone number</span> you want to send a message to.</li>
-    <li>Type your <span className="font-bold">message content</span>.</li>
-    <li>(Optional) Attach <span className="font-bold">files</span> like PDFs, images, or videos.</li>
-  </ol>
-</div>
+## Troubleshooting
 
-### 🤖 3️⃣ Automate Message Delivery
+<AccordionGroup>
+  <Accordion title="Message not being sent?" icon="circle-exclamation">
+    <Steps>
+      <Step title="Verify Account Active">
+      Verify that your WhatsAble account is active.
+      </Step>
+      <Step title="Phone Number Verification">
+      Check that your phone number is properly verified.
+      </Step>
+      <Step title="API Key in Make">
+      Ensure your API key is entered correctly in Make.
+      </Step>
+      <Step title="Recipient Number Format">
+      Confirm that the recipient's phone number is in the correct format (including country code).
+      </Step>
+    </Steps>
+  </Accordion>
+  
+  <Accordion title="File attachments not working?" icon="file-exclamation">
+    <Steps>
+      <Step title="File Size Limit">
+      Check that the file size is under 16 MB.
+      </Step>
+      <Step title="Supported File Type">
+      Verify the file type is supported by WhatsApp.
+      </Step>
+      <Step title="Accessibility">
+      Ensure the file path or URL is accessible.
+      </Step>
+    </Steps>
+  </Accordion>
+</AccordionGroup>
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-  <ol className="list-decimal list-inside text-base text-gray-800">
-    <li>Choose a trigger app (e.g., <span className="font-bold">Google Forms, Jotform, ClickUp</span>).</li>
-    <li>Set up conditions (e.g., "When a new form is submitted, send a WhatsApp message").</li>
-    <li>Click <span className="bg-green-100 px-2 py-1 rounded">Save & Run</span> – WhatsAble will now send messages <span className="font-bold">automatically</span>!</li>
-  </ol>
-</div>
+## Need help?
 
----
+Our support team is ready to assist you:
 
-## 📤 Sending Messages to Multiple Numbers
+<CardGroup cols={3}>
+  <Card title="Email support" icon="envelope" href="mailto:team@whatsable.app">
+    Contact team@whatsable.app
+  </Card>
+  <Card title="Schedule a demo" icon="calendar" href="https://tidycal.com/axelmeta/whatsapp-notifications-by-whatsable">
+    Book a personalized walkthrough
+  </Card>
+  <Card title="Live chat" icon="message-dots" href="">
+    Click the green chat button in the bottom right corner of the Notifier dashboard
+  </Card>
+</CardGroup>
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-  <ol className="list-decimal list-inside text-base text-gray-800">
-    <li>Click the <span className="font-bold">three dots</span> next to your message action in Make.com.</li>
-    <li>Select <span className="font-bold">Duplicate</span> and update the phone number.</li>
-    <li>Repeat this for each recipient.</li>
-  </ol>
-</div>
-
----
-
-## 💡 Need Help?
-
-<div className="bg-blue-50 p-6 rounded-lg my-6">
-  <p className="mb-4">If you need assistance setting up <span className="font-bold">Make.com or Zapier</span>, our team is happy to help!</p>
-  - **Chat with us:** Click the green chat button in the bottom right corner of WhatsAble.
-  - **Schedule a demo:** Find the link in your **welcome email** or contact our support team.
-</div>
-
----
-
-<div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-8 rounded-lg my-8">
-  <h2 className="text-2xl font-bold mb-4">🚀 Start Automating Now!</h2>
-  <div className="space-y-4">
-    <a href="https://www.whatsable.app/" className="block bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
-      Try WhatsAble on Make.com
-    </a>
-  </div>
-</div> 
+<Info>
+  For additional automation platform integrations (Zapier, n8n, etc.), please contact our support team or check our integration documentation.
+</Info>
