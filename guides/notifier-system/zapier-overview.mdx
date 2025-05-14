@@ -1,134 +1,426 @@
 ---
 title: 'Zapier'
-description: 'Overview of Zapier integration with Notifyer System.'
+description: 'Learn how to seamlessly integrate Zapier with the Notifyer System for enterprise-level WhatsApp automation'
+icon: 'bolt'
 ---
 
-# Zapier Integration Overview
+# Notifyer System Integration with Zapier
 
-<div className="bg-blue-50 p-6 rounded-lg my-6">
-  <p className="text-lg">
-    Zapier is a powerful automation tool that allows users to connect their Notifyer System with thousands of other apps (7,000+ integrations). With Zapier, users can automate workflows, send messages, and manage their WhatsApp Business Account seamlessly. This section provides an overview of how Zapier integrates with the Notifyer System.
-  </p>
-</div>
+<Frame caption="Automate your WhatsApp messaging workflows with Zapier and Notifyer System">
+  <img src="/images/notifyer_n8n_svg.svg" className="rounded-xl" />
+</Frame>
 
----
+<Tip>
+  This guide walks you through connecting Notifyer System with Zapier to create powerful automated WhatsApp messaging workflows for your business.
+</Tip>
 
-## Key Features of Zapier Integration
+## Prerequisites
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-1. **Automated Workflows**: Create "Zaps" to automate repetitive tasks between Notifyer System and other apps.
-2. **Send Messages**: Automate sending WhatsApp messages (with or without templates) via Zapier.
-3. **Receive Replies**: Capture and manage replies from recipients directly in your connected apps.
-4. **Template Management**: Use pre-approved WhatsApp templates to send automated messages.
-5. **Multi-App Integration**: Connect Notifyer System with other tools like Google Sheets, Slack, CRM systems, and more.
-</div>
+Before getting started, make sure you have:
 
----
+<CardGroup cols={2}>
+  <Card title="Notifyer System Account" icon="user">
+    Active Notifyer System account with a subscription plan (Monthly or Pay-as-you-go)
+  </Card>
+  <Card title="Zapier Account" icon="user">
+    Access to [Zapier](https://zapier.com/sign-up/) workflow automation platform
+  </Card>
+</CardGroup>
 
-## Step 1: Setting Up Zapier Integration
+<Tip>
+  New to Notifyer System? [Sign up here](https://console.notifyer-systems.com/)
+</Tip>
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-To get started with Zapier, users need to connect their Notifyer System account to Zapier. Here's how:
+## Setting up your Notifyer System account
 
-1. **Log in to Zapier**: Sign up or log in to your Zapier account.
-2. **Search for Notifyer System**: In the Zapier app directory, search for "Notifyer System."
-3. **Connect Your Account**: Authenticate your Notifyer System account by providing the necessary credentials.
-4. **Create a Zap**: Set up a workflow (Zap) by selecting a trigger (e.g., new form submission) and an action (e.g., send a WhatsApp message).
-</div>
+<Steps>
+  <Step title="Complete the Embedding Process">
+    Before sending WhatsApp messages, you must complete the platform embedding process, which connects your WhatsApp Business account to Notifyer System.
 
----
+    <Info>
+      The embedding process is required by Meta to ensure proper business verification and compliance with WhatsApp Business Platform policies.
+    </Info>
+  </Step>
+  
+  <Step title="Set up message templates">
+    Notifyer System provides two methods for sending WhatsApp messages:
 
-## Step 2: Sending Messages via Zapier
+    <Accordion title="Option A: Template messages" defaultOpen={true}>
+      <p>WhatsApp templates are pre-approved message formats that allow for personalization while maintaining compliance with WhatsApp policies.</p>
+      
+      <Steps>
+        <Step title="Navigate to Templates">
+          Go to **Your Templates** in your Notifyer dashboard
+        </Step>
+        <Step title="Create Template">
+          Click the **Create Template** tab at the top of the page
+        </Step>
+        <Step title="Fill out the form">
+          Complete the template creation form with the following details:
+          
+          <ResponseField name="Template Name" type="string" required>
+            Choose a descriptive name for internal reference
+          </ResponseField>
+          <ResponseField name="Category" type="string" required>
+            Select the appropriate message category
+          </ResponseField>
+          <ResponseField name="Language" type="string" required>
+            Choose your template's primary language
+          </ResponseField>
+          <ResponseField name="Message Body" type="string" required>
+            Craft your message content
+          </ResponseField>
+          <ResponseField name="Variables" type="string">
+            Add placeholders using `{{1}}`, `{{2}}` format for personalization
+          </ResponseField>
+          <ResponseField name="Header" type="image | document | video">
+            Optional: Add an image, document, or video header
+          </ResponseField>
+          <ResponseField name="Footer" type="string">
+            Optional: Add a standard footer message
+          </ResponseField>
+          <ResponseField name="Buttons" type="button[]">
+            Optional: Configure call-to-action buttons
+          </ResponseField>
+        </Step>
+        <Step title="Submit for review">
+          Click **Preview and Submit**
+        </Step>
+      </Steps>
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-Users can send WhatsApp messages (with or without templates) using Zapier. Here's how it works:
+      <Frame caption="Template Creation Interface">
+        <img src="https://notifyer.app/docs/images/template-creation.png" alt="Template Creation Interface" />
+      </Frame>
 
-### Sending Template Messages
+      <Warning>
+        Templates typically get reviewed within 24 hours. Creating compliant templates that avoid promotional language increases approval chances.
+      </Warning>
+    </Accordion>
 
-- **Trigger**: Choose an event that triggers the message (e.g., new row in Google Sheets).
-- **Action**: Select "Send WhatsApp Template Message" as the action.
-- **Template Selection**: Choose a pre-approved template from your Notifyer System account.
-- **Customize Message**: Add dynamic fields (e.g., recipient name, order number) to personalize the message.
-- **Send**: The message will be sent automatically when the trigger condition is met.
+    <Accordion title="Option B: Non-template messages">
+      <p>For simpler communications, you can send non-template messages that include:</p>
+      
+      <CardGroup cols={2}>
+        <Card title="Text" icon="message-text">
+          Plain text messages within the 24-hour window
+        </Card>
+        <Card title="Images" icon="image">
+          Photos and graphics in supported formats
+        </Card>
+        <Card title="Documents" icon="file-pdf">
+          PDFs, Word docs, and other file types
+        </Card>
+        <Card title="Videos" icon="video">
+          MP4 and other supported video formats
+        </Card>
+      </CardGroup>
 
-![templates-zapier.png](https://i.ibb.co/Rp2xL8L0/templates-zapier.png)
+      <Note>
+        Non-template messages can only be sent within the 24-hour customer service window after a customer initiates contact with your business.
+      </Note>
+    </Accordion>
+  </Step>
+  
+  <Step title="Get your API key">
+    To connect Notifyer System with Zapier, you'll need an API key:
 
-### Sending Non-Template Messages
+    1. In your Notifyer dashboard, navigate to **API Keys**
+    2. Copy your unique API key (keep this secure - it provides access to your WhatsApp messaging)
 
-- **Trigger**: Choose an event that triggers the message (e.g., new email in Gmail).
-- **Action**: Select "Send WhatsApp Message" as the action.
-- **Message Type**: Choose the type of message (text, image, video, document, audio, or interactive buttons).
-- **Customize Content**: Add the message content and media files (if applicable).
-- **Send**: The message will be sent automatically when the trigger condition is met.
+    <Frame caption="API Key Location">
+      <img src="https://notifyer.app/docs/images/api-key-location.png" alt="API Key Location" />
+    </Frame>
+  </Step>
+</Steps>
 
-![zapier-send-message-with-without-template.png](https://i.ibb.co/60jhJvQj/zapier-send-message-with-without-template.png)
-</div>
+## Connect Notifyer System to Zapier
 
----
+Now that you have your Notifyer System account configured, let's connect it to Zapier to automate your messaging workflows.
 
-## Step 3: Managing Replies
+<Steps>
+  <Step title="Connect Notifyer System to Zapier">
+    1. Log in to your Zapier account
+    2. Navigate to Notifyer System dashboard and select **Connect to Zapier** in the side menu
+    3. Click **Continue** in the connection guide popup
+    4. Select Accept & Build a Zap on the invitation page
+    <Check>
+      You're now ready to create Zaps with the Notifyer System app
+    </Check>
+  </Step>
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-Zapier can also capture replies from recipients and send them to your preferred app (e.g., CRM, Google Sheets, or Slack).
+  <Step title="Set up your Zapier Zaps">
+    1. Log in to your Zapier account
+    2. Create a new workflow/Zap by clicking **+ Create** and select **Zaps**/**New Zap**
+    3. Add a trigger step of your choice:
+       - Popular triggers include Google Forms, Jotform, ClickUp, or a Schedule trigger
+       - Connect and configure your trigger according to your use case
 
-1. **Trigger**: Set up a trigger for "New WhatsApp Reply."
-2. **Action**: Choose an action to handle the reply (e.g., add to Google Sheets or send a notification to Slack).
-3. **Automate**: Replies will be automatically logged or forwarded based on your workflow.
-</div>
+    <Frame caption="Setting up Zapier Zaps">
+      <img src=" " alt="Setting up Zapier Zaps" />
+    </Frame>
+  </Step>
+  
+  <Step title="Add the Notifyer System app">
+    1. Select the next **Action** step or click the **+** button to add a new step
+    2. Search for "Notifyer System" in the apps and tools library
+    3. Select the app with the official Notifyer System logo
 
----
+    <Frame caption="Adding the Notifyer System app">
+      <img src=" " alt="Adding the WhatsAble app" />
+    </Frame>
+  </Step>
+  
+  <Step title="Configure Notifyer System credentials">
+    <Accordion title="Credential Setup" defaultOpen>
+      1. In the Notifyer System app Setup, select **Send WhatsApp Message** in the **Action event** dropdown
+      2. Click **Sign In** in the **Account** field and you will be prompted to enter your API Key
+      3. Enter your Notifyer System API key that you copied earlier      
+      4. Click **Yes, Continue to Notifyer System** to store your credential
+      5. Next, click the **Continue** button in the Setup screen to proceed to the **Configure** section
 
-## Step 4: Webhook Setup
+    <Frame caption="Configuring Notifyer System credentials">
+      <img src="   " alt="Configuring Notifyer System credentials" />
+    </Frame>
+    </Accordion>
+  </Step>
+  
+    <Step title="Configure your message">
+    Depending on your messaging needs, choose one of the following operations:
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-For advanced users, Zapier supports webhooks to create custom integrations. Here's how to set it up:
+    <Tabs>
+      <Tab title="Template Messages">
+        <Steps>
+          <Step title="Select operation">
+            In the **Operation Name or ID** dropdown, select **Send Template (Notifyer)**
+          </Step>
+          <Step title="Configure message">
+            Complete the required fields:
+            
+            <ResponseField name="Phone Number" type="string" required>
+              Enter the recipient's phone number with country code (e.g., +14155552671) or use dynamic data from previous nodes
+            </ResponseField>
+            <ResponseField name="Template Name or ID" type="string" required>
+              Select from your pre-approved templates in the dropdown
+            </ResponseField>
+            <ResponseField name="Template Variables" type="string[]">
+              Fill in values for each variable in your template, mapping them to dynamic data when applicable
+            </ResponseField>
+          </Step>
+          <Step title="Complete message details">
+            Based on your selected message type, fill in the required fields:
+            - For text messages: Enter your message content
+            - For media messages: Provide a publicly accessible URL to your file
+            - Optional caption (for media files)
+          </Step>
+        </Steps>
 
-1. **Trigger**: Use a webhook trigger to capture events from Notifyer System.
-2. **Action**: Define the action to be performed when the webhook is triggered (e.g., send a message or update a database).
-3. **Test**: Test the webhook to ensure it works as expected.
+        <Frame caption="Template Message Configuration">
+          <img src="https://notifyer.app/docs/images/n8n-template-config.png" alt="Template Message Configuration" />
+        </Frame>
+      </Tab>
+      <Tab title="Non-Template Messages">
+        <Steps>
+          <Step title="Select operation">
+            In the **Operation Name or ID** dropdown, select **Send Non Template Message**
+          </Step>
+          <Step title="Enter phone number">
+            Enter the **Phone Number** with country code
+          </Step>
+          <Step title="Select message type">
+            Choose from the following message types:
+            
+            <CardGroup cols={2}>
+              <Card title="Text Message" icon="message">
+                For plain text messages
+              </Card>
+              <Card title="Document Message" icon="file">
+                For sending documents (PDF, Word, etc.)
+              </Card>
+              <Card title="Image Message" icon="image">
+                For sending images (JPEG, PNG, etc.)
+              </Card>
+              <Card title="Video Message" icon="video">
+                For sending videos (MP4, 3GP, etc.)
+              </Card>
+            </CardGroup>
+          </Step>
+          <Step title="Complete message details">
+            Based on your selected message type, fill in the required fields:
+            - For text messages: Enter your message content
+            - For media messages: Provide a publicly accessible URL to your file
+            - Optional caption (for media files)
+          </Step>
+        </Steps>
 
-![webhook-setup.png](https://i.ibb.co/Q3gR2yvQ/webhook-setup.png)
-</div>
+        <Warning>
+          For all media types, ensure your file URLs are publicly accessible and match the supported file formats.
+        </Warning>
 
----
+        <Frame caption="Non-Template Message Configuration">
+          <img src="https://notifyer.app/docs/images/n8n-non-template-config.png" alt="Non-Template Message Configuration" />
+        </Frame>
+      </Tab>
+    </Tabs>
+  </Step>
+  
+  <Step title="Test and activate your Zap">
+    1. Click **Continue** and then click **Test step** in the **Test** to verify it's working correctly
+    2. If the test is successful, you'll see a confirmation message
+    3. Click **Publish** to save your entire Zap
+    5. Toggle the **Active** switch in the top-left corner to activate your Zap
+  </Step>
+</Steps>
 
-## Step 5: Example Use Cases
+## Example use cases
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-Here are some practical examples of how Zapier can be used with Notifyer System:
+<CardGroup cols={2}>
+  <Card title="Customer Onboarding" icon="user-plus">
+    Send a welcome message when a new customer signs up
+  </Card>
+  
+  <Card title="Order Notifications" icon="box-check">
+    Update customers when their order status changes
+  </Card>
+  
+  <Card title="Appointment Reminders" icon="calendar">
+    Automatically send reminders before scheduled appointments
+  </Card>
+  
+  <Card title="Lead Follow-up" icon="user-check">
+    Send personalized messages to new leads from your form submissions
+  </Card>
+  
+  <Card title="Support Ticket Updates" icon="ticket">
+    Notify customers when their support ticket status changes
+  </Card>
+</CardGroup>
 
-1. **Order Notifications**:
+## Workflow Diagram
 
-   - Trigger: New order in Shopify.
-   - Action: Send a WhatsApp message to the customer with order details.
+<Frame caption="Sample Notifyer System Zapier Workflow">
+  ```mermaid
+  flowchart LR
+    A[Trigger Step] --> B[Data Transformation]
+    B --> C[Notifyer System App]
+    C --> D{Message Sent?}
+    D -->|Yes| E[Success Path]
+    D -->|No| F[Error Handling]
+    E --> G[Additional Actions]
+    F --> H[Retry Logic]
+  ```
+</Frame>
 
-2. **Appointment Reminders**:
+## Example use cases
 
-   - Trigger: New event in Google Calendar.
-   - Action: Send a WhatsApp reminder to the client.
+<CardGroup cols={3}>
+  <Card title="Order confirmations" icon="box-check">
+    Send automatic order confirmations when new orders are placed
+  </Card>
+  <Card title="Appointment reminders" icon="calendar">
+    Schedule reminders before upcoming appointments
+  </Card>
+  <Card title="Lead notifications" icon="user-plus">
+    Alert your sales team when new leads come in
+  </Card>
+  <Card title="Customer support" icon="headset">
+    Route support inquiries to the appropriate team member
+  </Card>
+  <Card title="Delivery updates" icon="truck">
+    Keep customers informed about their delivery status
+  </Card>
+  <Card title="Payment reminders" icon="credit-card">
+    Send automatic payment reminders for overdue accounts
+  </Card>
+</CardGroup>
 
-3. **Lead Management**:
+## Best practices
 
-   - Trigger: New lead in HubSpot.
-   - Action: Send a WhatsApp message to the sales team.
+<AccordionGroup>
+  <Accordion title="Test thoroughly" icon="vial">
+    Always test your workflows with test phone numbers before activating them for production use.
+  </Accordion>
+  <Accordion title="Use templates" icon="file-lines">
+    Whenever possible, use pre-approved templates for better deliverability and compliance.
+  </Accordion>
+  <Accordion title="Add personalization" icon="user">
+    Include customer names and specific details to increase engagement and response rates.
+  </Accordion>
+  <Accordion title="Follow WhatsApp policies" icon="shield-check">
+    Ensure all message content complies with WhatsApp Business policies to avoid account restrictions.
+  </Accordion>
+  <Accordion title="Monitor performance" icon="chart-line">
+    Regularly check your message delivery rates in your Notifyer dashboard.
+  </Accordion>
+</AccordionGroup>
 
-4. **Feedback Collection**:
-   - Trigger: New response in Google Forms.
-   - Action: Send a WhatsApp message requesting feedback.
-</div>
+## Troubleshooting
 
----
+<AccordionGroup>
+  <Accordion title="Messages not sending?" icon="circle-exclamation">
+    <Steps>
+      <Step title="Verify API key">
+        Ensure your API key is entered correctly in the Zapier credentials
+      </Step>
+      <Step title="Check phone numbers">
+        Confirm phone numbers are in the correct international format (e.g., +14155552671)
+      </Step>
+      <Step title="Check subscription">
+        Verify your Notifyer subscription is active and has available credits
+      </Step>
+      <Step title="Template verification">
+        For template messages, ensure you're using an approved template
+      </Step>
+    </Steps>
+  </Accordion>
+  
+  <Accordion title="Template errors?" icon="file-exclamation">
+    <Steps>
+      <Step title="Variable check">
+        Verify all required variables are included in your template message
+      </Step>
+      <Step title="Format verification">
+        Check that variable formats match the expected values (text, number, date, etc.)
+      </Step>
+      <Step title="Template name">
+        Ensure you're using the correct template name exactly as it appears in your dashboard
+      </Step>
+    </Steps>
+  </Accordion>
+  
+  <Accordion title="Media not displaying?" icon="image">
+    <Steps>
+      <Step title="URL access">
+        Confirm your media URLs are publicly accessible (test in an incognito browser)
+      </Step>
+      <Step title="File format">
+        Verify the file format is supported by WhatsApp
+      </Step>
+      <Step title="File size">
+        Check that file sizes are within WhatsApp limits:
+        - Images: up to 5MB
+        - Videos: up to 16MB
+        - Documents: up to 100MB
+      </Step>
+    </Steps>
+  </Accordion>
+</AccordionGroup>
 
-## Conclusion
+## Need help?
 
-<div className="bg-blue-50 p-6 rounded-lg my-6">
-Zapier integration with Notifyer System empowers users to automate their WhatsApp messaging workflows, saving time and improving efficiency. By connecting Notifyer System with Zapier, users can send messages, manage replies, and integrate with thousands of other apps seamlessly.
-</div>
+Our support team is ready to assist you:
 
----
+<CardGroup cols={3}>
+  <Card title="Email support" icon="envelope" href="mailto:team@whatsable.app">
+    Contact team@whatsable.app
+  </Card>
+  <Card title="Schedule a demo" icon="calendar" href="https://tidycal.com/axelmeta/notifyer-systems-demo">
+    Book a personalized walkthrough
+  </Card>
+  <Card title="Live chat" icon="message-dots" href="">
+    Click the green chat button in the bottom right corner of the Notifyer System dashboard
+  </Card>
+</CardGroup>
 
-<div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-8 rounded-lg my-8">
-  <h2 className="text-2xl font-bold mb-4">🚀 Get Started with Zapier and Notifyer System!</h2>
-</div>
-
---- 
+<Info>
+  For additional automation platform integrations (Make.com, Zapier, etc.), please contact our support team or check our integration documentation.
+</Info>

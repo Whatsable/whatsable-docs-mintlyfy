@@ -1,138 +1,315 @@
 ---
 title: 'Embedding Process'
-description: 'Step-by-step guide to embedding your WhatsApp Business Account into the Notifyer System.'
+description: 'Connect your WhatsApp Business Account to the Notifyer System to enable automated messaging capabilities'
+icon: 'whatsapp'
 ---
 
-# Embedding Process Documentation
+# WhatsApp Business Account Integration
 
-<div className="bg-blue-50 p-6 rounded-lg my-6">
-  <p className="text-lg">
-    This section provides a step-on-step guide on how users can embed their WhatsApp Business Account into the Notifyer System. The process involves connecting the account, setting up business information, and creating a WhatsApp Business profile.
-  </p>
-</div>
+<Frame caption="Connect your WhatsApp Business account to unlock powerful automated messaging">
+  <img className="block dark:hidden" src="/images/whatsapp-connect-light.png" alt="WhatsApp Business Integration" />
+  <img className="hidden dark:block" src="/images/whatsapp-connect-dark.png" alt="WhatsApp Business Integration" />
+</Frame>
 
----
+## Overview
 
-## Step 1: Dashboard Overview
+Notifyer System enables businesses to send automated WhatsApp messages to customers through a direct integration with the WhatsApp Business Platform. This guide walks you through the embedding process to connect your WhatsApp Business Account with Notifyer System.
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-Once the embedding process is complete, users will be directed to the Notifyer System dashboard, where they can start creating templates and managing their WhatsApp Business Account.
+<Note>
+  This process uses Meta's Embedded Signup flow, which allows you to create or connect your WhatsApp Business Account directly within Notifyer System.
+</Note>
 
-![home-dashboard.png](https://i.ibb.co/21tdykxx/home-dashboard.png)
+## Prerequisites
 
-### Description:
+<Check>
+  Active Notifyer System account with a subscription plan or pay-as-you-go credit
+</Check>
 
-- The dashboard provides options to:
-  - Sign up.
-  - Create templates.
-  - View existing templates.
-  - Embed accounts.
-- Users can get started with sending automated messages using the WhatsApp API.
-</div>
+<Check>
+  Meta Business Portfolio (or willingness to create one during the process)
+</Check>
 
----
+<Check>
+  A phone number that isn't currently associated with any WhatsApp account
+</Check>
 
-## Step 2: Log in with Facebook
+<Warning>
+  The phone number you use for your WhatsApp Business Account cannot have an existing WhatsApp account associated with it. If you're using a number that already has WhatsApp, you'll need to delete that account or use a different number.
+</Warning>
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-To begin the embedding process, users need to log in with their existing Facebook account. This step ensures that the Notifyer System can access the necessary permissions to manage the WhatsApp Business Account.
+## Integration Process
 
-![embedding-flow-1.png](https://i.ibb.co/YTjVcmWy/embedding-flow-1.png)
+<Steps>
+  <Step title="Access the Connection Flow">
+    <Accordion title="Navigating to the Connection Page" defaultOpen={true}>
+      1. Log in to your Notifyer System dashboard
+      2. Navigate to **Your Templates** section
+      3. Make sure you're on the **Connect to WhatsApp** tab
+      4. Click the **Connect your WhatsApp Number** button in the center of the page
+    </Accordion>
+    
+    <Tip>
+      You can track your progress through the onboarding process using the steps indicator in the bottom-left corner of the screen.
+    </Tip>
+  </Step>
 
-### Description:
+  <Step title="Connect with Facebook">
+    1. Log in with your Facebook account when prompted
+    2. If already logged in, click **Continue as [your Facebook username]**
+    3. Review the permissions Notifyer System is requesting
+    4. Click **Get Started** to begin the configuration process
+  </Step>
 
-- The user is prompted to continue with their Facebook account (e.g., MD Sajjad Bhuiyan Taki).
-- Notifyer System will receive the user's name and profile picture but will not post to Facebook without permission.
-- Users must log in with an existing Facebook account, as new accounts won't be approved for Business Manager.
-- By continuing, the user grants Notifyer System ongoing access to shared information.
-</div>
+  <Step title="Complete the 6-Step Configuration">
+    <Accordion title="Step 1: Business Information" icon="building">
+      <ResponseField name="Business Portfolio" type="dropdown" required>
+        <Expandable title="Options">
+          <ResponseField name="Select Existing Portfolio" type="option">
+            Choose a business portfolio you've already configured in Meta Business Suite
+          </ResponseField>
+          <ResponseField name="Create New Portfolio" type="option">
+            Set up a new business portfolio from scratch
+          </ResponseField>
+        </Expandable>
+      </ResponseField>
 
----
+      <Info>
+        If using an existing portfolio, your business name, website, and country will be automatically populated from your Meta Business configuration.
+      </Info>
 
-## Step 3: Connect Your Account
+      <ResponseField name="For New Portfolios" type="object">
+        <Expandable title="Required Fields">
+          <ResponseField name="Business Name" type="string" required>
+            Your official business name (must be unique among your portfolios)
+          </ResponseField>
+          <ResponseField name="Business Email Address" type="string" required>
+            A valid email that can receive verification messages
+          </ResponseField>
+          <ResponseField name="Business Website or Profile" type="string" required>
+            Your business website URL or social media profile
+          </ResponseField>
+          <ResponseField name="Country" type="string" required>
+            Country where your business is located
+          </ResponseField>
+        </Expandable>
+      </ResponseField>
+    </Accordion>
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-After logging in, users need to connect their WhatsApp Business Account to the Notifyer System. This step involves sharing account permissions.
+    <Accordion title="Step 2: Select WhatsApp Business Account" icon="message">
+      <ResponseField name="WhatsApp Business Account" type="radio" required>
+        <Expandable title="Options">
+          <ResponseField name="Create new account" type="option">
+            Recommended for first-time users (default option)
+          </ResponseField>
+          <ResponseField name="Select existing account" type="option">
+            Only available if you have existing WhatsApp Business accounts
+          </ResponseField>
+        </Expandable>
+      </ResponseField>
 
-![embedding-flow-2.png](https://i.ibb.co/jZ3cWh2b/embedding-flow-2.png)
+      <ResponseField name="WhatsApp Business Profile" type="radio" required>
+        <Expandable title="Options">
+          <ResponseField name="Create new profile" type="option">
+            Set up a fresh WhatsApp Business profile
+          </ResponseField>
+          <ResponseField name="Select existing profile" type="option">
+            Connect an existing WhatsApp Business profile
+          </ResponseField>
+        </Expandable>
+      </ResponseField>
+    </Accordion>
 
-### Description:
+    <Accordion title="Step 3: Business Profile Setup" icon="id-card">
+      <ResponseField name="WhatsApp Business Account Name" type="string" required>
+        The internal name of your account (used for management purposes)
+      </ResponseField>
 
-- Users are informed about the permissions they are sharing with Notifyer Systems, including:
-  - Adding or linking phone numbers.
-  - Creating message templates.
-  - Sending and receiving messages.
-  - Assigning users to the account.
-  - Accessing metrics.
-- By continuing, users agree to the WhatsApp Business Terms of Service, Meta Terms of Service, and Business Tools Terms of Service.
-</div>
+      <ResponseField name="WhatsApp Business Display Name" type="string" required>
+        <Warning>
+          This is the name your customers will see when receiving messages from your business. Choose carefully as it impacts brand recognition.
+        </Warning>
+      </ResponseField>
 
----
+      <ResponseField name="Category" type="dropdown" required>
+        Business category that best represents your industry (will be displayed on your profile)
+      </ResponseField>
+    </Accordion>
 
-## Step 4: Fill in Business Information
+    <Accordion title="Step 4: Phone Number Configuration" icon="phone">
+      <ResponseField name="Phone Number Method" type="radio" required>
+        <Expandable title="Options">
+          <ResponseField name="Add a new number (Recommended)" type="option">
+            Use your own business phone number
+          </ResponseField>
+          <ResponseField name="Free WhatsApp number (Not Recommended)" type="option">
+            WhatsApp will generate a +1 555 number (limited functionality)
+          </ResponseField>
+        </Expandable>
+      </ResponseField>
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-Users are required to provide their business information, which will be used to set up their WhatsApp Business profile.
+      <ResponseField name="Verification Method" type="radio" required>
+        <Expandable title="Options">
+          <ResponseField name="Text message" type="option">
+            Receive verification code via SMS
+          </ResponseField>
+          <ResponseField name="Phone call" type="option">
+            Receive verification code via automated call
+          </ResponseField>
+        </Expandable>
+      </ResponseField>
+    </Accordion>
 
-![embedding-flow-3.png](https://i.ibb.co/HDVBssSG/embedding-flow-3.png)
+    <Accordion title="Step 5: Number Verification" icon="shield-check">
+      Enter the verification code received via your selected method
+    </Accordion>
 
-### Description:
+    <Accordion title="Step 6: Payment Method Setup" icon="credit-card">
+      1. After verification, you'll see a "You're now ready to chat with people on WhatsApp" screen
+      2. Click the **Add Payment Method** button
+      3. You'll be redirected to the Facebook Business "Billing & Payments" page
+      4. Select "Payment Methods" from the left menu
+      5. Ensure you're on the "WhatsApp Business accounts" tab
+      6. Select your WhatsApp account from the dropdown (verify WhatsApp account ID)
+      7. Click "Add Payment Method" and provide the required information
+      8. Set your payment method as the default option
+    </Accordion>
+  </Step>
 
-- Users can select an existing business portfolio or create a new one.
-- Business information includes:
-  - Business name (e.g., Sajjad Delivery).
-  - Business website or profile page.
-  - Country (e.g., Portugal).
-  - Optional address.
-- Users can proceed to the next step after filling in the required details.
-</div>
+  <Step title="Complete Business Verification">
+    <Warning>
+      This step is critical for ensuring you can send messages without restrictions. Unverified businesses may experience limited functionality.
+    </Warning>
 
----
+    1. Navigate to Settings in your Facebook Business Manager
+    2. Select "WhatsApp accounts" under the "Accounts" section
+    3. Scroll down to the "Business verification" section
+    4. Click "Start verification" to access the Security Center
+    5. Complete the business verification process by providing the requested business information and documentation
+  </Step>
+</Steps>
 
-## Step 5: Create a WhatsApp Business Profile
+## Account Dashboard Overview
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-In this step, users create a WhatsApp Business profile that will be visible to their audience on WhatsApp.
+Once your WhatsApp Business Account is connected, you'll have access to the following tabs in the "Your Templates" section:
 
-![embedding-flow-4.png](https://i.ibb.co/84g6Cr8f/embedding-flow-4.png)
+<CardGroup cols={3}>
+  <Card title="Sign Up" icon="user-plus">
+    Connect your WhatsApp Business Account using the "Sign up with Facebook" option
+  </Card>
+  <Card title="Create Template" icon="pen-to-square">
+    Design message templates and submit them to Meta for approval
+  </Card>
+  <Card title="Templates" icon="clipboard-list">
+    View, manage, and monitor the approval status of your message templates
+  </Card>
+</CardGroup>
 
-### Description:
+## Integration Options
 
-- Users need to provide:
-  - WhatsApp Business Account Name (e.g., Sajjad Delivery).
-  - WhatsApp Business display name (must match the business name and adhere to WhatsApp guidelines).
-  - Business category (select the category that best describes the business).
-- This profile can be edited later via Meta Business Suite Settings.
-</div>
+After successfully embedding your WhatsApp Business Account, you can integrate Notifyer System with your preferred automation platform:
 
----
+<AccordionGroup>
+  <Accordion title="Make Integration" icon="lines-leaning">
+    Connect Notifyer System with Make to create powerful automation workflows.
+    
+    [View Make Documentation →](https://docs.whatsable.com/notifer/make)
+  </Accordion>
+  
+  <Accordion title="Zapier Integration" icon="bolt">
+    Integrate with Zapier to connect WhatsApp messaging with thousands of applications.
+    
+    [View Zapier Documentation →](https://docs.whatsable.com/notifer/zapier)
+  </Accordion>
+  
+  <Accordion title="n8n Integration" icon="diagram-project">
+    Use n8n for advanced workflow automation with WhatsApp messaging.
+    
+    [View n8n Documentation →](https://docs.whatsable.com/notifer/n8n)
+  </Accordion>
+  
+  <Accordion title="Direct API Integration" icon="code">
+    Implement custom integrations using our comprehensive API.
+    
+    [View API Documentation →](https://docs.whatsable.com/api-reference)
+  </Accordion>
+</AccordionGroup>
 
-## Step 6: Create or Select a WhatsApp Business Account
+## API Reference
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-If the user does not have an existing WhatsApp Business Account, they can create a new one during this step.
+<CardGroup cols={2}>
+  <Card title="Get Templates" icon="list" href="https://docs.whatsable.com/api-reference/get-templates">
+    Retrieve all your approved message templates
+  </Card>
+  <Card title="Send Template Message" icon="paper-plane" href="https://docs.whatsable.com/api-reference/send-template">
+    Send messages using your approved templates
+  </Card>
+  <Card title="Incoming Message" icon="inbox" href="https://docs.whatsable.com/api-reference/incoming-message">
+    Handle incoming messages from customers
+  </Card>
+  <Card title="Complete API Reference" icon="book" href="https://docs.whatsable.com/api-reference">
+    View our comprehensive API documentation
+  </Card>
+</CardGroup>
 
-![embedding-flow-if-not-bussiness-account.png](https://i.ibb.co/ycp2N8h3/embedding-flow-if-not-bussiness-account.png)
+## Alternative Option: Notifier
 
-### Description:
+<Info>
+  If the embedding process is too complex for your needs, you can use Notifier by WhatsAble instead, which allows you to send automated messages through our WhatsApp bot without going through the full embedding process.
+</Info>
 
-- Users can choose an existing WhatsApp Business Account or create a new one.
-- The new account will belong to the user's business portfolio.
-- Users can proceed to the next step after selecting or creating an account.
-</div>
+<Card title="Learn More About Notifier" icon="lightbulb" href="https://docs.whatsable.com/notifier">
+  Discover a simpler way to send automated WhatsApp messages using Notifier by WhatsAble
+</Card>
 
----
+## Troubleshooting
 
-## Conclusion
+<Accordion title="Verification Failed" icon="triangle-exclamation">
+  If your phone number verification fails:
+  
+  1. Ensure the phone number isn't already linked to a WhatsApp account
+  2. Wait 24 hours before trying again with the same number
+  3. Try a different verification method (SMS vs. call)
+  4. Contact support if issues persist
+</Accordion>
 
-<div className="bg-blue-50 p-6 rounded-lg my-6">
-The embedding process is designed to be straightforward, allowing users to connect their WhatsApp Business Account to the Notifyer System quickly. By following these steps, users can set up their business profile, create templates, and start automating messages via integrations like Zapier and Make.
-</div>
+<Accordion title="Business Verification Issues" icon="building-shield">
+  If you encounter problems with business verification:
+  
+  1. Ensure all business information is accurate and matches official documents
+  2. Provide clear, high-quality images of requested documentation
+  3. Allow 1-2 business days for verification review
+  4. Submit an appeal if verification is rejected
+</Accordion>
 
----
+## Resources
 
-<div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-8 rounded-lg my-8">
-  <h2 className="text-2xl font-bold mb-4">🚀 Get Started with Notifyer System!</h2>
-</div>
+<CardGroup cols={2}>
+  <Card title="Meta Business Suite" icon="facebook" href="https://business.facebook.com">
+    Manage your Meta business profiles and portfolios
+  </Card>
+  <Card title="WhatsApp Business Platform" icon="whatsapp" href="https://business.whatsapp.com/products/business-platform">
+    Learn more about the WhatsApp Business Platform
+  </Card>
+  <Card title="Notifyer Help Center" icon="headset" href="https://help.notifyer.com">
+    Get assistance with your Notifyer System integration
+  </Card>
+  <Card title="Embedded Signup Guide" icon="link" href="https://developers.facebook.com/docs/whatsapp/embedded-signup">
+    Meta's official documentation on embedded signup
+  </Card>
+</CardGroup>
 
----
+<Update label="May 14, 2025" description="v2.0.1">
+  ### Latest Updates
+  
+  * Enhanced business verification process guidance
+  * Added troubleshooting section for common integration issues
+  * Improved visual guidance for the 6-step configuration process
+</Update>
+
+<Update label="February 28, 2025" description="v2.0.0">
+  ### Major Release
+  
+  * Implemented direct integration with Meta's Embedded Signup
+  * Added support for existing WhatsApp Business accounts
+  * Streamlined payment method configuration
+</Update>

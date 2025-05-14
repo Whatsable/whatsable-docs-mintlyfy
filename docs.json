@@ -48,11 +48,11 @@
             "group": "Notifyer System",
             "pages": [
               "guides/notifier-system/embedding-process",
-              "guides/notifier-system/make-overview",
               "guides/notifier-system/zapier-overview",
+              "guides/notifier-system/make-overview",
               "guides/notifier-system/n8n-overview",
               {
-                "group": "API",
+                "group": "API Documentation",
                 "pages": [
                   "guides/notifier-system/api/get-templates",
                   "guides/notifier-system/api/template-message",

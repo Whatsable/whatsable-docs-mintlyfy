@@ -1,6 +1,7 @@
 ---
 title: 'Zapier'
 description: 'Learn how to automate WhatsApp messaging through Zapier with WhatsAble'
+icon: 'bolt'
 ---
 
 # WhatsAble Integration with Zapier
@@ -83,7 +84,7 @@ Now that you have WhatsAble set up, let's connect it to Zapier to automate your 
 <Steps>
   <Step title="Set up your Zapier Zaps">
     1. Log in to your Zapier account
-    2. Create a new workflow by clicking **+ Create** and select **Zaps**
+    2. Create a new workflow/Zap by clicking **+ Create** and select **Zaps**/**New Zap**
     3. Add a trigger step of your choice:
        - Popular triggers include Google Forms, Jotform, ClickUp, or a Schedule trigger
        - Connect and configure your trigger according to your use case
@@ -118,7 +119,7 @@ Now that you have WhatsAble set up, let's connect it to Zapier to automate your 
   </Step>
   
   <Step title="Configure your message">
-    1. Complete the required fields:
+    Complete the required fields:
     
     <ResponseField name="Phone" type="string" required>
       Select the recipient's phone number (In the **Phone** dropdown, you'll see all phone numbers added in your WhatsAble dashboard's **Verified Numbers** menu.)
@@ -141,7 +142,7 @@ Now that you have WhatsAble set up, let's connect it to Zapier to automate your 
         Customize advanced options as needed
       </ResponseField>
     </Expandable>
-
+<br />
     <Frame caption="Configuring message">
       <img src="/images/whatsable_zapier4.gif" alt="Configuring message" />
     </Frame>
@@ -185,7 +186,7 @@ Now that you have WhatsAble set up, let's connect it to Zapier to automate your 
   ```mermaid
   flowchart LR
     A[Trigger Node] --> B[Data Transformation]
-    B --> C[WhatsAble Node]
+    B --> C[WhatsAble App]
     C --> D{Message Sent?}
     D -->|Yes| E[Success Path]
     D -->|No| F[Error Handling]

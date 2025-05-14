@@ -1,6 +1,7 @@
 ---
 title: 'n8n'
 description: 'Connect Notifier with n8n to automate powerful WhatsApp messaging workflows'
+icon: 'diagram-project'
 ---
 
 # Notifier Integration with n8n
@@ -77,7 +78,7 @@ Now that you have your Notifier account configured, let's connect it to n8n to a
 <Steps>
   <Step title="Set up your n8n workflow">
     1. Log in to your n8n account
-    2. Create a new workflow by clicking **+ New Workflow**
+    2. Create a new workflow/Zap by clicking **+ Create**
     3. Add a trigger node of your choice:
        - Popular triggers include Google Forms, Jotform, ClickUp, or a Schedule trigger
        - Connect and configure your trigger according to your use case
@@ -132,7 +133,7 @@ Now that you have your Notifier account configured, let's connect it to n8n to a
         Customize advanced options as needed
       </ResponseField>
     </Expandable>
-     
+<br />
     <Frame caption="Configuring message">
       <img src="/images/notfier_n8n_config_msg.gif" alt="Configuring Notifier credentials" />
     </Frame>  
@@ -172,6 +173,21 @@ Here are some powerful automation workflows you can build with Notifier and n8n:
     Keep customers informed about the status of their support requests
   </Card>
 </CardGroup>
+
+## Workflow Diagram
+
+<Frame caption="Sample Notifier n8n Workflow">
+  ```mermaid
+  flowchart LR
+    A[Trigger node] --> B[Data Transformation]
+    B --> C[Notifier App]
+    C --> D{Message Sent?}
+    D -->|Yes| E[Success Path]
+    D -->|No| F[Error Handling]
+    E --> G[Additional Actions]
+    F --> H[Retry Logic]
+  ```
+</Frame>
 
 ## Best practices
 

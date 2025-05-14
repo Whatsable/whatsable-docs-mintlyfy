@@ -1,256 +1,276 @@
 ---
 title: 'Make'
-description: 'Notifier by WhatsAble Documentation for Make'
+description: 'Connect Notifier with Make to automate powerful WhatsApp messaging scenarios'
+icon: 'lines-leaning'
 ---
 
-# Make
-
-<div className="video-container">
-  <iframe 
-    width="100%" 
-    height="500" 
-    src="https://www.youtube.com/embed/8fVFnZbFVgg"
-    title="WhatsAble + Make.com Integration" 
-    frameBorder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowFullScreen
-    className="rounded-lg shadow-lg"
-  ></iframe>
-</div>
-
-# 📚 Notifier by WhatsAble Documentation for Make
-
-<div className="bg-blue-50 p-6 rounded-lg my-6">
-  <p className="text-lg">
-    Welcome to the <span className="font-bold text-blue-600">Notifier by WhatsAble Documentation for Make</span>! This guide will walk you through a use case on how to use <span className="font-bold">Notifier by WhatsAble</span> to send WhatsApp reminders when someone books an appointment on your <span className="font-bold">Supersaas</span> platform. We'll also cover common error messages and how to resolve them.
-  </p>
-</div>
-
----
-
-## 🚀 Introduction to Notifier by WhatsAble
-
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-Notifier by WhatsAble allows you to send <span className="font-bold">WhatsApp reminders</span> to customers without needing to use the <span className="font-bold">WhatsApp API</span>. It's perfect for sending appointment reminders, notifications, and other automated messages.
-
-### Key Features:
-
-- **Easy Integration**: Works seamlessly with Make.
-- **Customizable Messages**: Send personalized messages with attachments.
-- **No Subscription Required**: Pay-as-you-go plans available.
-- **Multi-language Support**: Messages and buttons are translated into the language of your choice.
-- **Analytics**: Track message statuses such as Sent, Delivered, Read, and download detailed reports.
-- **Chatbot**: Build and customize your own AI-powered assistant.
-</div>
-
----
-
-## 📌 Use Case: Sending WhatsApp Reminders for Supersaas Appointments
-
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-In this use case, we'll show you how to send WhatsApp reminders to customers who book appointments on your <span className="font-bold">Supersaas</span> platform. You can adapt this process for other scheduling tools like <span className="font-bold">Calendly</span> or <span className="font-bold">Google Calendar</span>.
-</div>
-
----
-
-## 📋 Prerequisites
-
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-1. <span className="font-bold">Notifier by WhatsAble Account</span>: Sign up at [Notifier by WhatsAble](https://notifier.whatsable.app/).
-2. <span className="font-bold">Supersaas Account</span>: Ensure you have a Supersaas account with appointments set up.
-3. <span className="font-bold">Make Account</span>: Create or log in to your Make account.
-</div>
-
----
-
-## 📤 Step 1: Set Up Notifier by WhatsAble
-
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-1. <span className="font-bold">Sign Up</span>: Go to [Notifier by WhatsAble](https://notifier.whatsable.app/) and create an account.
-2. <span className="font-bold">Business Information</span>: Fill in your business details, including the language for your messages.
-3. <span className="font-bold">Connect Phone Number</span>: Connect the WhatsApp number that will send the reminders.
-4. <span className="font-bold">Purchase a Plan</span>: Choose a plan (e.g., $49 for 1,000 messages with no subscription).
-5. <span className="font-bold">Get API Key</span>: After purchasing, retrieve your API key from the <span className="font-bold">API Keys</span> section.
-</div>
-
----
-
-## 📥 Step 2: Integrate with Make
-
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-
-### 1. Create a Make Scenario
-
-1. <span className="font-bold">Trigger</span>: Set up a trigger for <span className="font-bold">New Appointment</span> in Supersaas.
-   - Create a webhook for your demo schedule.
-2. <span className="font-bold">Action</span>: Add an action for <span className="font-bold">Notifier by WhatsAble</span>.
-   - Select the <span className="font-bold">Send WhatsApp Message</span> action.
-   - Connect your Notifier account using the API key.
-
-### 2. Configure the Message
-
-1. <span className="font-bold">Phone Number</span>: Map the phone number from the Supersaas appointment.
-2. <span className="font-bold">Message Content</span>: Customize the message (e.g., "Hi [Name], reminder of your appointment at [Time].").
-3. <span className="font-bold">Attachments (Optional)</span>: Add a public Google Drive link for attachments.
-4. <span className="font-bold">Test</span>: Run the scenario to ensure the message is sent successfully.
-
-### 3. Customer Experience
-
-- Customers will receive a WhatsApp message with options to <span className="font-bold">reply</span> or <span className="font-bold">unsubscribe</span>.
-- If they reply, they will be redirected to a chat with your personal WhatsApp number.
-</div>
-
----
-
-## 📌 Common Error Messages and Resolutions
-
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-
-### 1. Phone Number Validation Error
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```plaintext
-The phone number (+1234567890123456) exceeds the maximum of 15 digits. Please enter a valid phone number.
-```
-</div>
-
-**Resolution**: Ensure the phone number is in **E.164 format** (e.g., `+1234567890`) and does not exceed 15 digits.
-
----
-
-### 2. Insufficient Credits
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```plaintext
-Insufficient credits in your account. We could not send the message. Your current balance is $0.00 and you need at least $0.50 to continue sending messages.
-```
-</div>
-
-**Resolution**: Purchase additional credits or upgrade your plan.
-
----
-
-### 3. Subscription Expired
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```plaintext
-Failed to send your message because your subscription has ended. Your subscription began on Jan 1, 2023 and expired on Jan 31, 2023.
-```
-</div>
-
-**Resolution**: Renew your subscription or purchase a new plan.
-
----
-
-### 4. Rate Limit Exceeded
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```plaintext
-Could not send message to +1234567890. To avoid getting marked as spam by WhatsApp, you can only send up to 4 messages per minute.
-```
-</div>
-
-**Resolution**: Reduce the frequency of messages or upgrade your plan for higher limits.
-
----
-
-### 5. Unique Number Limit Reached
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```plaintext
-Message Not Sent. You've reached the limit of phone numbers you can message with your current plan. Your plan allows messaging to 100 numbers, but you've already sent messages to 100 numbers. Please upgrade your plan or contact team@whatsable.app to send messages to more numbers.
-```
-</div>
-
-**Resolution**: Upgrade your plan or contact support to increase the limit.
-
----
-
-### 6. File Size or Type Error
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```plaintext
-File does not meet the WhatsApp Business API media validation criteria. Your file type is "image/jpeg" and size is 10485760 bytes which is approximately 10.00 MB. Please follow this link to review the file validation criteria for WhatsApp: https://www.whatsable.app/blog/what-message-types-does-the-whatsapp-api-support-and-what-file-size-limit.
-```
-</div>
-
-**Resolution**: Ensure the file meets WhatsApp's size and type requirements. For example, images should be less than 5 MB.
-
----
-
-### 7. Messaging Limit per Number
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```plaintext
-Could not send message to this number: +1234567890 because it would exceed the number of times you can message this same number. Your purchased plan allows you to message this number 5 times and you have already messaged it 5 times. Upgrade or contact team@whatsable.app to increase this limit.
-```
-</div>
-
-**Resolution**: Upgrade your plan or contact support to increase the messaging limit.
-
----
-
-### 8. Message Too Long
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```plaintext
-Message too long. The total character count exceeds the 1024 character limit. Your message text has 1200 characters, Please make your message shorter.
-```
-</div>
-
-**Resolution**: Shorten the message to fit within the 1024-character limit.
-
----
-
-### 9. No WhatsApp Account
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```plaintext
-This phone number (+1234567890) does not have a WhatsApp account.
-```
-</div>
-
-**Resolution**: Verify that the recipient has an active WhatsApp account.
-
-</div>
-
----
-
-## 📌 Key Points to Remember
-
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-- **API Key**: Keep your API key secure and use it to connect Notifier with Make.
-- **Language**: Choose the language for your messages during the Notifier setup.
-- **Attachments**: Ensure any attachments (e.g., Google Drive links) are publicly accessible.
-- **Testing**: Always test your automation to ensure messages are sent correctly.
-</div>
-
----
-
-## ❓ Need Help?
-
-<div className="bg-blue-50 p-6 rounded-lg my-6">
-If you encounter any issues or need further assistance, feel free to reach out to our support team:
-
-- **Email Support**: support@whatsable.app
-- **Video Tutorial**: Watch the full tutorial [here](https://youtu.be/8fVFnZbFVgg).
-</div>
-
----
-
-<div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-8 rounded-lg my-8">
-  <h2 className="text-2xl font-bold mb-4">🚀 Start Sending WhatsApp Reminders Today!</h2>
-</div>
-
----
-
-**Disclaimer**: This service is not affiliated with nor endorsed by WhatsApp Inc. The tool uses the WhatsApp API but is not affiliated with WhatsApp. 
+# Notifier Integration with Make
+
+<Frame caption="Automate your WhatsApp messaging scenarios with Make and Notifier">
+  <img src="/images/notifier_n8n_svg.svg" className="rounded-xl" />
+</Frame>
+
+<Info>
+  Notifier enables you to send automated WhatsApp messages through your favorite scenario automation tools. This guide walks you through integrating Notifier with Make to create powerful messaging scenarios.
+</Info>
+
+## Prerequisites
+
+Before getting started, make sure you have:
+
+<CardGroup cols={2}>
+  <Card title="Notifier Account" icon="user">
+    Active Notifier account with a subscription plan (Monthly or Pay-as-you-go)
+  </Card>
+  <Card title="Make Account" icon="user">
+    Access to [Make](https://www.make.com/en/register/) scenario automation platform
+  </Card>
+</CardGroup>
+
+<Tip>
+  New to Notifier? [Sign up here](https://notifier.whatsable.app/)
+</Tip>
+
+## Set up your Notifier account
+
+<Steps>
+  <Step title="Configure your business information">
+    First, let's set up your business profile in Notifier:
+    
+    1. Log in to your Notifier dashboard
+    2. Navigate to **Business Information**
+    3. Complete all required fields:
+       - **Business Name**: Enter the name that will appear in messages sent to recipients
+       - **Business Website or Social Media**: Add your website or social media URL
+       - **Preferred Language**: Select the language for standard WhatsApp message elements
+       - **Default Reply Text**: Create a template message that appears when recipients click "Reply"
+       - **WhatsApp Number**: Add your business WhatsApp number where replies will be directed
+
+    <Frame caption="Configuring business information">
+      <img src="/images/notifier_business_info.gif" alt="Configuring business information" />
+    </Frame>
+
+    <Note>
+      After entering your WhatsApp number, Notifier will send a verification code to this number. Enter the code to verify ownership.
+    </Note>
+    
+    Once saved, you'll see a preview of how your messages will appear to recipients. The actual message structure may vary slightly based on variables and attachments you include.
+    
+  </Step>
+  
+  <Step title="Get your API key">
+    To connect Notifier with Make, you'll need your API key:
+    
+    1. In your Notifier dashboard, go to **API Keys**
+    2. Copy your unique API key
+    3. Store it securely—you'll need it for the integration
+    
+    <Warning>
+      Never share your API key publicly or commit it to version control systems.
+    </Warning>
+  </Step>
+</Steps>
+
+## Connect Notifier to Make
+
+Now that you have Notifier set up, let's connect it to Make to automate your scenarios.
+
+<Steps>
+  <Step title="Set up your Make Scenario">
+    1. Log in to your Make account
+    2. Create a new scenario by clicking **+ Create a new scenario**
+    3. (Optional) Add a trigger module of your choice:
+       - Popular triggers include Google Forms, Jotform, ClickUp, or a Schedule trigger
+       - Connect and configure your trigger according to your use case
+
+    <Frame caption="Setting up Make module">
+      <img src=" " alt="Setting up Make module" />
+    </Frame>
+  </Step>
+  
+  <Step title="Add the Notifier module">
+    1. Click the **+** button to add a new module
+    2. Search for **Notifier WhatsAble** in the apps or modules library
+    3. Select the module with the official Notifer logo
+
+    <Frame caption="Adding the Notifier module">
+      <img src=" " alt="Adding the Notifier module" />
+    </Frame>
+  </Step>
+  
+  <Step title="Configure Notifier credentials">
+    <Accordion title="Credential Setup" defaultOpen>
+      1. Once you click on Notifier module, select **Send a WhatsApp Message** from the **ACTIONS**
+      2. Click **Create a connection** in the **Connection** section of Notifier module and you will be prompted to enter your API Key
+      3. Enter your Notifier API key that you copied earlier
+      4. Rename your connection name if needed
+      4. Click **Save** to store your credential
+
+    <Frame caption="Configuring Notifier credentials">
+      <img src=" " alt="Configuring Notifier credentials" />
+    </Frame>
+    </Accordion>
+  </Step>
+
+  <Step title="Configure your message">
+    Complete the required fields:
+    
+    <ResponseField name="Phone" type="string" required>
+      Enter the recipient’s phone number (with country code) or use dynamic data from previous module (*Make sure that the phone number is valid and that you are only sending to one phone number per step.*)
+    </ResponseField>
+    
+    <ResponseField name="Message Body" type="string" required>
+      Type your message text or use variables from previous module
+    </ResponseField>
+    
+    <Expandable title="Optional Parameters">
+      <ResponseField name="File > Attachment URL (must be publicly available)" type="file">
+        Enter public URL of a file, image, or video to send with your message
+      </ResponseField>
+      
+      <ResponseField name="File Name" type="string">
+        Specify a custom filename for your attachment
+      </ResponseField>
+      
+      <ResponseField name="Additional Parameters" type="object">
+        Customize advanced options as needed
+      </ResponseField>
+    </Expandable>
+<br />
+    <Frame caption="Configuring message">
+      <img src=" " alt="Configuring message" />
+    </Frame>
+  </Step>
+  
+  <Step title="Test and activate your scenario">
+    1. Click **Save** to save your message configuration
+    2. Right click on the WhatsAble module and select **Run this module only** to verify the module is working correctly
+        - or click **Run once** in the bottom-left corner of the screen to test the entire scenario
+    3. If the test is successful, you'll see a confirmation message
+    4. Click **Save** icon in the bottom-left corner to save your scenario (You can also set timer intarval for the scenario)
+    5. Toggle the **Active** switch in the bottom-left corner with time to activate your scenario
+    <Frame caption="Testing and activating your scenario">
+      <img src=" " alt="Testing and activating your scenario" />
+    </Frame>
+  </Step>
+</Steps>
+
+## Example use cases
+
+<CardGroup cols={2}>
+  <Card title="Customer Onboarding" icon="user-plus">
+    Send a welcome message when a new customer signs up
+  </Card>
+  
+  <Card title="Order Notifications" icon="box-check">
+    Update customers when their order status changes
+  </Card>
+  
+  <Card title="Appointment Reminders" icon="calendar">
+    Automatically send reminders before scheduled appointments
+  </Card>
+  
+  <Card title="Lead Follow-up" icon="user-check">
+    Send personalized messages to new leads from your form submissions
+  </Card>
+  
+  <Card title="Support Ticket Updates" icon="ticket">
+    Notify customers when their support ticket status changes
+  </Card>
+</CardGroup>
+
+## Scenario Diagram
+
+<Frame caption="Sample Notifier Make Scenario">
+  ```mermaid
+  flowchart LR
+    A[Trigger Module] --> B[Data Transformation]
+    B --> C[Notifier Module]
+    C --> D{Message Sent?}
+    D -->|Yes| E[Success Path]
+    D -->|No| F[Error Handling]
+    E --> G[Additional Actions]
+    F --> H[Retry Logic]
+  ```
+</Frame>
+
+## Best practices
+
+For optimal results when using Notifier with Make:
+
+<AccordionGroup>
+  <Accordion title="Personalize your messages" icon="user-check">
+    Use data from previous modules in your workflow to create personalized, relevant messages for each recipient.
+  </Accordion>
+  
+  <Accordion title="Keep messages concise" icon="text-size">
+    Focus on a single call-to-action and keep your messages brief to maintain recipient engagement.
+  </Accordion>
+  
+  <Accordion title="Test thoroughly" icon="flask">
+    Always run complete tests of your workflow before deploying to production to catch any potential issues.
+  </Accordion>
+  
+  <Accordion title="Monitor performance" icon="chart-line">
+    Regularly check your Notifier dashboard to monitor delivery rates and optimize your messaging strategy.
+  </Accordion>
+  
+  <Accordion title="Respect privacy" icon="shield-check">
+    Always provide clear opt-out instructions and respect recipient preferences regarding messaging.
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Message not being sent?" icon="circle-exclamation">
+    <Steps>
+      <Step title="Check account status">
+        Verify that your Notifier account is active and has available credits
+      </Step>
+      <Step title="Verify business information">
+        Ensure your business information is complete and properly verified
+      </Step>
+      <Step title="Confirm API key">
+        Double-check that your API key is entered correctly in Make
+      </Step>
+      <Step title="Validate phone number">
+        Confirm that the recipient's phone number is in the correct format (including country code)
+      </Step>
+    </Steps>
+  </Accordion>
+  
+  <Accordion title="Formatting issues in messages?" icon="text-slash">
+    <Steps>
+      <Step title="Review template">
+        Check your message template for any invalid characters or formatting issues
+      </Step>
+      <Step title="Variable formatting">
+        Ensure variables from previous modules are properly formatted
+      </Step>
+      <Step title="Message length">
+        Verify your message doesn't exceed WhatsApp's length limitations
+      </Step>
+    </Steps>
+  </Accordion>
+</AccordionGroup>
+
+## Need help?
+
+Our support team is ready to assist you:
+
+<CardGroup cols={3}>
+  <Card title="Email support" icon="envelope" href="mailto:team@whatsable.app">
+    Contact team@whatsable.app
+  </Card>
+  <Card title="Schedule a demo" icon="calendar" href="https://tidycal.com/axelmeta/whatsapp-notifications-by-whatsable">
+    Book a personalized walkthrough
+  </Card>
+  <Card title="Live chat" icon="message-dots" href="">
+    Click the green chat button in the bottom right corner of the Notifier dashboard
+  </Card>
+</CardGroup>
+
+<Info>
+  For additional automation platform integrations (Zapier, n8n, etc.), please contact our support team or check our integration documentation.
+</Info>

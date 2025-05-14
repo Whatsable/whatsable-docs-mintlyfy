@@ -1,6 +1,7 @@
 ---
 title: 'n8n'
 description: 'Learn how to seamlessly integrate n8n with the Notifyer System for enterprise-level WhatsApp automation'
+icon: 'diagram-project'
 ---
 
 # Notifyer System Integration with n8n
@@ -198,6 +199,12 @@ Before getting started, make sure you have:
             <ResponseField name="Template Variables" type="string[]">
               Fill in values for each variable in your template, mapping them to dynamic data when applicable
             </ResponseField>
+          </Step>
+          <Step title="Complete message details">
+            Based on your selected message type, fill in the required fields:
+            - For text messages: Enter your message content
+            - For media messages: Provide a publicly accessible URL to your file
+            - Optional caption (for media files)
           </Step>
         </Steps>
 

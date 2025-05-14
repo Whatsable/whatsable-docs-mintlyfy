@@ -1,16 +1,17 @@
 ---
 title: 'Make'
 description: 'Learn how to automate WhatsApp messaging through Make with WhatsAble'
+icon: 'lines-leaning'
 ---
 
 # WhatsAble Integration with Make
 
-<Frame caption="Automate your WhatsApp messaging workflows with Make and WhatsAble">
+<Frame caption="Automate your WhatsApp messaging scenarios with Make and WhatsAble">
   <img src="/images/whatsable_make_svg.svg" className="rounded-xl" />
 </Frame>
 
 <Info>
-  WhatsAble lets you automate WhatsApp messaging through your favorite workflow automation platforms. This guide walks you through connecting WhatsAble with Make to create powerful WhatsApp messaging workflows.
+  WhatsAble lets you automate WhatsApp messaging through your favorite scenario automation platforms. This guide walks you through connecting WhatsAble with Make to create powerful WhatsApp messaging workflows.
 </Info>
 
 ## Prerequisites
@@ -22,7 +23,7 @@ Before getting started, make sure you have:
     An active subscription with WhatsAble
   </Card>
   <Card title="Make" icon="user">
-    Access to [Make](https://www.make.com/en/register/) workflow automation platform
+    Access to [Make](https://www.make.com/en/register/) scenario automation platform
   </Card>
 </CardGroup>
 
@@ -78,12 +79,12 @@ Before getting started, make sure you have:
 
 ## Connect WhatsAble to Make
 
-Now that you have WhatsAble set up, let's connect it to Make to automate your workflows.
+Now that you have WhatsAble set up, let's connect it to Make to automate your scenarios.
 
 <Steps>
-  <Step title="Set up your Make Zaps">
+  <Step title="Set up your Make Scenario">
     1. Log in to your Make account
-    2. Create a new workflow by clicking **+ Create a new scenario**
+    2. Create a new scenario by clicking **+ Create a new scenario**
     3. (Optional) Add a trigger module of your choice:
        - Popular triggers include Google Forms, Jotform, ClickUp, or a Schedule trigger
        - Connect and configure your trigger according to your use case
@@ -141,21 +142,21 @@ Now that you have WhatsAble set up, let's connect it to Make to automate your wo
         Customize advanced options as needed
       </ResponseField>
     </Expandable>
-
+<br />
     <Frame caption="Configuring message">
       <img src="/images/whatsable_make4.gif" alt="Configuring message" />
     </Frame>
   </Step>
   
-  <Step title="Test and activate your workflow">
+  <Step title="Test and activate your scenario">
     1. Click **Save** to save your message configuration
     2. Right click on the WhatsAble module and select **Run this module only** to verify the module is working correctly
         - or click **Run once** in the bottom-left corner of the screen to test the entire scenario
     3. If the test is successful, you'll see a confirmation message
-    4. Click **Save** icon in the bottom-left corner to save your scenario (You can also set timer intarval for the workflow)
-    5. Toggle the **Active** switch in the bottom-left corner with time to activate your workflow
-    <Frame caption="Testing and activating your workflow">
-      <img src="/images/whatsable_make5.gif" alt="Testing and activating your workflow" />
+    4. Click **Save** icon in the bottom-left corner to save your scenario (You can also set timer intarval for the scenario)
+    5. Toggle the **Active** switch in the bottom-left corner with time to activate your scenario
+    <Frame caption="Testing and activating your scenario">
+      <img src="/images/whatsable_make5.gif" alt="Testing and activating your scenario" />
     </Frame>
   </Step>
 </Steps>
@@ -184,13 +185,13 @@ Now that you have WhatsAble set up, let's connect it to Make to automate your wo
   </Card>
 </CardGroup>
 
-## Workflow Diagram
+## Scenario Diagram
 
-<Frame caption="Sample WhatsAble Make Workflow">
+<Frame caption="Sample WhatsAble Make Scenario">
   ```mermaid
   flowchart LR
-    A[Trigger Node] --> B[Data Transformation]
-    B --> C[WhatsAble Node]
+    A[Trigger Module] --> B[Data Transformation]
+    B --> C[WhatsAble Module]
     C --> D{Message Sent?}
     D -->|Yes| E[Success Path]
     D -->|No| F[Error Handling]
