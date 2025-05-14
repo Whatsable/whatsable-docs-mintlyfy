@@ -1,134 +1,382 @@
 ---
 title: 'Make'
-description: 'Overview of Make (formerly Integromat) integration with Notifyer System.'
+description: 'Learn how to seamlessly integrate Make with the Notifyer System for enterprise-level WhatsApp automation'
+icon: 'lines-leaning'
 ---
 
-# Make (formerly Integromat) Integration Overview
+# Notifyer System Integration with Make
 
-<div className="bg-blue-50 p-6 rounded-lg my-6">
-  <p className="text-lg">
-    Make is a powerful automation platform that allows users to connect their Notifyer System with thousands of apps (3,000+ integrations). With Make, users can create complex workflows, automate messaging, and manage their WhatsApp Business Account efficiently. This section provides an overview of how Make integrates with the Notifyer System.
-  </p>
-</div>
+<Frame caption="Automate your WhatsApp messaging workflows with Make and Notifyer System">
+  <img src="/images/notifyer_n8n_svg.svg" className="rounded-xl" />
+</Frame>
 
----
+<Tip>
+  This guide walks you through connecting Notifyer System with Make to create powerful automated WhatsApp messaging workflows for your business.
+</Tip>
 
-## Key Features of Make Integration
+## Prerequisites
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-1. **Advanced Automation**: Create complex workflows (scenarios) to automate tasks between Notifyer System and other apps.
-2. **Send Messages**: Automate sending WhatsApp messages (with or without templates) via Make.
-3. **Receive Replies**: Capture and manage replies from recipients directly in your connected apps.
-4. **Template Management**: Use pre-approved WhatsApp templates to send automated messages.
-5. **Multi-App Integration**: Connect Notifyer System with tools like Google Sheets, Slack, CRM systems, and more.
-</div>
+Before getting started, make sure you have:
 
----
+<CardGroup cols={2}>
+  <Card title="Notifyer System Account" icon="user">
+    Active Notifyer System account with a subscription plan (Monthly or Pay-as-you-go)
+  </Card>
+  <Card title="Make Account" icon="user">
+    Access to [Make](https://www.make.com/en/register) workflow automation platform
+  </Card>
+</CardGroup>
 
-## Step 1: Setting Up Make Integration
+<Tip>
+  New to Notifyer System? [Sign up here](https://console.notifyer-systems.com/)
+</Tip>
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-To get started with Make, users need to connect their Notifyer System account to Make. Here's how:
+## Setting up your Notifyer System account
 
-1. **Log in to Make**: Sign up or log in to your Make account.
-2. **Search for Notifyer System**: In the Make app directory, search for "Notifyer System."
-3. **Connect Your Account**: Authenticate your Notifyer System account by providing the necessary credentials.
-4. **Create a Scenario**: Set up a workflow (scenario) by selecting a trigger (e.g., new form submission) and an action (e.g., send a WhatsApp message).
-</div>
+<Steps>
+  <Step title="Complete the Embedding Process">
+    Before sending WhatsApp messages, you must complete the platform embedding process, which connects your WhatsApp Business account to Notifyer System.
 
----
+    <Info>
+      The embedding process is required by Meta to ensure proper business verification and compliance with WhatsApp Business Platform policies.
+    </Info>
+  </Step>
+  
+  <Step title="Set up message templates">
+    Notifyer System provides two methods for sending WhatsApp messages:
 
-## Step 2: Sending Messages via Make
+    <Accordion title="Option A: Template messages" defaultOpen={true}>
+      <p>WhatsApp templates are pre-approved message formats that allow for personalization while maintaining compliance with WhatsApp policies.</p>
+      
+      <Steps>
+        <Step title="Navigate to Templates">
+          Go to **Your Templates** in your Notifyer dashboard
+        </Step>
+        <Step title="Create Template">
+          Click the **Create Template** tab at the top of the page
+        </Step>
+        <Step title="Fill out the form">
+          Complete the template creation form with the following details:
+          
+          <ResponseField name="Template Name" type="string" required>
+            Choose a descriptive name for internal reference
+          </ResponseField>
+          <ResponseField name="Category" type="string" required>
+            Select the appropriate message category
+          </ResponseField>
+          <ResponseField name="Language" type="string" required>
+            Choose your template's primary language
+          </ResponseField>
+          <ResponseField name="Message Body" type="string" required>
+            Craft your message content
+          </ResponseField>
+          <ResponseField name="Variables" type="string">
+            Add placeholders using `{{1}}`, `{{2}}` format for personalization
+          </ResponseField>
+          <ResponseField name="Header" type="image | document | video">
+            Optional: Add an image, document, or video header
+          </ResponseField>
+          <ResponseField name="Footer" type="string">
+            Optional: Add a standard footer message
+          </ResponseField>
+          <ResponseField name="Buttons" type="button[]">
+            Optional: Configure call-to-action buttons
+          </ResponseField>
+        </Step>
+        <Step title="Submit for review">
+          Click **Preview and Submit**
+        </Step>
+      </Steps>
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-Users can send WhatsApp messages (with or without templates) using Make. Here's how it works:
+      <Frame caption="Template Creation Interface">
+        <img src="https://notifyer.app/docs/images/template-creation.png" alt="Template Creation Interface" />
+      </Frame>
 
-### Sending Template Messages
+      <Warning>
+        Templates typically get reviewed within 24 hours. Creating compliant templates that avoid promotional language increases approval chances.
+      </Warning>
+    </Accordion>
 
-- **Trigger**: Choose an event that triggers the message (e.g., new row in Google Sheets).
-- **Action**: Select "Send WhatsApp Template Message" as the action.
-- **Template Selection**: Choose a pre-approved template from your Notifyer System account.
-- **Customize Message**: Add dynamic fields (e.g., recipient name, order number) to personalize the message.
-- **Send**: The message will be sent automatically when the trigger condition is met.
+    <Accordion title="Option B: Non-template messages">
+      <p>For simpler communications, you can send non-template messages that include:</p>
+      
+      <CardGroup cols={2}>
+        <Card title="Text" icon="message-text">
+          Plain text messages within the 24-hour window
+        </Card>
+        <Card title="Images" icon="image">
+          Photos and graphics in supported formats
+        </Card>
+        <Card title="Documents" icon="file-pdf">
+          PDFs, Word docs, and other file types
+        </Card>
+        <Card title="Videos" icon="video">
+          MP4 and other supported video formats
+        </Card>
+      </CardGroup>
 
-![make-our-integrations.png](https://i.ibb.co/Kz240yjm/make-our-integrations.png)
+      <Note>
+        Non-template messages can only be sent within the 24-hour customer service window after a customer initiates contact with your business.
+      </Note>
+    </Accordion>
+  </Step>
+  
+  <Step title="Get your API key">
+    To connect Notifyer System with Make, you'll need an API key:
 
-### Sending Non-Template Messages
+    1. In your Notifyer dashboard, navigate to **API Keys**
+    2. Copy your unique API key (keep this secure - it provides access to your WhatsApp messaging)
 
-- **Trigger**: Choose an event that triggers the message (e.g., new email in Gmail).
-- **Action**: Select "Send WhatsApp Message" as the action.
-- **Message Type**: Choose the type of message (text, image, video, document, audio, or interactive buttons).
-- **Customize Content**: Add the message content and media files (if applicable).
-- **Send**: The message will be sent automatically when the trigger condition is met.
+    <Frame caption="API Key Location">
+      <img src="https://notifyer.app/docs/images/api-key-location.png" alt="API Key Location" />
+    </Frame>
+  </Step>
+</Steps>
 
-![only-video.png](https://i.ibb.co/NdF38Nr0/only-video.png)
-</div>
+## Connect Notifyer System to Make
 
----
+Now that you have NotNotifyer Systemifier set up, let's connect it to Make to automate your scenarios.
 
-## Step 3: Managing Replies
+<Steps>
+  <Step title="Set up your Make Scenario">
+    1. Log in to your Make account
+    2. Create a new scenario by clicking **+ Create a new scenario**
+    3. (Optional) Add a trigger module of your choice:
+       - Popular triggers include Google Forms, Jotform, ClickUp, or a Schedule trigger
+       - Connect and configure your trigger according to your use case
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-Make can also capture replies from recipients and send them to your preferred app (e.g., CRM, Google Sheets, or Slack).
+    <Frame caption="Setting up Make module">
+      <img src=" " alt="Setting up Make module" />
+    </Frame>
+  </Step>
+  
+  <Step title="Add the Notifyer System module">
+    1. Click the **+** button to add a new module
+    2. Search for **Notifyer System** in the apps or modules library
+    3. Select the module with the official Notifer logo
 
-1. **Trigger**: Set up a trigger for "New WhatsApp Reply."
-2. **Action**: Choose an action to handle the reply (e.g., add to Google Sheets or send a notification to Slack).
-3. **Automate**: Replies will be automatically logged or forwarded based on your workflow.
-</div>
+    <Frame caption="Adding the Notifyer System module">
+      <img src=" " alt="Adding the Notifyer System module" />
+    </Frame>
+  </Step>
+  
+  <Step title="Configure Notifyer System credentials">
+    <Accordion title="Credential Setup" defaultOpen>
+      1. Once you click on Notifyer System module, select **Send a WhatsApp Message** from the **ACTIONS**
+      2. Click **Create a connection** in the **Connection** section of Notifyer System module and you will be prompted to enter your API Key
+      3. Enter your Notifyer System API key that you copied earlier
+      4. Rename your connection name if needed
+      4. Click **Save** to store your credential
 
----
+    <Frame caption="Configuring Notifyer System credentials">
+      <img src=" " alt="Configuring Notifyer System credentials" />
+    </Frame>
+    </Accordion>
+  </Step>
 
-## Step 4: Webhook Setup
+  <Step title="Configure your message">
+    Depending on your messaging needs, choose one of the following operations:
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-For advanced users, Make supports webhooks to create custom integrations. Here's how to set it up:
+    <Tabs>
+      <Tab title="Template Messages">
+        <Steps>
+          <Step title="Select operation">
+            In the **Operation Name or ID** dropdown, select **Send Template (Notifyer)**
+          </Step>
+          <Step title="Configure message">
+            Complete the required fields:
+            
+            <ResponseField name="Phone Number" type="string" required>
+              Enter the recipient's phone number with country code (e.g., +14155552671) or use dynamic data from previous nodes
+            </ResponseField>
+            <ResponseField name="Template Name or ID" type="string" required>
+              Select from your pre-approved templates in the dropdown
+            </ResponseField>
+            <ResponseField name="Template Variables" type="string[]">
+              Fill in values for each variable in your template, mapping them to dynamic data when applicable
+            </ResponseField>
+          </Step>
+          <Step title="Complete message details">
+            Based on your selected message type, fill in the required fields:
+            - For text messages: Enter your message content
+            - For media messages: Provide a publicly accessible URL to your file
+            - Optional caption (for media files)
+          </Step>
+        </Steps>
 
-1. **Trigger**: Use a webhook trigger to capture events from Notifyer System.
-2. **Action**: Define the action to be performed when the webhook is triggered (e.g., send a message or update a database).
-3. **Test**: Test the webhook to ensure it works as expected.
+        <Frame caption="Template Message Configuration">
+          <img src="https://notifyer.app/docs/images/n8n-template-config.png" alt="Template Message Configuration" />
+        </Frame>
+      </Tab>
+      <Tab title="Non-Template Messages">
+        <Steps>
+          <Step title="Select operation">
+            In the **Operation Name or ID** dropdown, select **Send Non Template Message**
+          </Step>
+          <Step title="Enter phone number">
+            Enter the **Phone Number** with country code
+          </Step>
+          <Step title="Select message type">
+            Choose from the following message types:
+            
+            <CardGroup cols={2}>
+              <Card title="Text Message" icon="message">
+                For plain text messages
+              </Card>
+              <Card title="Document Message" icon="file">
+                For sending documents (PDF, Word, etc.)
+              </Card>
+              <Card title="Image Message" icon="image">
+                For sending images (JPEG, PNG, etc.)
+              </Card>
+              <Card title="Video Message" icon="video">
+                For sending videos (MP4, 3GP, etc.)
+              </Card>
+            </CardGroup>
+          </Step>
+          <Step title="Complete message details">
+            Based on your selected message type, fill in the required fields:
+            - For text messages: Enter your message content
+            - For media messages: Provide a publicly accessible URL to your file
+            - Optional caption (for media files)
+          </Step>
+        </Steps>
 
-![webhook-setup.png](https://i.ibb.co/Q3gR2yvQ/webhook-setup.png)
-</div>
+        <Warning>
+          For all media types, ensure your file URLs are publicly accessible and match the supported file formats.
+        </Warning>
 
----
+        <Frame caption="Non-Template Message Configuration">
+          <img src="https://notifyer.app/docs/images/n8n-non-template-config.png" alt="Non-Template Message Configuration" />
+        </Frame>
+      </Tab>
+    </Tabs>
+  </Step>
+  
+  <Step title="Test and activate your scenario">
+    1. Click **Save** to save your message configuration
+    2. Right click on the WhatsAble module and select **Run this module only** to verify the module is working correctly
+        - or click **Run once** in the bottom-left corner of the screen to test the entire scenario
+    3. If the test is successful, you'll see a confirmation message
+    4. Click **Save** icon in the bottom-left corner to save your scenario (You can also set timer intarval for the scenario)
+    5. Toggle the **Active** switch in the bottom-left corner with time to activate your scenario
+    <Frame caption="Testing and activating your scenario">
+      <img src=" " alt="Testing and activating your scenario" />
+    </Frame>
+  </Step>
+</Steps>
 
-## Step 5: Example Use Cases
+## Example use cases
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-Here are some practical examples of how Make can be used with Notifyer System:
+<CardGroup cols={3}>
+  <Card title="Order confirmations" icon="box-check">
+    Send automatic order confirmations when new orders are placed
+  </Card>
+  <Card title="Appointment reminders" icon="calendar">
+    Schedule reminders before upcoming appointments
+  </Card>
+  <Card title="Lead notifications" icon="user-plus">
+    Alert your sales team when new leads come in
+  </Card>
+  <Card title="Customer support" icon="headset">
+    Route support inquiries to the appropriate team member
+  </Card>
+  <Card title="Delivery updates" icon="truck">
+    Keep customers informed about their delivery status
+  </Card>
+  <Card title="Payment reminders" icon="credit-card">
+    Send automatic payment reminders for overdue accounts
+  </Card>
+</CardGroup>
 
-1. **Order Notifications**:
+## Best practices
 
-   - Trigger: New order in Shopify.
-   - Action: Send a WhatsApp message to the customer with order details.
+<AccordionGroup>
+  <Accordion title="Test thoroughly" icon="vial">
+    Always test your workflows with test phone numbers before activating them for production use.
+  </Accordion>
+  <Accordion title="Use templates" icon="file-lines">
+    Whenever possible, use pre-approved templates for better deliverability and compliance.
+  </Accordion>
+  <Accordion title="Add personalization" icon="user">
+    Include customer names and specific details to increase engagement and response rates.
+  </Accordion>
+  <Accordion title="Follow WhatsApp policies" icon="shield-check">
+    Ensure all message content complies with WhatsApp Business policies to avoid account restrictions.
+  </Accordion>
+  <Accordion title="Monitor performance" icon="chart-line">
+    Regularly check your message delivery rates in your Notifyer dashboard.
+  </Accordion>
+</AccordionGroup>
 
-2. **Appointment Reminders**:
+## Troubleshooting
 
-   - Trigger: New event in Google Calendar.
-   - Action: Send a WhatsApp reminder to the client.
+<AccordionGroup>
+  <Accordion title="Messages not sending?" icon="circle-exclamation">
+    <Steps>
+      <Step title="Verify API key">
+        Ensure your API key is entered correctly in the Make credentials
+      </Step>
+      <Step title="Check phone numbers">
+        Confirm phone numbers are in the correct international format (e.g., +14155552671)
+      </Step>
+      <Step title="Check subscription">
+        Verify your Notifyer subscription is active and has available credits
+      </Step>
+      <Step title="Template verification">
+        For template messages, ensure you're using an approved template
+      </Step>
+    </Steps>
+  </Accordion>
+  
+  <Accordion title="Template errors?" icon="file-exclamation">
+    <Steps>
+      <Step title="Variable check">
+        Verify all required variables are included in your template message
+      </Step>
+      <Step title="Format verification">
+        Check that variable formats match the expected values (text, number, date, etc.)
+      </Step>
+      <Step title="Template name">
+        Ensure you're using the correct template name exactly as it appears in your dashboard
+      </Step>
+    </Steps>
+  </Accordion>
+  
+  <Accordion title="Media not displaying?" icon="image">
+    <Steps>
+      <Step title="URL access">
+        Confirm your media URLs are publicly accessible (test in an incognito browser)
+      </Step>
+      <Step title="File format">
+        Verify the file format is supported by WhatsApp
+      </Step>
+      <Step title="File size">
+        Check that file sizes are within WhatsApp limits:
+        - Images: up to 5MB
+        - Videos: up to 16MB
+        - Documents: up to 100MB
+      </Step>
+    </Steps>
+  </Accordion>
+</AccordionGroup>
 
-3. **Lead Management**:
+## Need help?
 
-   - Trigger: New lead in HubSpot.
-   - Action: Send a WhatsApp message to the sales team.
+Our support team is ready to assist you:
 
-4. **Feedback Collection**:
-   - Trigger: New response in Google Forms.
-   - Action: Send a WhatsApp message requesting feedback.
-</div>
+<CardGroup cols={3}>
+  <Card title="Email support" icon="envelope" href="mailto:team@whatsable.app">
+    Contact team@whatsable.app
+  </Card>
+  <Card title="Schedule a demo" icon="calendar" href="https://tidycal.com/axelmeta/notifyer-systems-demo">
+    Book a personalized walkthrough
+  </Card>
+  <Card title="Live chat" icon="message-dots" href="">
+    Click the green chat button in the bottom right corner of the Notifyer System dashboard
+  </Card>
+</CardGroup>
 
----
-
-## Conclusion
-
-<div className="bg-blue-50 p-6 rounded-lg my-6">
-Make integration with Notifyer System empowers users to automate their WhatsApp messaging workflows, saving time and improving efficiency. By connecting Notifyer System with Make, users can send messages, manage replies, and integrate with thousands of other apps seamlessly.
-</div>
-
----
-
-<div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-8 rounded-lg my-8">
-  <h2 className="text-2xl font-bold mb-4">🚀 Get Started with Make and Notifyer System!</h2>
-</div>
-
----
+<Info>
+  For additional automation platform integrations (Make.com, Zapier, etc.), please contact our support team or check our integration documentation.
+</Info>
