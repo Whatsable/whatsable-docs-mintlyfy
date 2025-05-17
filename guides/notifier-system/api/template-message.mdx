@@ -1,269 +1,569 @@
 ---
 title: 'Send Template Message'
-description: 'API documentation for sending template-based WhatsApp messages via Notifyer System.'
+description: 'Send personalized WhatsApp messages using pre-approved templates'
 icon: 'paper-plane'
 ---
 
-# API Documentation: Sending Template Messages
+<Tip>
+Templates enable personalized communication while ensuring compliance with WhatsApp's business policies. This API lets you send template-based messages to your customers with dynamic content.
+</Tip>
 
-<div className="bg-blue-50 p-6 rounded-lg my-6">
-  <p className="text-lg">
-    This API allows you to send template-based messages to users via their phone numbers. You can personalize messages using variables and attach media files when applicable.
-  </p>
-</div>
+WhatsApp requires businesses to use pre-approved templates for initiating conversations. This API allows you to send template messages with personalized variables, media attachments, and interactive components to your customers.
 
----
+## Overview
 
-## Endpoint
+The Send Template Message API enables you to:
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+- Send WhatsApp messages using your pre-approved templates
+- Dynamically replace variables with personalized content
+- Attach media (images, videos, documents) when supported by the template
+- Include interactive elements like buttons and quick replies
+- Track delivery status through WhatsApp response information
+
+<Card title="Try it in the API Reference" icon="arrow-right" href="https://docs.whatsable.app/api-reference/notifier-system/templates/send-template-message">
+  Experiment with the Send Template Message API and view responses in real-time
+</Card>
+
+## Send Template Message
+
+Send a personalized WhatsApp template message to a specific phone number.
+
+### Endpoint
 
 ```
-POST https://api.insightssystem.com/api:hFrjh8a1/send_template_message_by_api
+POST https://api.insightssystem.com/api:hFrjh8a1/send_template_message
 ```
 
-</div>
+### Authentication
 
----
+<Warning>
+All API requests require authentication using your API key. Never share your API keys in client-side code.
+</Warning>
 
-## Request Headers
+Include your API key in all requests using Bearer authentication:
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+<CodeGroup>
+```bash
+Authorization: Bearer YOUR_API_KEY
+```
 
-| Header        | Value               | Description              |
-| ------------- | ------------------- | ------------------------ |
-| Content-Type  | application/json    | Specifies JSON format    |
-| Authorization | Bearer YOUR_API_KEY | API authentication token |
-
-</div>
-
----
-
-## Request Body
-
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-The request body must be in JSON format and include the following parameters:
-
-### Parameters:
-
-| Parameter    | Type   | Required | Description                                                                 |
-| ------------ | ------ | -------- | --------------------------------------------------------------------------- |
-| template     | string | Yes      | The unique template ID used for sending the message.                        |
-| variables    | object | Yes      | A JSON object containing dynamic placeholders for the message template.     |
-| phone_number | string | Yes      | The recipient's phone number in international format (e.g., +123476529999). |
-
-### Variables:
-
-The `variables` object contains placeholders for dynamic text replacements in the message template.
-
-| Key           | Type   | Required | Description                                                                                                               |
-| ------------- | ------ | -------- | ------------------------------------------------------------------------------------------------------------------------- |
-| body1         | string | Yes      | The first variable in the template.                                                                                       |
-| body2         | string | Yes      | The second variable in the template.                                                                                      |
-| body3         | string | Yes      | The third variable in the template.                                                                                       |
-| media         | string | Yes      | A public URL pointing to an image, video, or document to be attached to the message. Good for Google drive shareable link |
-| visit_website | string | Yes      | This is the dynamic url button                                                                                            |
-
-</div>
-
----
-
-## Example Requests
-
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-
-### Example 1: Sending a Template Message with Variables and Media
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```json
-{
-  "template": "f10695a9-38d6-4f5f-8444-1f7bf52c6164",
-  "variables": {
-    "body1": "Axel",
-    "body2": "Shampoo",
-    "body3": "$1",
-    "media": "https://drive.google.com/file/d/1D35uTbceRPmCgwxVfBJZ2yxD2lQgs0bi/view?usp=sharing",
-    "visit_website": 1
-  },
-  "phone_number": "+123476529999"
+```javascript
+headers: {
+  'Authorization': 'Bearer YOUR_API_KEY',
+  'Content-Type': 'application/json'
 }
 ```
-</div>
+</CodeGroup>
 
-### Example 2: Sending a Template Message with Only One Variable
+### Request Body
 
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
+<ParamField body="template_id" type="string" required>
+  The unique identifier of the template to use. You can retrieve this from the [Get Templates API](/api-reference/notifier-system/templates/get-templates).
+</ParamField>
 
-```json
-{
-  "template": "b65081ed-a0f6-4aaf-b148-31719b5bc567",
-  "variables": {
-    "body1": "Edith Mireles"
-  },
-  "phone_number": "+123476529999"
+<ParamField body="phone_number" type="string" required>
+  The recipient's phone number in international format with country code (e.g., "+123456789012").
+</ParamField>
+
+<ParamField body="variables" type="object" required>
+  Object containing key-value pairs for template variables. The keys must match the variable names defined in your template.
+  
+  <Expandable title="Variable Types">
+    <ParamField body="body{n}" type="string">
+      Text variables that replace placeholders in the message body (e.g., body1, body2, etc.)
+    </ParamField>
+    
+    <ParamField body="header{n}" type="string">
+      Text variables that replace placeholders in the message header
+    </ParamField>
+    
+    <ParamField body="media" type="string">
+      Public URL to media content (image, video, or document) for templates with media support
+    </ParamField>
+    
+    <ParamField body="button{n}" type="string">
+      Text or URL for dynamic buttons in interactive templates
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="language" type="string" default="en">
+  The language code for the template. Must match one of the languages your template is approved for.
+</ParamField>
+
+### Response
+
+The API returns a detailed response indicating whether the message was accepted for delivery and provides WhatsApp message identifiers for tracking.
+
+<ResponseField name="success" type="boolean">
+  Indicates if the request was successfully processed
+</ResponseField>
+
+<ResponseField name="whatsapp_response_info" type="object">
+  Details from the WhatsApp Business API about the message delivery
+  
+  <Expandable title="WhatsApp Response Fields">
+    <ResponseField name="messaging_product" type="string">
+      Always "whatsapp" for WhatsApp messages
+    </ResponseField>
+    
+    <ResponseField name="contacts" type="array">
+      Information about the message recipient
+      <ResponseField name="input" type="string">
+        The phone number that was provided in the request
+      </ResponseField>
+      <ResponseField name="wa_id" type="string">
+        WhatsApp's unique identifier for the recipient
+      </ResponseField>
+    </ResponseField>
+    
+    <ResponseField name="messages" type="array">
+      Details about the sent message
+      <ResponseField name="id" type="string">
+        Unique message identifier (wamid) for tracking status
+      </ResponseField>
+      <ResponseField name="message_status" type="string">
+        Initial status of the message (typically "accepted")
+      </ResponseField>
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="error" type="object" optional>
+  Present only when an error occurs
+  <ResponseField name="code" type="string">
+    Error code identifier
+  </ResponseField>
+  <ResponseField name="message" type="string">
+    Human-readable error description
+  </ResponseField>
+</ResponseField>
+
+### Example Request
+
+<CodeGroup>
+```bash cURL
+curl -X POST \
+  https://api.insightssystem.com/api:hFrjh8a1/send_template_message \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -d '{
+    "template_id": "6f6e4113-cc8a-4fbe-b98d-2c631d299c6b",
+    "phone_number": "+123456789012",
+    "variables": {
+      "body1": "John Doe",
+      "body2": "Premium Subscription",
+      "body3": "$49.99",
+      "media": "https://storage.googleapis.com/your-public-bucket/offer-image.jpg",
+      "button1": "https://example.com/special-offer"
+    },
+    "language": "en"
+  }'
+```
+
+```javascript Node.js
+const axios = require('axios');
+
+async function sendTemplateMessage() {
+  try {
+    const response = await axios.post(
+      'https://api.insightssystem.com/api:hFrjh8a1/send_template_message',
+      {
+        template_id: '6f6e4113-cc8a-4fbe-b98d-2c631d299c6b',
+        phone_number: '+123456789012',
+        variables: {
+          body1: 'John Doe',
+          body2: 'Premium Subscription',
+          body3: '$49.99',
+          media: 'https://storage.googleapis.com/your-public-bucket/offer-image.jpg',
+          button1: 'https://example.com/special-offer'
+        },
+        language: 'en'
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer YOUR_API_KEY'
+        }
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error sending template message:', error.response?.data || error.message);
+  }
+}
+
+sendTemplateMessage();
+```
+
+```python Python
+import requests
+
+url = "https://api.insightssystem.com/api:hFrjh8a1/send_template_message"
+
+payload = {
+    "template_id": "6f6e4113-cc8a-4fbe-b98d-2c631d299c6b",
+    "phone_number": "+123456789012",
+    "variables": {
+        "body1": "John Doe",
+        "body2": "Premium Subscription",
+        "body3": "$49.99",
+        "media": "https://storage.googleapis.com/your-public-bucket/offer-image.jpg",
+        "button1": "https://example.com/special-offer"
+    },
+    "language": "en"
+}
+
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer YOUR_API_KEY"
+}
+
+response = requests.post(url, json=payload, headers=headers)
+print(response.json())
+```
+
+```go Go
+package main
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
+
+func main() {
+	url := "https://api.insightssystem.com/api:hFrjh8a1/send_template_message"
+	
+	// Create request payload
+	payload := map[string]interface{}{
+		"template_id": "6f6e4113-cc8a-4fbe-b98d-2c631d299c6b",
+		"phone_number": "+123456789012",
+		"variables": map[string]interface{}{
+			"body1":   "John Doe",
+			"body2":   "Premium Subscription",
+			"body3":   "$49.99",
+			"media":   "https://storage.googleapis.com/your-public-bucket/offer-image.jpg",
+			"button1": "https://example.com/special-offer",
+		},
+		"language": "en",
+	}
+	
+	// Convert payload to JSON
+	jsonPayload, err := json.Marshal(payload)
+	if err != nil {
+		fmt.Println("Error creating JSON payload:", err)
+		return
+	}
+	
+	// Create request
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonPayload))
+	if err != nil {
+		fmt.Println("Error creating request:", err)
+		return
+	}
+	
+	// Add headers
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer YOUR_API_KEY")
+	
+	// Send request
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error sending request:", err)
+		return
+	}
+	defer resp.Body.Close()
+	
+	// Read response
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("Error reading response:", err)
+		return
+	}
+	
+	fmt.Println("Response:", string(body))
 }
 ```
-</div>
+</CodeGroup>
 
-</div>
+### Example Response
 
----
-
-## Response
-
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-
-### Success Response
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```json
+<CodeGroup>
+```json Success Response
 {
   "success": true,
   "whatsapp_response_info": {
+    "messaging_product": "whatsapp",
     "contacts": [
       {
-        "input": "+123476529999",
-        "wa_id": "123476529999"
+        "input": "+123456789012",
+        "wa_id": "123456789012"
       }
     ],
     "messages": [
       {
-        "id": "wamid.HBgLMzM3NjY4NjQwMDIVAgARGBIxN0ZDREExNkE1OTdEQkUwNkQA",
+        "id": "wamid.HBgLMTIzNDU2Nzg5MDEyFQIAERgSNUU2RjM4NzM1M0Q5OEIwQTQwAA==",
         "message_status": "accepted"
       }
-    ],
-    "messaging_product": "whatsapp"
+    ]
   }
 }
 ```
-</div>
 
-</div>
-
----
-
-## Code Examples
-
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-
-### cURL
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
+```json Error Response
+{
+  "success": false,
+  "error": {
+    "code": "invalid_template",
+    "message": "The template ID provided does not exist or is not approved"
+  }
+}
 ```
-curl -X POST "https://api.insightssystem.com/api:hFrjh8a1/send_template_message_by_api" \
-     -H "Content-Type: application/json" \
-     -H "Authorization: Bearer YOUR_API_KEY" \
-     -d '{
-          "template": "f10695a9-38d6-4f5f-8444-1f7bf52c6164",
-          "variables": {
-            "body1": "Axel",
-            "body2": "Shampoo",
-            "body3": "$1",
-            "media": "https://drive.google.com/file/d/1D35uTbceRPmCgwxVfBJZ2yxD2lQgs0bi/view?usp=sharing"
-          },
-          "phone_number": "123476529999"
-        }'
-```
-</div>
+</CodeGroup>
 
-### JavaScript (Node.js)
+## Response Codes
 
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
+<AccordionGroup>
+  <Accordion title="200: Success">
+    Your request was successful and the message has been accepted for delivery.
+  </Accordion>
+  <Accordion title="400: Bad Request">
+    The request was invalid. Check the error message for details.
+    ```json
+    {
+      "success": false,
+      "error": {
+        "code": "invalid_request",
+        "message": "Missing required field: template_id"
+      }
+    }
+    ```
+  </Accordion>
+  <Accordion title="401: Unauthorized">
+    Authentication failed. Check that you're using a valid API key.
+    ```json
+    {
+      "success": false,
+      "error": {
+        "code": "unauthorized",
+        "message": "Invalid API key provided"
+      }
+    }
+    ```
+  </Accordion>
+  <Accordion title="403: Forbidden">
+    Your account doesn't have permission to send messages.
+  </Accordion>
+  <Accordion title="404: Not Found">
+    The template specified doesn't exist.
+    ```json
+    {
+      "success": false,
+      "error": {
+        "code": "template_not_found",
+        "message": "Template with ID '6f6e4113-cc8a-4fbe-b98d-2c631d299c6b' not found"
+      }
+    }
+    ```
+  </Accordion>
+  <Accordion title="422: Unprocessable Entity">
+    The request was well-formed but contains invalid parameters.
+    ```json
+    {
+      "success": false,
+      "error": {
+        "code": "invalid_phone_number",
+        "message": "The phone number format is invalid"
+      }
+    }
+    ```
+  </Accordion>
+  <Accordion title="429: Too Many Requests">
+    You've exceeded the rate limit. Implement exponential backoff in your requests.
+  </Accordion>
+  <Accordion title="500: Server Error">
+    Something went wrong on our end. Please contact support if the issue persists.
+    ```json
+    {
+      "success": false,
+      "error": {
+        "code": "server_error",
+        "message": "An internal server error occurred"
+      }
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Working with Template Variables
+
+Templates contain placeholders that are replaced with dynamic content when sending messages. Understanding how to map your data to these variables is essential.
+
+### Variable Types
+
+<CardGroup cols={2}>
+  <Card title="Text Variables" icon="text">
+    Body and header variables replace text placeholders in your template. They are named `body1`, `body2`, etc., or `header1`, `header2`, etc.
+  </Card>
+  <Card title="Media Variables" icon="photo-film">
+    Media variables allow you to attach images, videos, or documents to your template. Provide a public URL in the `media` property.
+  </Card>
+  <Card title="Button Variables" icon="hand-pointer">
+    Used for dynamic buttons in interactive templates. Can be URLs or text, depending on the button type.
+  </Card>
+  <Card title="Quick Reply Variables" icon="message-dots">
+    For templates with quick reply buttons, provide the text to display on each button.
+  </Card>
+</CardGroup>
+
+### Variable Mapping
+
+<Steps>
+  <Step title="Identify template variables">
+    Examine your template structure to identify which variables are required. You can find this information using the [Get Templates API](/api-reference/notifier-system/templates/get-templates).
+  </Step>
+  <Step title="Prepare your data">
+    Format your data to match the expected variable structure. Ensure values meet any length or format requirements.
+  </Step>
+  <Step title="Map data to variables">
+    Create a `variables` object with keys matching your template's variable names and values from your data.
+  </Step>
+  <Step title="Handle media properly">
+    For media templates, ensure your media URL is publicly accessible and in a WhatsApp-supported format.
+  </Step>
+</Steps>
+
+## Media Guidelines
+
+When including media in your templates, follow these guidelines for optimal delivery:
+
+<CardGroup cols={2}>
+  <Card title="Images" icon="image">
+    - Supported formats: JPG, JPEG, PNG
+    - Max size: 5MB
+    - Recommended aspect ratio: 1.91:1
+  </Card>
+  <Card title="Videos" icon="video">
+    - Supported formats: MP4, 3GPP
+    - Max size: 16MB
+    - Max duration: 1 minute
+  </Card>
+  <Card title="Documents" icon="file">
+    - Supported formats: PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX
+    - Max size: 100MB
+  </Card>
+  <Card title="URLs" icon="link">
+    - Must be publicly accessible
+    - Direct file links (no redirects)
+    - HTTPS required
+  </Card>
+</CardGroup>
+
+<Warning>
+Media URLs must be publicly accessible without requiring authentication. For security, we recommend using signed URLs with limited-time access.
+</Warning>
+
+## Sending to Multiple Recipients
+
+While this API is designed for sending to a single recipient, you can efficiently send to multiple recipients by implementing a batch process in your application:
 
 ```javascript
-const fetch = require("node-fetch");
-
-async function sendMessage() {
-  const response = await fetch(
-    "https://api.insightssystem.com/api:hFrjh8a1/send_template_message_by_api",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer YOUR_API_KEY",
-      },
-      body: JSON.stringify({
-        template: "f10695a9-38d6-4f5f-8444-1f7bf52c6164",
-        variables: {
-          body1: "Axel",
-          body2: "Shampoo",
-          body3: "$1",
-          media:
-            "https://drive.google.com/file/d/1D35uTbceRPmCgwxVfBJZ2yxD2lQgs0bi/view?usp=sharing",
-        },
-        phone_number: "123476529999",
-      }),
+async function sendToMultipleRecipients(templateId, recipients, baseVariables) {
+  const results = [];
+  
+  for (const recipient of recipients) {
+    // Customize variables for each recipient if needed
+    const variables = {
+      ...baseVariables,
+      body1: recipient.name,
+      // Other recipient-specific variables
+    };
+    
+    try {
+      const response = await sendTemplateMessage(templateId, recipient.phone, variables);
+      results.push({ recipient: recipient.phone, success: true, response });
+    } catch (error) {
+      results.push({ recipient: recipient.phone, success: false, error });
     }
-  );
-  const data = await response.json();
-  console.log(data);
-}
-
-sendMessage();
-```
-</div>
-
-### Go
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```go
-package main
-
-import (
-    "bytes"
-    "encoding/json"
-    "fmt"
-    "net/http"
-)
-
-type RequestBody struct {
-    Template   string            `json:"template"`
-    Variables  map[string]string `json:"variables"`
-    PhoneNumber string           `json:"phone_number"`
-}
-
-func main() {
-    requestBody := RequestBody{
-        Template: "f10695a9-38d6-4f5f-8444-1f7bf52c6164",
-        Variables: map[string]string{
-            "body1": "Axel",
-            "body2": "Shampoo",
-            "body3": "$1",
-            "media": "https://drive.google.com/file/d/1D35uTbceRPmCgwxVfBJZ2yxD2lQgs0bi/view?usp=sharing"
-        },
-        PhoneNumber: "123476529999",
-    }
-
-    jsonData, _ := json.Marshal(requestBody)
-    resp, err := http.Post("https://api.insightssystem.com/api:hFrjh8a1/send_template_message_by_api", "application/json", bytes.NewBuffer(jsonData))
-    if err != nil {
-        fmt.Println("Error:", err)
-        return
-    }
-    defer resp.Body.Close()
-    fmt.Println("Response Status:", resp.Status)
+    
+    // Add a small delay to avoid rate limiting
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+  
+  return results;
 }
 ```
-</div>
 
-</div>
+## Rate Limiting
 
----
+This API endpoint is subject to the following rate limits:
 
-## Notes & Best Practices
+| Plan | Rate Limit |
+| ---- | ---------- |
+| Free | 50 messages per day |
+| Pro  | 1,000 messages per day |
+| Enterprise | Custom limits |
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-- Ensure that your API key is valid and has the required permissions to send messages.
-- Phone numbers must be formatted in the international format, including the country code.
-- Templates must be pre-approved and exist in your system before sending messages.
-- For media attachments, use a public, direct-access URL (e.g., Google Drive shareable link).
-- Handle API errors and check the response for `success: true` before assuming delivery.
+<Warning>
+If you exceed your rate limit, the API will return a 429 status code. Implement exponential backoff and retries in your code to handle rate limiting gracefully.
+</Warning>
 
-For further assistance, contact API support.
-</div>
+## Best Practices
 
---- 
+<CardGroup cols={2}>
+  <Card title="Error Handling" icon="shield-exclamation">
+    Implement comprehensive error handling to manage API failures gracefully. Always check the `success` field in responses and handle various error scenarios.
+  </Card>
+  <Card title="Message Tracking" icon="chart-line">
+    Store the returned `message_id` values to track delivery status using the [Message Status API](/api-reference/notifier-system/message-status).
+  </Card>
+  <Card title="Throttling" icon="gauge-high">
+    Implement request throttling when sending to multiple recipients to avoid hitting rate limits and ensure reliable delivery.
+  </Card>
+  <Card title="Template Testing" icon="flask">
+    Test your templates with various inputs to ensure variables are correctly replaced and messages appear as expected.
+  </Card>
+</CardGroup>
+
+## FAQs
+
+<AccordionGroup>
+  <Accordion title="Why was my message not delivered?">
+    Messages may fail to deliver for several reasons: invalid phone number, recipient has blocked your WhatsApp Business number, template issues, or WhatsApp temporary service interruptions. Check the error code returned for specific details.
+  </Accordion>
+  <Accordion title="Can I send to non-WhatsApp users?">
+    No, recipients must have an active WhatsApp account associated with the phone number you're sending to.
+  </Accordion>
+  <Accordion title="How do I know if my message was delivered?">
+    The initial response only confirms that WhatsApp accepted the message. For actual delivery status, implement webhook handling using our [Webhooks API](/api-reference/webhook) or query the [Message Status API](/api-reference/notifier-system/message-status).
+  </Accordion>
+  <Accordion title="Can I edit a message after sending?">
+    No, WhatsApp messages cannot be edited once sent. You would need to send a new message with the corrected information.
+  </Accordion>
+</AccordionGroup>
+
+<Card title="Need help?" icon="headset" href="/support">
+  Our support team is available 24/7 to assist with template issues, API integration, or any other questions.
+</Card>
+
+<Update label="2024-04-15" description="v2.1.0">
+  ## Enhanced Template Messaging
+  
+  - Added support for rich text formatting in templates
+  - Improved error reporting with more specific error codes
+  - New language parameter for multi-language template support
+</Update>
+
+<Update label="2024-01-22" description="v2.0.0">
+  ## Major API Upgrade
+  
+  - Simplified variable handling for easier integration
+  - Added support for all interactive message components
+  - Improved media handling with support for more file types
+  - Enhanced security with better input validation
+</Update>

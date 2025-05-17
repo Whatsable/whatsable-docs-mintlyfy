@@ -1,368 +1,742 @@
 ---
-title: 'API Documentation'
-description: 'Comprehensive WhatsAble API Documentation (Version 2)'
+title: 'WhatsAble API'
+description: 'Send programmatic WhatsApp messages with the WhatsAble API'
 icon: 'code'
 ---
 
-# API
+# WhatsAble API
 
-# 📚 WhatsAble API Documentation (Version 2)
+> Send programmatic WhatsApp messages with ease
 
-<div className="bg-blue-50 p-6 rounded-lg my-6">
-  <p className="text-lg">
-    Welcome to <span className="font-bold text-blue-600">WhatsAble API Documentation</span>! This guide provides comprehensive details on how to integrate and use the <span className="font-bold">WhatsAble API</span> to send WhatsApp messages programmatically. Whether you're a developer or a non-technical user, this documentation will walk you through the process step-by-step.
-  </p>
-</div>
+<Frame caption="WhatsAble API enables seamless WhatsApp integration">
+  <img className="block dark:hidden" src="/images/hero-light.png" alt="WhatsAble API Hero Image" />
+  <img className="hidden dark:block" src="/images/hero-dark.png" alt="WhatsAble API Hero Image" />
+</Frame>
 
----
+## Overview
 
-## 🧩 Key Features of WhatsAble API
+WhatsAble API enables developers to programmatically send WhatsApp messages with rich media support. Our RESTful API delivers enterprise-grade reliability while maintaining a simple integration process. Whether you're building a customer support platform, marketing automation system, or notification service, WhatsAble API gives you the tools to engage your users on WhatsApp.
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-- **Send WhatsApp Messages**: Automate WhatsApp messages with text, images, videos, and documents.
-- **Template-Based Messaging**: Use pre-defined templates for structured messages.
-- **Attachment Support**: Send files like PDFs, images, and videos.
-- **Zapier & Make.com Integration**: Easily integrate with no-code platforms like Zapier and Make.com.
-- **Scalable**: Send messages to multiple numbers with ease.
-</div>
+<CardGroup cols={2}>
+  <Card title="Quick Start" icon="bolt" href="#getting-started">
+    Send your first WhatsApp message in under 5 minutes
+  </Card>
+  <Card title="API Reference" icon="code" href="#api-reference">
+    Complete API endpoints and parameters documentation
+  </Card>
+  <Card title="Media Support" icon="image" href="#supported-media-types">
+    Send images, videos, documents, and more
+  </Card>
+  <Card title="Templates" icon="layer-group" href="#template-based-messaging">
+    Use templates for structured messages
+  </Card>
+</CardGroup>
 
----
+## Key Features
 
-## 🚀 Getting Started
+<AccordionGroup>
+  <Accordion title="Rich Media Messaging" icon="photo-film">
+    Send WhatsApp messages with text, images, videos, documents, and audio files.
+  </Accordion>
+  <Accordion title="Template-Based Messaging" icon="layer-group">
+    Use pre-defined templates for structured messages, enabling you to send consistent communications.
+  </Accordion>
+  <Accordion title="No-Code Integration" icon="puzzle-piece">
+    Seamlessly integrate with platforms like Zapier and Make.com without writing code.
+  </Accordion>
+  <Accordion title="Enterprise Scalability" icon="chart-line">
+    Send messages to thousands of recipients with high deliverability and reliability.
+  </Accordion>
+</AccordionGroup>
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+## Getting Started
 
-### 1. <span className="font-bold">Prerequisites</span>
+<Steps>
+  <Step title="Create a WhatsAble Account">
+    Sign up for a [WhatsAble account](https://dashboard.whatsable.app/register) and activate your subscription or start a free trial.
+    
+    <Note>
+      You'll need a WhatsApp-enabled phone number to send messages from your account.
+    </Note>
+  </Step>
+  <Step title="Obtain Your API Key">
+    Navigate to the API section in your WhatsAble dashboard and generate an API key.
+    
+    <Warning>
+      Keep your API key secure and never share it publicly. It grants full access to send messages from your account.
+    </Warning>
+  </Step>
+  <Step title="Send Your First Message">
+    Use the examples below to send your first WhatsApp message programmatically.
+  </Step>
+</Steps>
 
-- A **WhatsApp-enabled phone number** (this will be used to send messages).
-- A **WhatsAble account** with an active subscription or free trial.
-- An **API Key** from your WhatsAble dashboard.
+## API Reference
 
-### 2. <span className="font-bold">API Endpoint</span>
+### Base URL
 
-- **Version 1**: `https://dashboard.whatsable.app/api/whatsapp/messages/send`
-- **Version 2**: `https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send`
+<CodeGroup>
+  ```bash Base URL
+  https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0
+  ```
+  
+  ```bash Legacy URL (v1)
+  https://dashboard.whatsable.app/api/whatsapp/messages
+  ```
+</CodeGroup>
 
-</div>
+### Authentication
 
----
+All API requests require authentication using your API key in the request header:
 
-## 🗝️ Authentication
+<ParamField header="Authorization" type="string" required>
+  Your WhatsAble API key
+</ParamField>
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-To use the WhatsAble API, you need to authenticate your requests using your **API Key**. Include the API Key in the `Authorization` header of your HTTP request.
+<CodeGroup>
+  ```bash Example
+  curl -X POST https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send \
+  -H 'Authorization: YOUR_API_KEY' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "to": "+1234567890",
+    "text": "Hello from WhatsAble!"
+  }'
+  ```
+</CodeGroup>
 
-```http
-Authorization: YOUR_API_KEY
-```
-</div>
+### Send Message Endpoint
 
----
+<ParamField path="send" type="string">
+  Endpoint to send WhatsApp messages
+</ParamField>
 
-## 📤 Sending a WhatsApp Message
+#### Request Parameters
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+<ResponseField name="Body Parameters" type="Object">
+  <Expandable title="properties">
+    <ResponseField name="to" type="string" required>
+      The recipient's phone number in E.164 format (e.g., +1234567890)
+    </ResponseField>
+    <ResponseField name="text" type="string" required>
+      The message content you want to send
+    </ResponseField>
+    <ResponseField name="attachment" type="string">
+      URL or base64-encoded file for attachments (images, videos, PDFs)
+    </ResponseField>
+    <ResponseField name="filename" type="string">
+      Name of the file when sending a document attachment
+    </ResponseField>
+  </Expandable>
+</ResponseField>
 
-### <span className="font-bold">Request Structure</span>
+#### Response
 
-Send a **POST** request to the API endpoint with the following parameters:
+<ResponseField name="Success Response" type="Object">
+  <Expandable title="properties">
+    <ResponseField name="success" type="boolean">
+      Indicates if the message was sent successfully (true)
+    </ResponseField>
+    <ResponseField name="message" type="string">
+      A human-readable message describing the result
+    </ResponseField>
+    <ResponseField name="details" type="object">
+      <Expandable title="properties">
+        <ResponseField name="messages" type="array">
+          <Expandable title="properties">
+            <ResponseField name="id" type="string">
+              Unique identifier for the message (e.g., wamid.XXXXXX)
+            </ResponseField>
+            <ResponseField name="message_status" type="string">
+              Status of the message (e.g., "accepted")
+            </ResponseField>
+          </Expandable>
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+  </Expandable>
+</ResponseField>
 
-#### <span className="font-bold">Headers</span>
+<RequestExample>
+  ```bash cURL
+  curl -X POST https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send \
+  -H 'Authorization: YOUR_API_KEY' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "to": "+1234567890",
+    "text": "Hello, this is a test message from WhatsAble!",
+    "attachment": "https://example.com/image.jpg",
+    "filename": "image.jpg"
+  }'
+  ```
+</RequestExample>
 
-- `Authorization`: Your API Key.
-- `Content-Type`: `application/json`.
-
-#### <span className="font-bold">Body Parameters</span>
-
-| Parameter    | Type   | Description                                                                   |
-| ------------ | ------ | ----------------------------------------------------------------------------- |
-| `to`         | String | The recipient's phone number in **E.164 format** (e.g., `+1234567890`).       |
-| `text`       | String | The message content you want to send.                                         |
-| `attachment` | String | (Optional) URL or base64-encoded file for attachments (images, videos, PDFs). |
-| `filename`   | String | (Optional) Name of the file if sending a document.                            |
-
-#### <span className="font-bold">Example Request (cURL)</span>
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```bash
-curl -X POST https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send \
--H 'Authorization: YOUR_API_KEY' \
--H 'Content-Type: application/json' \
--d '{
-  "to": "+1234567890",
-  "text": "Hello, this is a test message from WhatsAble!",
-  "attachment": "https://example.com/image.jpg",
-  "filename": "image.jpg"
-}'
-```
-</div>
-
-</div>
-
----
-
-## 📥 Response Structure
-
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-
-### <span className="font-bold">Success Response</span>
-
-If the message is sent successfully, you will receive a **200 OK** response with the following structure:
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```json
-{
-  "success": true,
-  "message": "Message sent successfully to +1234567890",
-  "details": {
-    "messages": [
-      {
-        "id": "wamid.XXXXXX",
-        "message_status": "accepted"
-      }
-    ]
+<ResponseExample>
+  ```json Success Response
+  {
+    "success": true,
+    "message": "Message sent successfully to +1234567890",
+    "details": {
+      "messages": [
+        {
+          "id": "wamid.XXXXXX",
+          "message_status": "accepted"
+        }
+      ]
+    }
   }
-}
-```
-</div>
-
-#### <span className="font-bold">Response Fields</span>
-
-| Field     | Type    | Description                                                          |
-| --------- | ------- | -------------------------------------------------------------------- |
-| `success` | Boolean | Indicates if the message was sent successfully (`true` or `false`).  |
-| `message` | String  | A human-readable message describing the result.                      |
-| `details` | Object  | Contains details about the sent message, including the `message_id`. |
-
-</div>
-
----
-
-### ❌ Error Responses
-
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-If the request fails, you will receive an error response with the following structure:
-
-#### <span className="font-bold">400 Bad Request</span>
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```json
-{
-  "success": false,
-  "message": "Invalid phone number format",
-  "details": "Phone number must be in E.164 format."
-}
-```
-</div>
-
-#### <span className="font-bold">401 Unauthorized</span>
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```json
-{
-  "success": false,
-  "message": "API key is required"
-}
-```
-</div>
-
-#### <span className="font-bold">403 Forbidden</span>
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```json
-{
-  "success": false,
-  "message": "Invalid API Key"
-}
-```
-</div>
-
-#### <span className="font-bold">404 Not Found</span>
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```json
-{
-  "success": false,
-  "message": "The number +1234567890 is not registered."
-}
-```
-</div>
-</div>
-
----
-
-## 🛠️ Code Examples
-
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-
-### <span className="font-bold">JavaScript (Fetch API)</span>
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```javascript
-var myHeaders = new Headers();
-myHeaders.append("Authorization", "YOUR_API_KEY");
-myHeaders.append("Content-Type", "application/json");
-
-var raw = JSON.stringify({
-  to: "+1234567890",
-  text: "Hello, this is a test message from WhatsAble!",
-});
-
-var requestOptions = {
-  method: "POST",
-  headers: myHeaders,
-  body: raw,
-  redirect: "follow",
-};
-
-fetch(
-  "https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send",
-  requestOptions
-)
-  .then((response) => response.text())
-  .then((result) => console.log(result))
-  .catch((error) => console.log("error", error));
-```
-</div>
-
-### <span className="font-bold">Python (Requests Library)</span>
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```python
-import requests
-import json
-
-url = "https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send"
-
-payload = json.dumps({
-  "to": "+1234567890",
-  "text": "Hello, this is a test message from WhatsAble!"
-})
-
-headers = {
-  'Authorization': 'YOUR_API_KEY',
-  'Content-Type': 'application/json'
-}
-
-response = requests.post(url, headers=headers, data=payload)
-print(response.text)
-```
-</div>
-
-</div>
-
----
-
-## 📂 Supported Media Types
-
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-WhatsAble API supports a wide range of media types for sending rich messages via WhatsApp. Below is a detailed breakdown of the supported file formats, extensions, MIME types, and maximum file sizes.
-
-### 🎧 <span className="font-bold">Audio</span>
-
-You can send audio files in various formats. The maximum file size for audio files is **16 MB**.
-
-| **Audio Type**        | **Extension** | **MIME Type** | **Max Size** |
-| --------------------- | ------------- | ------------- | ------------ |
-| AAC                   | `.aac`        | `audio/aac`   | 16 MB        |
-| AMR                   | `.amr`        | `audio/amr`   | 16 MB        |
-| MP3                   | `.mp3`        | `audio/mpeg`  | 16 MB        |
-| MP4 Audio             | `.m4a`        | `audio/mp4`   | 16 MB        |
-| OGG Audio (OPUS only) | `.ogg`        | `audio/ogg`   | 16 MB        |
-
-### 📄 <span className="font-bold">Documents</span>
-
-You can send documents in various formats, including text files, PDFs, and Microsoft Office files. The maximum file size for documents is **100 MB**.
-
-| **Document Type**    | **Extension** | **MIME Type**                                                               | **Max Size** |
-| -------------------- | ------------- | --------------------------------------------------------------------------- | ------------ |
-| Text                 | `.txt`        | `text/plain`                                                                | 100 MB       |
-| Microsoft Excel      | `.xls`        | `application/vnd.ms-excel`                                                  | 100 MB       |
-| Microsoft Excel      | `.xlsx`       | `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`         | 100 MB       |
-| Microsoft Word       | `.doc`        | `application/msword`                                                        | 100 MB       |
-| Microsoft Word       | `.docx`       | `application/vnd.openxmlformats-officedocument.wordprocessingml.document`   | 100 MB       |
-| Microsoft PowerPoint | `.ppt`        | `application/vnd.ms-powerpoint`                                             | 100 MB       |
-| Microsoft PowerPoint | `.pptx`       | `application/vnd.openxmlformats-officedocument.presentationml.presentation` | 100 MB       |
-| PDF                  | `.pdf`        | `application/pdf`                                                           | 100 MB       |
-
-### 🖼️ <span className="font-bold">Images</span>
-
-You can send images in JPEG or PNG formats. Images must be **8-bit, RGB, or RGBA**. The maximum file size for images is **5 MB**.
-
-| **Image Type** | **Extension** | **MIME Type** | **Max Size** |
-| -------------- | ------------- | ------------- | ------------ |
-| JPEG           | `.jpeg`       | `image/jpeg`  | 5 MB         |
-| PNG            | `.png`        | `image/png`   | 5 MB         |
-
-### 🎞️ <span className="font-bold">Stickers</span>
-
-Stickers can be sent as **WebP** files. Animated stickers are also supported. The maximum file size for stickers is **500 KB** for animated stickers and **100 KB** for static stickers.
-
-| **Sticker Type** | **Extension** | **MIME Type** | **Max Size** |
-| ---------------- | ------------- | ------------- | ------------ |
-| Animated Sticker | `.webp`       | `image/webp`  | 500 KB       |
-| Static Sticker   | `.webp`       | `image/webp`  | 100 KB       |
-
-### 🎥 <span className="font-bold">Videos</span>
-
-You can send videos in 3GPP or MP4 formats. Only **H.264 video codec** and **AAC audio codec** are supported. The maximum file size for videos is **16 MB**.
-
-| **Video Type** | **Extension** | **MIME Type** | **Max Size** |
-| -------------- | ------------- | ------------- | ------------ |
-| 3GPP           | `.3gp`        | `video/3gpp`  | 16 MB        |
-| MP4 Video      | `.mp4`        | `video/mp4`   | 16 MB        |
-
-</div>
-
----
-
-## 📜 Template-Based Messaging
-
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-WhatsAble supports **template-based messaging** for structured messages. The API automatically selects the appropriate template based on the message content and attachment type.
-
-#### <span className="font-bold">Template Selection Logic</span>
-
-- **Text-Only Messages**: Templates like `standard_1_line_textonly`, `standard_2_line2_textonly`, etc.
-- **Image Attachments**: Templates like `standard_image_notification_1_lines`, `standard_image_notification_2_lines`, etc.
-- **Video Attachments**: Templates like `standard_video_notification_1_lines`, `standard_video_notification_2_lines`, etc.
-- **Document Attachments**: Templates like `standard_doc_message_1_line`, `standard_doc_message_2_lines`, etc.
-
-</div>
-
----
-
-## ❓ Need Help?
-
-<div className="bg-blue-50 p-6 rounded-lg my-6">
-If you encounter any issues or need further assistance, feel free to reach out to our support team:
-
-- **Chat Support**: Click the green chat button in the bottom right corner of the WhatsAble dashboard.
-- **Email Support**: support@whatsable.app
-</div>
-
----
-
-<div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-8 rounded-lg my-8">
-  <h2 className="text-2xl font-bold mb-4">🚀 Start Automating WhatsApp Messages Today!</h2>
-  <div className="space-y-4">
-    <a href="https://whatsable.app/" className="block bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
-      Visit WhatsAble's Website
-    </a>
-    <a href="https://zapier.com/apps/whatsable-ca185063/integrations" className="block bg-blue-400 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-500 transition-colors">
-      Try WhatsAble on Zapier
-    </a>
-  </div>
-</div>
-
----
-
-**Disclaimer**: This service is not affiliated with nor endorsed by WhatsApp Inc. The tool uses the WhatsApp API but is not affiliated with WhatsApp. 
+  ```
+</ResponseExample>
+
+### Error Codes
+
+<AccordionGroup>
+  <Accordion title="400 Bad Request">
+    ```json
+    {
+      "success": false,
+      "message": "Invalid phone number format",
+      "details": "Phone number must be in E.164 format."
+    }
+    ```
+    <Tip>
+      Ensure phone numbers are in E.164 format (e.g., +1234567890) with country code.
+    </Tip>
+  </Accordion>
+  <Accordion title="401 Unauthorized">
+    ```json
+    {
+      "success": false,
+      "message": "API key is required"
+    }
+    ```
+    <Warning>
+      Make sure you're including the API key in the Authorization header.
+    </Warning>
+  </Accordion>
+  <Accordion title="403 Forbidden">
+    ```json
+    {
+      "success": false,
+      "message": "Invalid API Key"
+    }
+    ```
+    <Warning>
+      Verify your API key is correct and active in your WhatsAble dashboard.
+    </Warning>
+  </Accordion>
+  <Accordion title="404 Not Found">
+    ```json
+    {
+      "success": false,
+      "message": "The number +1234567890 is not registered."
+    }
+    ```
+    <Info>
+      The recipient's number must be registered with WhatsApp to receive messages.
+    </Info>
+  </Accordion>
+</AccordionGroup>
+
+## Code Examples
+
+<CodeGroup>
+  ```javascript JavaScript (Fetch)
+  const sendWhatsAppMessage = async () => {
+    const apiKey = 'YOUR_API_KEY';
+    const endpoint = 'https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send';
+    
+    const payload = {
+      to: '+1234567890',
+      text: 'Hello, this is a test message from WhatsAble!',
+      attachment: 'https://example.com/image.jpg',
+      filename: 'image.jpg'
+    };
+    
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Authorization': apiKey,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+      
+      const data = await response.json();
+      console.log('Message sent:', data);
+      return data;
+    } catch (error) {
+      console.error('Error sending message:', error);
+      throw error;
+    }
+  };
+  
+  sendWhatsAppMessage();
+  ```
+  
+  ```python Python
+  import requests
+  import json
+  
+  def send_whatsapp_message():
+      api_key = 'YOUR_API_KEY'
+      endpoint = 'https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send'
+      
+      payload = {
+          'to': '+1234567890',
+          'text': 'Hello, this is a test message from WhatsAble!',
+          'attachment': 'https://example.com/image.jpg',
+          'filename': 'image.jpg'
+      }
+      
+      headers = {
+          'Authorization': api_key,
+          'Content-Type': 'application/json'
+      }
+      
+      try:
+          response = requests.post(endpoint, headers=headers, data=json.dumps(payload))
+          data = response.json()
+          print('Message sent:', data)
+          return data
+      except Exception as e:
+          print('Error sending message:', str(e))
+          raise e
+  
+  send_whatsapp_message()
+  ```
+  
+  ```php PHP
+  <?php
+  
+  function sendWhatsAppMessage() {
+      $apiKey = 'YOUR_API_KEY';
+      $endpoint = 'https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0/send';
+      
+      $payload = [
+          'to' => '+1234567890',
+          'text' => 'Hello, this is a test message from WhatsAble!',
+          'attachment' => 'https://example.com/image.jpg',
+          'filename' => 'image.jpg'
+      ];
+      
+      $headers = [
+          'Authorization: ' . $apiKey,
+          'Content-Type: application/json'
+      ];
+      
+      $ch = curl_init($endpoint);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($ch, CURLOPT_POST, true);
+      curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+      curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+      
+      $response = curl_exec($ch);
+      $error = curl_error($ch);
+      curl_close($ch);
+      
+      if ($error) {
+          echo 'Error sending message: ' . $error;
+          return false;
+      }
+      
+      $data = json_decode($response, true);
+      echo 'Message sent: ' . print_r($data, true);
+      return $data;
+  }
+  
+  sendWhatsAppMessage();
+  ```
+</CodeGroup>
+
+## Supported Media Types
+
+WhatsAble API supports a wide range of media types for sending rich messages via WhatsApp.
+
+<Tabs>
+  <Tab title="Images">
+    <ResponseField name="Supported Formats" type="Object">
+      <Expandable title="formats">
+        <ResponseField name="JPEG" type="Image">
+          <Expandable title="specifications">
+            <ResponseField name="Extension" type="string">
+              .jpeg, .jpg
+            </ResponseField>
+            <ResponseField name="MIME Type" type="string">
+              image/jpeg
+            </ResponseField>
+            <ResponseField name="Max Size" type="string">
+              5MB
+            </ResponseField>
+            <ResponseField name="Requirements" type="string">
+              8-bit, RGB or RGBA
+            </ResponseField>
+          </Expandable>
+        </ResponseField>
+        <ResponseField name="PNG" type="Image">
+          <Expandable title="specifications">
+            <ResponseField name="Extension" type="string">
+              .png
+            </ResponseField>
+            <ResponseField name="MIME Type" type="string">
+              image/png
+            </ResponseField>
+            <ResponseField name="Max Size" type="string">
+              5MB
+            </ResponseField>
+            <ResponseField name="Requirements" type="string">
+              8-bit, RGB or RGBA
+            </ResponseField>
+          </Expandable>
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+    
+    <CodeGroup>
+      ```javascript Send Image Example
+      const payload = {
+        to: '+1234567890',
+        text: 'Check out this image!',
+        attachment: 'https://example.com/image.jpg',
+        filename: 'image.jpg'
+      };
+      ```
+    </CodeGroup>
+  </Tab>
+  
+  <Tab title="Videos">
+    <ResponseField name="Supported Formats" type="Object">
+      <Expandable title="formats">
+        <ResponseField name="MP4" type="Video">
+          <Expandable title="specifications">
+            <ResponseField name="Extension" type="string">
+              .mp4
+            </ResponseField>
+            <ResponseField name="MIME Type" type="string">
+              video/mp4
+            </ResponseField>
+            <ResponseField name="Max Size" type="string">
+              16MB
+            </ResponseField>
+            <ResponseField name="Codec" type="string">
+              H.264 video, AAC audio
+            </ResponseField>
+          </Expandable>
+        </ResponseField>
+        <ResponseField name="3GPP" type="Video">
+          <Expandable title="specifications">
+            <ResponseField name="Extension" type="string">
+              .3gp
+            </ResponseField>
+            <ResponseField name="MIME Type" type="string">
+              video/3gpp
+            </ResponseField>
+            <ResponseField name="Max Size" type="string">
+              16MB
+            </ResponseField>
+            <ResponseField name="Codec" type="string">
+              H.264 video, AAC audio
+            </ResponseField>
+          </Expandable>
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+  </Tab>
+  
+  <Tab title="Documents">
+    <ResponseField name="Supported Formats" type="Object">
+      <Expandable title="formats">
+        <ResponseField name="PDF" type="Document">
+          <Expandable title="specifications">
+            <ResponseField name="Extension" type="string">
+              .pdf
+            </ResponseField>
+            <ResponseField name="MIME Type" type="string">
+              application/pdf
+            </ResponseField>
+            <ResponseField name="Max Size" type="string">
+              100MB
+            </ResponseField>
+          </Expandable>
+        </ResponseField>
+        <ResponseField name="Microsoft Word" type="Document">
+          <Expandable title="specifications">
+            <ResponseField name="Extension" type="string">
+              .doc, .docx
+            </ResponseField>
+            <ResponseField name="MIME Type" type="string">
+              application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document
+            </ResponseField>
+            <ResponseField name="Max Size" type="string">
+              100MB
+            </ResponseField>
+          </Expandable>
+        </ResponseField>
+        <ResponseField name="Microsoft Excel" type="Document">
+          <Expandable title="specifications">
+            <ResponseField name="Extension" type="string">
+              .xls, .xlsx
+            </ResponseField>
+            <ResponseField name="MIME Type" type="string">
+              application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+            </ResponseField>
+            <ResponseField name="Max Size" type="string">
+              100MB
+            </ResponseField>
+          </Expandable>
+        </ResponseField>
+        <ResponseField name="Microsoft PowerPoint" type="Document">
+          <Expandable title="specifications">
+            <ResponseField name="Extension" type="string">
+              .ppt, .pptx
+            </ResponseField>
+            <ResponseField name="MIME Type" type="string">
+              application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation
+            </ResponseField>
+            <ResponseField name="Max Size" type="string">
+              100MB
+            </ResponseField>
+          </Expandable>
+        </ResponseField>
+        <ResponseField name="Text" type="Document">
+          <Expandable title="specifications">
+            <ResponseField name="Extension" type="string">
+              .txt
+            </ResponseField>
+            <ResponseField name="MIME Type" type="string">
+              text/plain
+            </ResponseField>
+            <ResponseField name="Max Size" type="string">
+              100MB
+            </ResponseField>
+          </Expandable>
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+  </Tab>
+  
+  <Tab title="Audio">
+    <ResponseField name="Supported Formats" type="Object">
+      <Expandable title="formats">
+        <ResponseField name="MP3" type="Audio">
+          <Expandable title="specifications">
+            <ResponseField name="Extension" type="string">
+              .mp3
+            </ResponseField>
+            <ResponseField name="MIME Type" type="string">
+              audio/mpeg
+            </ResponseField>
+            <ResponseField name="Max Size" type="string">
+              16MB
+            </ResponseField>
+          </Expandable>
+        </ResponseField>
+        <ResponseField name="AAC" type="Audio">
+          <Expandable title="specifications">
+            <ResponseField name="Extension" type="string">
+              .aac
+            </ResponseField>
+            <ResponseField name="MIME Type" type="string">
+              audio/aac
+            </ResponseField>
+            <ResponseField name="Max Size" type="string">
+              16MB
+            </ResponseField>
+          </Expandable>
+        </ResponseField>
+        <ResponseField name="OGG (OPUS)" type="Audio">
+          <Expandable title="specifications">
+            <ResponseField name="Extension" type="string">
+              .ogg
+            </ResponseField>
+            <ResponseField name="MIME Type" type="string">
+              audio/ogg
+            </ResponseField>
+            <ResponseField name="Max Size" type="string">
+              16MB
+            </ResponseField>
+            <ResponseField name="Codec" type="string">
+              OPUS only
+            </ResponseField>
+          </Expandable>
+        </ResponseField>
+        <ResponseField name="AMR" type="Audio">
+          <Expandable title="specifications">
+            <ResponseField name="Extension" type="string">
+              .amr
+            </ResponseField>
+            <ResponseField name="MIME Type" type="string">
+              audio/amr
+            </ResponseField>
+            <ResponseField name="Max Size" type="string">
+              16MB
+            </ResponseField>
+          </Expandable>
+        </ResponseField>
+        <ResponseField name="MP4 Audio" type="Audio">
+          <Expandable title="specifications">
+            <ResponseField name="Extension" type="string">
+              .m4a
+            </ResponseField>
+            <ResponseField name="MIME Type" type="string">
+              audio/mp4
+            </ResponseField>
+            <ResponseField name="Max Size" type="string">
+              16MB
+            </ResponseField>
+          </Expandable>
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+  </Tab>
+  
+  <Tab title="Stickers">
+    <ResponseField name="Supported Formats" type="Object">
+      <Expandable title="formats">
+        <ResponseField name="Static Sticker" type="WebP">
+          <Expandable title="specifications">
+            <ResponseField name="Extension" type="string">
+              .webp
+            </ResponseField>
+            <ResponseField name="MIME Type" type="string">
+              image/webp
+            </ResponseField>
+            <ResponseField name="Max Size" type="string">
+              100KB
+            </ResponseField>
+          </Expandable>
+        </ResponseField>
+        <ResponseField name="Animated Sticker" type="WebP">
+          <Expandable title="specifications">
+            <ResponseField name="Extension" type="string">
+              .webp
+            </ResponseField>
+            <ResponseField name="MIME Type" type="string">
+              image/webp
+            </ResponseField>
+            <ResponseField name="Max Size" type="string">
+              500KB
+            </ResponseField>
+          </Expandable>
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+  </Tab>
+</Tabs>
+
+## Template-Based Messaging
+
+WhatsAble intelligently selects the appropriate template based on the message content and attachment type.
+
+<Accordion title="Template Selection Logic" icon="wand-magic-sparkles">
+  WhatsAble automatically selects the appropriate template based on your content:
+  
+  - **Text-only messages**: Uses templates like `standard_1_line_textonly`, `standard_2_line_textonly`, etc.
+  - **Image attachments**: Uses templates like `standard_image_notification_1_lines`, `standard_image_notification_2_lines`, etc.
+  - **Video attachments**: Uses templates like `standard_video_notification_1_lines`, `standard_video_notification_2_lines`, etc.
+  - **Document attachments**: Uses templates like `standard_doc_message_1_line`, `standard_doc_message_2_lines`, etc.
+</Accordion>
+
+<Note>
+  Template messaging ensures your messages maintain consistent formatting and follow WhatsApp guidelines.
+</Note>
+
+## Rate Limits and Best Practices
+
+<Steps>
+  <Step title="Respect Rate Limits">
+    WhatsAble enforces rate limits to ensure reliable message delivery. Standard accounts are limited to 50 messages per minute, while enterprise accounts have customizable limits.
+    
+    <Warning>
+      Exceeding rate limits may result in temporary API access restrictions.
+    </Warning>
+  </Step>
+  <Step title="Implement Error Handling">
+    Always implement proper error handling to manage failed message deliveries gracefully:
+    
+    ```javascript
+    try {
+      const response = await sendWhatsAppMessage();
+      if (!response.success) {
+        // Handle specific error based on response message
+        console.error('Message sending failed:', response.message);
+      }
+    } catch (error) {
+      // Handle network or server errors
+      console.error('API request failed:', error);
+    }
+    ```
+  </Step>
+  <Step title="Optimize Media Size">
+    Compress images and videos before sending to improve delivery speed and reliability:
+    
+    - Resize images to appropriate dimensions for WhatsApp (1080px max width recommended)
+    - Compress videos to reduce file size while maintaining quality
+    - Use CDN-hosted media when possible rather than base64 encoding
+  </Step>
+</Steps>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Is WhatsAble officially affiliated with WhatsApp?">
+    No, WhatsAble is not affiliated with or endorsed by WhatsApp Inc. WhatsAble uses the WhatsApp Business API to provide its services.
+  </Accordion>
+  <Accordion title="Do recipients need to opt in before receiving messages?">
+    Yes, according to WhatsApp's policy, recipients must explicitly opt in to receive messages from businesses. Ensure you have proper consent before sending messages.
+  </Accordion>
+  <Accordion title="Can I track message delivery status?">
+    Currently, the WhatsAble API provides message acceptance status in the response. Real-time delivery and read receipts are planned for a future release.
+  </Accordion>
+  <Accordion title="Can I send messages to multiple recipients at once?">
+    Yes, but you need to send individual API requests for each recipient. Bulk messaging functionality with a single API call is available for enterprise customers.
+  </Accordion>
+</AccordionGroup>
+
+## Support
+
+<CardGroup cols={2}>
+  <Card title="Live Chat Support" icon="message" href="https://dashboard.whatsable.app/support" color="#25d366">
+    Click the green chat button in the bottom right corner of the WhatsAble dashboard
+  </Card>
+  <Card title="Email Support" icon="envelope" href="mailto:team@whatsable.app" color="#4A9DF8">
+    Contact our team at team@whatsable.app
+  </Card>
+</CardGroup>
+
+<Note>
+  Our support team is available Monday through Friday, 9 AM to 6 PM UTC. Enterprise customers receive 24/7 support access.
+</Note>
+
+## Updates
+
+<Update label="2023-09-01" description="API v2.0.0 Release">
+  <Frame>
+    <img className="block dark:hidden" src="/images/release-v2-light.png" alt="API v2.0.0 Release" />
+    <img className="hidden dark:block" src="/images/release-v2-dark.png" alt="API v2.0.0 Release" />
+  </Frame>
+  
+  ### What's New
+  
+  - **Improved Media Handling**: Support for larger file sizes and more media types
+  - **Enhanced Error Reporting**: More detailed error messages and status codes
+  - **Better Reliability**: Automatic retry mechanism for failed message delivery
+  - **Performance Improvements**: 50% faster message delivery times
+</Update>
+
+<Update label="2023-06-15" description="API v1.5.0 Release">
+  ### What's New
+  
+  - Added support for sticker messages
+  - Improved template selection algorithm
+  - Fixed issues with document attachments
+</Update>
+
+<Tip>
+  For a complete changelog, visit the [WhatsAble Release Notes](https://dashboard.whatsable.app/changelog) page.
+</Tip>
+
+<Warning>
+  API v1 is scheduled for deprecation on December 31, 2023. Please upgrade to v2.0.0 before this date.
+</Warning>

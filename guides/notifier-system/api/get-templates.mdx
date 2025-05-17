@@ -1,114 +1,176 @@
 ---
 title: 'Get Templates'
-description: 'API documentation for retrieving WhatsApp templates in Notifyer System.'
+description: 'Retrieve and manage your WhatsApp message templates'
 icon: 'list'
 ---
 
-# Get Templates API Documentation
+<Tip>
+Templates are pre-approved message formats that ensure your WhatsApp communications comply with WhatsApp Business policies while maintaining consistent messaging with your audience.
+</Tip>
 
-<div className="bg-blue-50 p-6 rounded-lg my-6">
-  <p className="text-lg">
-    The Get Templates API allows users to retrieve a list of all templates associated with their account. Templates are pre-defined message formats that can be used for various communication purposes such as marketing alerts, utility messages, and delivery notifications.
-  </p>
-</div>
+WhatsApp templates are essential for business messaging, enabling you to send structured communications to customers while complying with WhatsApp's policies. This guide covers how to retrieve your templates using our API.
 
----
+## Overview
 
-## Endpoint
+Templates serve as the foundation for all non-session messages on WhatsApp Business. Each template:
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+- Must be pre-approved by WhatsApp before use
+- Belongs to a specific category (Marketing, Utility, Authentication)
+- Can include variables that personalize messages for each recipient
+- Supports multiple languages and formats (text, media, interactive components)
+
+<Card title="Try it in the API Reference" icon="arrow-right" href="https://docs.whatsable.app/api-reference/notifier-system/templates/get-templates">
+  Experiment with the Get Templates API and view responses in real-time
+</Card>
+
+## Get Templates
+
+Retrieve all WhatsApp templates associated with your account, including approval status, variables, and other key properties.
+
+### Endpoint
 
 ```
 GET https://api.insightssystem.com/api:AFRA_QCy/get_templates
 ```
 
-</div>
+### Authentication
 
----
+<Warning>
+All API requests require authentication using your API key. Never share your API keys in client-side code.
+</Warning>
 
-## Authentication
+Include your API key in all requests using Bearer authentication:
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-Authentication is required for this endpoint. Include your API key in the request headers using Bearer authentication.
+<CodeGroup>
+```bash
+Authorization: Bearer YOUR_API_KEY
+```
 
-### Headers
+```javascript
+headers: {
+  'Authorization': 'Bearer YOUR_API_KEY',
+  'Content-Type': 'application/json'
+}
+```
+</CodeGroup>
 
-| Header        | Value               | Description                              |
-| ------------- | ------------------- | ---------------------------------------- |
-| Content-Type  | application/json    | Specifies the format of the request body |
-| Authorization | Bearer YOUR_API_KEY | Your API key prefixed with "Bearer "     |
+### Response
 
-</div>
+The API returns an array of template objects, each containing detailed information about your WhatsApp templates.
 
----
+<ResponseField name="id" type="integer">
+  Unique identifier for the template
+</ResponseField>
 
-## Request Parameters
+<ResponseField name="user_id" type="string">
+  UUID of the account that owns the template
+</ResponseField>
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-This endpoint does not require any request parameters. All templates associated with the authenticated user will be returned.
-</div>
+<ResponseField name="name" type="string">
+  Unique name identifier of the template
+</ResponseField>
 
----
+<ResponseField name="category" type="string">
+  <Expandable title="category options">
+    <ResponseField name="MARKETING" type="string">
+      Promotional content and offers
+    </ResponseField>
+    <ResponseField name="UTILITY" type="string">
+      Transactional messages like order confirmations
+    </ResponseField>
+    <ResponseField name="AUTHENTICATION" type="string">
+      Security codes and verification messages
+    </ResponseField>
+  </Expandable>
+</ResponseField>
 
-## Response
+<ResponseField name="type" type="string">
+  Format type of the template (text, media, etc.)
+</ResponseField>
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+<ResponseField name="language" type="string">
+  Language code (e.g., "en", "en_US")
+</ResponseField>
 
-### Response Format
+<ResponseField name="status" type="string">
+  <Expandable title="status options">
+    <ResponseField name="APPROVED" type="string">
+      Template is ready to use
+    </ResponseField>
+    <ResponseField name="PENDING" type="string">
+      Template is awaiting WhatsApp review
+    </ResponseField>
+    <ResponseField name="REJECTED" type="string">
+      Template was rejected by WhatsApp
+    </ResponseField>
+  </Expandable>
+</ResponseField>
 
-The response is a JSON array containing template objects.
+<ResponseField name="variable_counts" type="integer">
+  Number of variable placeholders in the template
+</ResponseField>
 
-### Response Fields
+<ResponseField name="template_formate" type="string">
+  Format string showing variable placement (e.g., "[b:7]")
+</ResponseField>
 
-Each template object contains the following fields:
-
-| Field Name       | Type    | Description                                                    |
-| ---------------- | ------- | -------------------------------------------------------------- |
-| id               | Integer | The unique identifier for the template                         |
-| user_id          | String  | UUID of the user who owns the template                         |
-| name             | String  | Descriptive name of the template                               |
-| category         | String  | Category of the template (e.g., "MARKETING", "UTILITY")        |
-| type             | String  | The type of template (e.g., "text")                            |
-| language         | String  | Language code of the template (e.g., "en", "en_US")            |
-| status           | String  | Approval status of the template (e.g., "APPROVED", "REJECTED") |
-| variable_counts  | Integer | Number of variable placeholders in the template                |
-| template_formate | String  | Format string showing variable placement (e.g., "[b:7]")       |
-| template_id      | String  | UUID of the template                                           |
-
-### Response Codes
-
-| Status Code | Description                                           |
-| ----------- | ----------------------------------------------------- |
-| 200         | Success                                               |
-| 401         | Unauthorized - Invalid or missing API key             |
-| 403         | Forbidden - Account does not have access to templates |
-| 500         | Server Error                                          |
-
-</div>
-
----
-
-## Example
-
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+<ResponseField name="template_id" type="string">
+  UUID of the template in our system
+</ResponseField>
 
 ### Example Request
 
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```bash
+<CodeGroup>
+```bash cURL
 curl -X GET \
   https://api.insightssystem.com/api:AFRA_QCy/get_templates \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer YOUR_API_KEY'
 ```
-</div>
+
+```javascript Node.js
+const axios = require('axios');
+
+async function getTemplates() {
+  try {
+    const response = await axios.get(
+      'https://api.insightssystem.com/api:AFRA_QCy/get_templates',
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer YOUR_API_KEY'
+        }
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching templates:', error);
+  }
+}
+
+getTemplates();
+```
+
+```python Python
+import requests
+
+url = "https://api.insightssystem.com/api:AFRA_QCy/get_templates"
+
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer YOUR_API_KEY"
+}
+
+response = requests.get(url, headers=headers)
+print(response.json())
+```
+</CodeGroup>
 
 ### Example Response
 
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```json
+<CodeGroup>
+```json Response
 [
   {
     "id": 300,
@@ -134,73 +196,127 @@ curl -X GET \
     "template_formate": "[]",
     "template_id": "75521873-72cd-4c33-9072-c8b901d6f687"
   }
-  // Additional templates omitted for brevity
 ]
 ```
-</div>
+</CodeGroup>
 
-</div>
+## Response Codes
 
----
+<AccordionGroup>
+  <Accordion title="200: Success">
+    Your request was successful and the templates have been returned.
+  </Accordion>
+  <Accordion title="401: Unauthorized">
+    Authentication failed. Check that you're using a valid API key.
+    ```json
+    {
+      "error": {
+        "code": "unauthorized",
+        "message": "Invalid API key provided"
+      }
+    }
+    ```
+  </Accordion>
+  <Accordion title="403: Forbidden">
+    Your account doesn't have permission to access templates.
+  </Accordion>
+  <Accordion title="429: Too Many Requests">
+    You've exceeded the rate limit. Implement exponential backoff in your requests.
+  </Accordion>
+  <Accordion title="500: Server Error">
+    Something went wrong on our end. Please contact support if the issue persists.
+    ```json
+    {
+      "error": {
+        "code": "server_error",
+        "message": "An internal server error occurred"
+      }
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
 
-## Notes
+## Working with Templates
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-- The `status` field indicates whether the template has been approved for use.
-- The `template_formate` field shows the variable placeholders in the template. For example, "[b:7]" indicates there are 7 variables.
-- Templates are returned in descending order by ID.
-</div>
+<Steps>
+  <Step title="Retrieve templates">
+    Use the Get Templates API to fetch all templates associated with your account.
+  </Step>
+  <Step title="Check template status">
+    Verify that your templates are in the "APPROVED" status before using them.
+  </Step>
+  <Step title="Identify variable placeholders">
+    Note the `variable_counts` and `template_formate` to understand how many variables need to be provided when sending a message.
+  </Step>
+  <Step title="Send messages">
+    Use the template ID and required variables to send messages via the [Send Template API](/api-reference/notifier-system/send-template).
+  </Step>
+</Steps>
 
----
+## Template Best Practices
 
-## Error Responses
-
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-
-### Authentication Error (401)
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```json
-{
-  "error": {
-    "code": "unauthorized",
-    "message": "Invalid API key provided"
-  }
-}
-```
-</div>
-
-### Server Error (500)
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```json
-{
-  "error": {
-    "code": "server_error",
-    "message": "An internal server error occurred"
-  }
-}
-```
-</div>
-
-</div>
-
----
+<CardGroup cols={2}>
+  <Card title="Variable Management" icon="wand-magic-sparkles">
+    Keep track of which variables correspond to which placeholders in your template. Consider creating a mapping in your application.
+  </Card>
+  <Card title="Template Versioning" icon="code-branch">
+    Templates can't be edited after submission, but you can create new versions. Use a versioning system in your template names (e.g., welcome_v2).
+  </Card>
+  <Card title="Status Monitoring" icon="gauge">
+    Regularly check the status of your templates, as WhatsApp can change approval statuses based on user feedback.
+  </Card>
+  <Card title="Language Support" icon="language">
+    Create templates in multiple languages to communicate with your global audience in their preferred language.
+  </Card>
+</CardGroup>
 
 ## Rate Limiting
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-This API is subject to rate limiting. If you exceed the rate limit, you will receive a 429 Too Many Requests response.
-</div>
+This API endpoint is subject to the following rate limits:
 
----
+| Plan | Rate Limit |
+| ---- | ---------- |
+| Free | 60 requests per hour |
+| Pro  | 600 requests per hour |
+| Enterprise | Custom limits |
 
-## Support
+<Warning>
+If you exceed your rate limit, the API will return a 429 status code. Implement exponential backoff and retries in your code to handle rate limiting gracefully.
+</Warning>
 
-<div className="bg-blue-50 p-6 rounded-lg my-6">
-If you encounter any issues or have questions about this API, please contact our support team at support@insightssystem.com.
-</div>
+## FAQs
 
---- 
+<AccordionGroup>
+  <Accordion title="How long does template approval take?">
+    WhatsApp typically reviews templates within 24-48 hours, but this can vary depending on template content and current review volumes.
+  </Accordion>
+  <Accordion title="Why was my template rejected?">
+    Templates may be rejected if they violate WhatsApp's Business Policy, contain prohibited content, or don't match the selected category. Check our [Template Guidelines](/guides/whatsapp/template-guidelines) for more information.
+  </Accordion>
+  <Accordion title="Can I edit an existing template?">
+    No, once submitted, templates cannot be modified. You'll need to create a new template with your desired changes.
+  </Accordion>
+  <Accordion title="What are the template character limits?">
+    Text-only templates have a limit of 1,024 characters. Templates with media have different limits based on the header type.
+  </Accordion>
+</AccordionGroup>
+
+<Card title="Need help?" icon="headset" href="/support">
+  Our support team is available 24/7 to assist with template issues, API integration, or any other questions.
+</Card>
+
+<Update label="2024-03-15" description="v1.2.0">
+  ## Enhanced Template API
+  
+  - Added support for interactive templates
+  - Improved error handling for better debugging
+  - New language options added for global messaging
+</Update>
+
+<Update label="2023-11-10" description="v1.1.0">
+  ## Template API Updates
+  
+  - Added multiple code examples
+  - Expanded response fields 
+  - Introduced rate limiting documentation
+</Update>

@@ -70,6 +70,9 @@ Before getting started, make sure you have:
     1. In your WhatsAble dashboard, go to **API Keys**
     2. Copy your unique API key
     3. Store it securely—you'll need it for the integration
+    <Warning>
+      Never share your API key publicly or commit it to version control systems.
+    </Warning>
     
     <Frame>
       <img src="/images/whatsable_apikey.png" alt="WhatsAble Api Keys" />
@@ -84,7 +87,7 @@ Now that you have WhatsAble set up, let's connect it to Zapier to automate your 
 <Steps>
   <Step title="Set up your Zapier Zaps">
     1. Log in to your Zapier account
-    2. Create a new workflow/Zap by clicking **+ Create** and select **Zaps**/**New Zap**
+    2. Create a new Zap by clicking **+ Create** and select **Zaps**/**New Zap**
     3. Add a trigger step of your choice:
        - Popular triggers include Google Forms, Jotform, ClickUp, or a Schedule trigger
        - Connect and configure your trigger according to your use case
@@ -125,34 +128,28 @@ Now that you have WhatsAble set up, let's connect it to Zapier to automate your 
       Select the recipient's phone number (In the **Phone** dropdown, you'll see all phone numbers added in your WhatsAble dashboard's **Verified Numbers** menu.)
     </ResponseField>
     
-    <ResponseField name="Message Content" type="string" required>
+    <ResponseField name="Message Body" type="string" required>
       Type your message text or use variables from previous steps
     </ResponseField>
+
+    <ResponseField name="Attachment" type="url">
+      Enter public URL of a file, image, or video to send with your message
+    </ResponseField>
+
+    <ResponseField name="File Name" type="string">
+      Specify a custom filename for your attachment
+    </ResponseField>
     
-    <Expandable title="Optional Parameters">
-      <ResponseField name="Attachment" type="file">
-        Enter public URL of a file, image, or video to send with your message
-      </ResponseField>
-      
-      <ResponseField name="File Name" type="string">
-        Specify a custom filename for your attachment
-      </ResponseField>
-      
-      <ResponseField name="Additional Parameters" type="object">
-        Customize advanced options as needed
-      </ResponseField>
-    </Expandable>
-<br />
     <Frame caption="Configuring message">
       <img src="/images/whatsable_zapier4.gif" alt="Configuring message" />
     </Frame>
   </Step>
   
-  <Step title="Test and activate your workflow">
+  <Step title="Test and activate your Zap">
     1. Click **Continue** and then click **Test step** in the **Test** to verify it's working correctly
     2. If the test is successful, you'll see a confirmation message
     3. Click **Publish** to save your entire Zap
-    5. Toggle the **Active** switch in the top-left corner to activate your workflow
+    5. Toggle the **Active** switch in the top-left corner to activate your Zap
   </Step>
 </Steps>
 
@@ -182,7 +179,7 @@ Now that you have WhatsAble set up, let's connect it to Zapier to automate your 
 
 ## Workflow Diagram
 
-<Frame caption="Sample WhatsAble Zapier Workflow">
+<Frame caption="Sample WhatsAble Zapier Zap">
   ```mermaid
   flowchart LR
     A[Trigger Node] --> B[Data Transformation]
@@ -241,8 +238,8 @@ Our support team is ready to assist you:
   <Card title="Schedule a demo" icon="calendar" href="https://tidycal.com/axelmeta/whatsapp-notifications-by-whatsable">
     Book a personalized walkthrough
   </Card>
-  <Card title="Live chat" icon="message-dots" href="">
-    Click the green chat button in the bottom right corner of the Notifier dashboard
+  <Card title="Live chat" icon="message-dots" href="https://dashboard.whatsable.app/signin">
+    Click the chat button in the bottom right corner of the WhatsAble dashboard
   </Card>
 </CardGroup>
 

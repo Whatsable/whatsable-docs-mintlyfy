@@ -61,25 +61,22 @@ Before getting started, make sure you have:
           <ResponseField name="Template Name" type="string" required>
             Choose a descriptive name for internal reference
           </ResponseField>
-          <ResponseField name="Category" type="string" required>
-            Select the appropriate message category
-          </ResponseField>
           <ResponseField name="Language" type="string" required>
             Choose your template's primary language
+          </ResponseField>
+          <ResponseField name="Category" type="string" required>
+            Select the appropriate message category
+          </ResponseField>          
+          <ResponseField name="Header" type="image | document | video">
+            Optional: Add an image, document, or video header
           </ResponseField>
           <ResponseField name="Message Body" type="string" required>
             Craft your message content
           </ResponseField>
           <ResponseField name="Variables" type="string">
             Add placeholders using `{{1}}`, `{{2}}` format for personalization
-          </ResponseField>
-          <ResponseField name="Header" type="image | document | video">
-            Optional: Add an image, document, or video header
-          </ResponseField>
-          <ResponseField name="Footer" type="string">
-            Optional: Add a standard footer message
-          </ResponseField>
-          <ResponseField name="Buttons" type="button[]">
+          </ResponseField>          
+          <ResponseField name="Buttons" type="button">
             Optional: Configure call-to-action buttons
           </ResponseField>
         </Step>
@@ -89,7 +86,7 @@ Before getting started, make sure you have:
       </Steps>
 
       <Frame caption="Template Creation Interface">
-        <img src="https://notifyer.app/docs/images/template-creation.png" alt="Template Creation Interface" />
+        <img src="/images/notifyer_template_create.png" alt="Template Creation Interface" />
       </Frame>
 
       <Warning>
@@ -122,22 +119,39 @@ Before getting started, make sure you have:
   </Step>
   
   <Step title="Get your API key">
-    To connect Notifyer System with Make, you'll need an API key:
+    To connect Notifyer System with n8n, you'll need an API key:
 
-    1. In your Notifyer dashboard, navigate to **API Keys**
-    2. Copy your unique API key (keep this secure - it provides access to your WhatsApp messaging)
+    1. In your Notifyer dashboard, navigate to [**API Keys**](https://console.notifyer-systems.com/api-key)
+    2. Copy your unique API key
+    3. Store it securely—you'll need it for the integration
+    <Warning>
+      Never share your API key publicly or commit it to version control systems.
+    </Warning>
 
     <Frame caption="API Key Location">
-      <img src="https://notifyer.app/docs/images/api-key-location.png" alt="API Key Location" />
+      <img src="/images/notifyer_apikey.png" alt="API Key Location" />
     </Frame>
   </Step>
 </Steps>
 
 ## Connect Notifyer System to Make
 
-Now that you have NotNotifyer Systemifier set up, let's connect it to Make to automate your scenarios.
+Now that you have Notifyer System set up, let's connect it to Make to automate your scenarios.
 
 <Steps>
+  <Step title="Install Notifyer System in Make">
+    1. Log in to your Make account
+    2. Navigate to Notifyer System dashboard and select **Connect to Make** in the side menu
+    3. Click **Continue** in the connection guide popup
+    4. Click **Install**, select your organization at the bottom of the screen, then click **Install** again. (Note: You need Admin, Owner, or App Developer role in your organization to install apps.)
+    <Check>
+      You're now ready to create scenarios with the Notifyer System app
+    </Check>
+    <Frame caption="Installing Notifyer System in Make">
+        <img src="/images/notifyer_make1.gif" alt="Installing Notifyer System in Make" />
+    </Frame>
+  </Step>
+
   <Step title="Set up your Make Scenario">
     1. Log in to your Make account
     2. Create a new scenario by clicking **+ Create a new scenario**
@@ -145,31 +159,31 @@ Now that you have NotNotifyer Systemifier set up, let's connect it to Make to au
        - Popular triggers include Google Forms, Jotform, ClickUp, or a Schedule trigger
        - Connect and configure your trigger according to your use case
 
-    <Frame caption="Setting up Make module">
-      <img src=" " alt="Setting up Make module" />
+    <Frame caption="Setting up a module/trigger in Make">
+      <img src="/images/whatsable_make1.gif" alt="Setting up a module/trigger Make" />
     </Frame>
   </Step>
   
   <Step title="Add the Notifyer System module">
     1. Click the **+** button to add a new module
     2. Search for **Notifyer System** in the apps or modules library
-    3. Select the module with the official Notifer logo
+    3. Select the module with the official Notifyer System logo
 
     <Frame caption="Adding the Notifyer System module">
-      <img src=" " alt="Adding the Notifyer System module" />
+      <img src="/images/Notifyer_make2.gif" alt="Adding the Notifyer System module" />
     </Frame>
   </Step>
   
   <Step title="Configure Notifyer System credentials">
     <Accordion title="Credential Setup" defaultOpen>
-      1. Once you click on Notifyer System module, select **Send a WhatsApp Message** from the **ACTIONS**
+      1. Once you click on Notifyer System module, select '**Send a WhatsApp Message with Your Template**' or '**Send a WhatsApp Message without Template**' from the **ACTIONS**
       2. Click **Create a connection** in the **Connection** section of Notifyer System module and you will be prompted to enter your API Key
       3. Enter your Notifyer System API key that you copied earlier
       4. Rename your connection name if needed
       4. Click **Save** to store your credential
 
     <Frame caption="Configuring Notifyer System credentials">
-      <img src=" " alt="Configuring Notifyer System credentials" />
+      <img src="/images/Notifyer_make3.gif" alt="Configuring Notifyer System credentials" />
     </Frame>
     </Accordion>
   </Step>
@@ -178,76 +192,155 @@ Now that you have NotNotifyer Systemifier set up, let's connect it to Make to au
     Depending on your messaging needs, choose one of the following operations:
 
     <Tabs>
-      <Tab title="Template Messages">
-        <Steps>
-          <Step title="Select operation">
-            In the **Operation Name or ID** dropdown, select **Send Template (Notifyer)**
-          </Step>
-          <Step title="Configure message">
+      <Tab title="Send a WhatsApp Message with Your Template">
             Complete the required fields:
             
             <ResponseField name="Phone Number" type="string" required>
-              Enter the recipient's phone number with country code (e.g., +14155552671) or use dynamic data from previous nodes
+              Enter the recipient's phone number with country code (e.g., +1234567890) or use dynamic data from previous nodes
             </ResponseField>
-            <ResponseField name="Template Name or ID" type="string" required>
+            <ResponseField name="Templates" type="dropdown" required>
               Select from your pre-approved templates in the dropdown
             </ResponseField>
-            <ResponseField name="Template Variables" type="string[]">
+            <ResponseField name="Media" type="string" required>
+              Enter publicly accessible media URL for Media (image/video/document) header.
+              <Info>
+               This field will only appear if you have a Media (image/video/document) header configured in your selected template.
+              </Info>
+            </ResponseField>
+            <ResponseField name="Variables" type="string" required>
               Fill in values for each variable in your template, mapping them to dynamic data when applicable
             </ResponseField>
-          </Step>
-          <Step title="Complete message details">
-            Based on your selected message type, fill in the required fields:
-            - For text messages: Enter your message content
-            - For media messages: Provide a publicly accessible URL to your file
-            - Optional caption (for media files)
-          </Step>
-        </Steps>
+            <ResponseField name="Add a Note" type="string" optional>
+              Add note for internal tracking. This data won't be sent to the recipient
+            </ResponseField>
+            <ResponseField name="Add Label(s)" type="multiselect" optional>
+              Select label(s) for internal tracking. This data won't be sent to the recipient
+            </ResponseField>
 
         <Frame caption="Template Message Configuration">
-          <img src="https://notifyer.app/docs/images/n8n-template-config.png" alt="Template Message Configuration" />
+          <img src="/images/Notifyer_make4.gif" alt="Template Message Configuration" />
         </Frame>
       </Tab>
-      <Tab title="Non-Template Messages">
-        <Steps>
-          <Step title="Select operation">
-            In the **Operation Name or ID** dropdown, select **Send Non Template Message**
-          </Step>
-          <Step title="Enter phone number">
-            Enter the **Phone Number** with country code
-          </Step>
-          <Step title="Select message type">
-            Choose from the following message types:
+      <Tab title="Send a WhatsApp Message without Template">
+            Complete the required fields:
             
-            <CardGroup cols={2}>
-              <Card title="Text Message" icon="message">
-                For plain text messages
-              </Card>
-              <Card title="Document Message" icon="file">
-                For sending documents (PDF, Word, etc.)
-              </Card>
-              <Card title="Image Message" icon="image">
-                For sending images (JPEG, PNG, etc.)
-              </Card>
-              <Card title="Video Message" icon="video">
-                For sending videos (MP4, 3GP, etc.)
-              </Card>
-            </CardGroup>
-          </Step>
-          <Step title="Complete message details">
-            Based on your selected message type, fill in the required fields:
-            - For text messages: Enter your message content
-            - For media messages: Provide a publicly accessible URL to your file
-            - Optional caption (for media files)
-          </Step>
-        </Steps>
-
-        <Warning>
-          For all media types, ensure your file URLs are publicly accessible and match the supported file formats.
-        </Warning>
+            <ResponseField name="Phone Number" type="string" required>
+              Enter the recipient's phone number with country code (e.g., +1234567890) or use dynamic data from previous nodes
+            </ResponseField>
+            <ResponseField name="Message Type" type="dropdown" required>
+              Choose from the following message types:            
+               <CardGroup cols={3}>
+               <Card title="Text Message" icon="message">
+                  For plain text messages
+               </Card>
+               <Card title="Media Message (Image)" icon="image">
+                  For sending images (JPEG, PNG, etc.)
+               </Card>
+               <Card title="Media Message (Video)" icon="video">
+                  For sending videos (MP4, 3GP, etc.)
+               </Card>
+               <Card title="Document Message" icon="file">
+                  For sending documents (PDF, Word, etc.)
+               </Card>
+               <Card title="Audio Message" icon="volume">
+                  For sending videos (MP3, OGG, etc.)
+               </Card>
+               <Card title="Interactive URL Button" icon="square-arrow-up-right">
+                  For messages with button that contain URL or dynamic URL
+               </Card>
+               </CardGroup>
+            </ResponseField>
+            <ResponseField name="Message Details" type="object" required>
+              <Tabs>
+                <Tab title="Text Message">
+                  <Steps>
+                    <Step title="Message Details">
+                      <ResponseField name="Enable Link Preview" type="option">
+                        Keep the option at the default 'No'. If there is a link/URL in the text body and you want the recipient to see a preview, select 'Yes'
+                      </ResponseField>
+                      <ResponseField name="Message Text" type="string" required>
+                        Enter the text message content
+                      </ResponseField>
+                    </Step>
+                  </Steps>
+                </Tab>
+                <Tab title="Media Message (Image)">
+                  <Steps>
+                    <Step title="Image Details">
+                      <ResponseField name="Image URL" type="url" required>
+                        Enter the publicly accessible URL for your image file
+                      </ResponseField>
+                      <ResponseField name="Caption" type="string" optional>
+                        Optional caption for the image
+                      </ResponseField>
+                    </Step>
+                  </Steps>
+                </Tab>
+                <Tab title="Media Message (Video)">
+                  <Steps>
+                    <Step title="Video Details">
+                      <ResponseField name="Video URL" type="url" required>
+                        Enter the publicly accessible URL for your video file
+                      </ResponseField>
+                      <ResponseField name="Caption" type="string" optional>
+                        Optional caption for the video
+                      </ResponseField>
+                    </Step>
+                  </Steps>
+                </Tab>
+                <Tab title="Document Message">
+                  <Steps>
+                    <Step title="Document Details">
+                      <ResponseField name="Document URL" type="url" required>
+                        Enter the publicly accessible URL for your document
+                      </ResponseField>
+                      <ResponseField name="Caption" type="string" optional>
+                        Optional caption for the document
+                      </ResponseField>
+                    </Step>
+                    <Step>
+                      <ResponseField name="Filename" type="string" required>
+                        Enter the filename (e.g., report.pdf)
+                      </ResponseField>
+                    </Step>
+                  </Steps>
+                </Tab>
+                <Tab title="Audio Message">
+                  <Step title="Document Details">
+                      <ResponseField name="Audio URL" type="url" required>
+                        Enter the publicly accessible URL for your audio file (MP3, OGG)
+                      </ResponseField>
+                  </Step>
+                </Tab>
+                <Tab title="Interactive URL Button">
+                  <Steps>
+                    <Step title="Interactive Message Details">
+                      <ResponseField name="Header Text" type="string" optional>
+                        Enter optional text to show at the top
+                      </ResponseField>
+                      <ResponseField name="Message Body" type="string" required>
+                        Enter the main content of the message
+                      </ResponseField>
+                      <ResponseField name="Button Text" type="string" required>
+                        Enter the text to display on button
+                      </ResponseField>
+                      <ResponseField name="Button URL" type="url" required>
+                        Enter the URL for the button
+                      </ResponseField>
+                      <ResponseField name="Footer Text" type="string" optional>
+                        Enter the optional text to show at bottom
+                      </ResponseField>
+                    </Step>
+                  </Steps>
+                </Tab>
+              </Tabs>
+            </ResponseField>
+            <ResponseField name="Add Label(s)" type="multiselect" optional>
+              Select label(s) for internal tracking. This data won't be sent to the recipient
+            </ResponseField>        
 
         <Frame caption="Non-Template Message Configuration">
-          <img src="https://notifyer.app/docs/images/n8n-non-template-config.png" alt="Non-Template Message Configuration" />
+          <img src="/images/Notifyer_make5.gif" alt="Non-Template Message Configuration" />
         </Frame>
       </Tab>
     </Tabs>

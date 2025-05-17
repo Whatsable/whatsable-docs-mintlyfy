@@ -7,8 +7,14 @@ icon: 'whatsapp'
 # WhatsApp Business Account Integration
 
 <Frame caption="Connect your WhatsApp Business account to unlock powerful automated messaging">
-  <img className="block dark:hidden" src="/images/whatsapp-connect-light.png" alt="WhatsApp Business Integration" />
-  <img className="hidden dark:block" src="/images/whatsapp-connect-dark.png" alt="WhatsApp Business Integration" />
+  <iframe 
+    className="w-full aspect-video" 
+    src="https://www.youtube.com/embed/OTdN8bdP0bw" 
+    title="WhatsApp Business Integration" 
+    frameBorder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowFullScreen
+  ></iframe>
 </Frame>
 
 ## Overview
@@ -46,6 +52,10 @@ Notifyer System enables businesses to send automated WhatsApp messages to custom
       2. Navigate to **Your Templates** section
       3. Make sure you're on the **Connect to WhatsApp** tab
       4. Click the **Connect your WhatsApp Number** button in the center of the page
+    
+     <Frame caption="Automate your WhatsApp messaging scenarios with Make and Notifier">
+        <img src="/images/notifyer_emb1.png" className="rounded-xl" />
+     </Frame>
     </Accordion>
     
     <Tip>
@@ -58,65 +68,78 @@ Notifyer System enables businesses to send automated WhatsApp messages to custom
     2. If already logged in, click **Continue as [your Facebook username]**
     3. Review the permissions Notifyer System is requesting
     4. Click **Get Started** to begin the configuration process
+  
+    <Frame caption="Connecting with Facebook">
+      <img src="/images/notifyer_emb2.gif" alt="Connecting with Facebook" />
+    </Frame>
   </Step>
 
   <Step title="Complete the 6-Step Configuration">
     <Accordion title="Step 1: Business Information" icon="building">
       <ResponseField name="Business Portfolio" type="dropdown" required>
-        <Expandable title="Options">
-          <ResponseField name="Select Existing Portfolio" type="option">
-            Choose a business portfolio you've already configured in Meta Business Suite
-          </ResponseField>
-          <ResponseField name="Create New Portfolio" type="option">
-            Set up a new business portfolio from scratch
-          </ResponseField>
-        </Expandable>
+        Select an existing business portfolio or create a new one
       </ResponseField>
 
-      <Info>
-        If using an existing portfolio, your business name, website, and country will be automatically populated from your Meta Business configuration.
-      </Info>
+      <Accordion title="Create a business portfolio" icon="circle-check">
+      If you choose to create a new business portfolio, fill out the required fields:
+        <ResponseField name="Business Name" type="string" required>
+          Your official business name (must be unique among your portfolios)
+        </ResponseField>
+        <ResponseField name="Business Email Address" type="string" required>
+          A valid email that can receive verification messages
+        </ResponseField>
+        <ResponseField name="Business Website or Profile" type="string" required>
+          Your business website URL or social media profile
+        </ResponseField>
+        <ResponseField name="Country" type="string" required>
+          Country where your business is located
+        </ResponseField>
+        <Frame caption="Entering required information in Business Information section">
+        <img src="/images/notifyer_emb3.gif" alt="Entering required information in Business Information section" />
+      </Frame>
+      </Accordion>
 
-      <ResponseField name="For New Portfolios" type="object">
-        <Expandable title="Required Fields">
-          <ResponseField name="Business Name" type="string" required>
-            Your official business name (must be unique among your portfolios)
-          </ResponseField>
-          <ResponseField name="Business Email Address" type="string" required>
-            A valid email that can receive verification messages
-          </ResponseField>
-          <ResponseField name="Business Website or Profile" type="string" required>
-            Your business website URL or social media profile
-          </ResponseField>
-          <ResponseField name="Country" type="string" required>
-            Country where your business is located
-          </ResponseField>
-        </Expandable>
-      </ResponseField>
+      <Accordion title="Existing Portfolios" icon="circle-check">
+        Choose a business portfolio you've already configured in Meta Business Suite
+        <Info>
+          See how to [create a business portfolio in Meta Business Suite and Business Manager.](https://www.facebook.com/business/help/1710077379203657)
+
+          If you select an existing portfolio, your business name, website, and country will be automatically populated from your Meta Business configuration.
+        </Info>
+      </Accordion>  
     </Accordion>
 
     <Accordion title="Step 2: Select WhatsApp Business Account" icon="message">
       <ResponseField name="WhatsApp Business Account" type="radio" required>
-        <Expandable title="Options">
-          <ResponseField name="Create new account" type="option">
-            Recommended for first-time users (default option)
-          </ResponseField>
-          <ResponseField name="Select existing account" type="option">
-            Only available if you have existing WhatsApp Business accounts
-          </ResponseField>
-        </Expandable>
+        Select whether to create a new account or use an existing one
       </ResponseField>
 
+      <Expandable title="Account Options">
+        <ResponseField name="Create new account" type="option">
+          **Recommended** for first-time users (default option)
+        </ResponseField>
+        <ResponseField name="Select existing account" type="option">
+          Only available if you have existing WhatsApp Business accounts
+        </ResponseField>
+      </Expandable>
+
       <ResponseField name="WhatsApp Business Profile" type="radio" required>
-        <Expandable title="Options">
-          <ResponseField name="Create new profile" type="option">
-            Set up a fresh WhatsApp Business profile
-          </ResponseField>
-          <ResponseField name="Select existing profile" type="option">
-            Connect an existing WhatsApp Business profile
-          </ResponseField>
-        </Expandable>
+        Select whether to create a new profile or use an existing one
       </ResponseField>
+
+      <Expandable title="Profile Options">
+        <ResponseField name="Create new profile" type="option">
+          **Recommended** for first-time users (default option)
+        </ResponseField>
+        <ResponseField name="Select existing profile" type="option">
+          Only available if you connect an existing WhatsApp Business profile
+        </ResponseField>
+      </Expandable>
+      <br />
+      <Frame caption="Selecting options for WhatsApp Business Account and Profile">
+        <img src="/images/notifyer_emb4.gif" alt="Selecting options for WhatsApp Business Account and Profile" />
+      </Frame>
+      
     </Accordion>
 
     <Accordion title="Step 3: Business Profile Setup" icon="id-card">
@@ -125,6 +148,7 @@ Notifyer System enables businesses to send automated WhatsApp messages to custom
       </ResponseField>
 
       <ResponseField name="WhatsApp Business Display Name" type="string" required>
+        The name your customers will see when receiving messages from your business
         <Warning>
           This is the name your customers will see when receiving messages from your business. Choose carefully as it impacts brand recognition.
         </Warning>
@@ -133,34 +157,50 @@ Notifyer System enables businesses to send automated WhatsApp messages to custom
       <ResponseField name="Category" type="dropdown" required>
         Business category that best represents your industry (will be displayed on your profile)
       </ResponseField>
+
+      <Frame caption="Entering required information in Create a WhatsApp business profile section">
+        <img src="/images/notifyer_emb5.gif" alt="Entering required information in Create a WhatsApp business profile section" />
+      </Frame>
     </Accordion>
 
     <Accordion title="Step 4: Phone Number Configuration" icon="phone">
       <ResponseField name="Phone Number Method" type="radio" required>
-        <Expandable title="Options">
-          <ResponseField name="Add a new number (Recommended)" type="option">
-            Use your own business phone number
-          </ResponseField>
-          <ResponseField name="Free WhatsApp number (Not Recommended)" type="option">
-            WhatsApp will generate a +1 555 number (limited functionality)
-          </ResponseField>
-        </Expandable>
+        Choose how to add your phone number
       </ResponseField>
 
+      <Expandable title="Phone Number Options">
+        <ResponseField name="Add a new number (Recommended)" type="option">
+          Use your own business phone number
+        </ResponseField>
+        <ResponseField name="Free WhatsApp number (Not Recommended)" type="option">
+          WhatsApp will generate a +1 555 number (limited functionality)
+        </ResponseField>
+      </Expandable>
+
       <ResponseField name="Verification Method" type="radio" required>
-        <Expandable title="Options">
-          <ResponseField name="Text message" type="option">
-            Receive verification code via SMS
-          </ResponseField>
-          <ResponseField name="Phone call" type="option">
-            Receive verification code via automated call
-          </ResponseField>
-        </Expandable>
+        Choose how to receive your verification code
       </ResponseField>
+
+      <Expandable title="Verification Options">
+        <ResponseField name="Text message" type="option">
+          Receive verification code via SMS
+        </ResponseField>
+        <ResponseField name="Phone call" type="option">
+          Receive verification code via automated call
+        </ResponseField>
+      </Expandable>
+      <br />
+          <Frame caption="Entering required informstion in Create a WhatsApp business profile section">
+            <img src="/images/notifyer_emb6.gif" alt="Entering required informstion in Create a WhatsApp business profile section" />
+          </Frame>
     </Accordion>
 
     <Accordion title="Step 5: Number Verification" icon="shield-check">
       Enter the verification code received via your selected method
+      
+          <Frame caption="Entering required informstion in Create a WhatsApp business profile section">
+            <img src="/images/notifyer_emb7.gif" alt="Entering required informstion in Create a WhatsApp business profile section" />
+          </Frame>
     </Accordion>
 
     <Accordion title="Step 6: Payment Method Setup" icon="credit-card">
@@ -212,44 +252,44 @@ After successfully embedding your WhatsApp Business Account, you can integrate N
   <Accordion title="Make Integration" icon="lines-leaning">
     Connect Notifyer System with Make to create powerful automation workflows.
     
-    [View Make Documentation →](https://docs.whatsable.com/notifer/make)
+    [View Make Documentation →](https://docs.whatsable.app/guides/notifier-system/make-overview)
   </Accordion>
   
   <Accordion title="Zapier Integration" icon="bolt">
     Integrate with Zapier to connect WhatsApp messaging with thousands of applications.
     
-    [View Zapier Documentation →](https://docs.whatsable.com/notifer/zapier)
+    [View Zapier Documentation →](https://docs.whatsable.app/guides/notifier-system/zapier-overview)
   </Accordion>
   
   <Accordion title="n8n Integration" icon="diagram-project">
     Use n8n for advanced workflow automation with WhatsApp messaging.
     
-    [View n8n Documentation →](https://docs.whatsable.com/notifer/n8n)
+    [View n8n Documentation →](https://docs.whatsable.app/guides/notifier-system/n8n-overview)
   </Accordion>
   
   <Accordion title="Direct API Integration" icon="code">
     Implement custom integrations using our comprehensive API.
     
-    [View API Documentation →](https://docs.whatsable.com/api-reference)
+    [Try API Reference →](https://docs.whatsable.app/api-reference/introduction)
   </Accordion>
 </AccordionGroup>
 
 ## API Reference
 
-<CardGroup cols={2}>
-  <Card title="Get Templates" icon="list" href="https://docs.whatsable.com/api-reference/get-templates">
+<CardGroup cols={3}>
+  <Card title="Get Templates" icon="list" href="https://docs.whatsable.app/guides/notifier-system/api/get-templates">
     Retrieve all your approved message templates
   </Card>
-  <Card title="Send Template Message" icon="paper-plane" href="https://docs.whatsable.com/api-reference/send-template">
+  <Card title="Send Template Message" icon="paper-plane" href="https://docs.whatsable.app/guides/notifier-system/api/template-message">
     Send messages using your approved templates
   </Card>
-  <Card title="Incoming Message" icon="inbox" href="https://docs.whatsable.com/api-reference/incoming-message">
+  <Card title="Incoming Message" icon="inbox" href="https://docs.whatsable.app/guides/notifier-system/api/incoming-message">
     Handle incoming messages from customers
   </Card>
-  <Card title="Complete API Reference" icon="book" href="https://docs.whatsable.com/api-reference">
-    View our comprehensive API documentation
-  </Card>
 </CardGroup>
+<Card title="Try it in the API Reference" icon="arrow-right" href="https://docs.whatsable.app/api-reference/">
+  Experiment with the Get Templates API and view responses in real-time
+</Card>
 
 ## Alternative Option: Notifier
 
@@ -257,7 +297,7 @@ After successfully embedding your WhatsApp Business Account, you can integrate N
   If the embedding process is too complex for your needs, you can use Notifier by WhatsAble instead, which allows you to send automated messages through our WhatsApp bot without going through the full embedding process.
 </Info>
 
-<Card title="Learn More About Notifier" icon="lightbulb" href="https://docs.whatsable.com/notifier">
+<Card title="Learn More About Notifier" icon="lightbulb" href="https://docs.whatsable.app/guides/notifier/zapier">
   Discover a simpler way to send automated WhatsApp messages using Notifier by WhatsAble
 </Card>
 
@@ -283,33 +323,30 @@ After successfully embedding your WhatsApp Business Account, you can integrate N
 
 ## Resources
 
-<CardGroup cols={2}>
+<CardGroup cols={3}>
   <Card title="Meta Business Suite" icon="facebook" href="https://business.facebook.com">
     Manage your Meta business profiles and portfolios
   </Card>
   <Card title="WhatsApp Business Platform" icon="whatsapp" href="https://business.whatsapp.com/products/business-platform">
     Learn more about the WhatsApp Business Platform
   </Card>
-  <Card title="Notifyer Help Center" icon="headset" href="https://help.notifyer.com">
-    Get assistance with your Notifyer System integration
-  </Card>
   <Card title="Embedded Signup Guide" icon="link" href="https://developers.facebook.com/docs/whatsapp/embedded-signup">
     Meta's official documentation on embedded signup
   </Card>
 </CardGroup>
 
-<Update label="May 14, 2025" description="v2.0.1">
-  ### Latest Updates
-  
-  * Enhanced business verification process guidance
-  * Added troubleshooting section for common integration issues
-  * Improved visual guidance for the 6-step configuration process
-</Update>
+## Need help?
 
-<Update label="February 28, 2025" description="v2.0.0">
-  ### Major Release
-  
-  * Implemented direct integration with Meta's Embedded Signup
-  * Added support for existing WhatsApp Business accounts
-  * Streamlined payment method configuration
-</Update>
+Our support team is ready to assist you:
+
+<CardGroup cols={3}>
+  <Card title="Email support" icon="envelope" href="mailto:team@whatsable.app">
+    Contact team@whatsable.app
+  </Card>
+  <Card title="Schedule a demo" icon="calendar" href="https://tidycal.com/axelmeta/whatsapp-notifications-by-whatsable">
+    Book a personalized walkthrough
+  </Card>
+  <Card title="Live chat" icon="message-dots" href="https://console.notifyer-systems.com/">
+    Click the chat button in the bottom right corner of the Notifyer System dashboard
+  </Card>
+</CardGroup>

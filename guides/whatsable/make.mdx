@@ -70,6 +70,9 @@ Before getting started, make sure you have:
     1. In your WhatsAble dashboard, go to **API Keys**
     2. Copy your unique API key
     3. Store it securely—you'll need it for the integration
+    <Warning>
+      Never share your API key publicly or commit it to version control systems.
+    </Warning>
     
     <Frame>
       <img src="/images/whatsable_apikey.png" alt="WhatsAble Api Keys" />
@@ -89,14 +92,14 @@ Now that you have WhatsAble set up, let's connect it to Make to automate your sc
        - Popular triggers include Google Forms, Jotform, ClickUp, or a Schedule trigger
        - Connect and configure your trigger according to your use case
 
-    <Frame caption="Setting up Make module">
-      <img src="/images/whatsable_make1.gif" alt="Setting up Make module" />
+    <Frame caption="Setting up a module/trigger Make">
+      <img src="/images/whatsable_make1.gif" alt="Setting up a module/trigger Make" />
     </Frame>
   </Step>
   
   <Step title="Add the WhatsAble module">
     1. Click the **+** button to add a new module
-    2. Search for "WhatsAble" in the apps or modules library
+    2. Search for "WhatsAble Message" in the apps or modules library
     3. Select the app with the official WhatsAble logo
 
     <Frame caption="Adding the WhatsAble module">
@@ -123,26 +126,29 @@ Now that you have WhatsAble set up, let's connect it to Make to automate your sc
     
     <ResponseField name="Phone" type="string" required>
       Select the recipient's phone number (In **Your verified WhatsApp number exactly as listed in the dashboard** dropdown, you'll see all phone numbers added in your WhatsAble dashboard's **Verified Numbers** menu.)
-    </ResponseField>
-    
+    </ResponseField>    
     <ResponseField name="Message Body" type="string" required>
       Type your message text or use variables from previous steps
     </ResponseField>
-    
-    <Expandable title="Optional Parameters">
-      <ResponseField name="File > Attachment URL (must be publicly available)" type="file">
-        Enter public URL of a file, image, or video to send with your message
-      </ResponseField>
-      
-      <ResponseField name="File Name" type="string">
-        Specify a custom filename for your attachment
-      </ResponseField>
-      
-      <ResponseField name="Additional Parameters" type="object">
-        Customize advanced options as needed
-      </ResponseField>
-    </Expandable>
-<br />
+
+    <ResponseField name="File" type="string">
+              <Steps>
+               <Step>
+                  <ResponseField name="Attachment URL (must be publicly available)" type="url" required>
+                     Enter publicly accessible media URL for Attachment (image/video/document)
+                     <Warning>
+                        Ensure your attachment URLs is publicly accessible and match the supported file formats.
+                     </Warning>
+                  </ResponseField>
+               </Step>
+               <Step>
+                  <ResponseField name="File Name" type="string" optional>
+                     Specify a custom filename for your attachment
+                  </ResponseField>
+               </Step>
+              </Steps>
+     </ResponseField>
+
     <Frame caption="Configuring message">
       <img src="/images/whatsable_make4.gif" alt="Configuring message" />
     </Frame>
@@ -246,8 +252,8 @@ Our support team is ready to assist you:
   <Card title="Schedule a demo" icon="calendar" href="https://tidycal.com/axelmeta/whatsapp-notifications-by-whatsable">
     Book a personalized walkthrough
   </Card>
-  <Card title="Live chat" icon="message-dots" href="">
-    Click the green chat button in the bottom right corner of the Notifier dashboard
+  <Card title="Live chat" icon="message-dots" href="https://dashboard.whatsable.app/signin">
+    Click the chat button in the bottom right corner of the WhatsAble dashboard
   </Card>
 </CardGroup>
 

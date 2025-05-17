@@ -89,7 +89,7 @@ Before getting started, make sure you have:
       </Steps>
 
       <Frame caption="Template Creation Interface">
-        <img src="https://notifyer.app/docs/images/template-creation.png" alt="Template Creation Interface" />
+        <img src="/images/notifyer_template_create.png" alt="Template Creation Interface" />
       </Frame>
 
       <Warning>
@@ -124,11 +124,15 @@ Before getting started, make sure you have:
   <Step title="Get your API key">
     To connect Notifyer System with n8n, you'll need an API key:
 
-    1. In your Notifyer dashboard, navigate to **API Keys**
-    2. Copy your unique API key (keep this secure - it provides access to your WhatsApp messaging)
+    1. In your Notifyer dashboard, navigate to [**API Keys**](https://console.notifyer-systems.com/api-key)
+    2. Copy your unique API key
+    3. Store it securely—you'll need it for the integration
+    <Warning>
+      Never share your API key publicly or commit it to version control systems.
+    </Warning>
 
     <Frame caption="API Key Location">
-      <img src="https://notifyer.app/docs/images/api-key-location.png" alt="API Key Location" />
+      <img src="/images/notifyer_apikey.png" alt="API Key Location" />
     </Frame>
   </Step>
 </Steps>
@@ -136,45 +140,39 @@ Before getting started, make sure you have:
 ## Integrating with n8n
 
 <Steps>
-  <Step title="Create a new n8n workflow">
+  <Step title="Set up your n8n workflow">
     1. Log in to your n8n account
-    2. Create a new workflow by clicking **+ Create Workflow**
-    3. Give your workflow a descriptive name
-  </Step>
-  
-  <Step title="Configure a trigger">
-    Choose an event that will trigger your WhatsApp message:
-
-    1. Click the **+** button in the workflow editor
-    2. Search for and select a trigger app (e.g., Google Forms, Jotform, ClickUp, or HTTP Request)
-    3. Configure the trigger settings according to your use case
-
-    <Frame caption="Trigger Configuration">
-      <img src="https://notifyer.app/docs/images/n8n-trigger-config.png" alt="Trigger Configuration" />
-    </Frame>
+    2. Create a new workflow by clicking **Create Workflow**
+    3. Add a trigger node of your choice:
+       - Popular triggers include Google Forms, Jotform, ClickUp, or a Schedule trigger
+       - Connect and configure your trigger according to your use case
   </Step>
   
   <Step title="Add the Notifyer System node">
     1. Click the **+** button after your trigger node
-    2. Search for "Notifyer" in the nodes panel
-    3. Select the **Notifyer System** node with the official logo
+    2. Search for "WhatsAble" in the nodes panel
+    3. Select the node with the official WhatsAble logo
+
+    <Frame caption="WhatsAble node selection">
+      <img src="/images/whatsable_n8n_node.gif" alt="WhatsAble node selection" />
+    </Frame>
   </Step>
   
-  <Step title="Set up Notifyer System credentials">
+  <Step title="Configure Notifyer System credential">
     <Steps>
       <Step title="Create new credential">
-        In the Notifyer System node settings, find the **Credential to connect with** dropdown and select **+ Create new credential**
+        In the WhatsAble node settings, find the **Credential to connect with** dropdown and select **+ Create new credential**
       </Step>
       <Step title="Enter API key">
-        Enter your Notifyer API key copied from Step 3 of the previous section
+        Enter your Notifyer API key copied from [Step 3](https://docs.whatsable.app/guides/notifier-system/n8n-overview#setting-up-your-notifyer-system-account#3:~:text=3-,Get%20your%20API%20key,-To%20connect%20Notifyer) of the previous section
       </Step>
       <Step title="Name and save">
         Name your credential (e.g., "Notifyer Production") and click **Save** to store it
       </Step>
     </Steps>
 
-    <Frame caption="Credential Setup">
-      <img src="https://notifyer.app/docs/images/n8n-credential-setup.png" alt="Credential Setup" />
+    <Frame caption="Configuring Notifyer System credential">
+      <img src="/images/notifyer_n8n1.gif" alt="Configuring Notifyer System credential" />
     </Frame>
   </Step>
   
@@ -208,8 +206,8 @@ Before getting started, make sure you have:
           </Step>
         </Steps>
 
-        <Frame caption="Template Message Configuration">
-          <img src="https://notifyer.app/docs/images/n8n-template-config.png" alt="Template Message Configuration" />
+        <Frame caption="Configuring Template Message">
+          <img src="/images/notifyer_n8n2.gif" alt="Configuring Template Message" />
         </Frame>
       </Tab>
       <Tab title="Non-Template Messages">
@@ -250,31 +248,19 @@ Before getting started, make sure you have:
           For all media types, ensure your file URLs are publicly accessible and match the supported file formats.
         </Warning>
 
-        <Frame caption="Non-Template Message Configuration">
-          <img src="https://notifyer.app/docs/images/n8n-non-template-config.png" alt="Non-Template Message Configuration" />
+        <Frame caption="Configuring Non-Template">
+          <img src="/images/notifyer_n8n3.gif" alt="Configuring Non-Template" />
         </Frame>
       </Tab>
     </Tabs>
   </Step>
   
-  <Step title="Test your configuration">
-    <Steps>
-      <Step title="Run test">
-        Click **Test Step** on the Notifyer System node to verify the connection and message delivery
-      </Step>
-      <Step title="Check response">
-        Check for a successful response in the test output
-      </Step>
-      <Step title="Verify receipt">
-        Verify receipt on a test device
-      </Step>
-    </Steps>
-  </Step>
-  
-  <Step title="Activate your workflow">
-    1. Connect any additional nodes needed for your complete workflow
-    2. Click **Save** to save your workflow
-    3. Toggle the **Active** switch in the top-right corner to activate your workflow
+  <Step title="Test and activate your workflow">
+    1. Click **Test Step** on the Notifier node to verify it's working correctly
+    2. If the test is successful, you'll see a confirmation message
+    3. Return to your workflow
+    4. Click **Save** to save your entire workflow
+    5. Toggle the **Active** switch in the top-right corner to activate your workflow
     
     <Check>
       Your automated messaging workflow is now operational! Whenever your trigger conditions are met, n8n will automatically send WhatsApp messages through Notifyer System.

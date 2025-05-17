@@ -1,127 +1,710 @@
 ---
-title: 'Incoming Message'
-description: 'How to receive incoming WhatsApp messages via webhooks in Notifyer System.'
+title: 'Incoming Messages'
+description: 'Receive and manage real-time WhatsApp message notifications via webhooks'
 icon: 'inbox'
 ---
 
-# Incoming Message
+<Tip>
+Incoming message webhooks deliver real-time notifications when your recipients reply, enabling immediate responses and interactive conversations through WhatsApp.
+</Tip>
 
-<div className="bg-blue-50 p-6 rounded-lg my-6">
-  <p className="text-lg">
-    The incoming message system allows you to configure endpoints where your application will receive real-time message from recipient reply.
-  </p>
-</div>
-
----
+The Incoming Messages system provides a robust webhook infrastructure that enables your application to receive and process WhatsApp messages from your recipients in real-time. This guide covers how to configure, manage, and handle incoming message webhooks.
 
 ## Overview
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-Webhooks provide a way for our system to send data to your application in real-time whenever your recipient replies. This enables you to build integrations that react immediately to user interactions.
+Webhooks are HTTP callbacks that deliver notifications to your server whenever specific events occur - in this case, when recipients reply to your WhatsApp messages. Benefits include:
 
-After clicking "More" from the right sidebar below, a menu will appear. From there, select the "Developer" option. Currently, we are focusing on incoming messages, and we plan to add more features in the future. 
+- **Real-time processing** of customer responses
+- **Seamless integration** with your existing systems
+- **Automated workflows** triggered by customer messages
+- **Enhanced customer experience** through timely interactions
 
-![Webhook Management Dashboard](https://i.ibb.co/9kFcXNrG/Screenshot-2025-04-02-at-11-55-07-AM.png)
-_Figure 1: Main webhook management dashboard showing the list of configured webhook endpoints_
-</div>
+<Card title="Try it in the API Reference" icon="arrow-right" href="https://docs.whatsable.app/api-reference/notifier-system/webhooks/manage-webhooks">
+  Explore the Webhook Management API and start receiving incoming messages
+</Card>
 
----
+## Webhook Configuration
 
-## Managing Webhook Endpoints
+### Managing Endpoints
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+<Steps>
+  <Step title="Access Webhook Settings">
+    Navigate to the Developer section in your dashboard sidebar to manage webhook configurations.
+  </Step>
+  <Step title="Configure Endpoint">
+    Add a new webhook URL where you want to receive incoming message notifications.
+  </Step>
+  <Step title="Set Up Authentication">
+    We recommend implementing signature verification to ensure webhook security.
+  </Step>
+  <Step title="Test Your Endpoint">
+    Use the test feature to verify your webhook is properly receiving and processing events.
+  </Step>
+</Steps>
 
-### Viewing Webhook Endpoints
+### Endpoint Requirements
 
-The Webhook dashboard displays all your configured webhook endpoints with their current status:
+<Warning>
+All webhook endpoints must be publicly accessible via HTTPS and configured to accept POST requests with JSON payloads. HTTP endpoints are not supported in production environments.
+</Warning>
 
-- **URL**: The destination where event data (recipient reply) will be sent
-- **Status**: Indicates if the webhook is active or disabled
+Your webhook endpoint must:
 
-### Adding a New Webhook Endpoint
+1. Accept HTTP POST requests
+2. Process JSON payloads
+3. Return a 2xx status code within 10 seconds
+4. Implement idempotency handling (see best practices below)
 
-To add a new webhook endpoint:
+## Webhook Payload
 
-1. Click the **Add endpoint** button in the top-right corner of the Webhook endpoints section
-2. Enter the endpoint URL where you want to receive webhook data
-3. Ensure your endpoint is accessible via HTTPS and configured to accept **POST requests** with JSON payloads
-4. Click **Save Endpoint** to add the webhook
+When a user replies to your WhatsApp message, we'll send a POST request to your configured endpoint with a detailed payload.
 
-![Add Webhook Dialog](https://i.ibb.co/BVtqGNnr/Screenshot-2025-04-02-at-11-55-56-AM.png)
-_Figure 2: Dialog for adding a new webhook endpoint_
+### Sample Payload
 
-### Managing Existing Webhooks
-
-Each webhook endpoint has a menu with the following options:
-
-- **Edit**: Modify the webhook URL
-- **Disable/Enable**: Click the webhook's active status
-- **Delete**: Permanently remove the webhook endpoint
-
-![Webhook Management Options](https://i.ibb.co/35Qwpfjp/Screenshot-2025-04-02-at-11-56-26-AM.png)
-_Figure 3: Menu options for managing an existing webhook endpoint_
-</div>
-
----
-
-## Webhook Payload Structure
-
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-When an event occurs, our system will send a POST request to your configured endpoint with a JSON payload containing the event data.
-
-### Message Notification Example
-
-When a new message is received, your webhook endpoint will receive a payload similar to this:
-
-<div className="bg-gray-900 rounded-lg p-4 my-4 overflow-x-auto">
-
-```json
+<CodeGroup>
+```json Incoming Text Message
 {
-  "last_messages": "[{\"type\":\"user\",\"content\":\"How can I use notifier by whatsable api?\",\"timestamp\":\"2025-03-23T21:41:44.477Z\",\"content_type\":\"text\"},{\"type\":\"bot\",\"content\":\"Hello! How can I assist you today?\",\"timestamp\":\"2025-03-23T20:47:45.000Z\",\"content_type\":\"text\"}]",
-  "conversation_paragraph": "User (9:41:44 PM): How can I use notifier by whatsable api? ; Bot (8:47:45 PM): Hello! How can I assist you today?",
-  "phone_number": "8801734363287",
-  "recipient_name": "John Doe",
-  "user_id": "6fb11ff2-d9b2-4560-8437-0fe58ec9f4a6",
-  "last_message_of_user": "How can I use notifier by whatsable api?",
-  "last_message_of_bot": "Hello! How can I assist you today?",
-  "message_type": "text",
-  "user_timestamp": 1234567890,
-  "bot_timestamp": 1234567890,
-  "attachment_url": "https://api.insightssystem.com/vault/LSMumRx1/VR-1aHOci6nP28eHWHJH7JauJkc/Ew7R9w../whatsapp_media_706123978455438.jpg"
+  "event_type": "incoming_message",
+  "event_id": "evt_1nHs82jKla92mzP",
+  "timestamp": "2025-04-15T13:42:27Z",
+  "data": {
+    "conversation_id": "conv_87Hj2k9Lm5",
+    "phone_number": "8801734363287",
+    "recipient_name": "John Doe",
+    "user_id": "6fb11ff2-d9b2-4560-8437-0fe58ec9f4a6",
+    "message": {
+      "type": "text",
+      "content": "How can I use notifier by whatsable api?",
+      "timestamp": "2025-04-15T13:42:27Z"
+    },
+    "conversation_context": {
+      "last_user_message": "How can I use notifier by whatsable api?",
+      "last_bot_message": "Hello! How can I assist you today?",
+      "user_timestamp": 1718470947,
+      "bot_timestamp": 1718470865
+    },
+    "conversation_history": [
+      {
+        "type": "bot",
+        "content": "Hello! How can I assist you today?",
+        "timestamp": "2025-04-15T13:41:05Z",
+        "content_type": "text"
+      },
+      {
+        "type": "user",
+        "content": "How can I use notifier by whatsable api?",
+        "timestamp": "2025-04-15T13:42:27Z",
+        "content_type": "text"
+      }
+    ]
+  },
+  "version": "2025-04-01"
 }
 ```
-</div>
+
+```json Incoming Media Message
+{
+  "event_type": "incoming_message",
+  "event_id": "evt_2mJt93kLmb93nzQ",
+  "timestamp": "2025-04-15T14:05:12Z",
+  "data": {
+    "conversation_id": "conv_87Hj2k9Lm5",
+    "phone_number": "8801734363287",
+    "recipient_name": "John Doe",
+    "user_id": "6fb11ff2-d9b2-4560-8437-0fe58ec9f4a6",
+    "message": {
+      "type": "image",
+      "content": "",
+      "timestamp": "2025-04-15T14:05:12Z",
+      "media": {
+        "url": "https://api.insightssystem.com/vault/LSMumRx1/VR-1aHOci6nP28eHWHJH7JauJkc/Ew7R9w../whatsapp_media_706123978455438.jpg",
+        "mime_type": "image/jpeg",
+        "sha256": "2fd4e1c67a2d28fced849ee1bb76e7391b93eb12",
+        "file_size": 12345
+      }
+    },
+    "conversation_context": {
+      "last_user_message": "",
+      "last_bot_message": "Can you share a screenshot of the issue?",
+      "user_timestamp": 1718472312,
+      "bot_timestamp": 1718472200
+    },
+    "conversation_history": [
+      {
+        "type": "bot",
+        "content": "Can you share a screenshot of the issue?",
+        "timestamp": "2025-04-15T14:03:20Z",
+        "content_type": "text"
+      },
+      {
+        "type": "user",
+        "content": "",
+        "timestamp": "2025-04-15T14:05:12Z",
+        "content_type": "image",
+        "media_url": "https://api.insightssystem.com/vault/LSMumRx1/VR-1aHOci6nP28eHWHJH7JauJkc/Ew7R9w../whatsapp_media_706123978455438.jpg"
+      }
+    ]
+  },
+  "version": "2025-04-01"
+}
+```
+</CodeGroup>
 
 ### Payload Fields
 
-| Field                    | Description                                                                                                                       |
-| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
-| `last_messages`          | JSON string containing the recent message history (type, content, timestamp, content_type). Actually this is the last 10 messages |
-| `conversation_paragraph` | Formatted string of the recent conversation history. This is also last 10 messages.                                               |
-| `phone_number`           | The phone number associated with the conversation                                                                                 |
-| `recipient_name`         | The name of the recipient                                                                                                         |
-| `user_id`                | Unique identifier for the user                                                                                                    |
-| `last_message_of_user`   | The last message sent by your recipient                                                                                           |
-| `last_message_of_bot`    | The most recent message sent by the you or your automation system                                                                 |
-| `message_type`           | The type of the message (e.g., "text")                                                                                            |
-| `user_timestamp`         | Timestamp of the user's last message                                                                                              |
-| `bot_timestamp`          | Timestamp of the bot's last message                                                                                               |
-| `attachment_url`         | URL to any media attachment sent in the conversation                                                                              |
-</div>
+<ResponseField name="event_type" type="string" required>
+  Type of event, always "incoming_message" for incoming messages
+</ResponseField>
 
----
+<ResponseField name="event_id" type="string" required>
+  Unique identifier for the event, use this for deduplication
+</ResponseField>
 
-## Technical Requirements
+<ResponseField name="timestamp" type="string" required>
+  ISO 8601 timestamp when the event occurred
+</ResponseField>
 
-<div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-For your webhook endpoint to properly receive and process notifications:
+<ResponseField name="data" type="object" required>
+  <Expandable title="data object">
+    <ResponseField name="conversation_id" type="string" required>
+      Unique identifier for the conversation thread
+    </ResponseField>
 
-1. **HTTPS Required**: All webhook endpoints must be accessible via HTTP/HTTPS
-2. **POST Method**: Your endpoint must accept POST requests
-3. **JSON Support**: Your endpoint must be able to parse JSON payloads
-4. **Response Code**: Your endpoint should return a 2xx HTTP response code to acknowledge receipt
+    <ResponseField name="phone_number" type="string" required>
+      The phone number of the recipient who sent the message
+    </ResponseField>
 
-> **Note:** As shown in Figure 2, your webhook endpoint must be accessible via HTTP/HTTPS and configured to accept POST requests with JSON payloads. 
-</div>
+    <ResponseField name="recipient_name" type="string">
+      The name of the recipient if available
+    </ResponseField>
 
----
+    <ResponseField name="user_id" type="string" required>
+      Unique identifier for the user in your system
+    </ResponseField>
+
+    <ResponseField name="message" type="object" required>
+      <Expandable title="message object">
+        <ResponseField name="type" type="string" required>
+          The type of message (text, image, audio, video, document, location)
+        </ResponseField>
+
+        <ResponseField name="content" type="string">
+          The text content of the message (empty for media messages)
+        </ResponseField>
+
+        <ResponseField name="timestamp" type="string" required>
+          ISO 8601 timestamp when the message was sent
+        </ResponseField>
+
+        <ResponseField name="media" type="object">
+          Present only for media messages (image, audio, video, document)
+          <Expandable title="media object">
+            <ResponseField name="url" type="string" required>
+              Secure URL to download the media file (valid for 24 hours)
+            </ResponseField>
+
+            <ResponseField name="mime_type" type="string" required>
+              MIME type of the media file
+            </ResponseField>
+
+            <ResponseField name="sha256" type="string">
+              SHA-256 hash of the file for verification
+            </ResponseField>
+
+            <ResponseField name="file_size" type="integer">
+              Size of the file in bytes
+            </ResponseField>
+          </Expandable>
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+
+    <ResponseField name="conversation_context" type="object">
+      Context information about the conversation
+      <Expandable title="conversation_context object">
+        <ResponseField name="last_user_message" type="string">
+          The last message sent by the user
+        </ResponseField>
+
+        <ResponseField name="last_bot_message" type="string">
+          The last message sent by your system
+        </ResponseField>
+
+        <ResponseField name="user_timestamp" type="integer">
+          Unix timestamp of the user's last message
+        </ResponseField>
+
+        <ResponseField name="bot_timestamp" type="integer">
+          Unix timestamp of your system's last message
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+
+    <ResponseField name="conversation_history" type="array">
+      Array of the last 10 messages in the conversation
+      <Expandable title="conversation_history array">
+        <ResponseField name="type" type="string" required>
+          Sender type ("user" or "bot")
+        </ResponseField>
+
+        <ResponseField name="content" type="string">
+          Message content
+        </ResponseField>
+
+        <ResponseField name="timestamp" type="string" required>
+          ISO 8601 timestamp of when the message was sent
+        </ResponseField>
+
+        <ResponseField name="content_type" type="string" required>
+          Type of content (text, image, audio, video, document, location)
+        </ResponseField>
+
+        <ResponseField name="media_url" type="string">
+          URL to media file if applicable
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="version" type="string" required>
+  API version identifier
+</ResponseField>
+
+## Webhook Management API
+
+You can programmatically manage your webhook endpoints using our API.
+
+### List Webhook Endpoints
+
+Retrieve all configured webhook endpoints for your account.
+
+<CodeGroup>
+```bash cURL
+curl -X GET \
+  https://api.insightssystem.com/api:AFRA_QCy/webhooks \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer YOUR_API_KEY'
+```
+
+```javascript Node.js
+const axios = require('axios');
+
+async function listWebhooks() {
+  try {
+    const response = await axios.get(
+      'https://api.insightssystem.com/api:AFRA_QCy/webhooks',
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer YOUR_API_KEY'
+        }
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error listing webhooks:', error);
+  }
+}
+
+listWebhooks();
+```
+
+```python Python
+import requests
+
+url = "https://api.insightssystem.com/api:AFRA_QCy/webhooks"
+
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer YOUR_API_KEY"
+}
+
+response = requests.get(url, headers=headers)
+print(response.json())
+```
+</CodeGroup>
+
+### Create Webhook Endpoint
+
+Register a new webhook endpoint to receive incoming message notifications.
+
+<CodeGroup>
+```bash cURL
+curl -X POST \
+  https://api.insightssystem.com/api:AFRA_QCy/webhooks \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -d '{
+    "url": "https://example.com/webhooks/whatsapp",
+    "description": "Production webhook for WhatsApp replies",
+    "events": ["incoming_message"]
+  }'
+```
+
+```javascript Node.js
+const axios = require('axios');
+
+async function createWebhook() {
+  try {
+    const response = await axios.post(
+      'https://api.insightssystem.com/api:AFRA_QCy/webhooks',
+      {
+        url: "https://example.com/webhooks/whatsapp",
+        description: "Production webhook for WhatsApp replies",
+        events: ["incoming_message"]
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer YOUR_API_KEY'
+        }
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error creating webhook:', error);
+  }
+}
+
+createWebhook();
+```
+
+```python Python
+import requests
+
+url = "https://api.insightssystem.com/api:AFRA_QCy/webhooks"
+
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer YOUR_API_KEY"
+}
+
+data = {
+    "url": "https://example.com/webhooks/whatsapp",
+    "description": "Production webhook for WhatsApp replies",
+    "events": ["incoming_message"]
+}
+
+response = requests.post(url, headers=headers, json=data)
+print(response.json())
+```
+</CodeGroup>
+
+## Webhook Security
+
+<Warning>
+Always verify webhook signatures to ensure the authenticity of incoming requests. This prevents malicious actors from sending fraudulent events to your endpoint.
+</Warning>
+
+### Signature Verification
+
+Every webhook request includes a signature in the `X-Webhook-Signature` header. Verify this signature by:
+
+1. Extract the `X-Webhook-Signature` header value
+2. Compute an HMAC-SHA256 signature using your webhook secret and the raw request body
+3. Compare the computed signature with the header value
+
+<CodeGroup>
+```javascript Node.js
+const crypto = require('crypto');
+
+function verifyWebhookSignature(requestBody, signatureHeader, webhookSecret) {
+  const hmac = crypto.createHmac('sha256', webhookSecret);
+  const signature = hmac.update(requestBody).digest('hex');
+  return crypto.timingSafeEqual(
+    Buffer.from(signature, 'hex'),
+    Buffer.from(signatureHeader, 'hex')
+  );
+}
+
+// Express.js example
+app.post('/webhooks/whatsapp', express.raw({type: 'application/json'}), (req, res) => {
+  const signature = req.headers['x-webhook-signature'];
+  
+  if (!signature) {
+    return res.status(400).send('No signature header');
+  }
+  
+  const isValid = verifyWebhookSignature(
+    req.body.toString(),
+    signature,
+    'YOUR_WEBHOOK_SECRET'
+  );
+  
+  if (!isValid) {
+    return res.status(401).send('Invalid signature');
+  }
+  
+  const payload = JSON.parse(req.body.toString());
+  // Process the webhook payload
+  
+  res.status(200).send('Webhook received');
+});
+```
+
+```python Python
+import hmac
+import hashlib
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+WEBHOOK_SECRET = 'YOUR_WEBHOOK_SECRET'
+
+@app.route('/webhooks/whatsapp', methods=['POST'])
+def handle_webhook():
+    signature_header = request.headers.get('X-Webhook-Signature')
+    
+    if not signature_header:
+        return jsonify({'error': 'No signature header'}), 400
+    
+    request_body = request.get_data()
+    
+    calculated_signature = hmac.new(
+        WEBHOOK_SECRET.encode('utf-8'),
+        request_body,
+        hashlib.sha256
+    ).hexdigest()
+    
+    if not hmac.compare_digest(calculated_signature, signature_header):
+        return jsonify({'error': 'Invalid signature'}), 401
+    
+    payload = request.json
+    # Process the webhook payload
+    
+    return jsonify({'status': 'success'}), 200
+
+if __name__ == '__main__':
+    app.run(port=3000)
+```
+
+```php PHP
+<?php
+$webhookSecret = 'YOUR_WEBHOOK_SECRET';
+
+// Get the signature from the request headers
+$signatureHeader = $_SERVER['HTTP_X_WEBHOOK_SIGNATURE'] ?? '';
+
+// Get the raw POST data
+$requestBody = file_get_contents('php://input');
+
+// Calculate the expected signature
+$calculatedSignature = hash_hmac('sha256', $requestBody, $webhookSecret);
+
+// Verify the signature
+if (!hash_equals($calculatedSignature, $signatureHeader)) {
+    http_response_code(401);
+    echo json_encode(['error' => 'Invalid signature']);
+    exit;
+}
+
+// Process the webhook payload
+$payload = json_decode($requestBody, true);
+
+// Respond to the webhook
+http_response_code(200);
+echo json_encode(['status' => 'success']);
+```
+</CodeGroup>
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Idempotency" icon="rotate">
+    Implement idempotency key checks to prevent duplicate processing of events. Use the `event_id` field to detect and handle retries.
+  </Card>
+  <Card title="Graceful Error Handling" icon="shield-check">
+    Design your webhook handler to gracefully process unexpected payload structures or event types. This ensures compatibility with future API updates.
+  </Card>
+  <Card title="Quick Response" icon="bolt">
+    Always respond quickly with a 2xx status code, then process the webhook asynchronously. Responses taking longer than 10 seconds may cause webhook delivery retries.
+  </Card>
+  <Card title="Multiple Endpoints" icon="network-wired">
+    Consider configuring multiple webhook endpoints for different environments (development, staging, production) or different types of processing.
+  </Card>
+</CardGroup>
+
+### Handling Media Files
+
+When receiving media messages:
+
+1. Download the media file from the URL provided in the webhook as soon as possible
+2. Media URLs expire after 24 hours
+3. Verify the SHA-256 hash to ensure file integrity
+4. Store media files securely in your system
+
+<CodeGroup>
+```javascript Node.js
+const axios = require('axios');
+const fs = require('fs');
+const crypto = require('crypto');
+const path = require('path');
+
+async function downloadAndVerifyMedia(mediaUrl, expectedSha256) {
+  try {
+    // Download the file
+    const response = await axios({
+      method: 'GET',
+      url: mediaUrl,
+      responseType: 'arraybuffer'
+    });
+    
+    // Calculate SHA-256 hash
+    const fileBuffer = Buffer.from(response.data);
+    const calculatedHash = crypto
+      .createHash('sha256')
+      .update(fileBuffer)
+      .digest('hex');
+    
+    // Verify hash
+    if (calculatedHash !== expectedSha256) {
+      throw new Error('File hash verification failed');
+    }
+    
+    // Save file
+    const filename = `media_${Date.now()}${path.extname(mediaUrl)}`;
+    fs.writeFileSync(filename, fileBuffer);
+    
+    return filename;
+  } catch (error) {
+    console.error('Error downloading media:', error);
+    throw error;
+  }
+}
+```
+
+```python Python
+import requests
+import hashlib
+import os
+from urllib.parse import urlparse
+
+def download_and_verify_media(media_url, expected_sha256):
+    try:
+        # Download the file
+        response = requests.get(media_url)
+        response.raise_for_status()
+        
+        # Calculate SHA-256 hash
+        file_data = response.content
+        calculated_hash = hashlib.sha256(file_data).hexdigest()
+        
+        # Verify hash
+        if calculated_hash != expected_sha256:
+            raise ValueError('File hash verification failed')
+        
+        # Save file
+        filename = f"media_{int(time.time())}{os.path.splitext(urlparse(media_url).path)[1]}"
+        with open(filename, 'wb') as f:
+            f.write(file_data)
+        
+        return filename
+    except Exception as e:
+        print(f"Error downloading media: {e}")
+        raise
+```
+</CodeGroup>
+
+## Rate Limiting and Quotas
+
+<AccordionGroup>
+  <Accordion title="Webhook Delivery Attempts">
+    If your endpoint fails to respond with a 2xx status code, we'll retry delivery using an exponential backoff strategy: 5s, 30s, 2m, 10m, 30m, 2h, 6h, 12h up to 3 days.
+  </Accordion>
+  <Accordion title="Endpoint Performance">
+    Your endpoint should respond within 10 seconds. If it takes longer, we may time out and retry the delivery.
+  </Accordion>
+  <Accordion title="Concurrency Limits">
+    We may send up to 25 concurrent webhook requests to a single endpoint. Design your system to handle this level of concurrency.
+  </Accordion>
+  <Accordion title="Account Limits">
+    | Plan | Maximum Webhooks | Delivery Retry Period |
+    | ---- | ---------------- | --------------------- |
+    | Free | 2                | 1 day                 |
+    | Pro  | 10               | 3 days                |
+    | Enterprise | Unlimited  | 7 days                |
+  </Accordion>
+</AccordionGroup>
+
+## Testing Webhooks
+
+Test your webhook implementation before going live:
+
+1. Create a test webhook endpoint using a service like [webhook.site](https://webhook.site/) or [Beeceptor](https://beeceptor.com/)
+2. Configure this test URL in your webhook settings
+3. Send a test WhatsApp message to trigger the webhook
+4. Inspect the payload to understand the data structure
+5. Implement proper handling in your application
+
+<Warning>
+Always test your webhook implementation thoroughly in a development environment before configuring production endpoints.
+</Warning>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Webhook Not Receiving Events">
+    - Verify your endpoint is publicly accessible
+    - Check for HTTP 4xx or 5xx responses
+    - Ensure proper SSL certificate configuration
+    - Verify your webhook is enabled in the dashboard
+  </Accordion>
+  <Accordion title="Invalid Signature Errors">
+    - Confirm you're using the correct webhook secret
+    - Ensure you're using the raw request body for signature calculation
+    - Check that you're using HMAC-SHA256 for verification
+    - Verify your implementation handles base64 or hex encoding correctly
+  </Accordion>
+  <Accordion title="Missing Media Files">
+    - Media URLs expire after 24 hours
+    - Download and store media files immediately
+    - Check for proper handling of MIME types
+    - Verify network connectivity to the media URL
+  </Accordion>
+  <Accordion title="Duplicate Event Processing">
+    - Implement idempotency using the event_id
+    - Store processed event IDs in a persistent database
+    - Add timeout logic to your idempotency check
+  </Accordion>
+</AccordionGroup>
+
+## FAQs
+
+<AccordionGroup>
+  <Accordion title="Can I receive notifications for all WhatsApp account events?">
+    Currently, webhooks are available for incoming messages only. We're working on expanding support for additional event types like delivery receipts, read receipts, and account status changes.
+  </Accordion>
+  <Accordion title="How do I handle different message types?">
+    Check the `message.type` field in the webhook payload to determine the message type (text, image, audio, video, document, location) and process accordingly.
+  </Accordion>
+  <Accordion title="Do I need to respond to every webhook request?">
+    Yes, your endpoint must respond with a 2xx HTTP status code for every webhook request to acknowledge receipt. This prevents unnecessary retries.
+  </Accordion>
+  <Accordion title="How can I test webhook delivery?">
+    Use the "Test Webhook" feature in the Developer section of your dashboard to send a sample webhook payload to your endpoint.
+  </Accordion>
+</AccordionGroup>
+
+<Card title="Need help?" icon="headset" href="/support">
+  Our support team is available 24/7 to assist with webhook setup, event handling, or any other questions.
+</Card>
+
+<Update label="2025-04-10" description="v2.1.0">
+  ## Enhanced Webhook System
+  
+  - Added signature verification for improved security
+  - Extended media file expiration to 24 hours (previously 1 hour)
+  - Improved retry logic for failed webhook deliveries
+  - Added support for multiple endpoints per account
+</Update>
+
+<Update label="2025-02-28" description="v2.0.0">
+  ## Major Webhook Overhaul
+  
+  - Standardized event payload structure
+  - Added conversation history context
+  - Improved media handling capabilities
+  - Added programmatic webhook management API
+</Update>
