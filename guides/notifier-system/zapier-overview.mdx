@@ -7,7 +7,7 @@ icon: 'bolt'
 # Notifyer System Integration with Zapier
 
 <Frame caption="Automate your WhatsApp messaging workflows with Zapier and Notifyer System">
-  <img src="/images/notifyer_n8n_svg.svg" className="rounded-xl" />
+  <img src=" " className="rounded-xl" />
 </Frame>
 
 <Tip>
@@ -53,7 +53,7 @@ Before getting started, make sure you have:
           Go to **Your Templates** in your Notifyer dashboard
         </Step>
         <Step title="Create Template">
-          Click the [**Create Template**](https://console.notifyer-systems.com/create-template) tab at the top of the page
+          Click the **Create Template** tab at the top of the page
         </Step>
         <Step title="Fill out the form">
           Complete the template creation form with the following details:
@@ -61,22 +61,22 @@ Before getting started, make sure you have:
           <ResponseField name="Template Name" type="string" required>
             Choose a descriptive name for internal reference
           </ResponseField>
-          <ResponseField name="Category" type="string" required>
-            Select the appropriate message category
-          </ResponseField>
           <ResponseField name="Language" type="string" required>
             Choose your template's primary language
+          </ResponseField>
+          <ResponseField name="Category" type="string" required>
+            Select the appropriate message category
+          </ResponseField>          
+          <ResponseField name="Header" type="image | document | video">
+            Optional: Add an image, document, or video header
           </ResponseField>
           <ResponseField name="Message Body" type="string" required>
             Craft your message content
           </ResponseField>
           <ResponseField name="Variables" type="string">
             Add placeholders using `{{1}}`, `{{2}}` format for personalization
-          </ResponseField>
-          <ResponseField name="Header" type="image | document | video">
-            Optional: Add an image, document, or video header
-          </ResponseField>
-          <ResponseField name="Buttons" type="button[]">
+          </ResponseField>          
+          <ResponseField name="Buttons" type="button">
             Optional: Configure call-to-action buttons
           </ResponseField>
         </Step>
@@ -86,7 +86,7 @@ Before getting started, make sure you have:
       </Steps>
 
       <Frame caption="Template Creation Interface">
-        <img src="https://notifyer.app/docs/images/template-creation.png" alt="Template Creation Interface" />
+        <img src="/images/notifyer_template_create.png" alt="Template Creation Interface" />
       </Frame>
 
       <Warning>
@@ -121,7 +121,7 @@ Before getting started, make sure you have:
   <Step title="Get your API key">
     To connect Notifyer System with Zapier, you'll need an API key:
 
-    1. In your Notifyer dashboard, navigate to **API Keys**
+    1. In your Notifyer dashboard, navigate to [**API Keys**](https://console.notifyer-systems.com/api-key)
     2. Copy your unique API key
     3. Store it securely—you'll need it for the integration
     <Warning>
@@ -129,7 +129,7 @@ Before getting started, make sure you have:
     </Warning>
 
     <Frame caption="API Key Location">
-      <img src="https://notifyer.app/docs/images/api-key-location.png" alt="API Key Location" />
+      <img src="/images/notifyer_apikey.png" alt="API Key Location" />
     </Frame>
   </Step>
 </Steps>
@@ -143,20 +143,13 @@ Now that you have your Notifyer System account configured, let's connect it to Z
     1. Log in to your Zapier account
     2. Navigate to Notifyer System dashboard and select **Connect to Zapier** in the side menu
     3. Click **Continue** in the connection guide popup
-    4. Select Accept & Build a Zap on the invitation page
+    4. Click **Accept & Build a Zap** on the invitation page
     <Check>
       You're now ready to create Zaps with the Notifyer System app
     </Check>
-  </Step>
-
-  <Step title="Connect Notifyer System to Zapier">
-    1. Log in to your Zapier account
-    2. Navigate to Notifyer System dashboard and select **Connect to Zapier** in the side menu
-    3. Click **Continue** in the connection guide popup
-    4. Select Accept & Build a Zap on the invitation page
-    <Check>
-      You're now ready to create Zaps with the Notifyer System app
-    </Check>
+    <Frame caption="Connecting Notifyer System to Zapier">
+      <img src="/images/connecting_notifyer_system_zapier.gif" alt="Connecting Notifyer System to Zapier" />
+    </Frame>
   </Step>
 
   <Step title="Set up your Zapier Zaps">
@@ -167,7 +160,7 @@ Now that you have your Notifyer System account configured, let's connect it to Z
        - Connect and configure your trigger according to your use case
 
     <Frame caption="Setting up Zapier Zaps">
-      <img src=" " alt="Setting up Zapier Zaps" />
+      <img src="/images/whatsable_zapier1.gif" alt="Setting up Zapier Zaps" />
     </Frame>
   </Step>
   
@@ -177,20 +170,20 @@ Now that you have your Notifyer System account configured, let's connect it to Z
     3. Select the app with the official Notifyer System logo
 
     <Frame caption="Adding the Notifyer System app">
-      <img src=" " alt="Adding the WhatsAble app" />
+      <img src="/images/adding_the_notifyer_system.gif" alt="Adding the WhatsAble app" />
     </Frame>
   </Step>
   
   <Step title="Configure Notifyer System credentials">
     <Accordion title="Credential Setup" defaultOpen>
-      1. In the Notifyer System app Setup, select **Send WhatsApp Message** in the **Action event** dropdown
+      1. In the Notifyer System app Setup, select [**Send a WhatsApp Message with your template**](/guides/notifier-system/zapier-overview#template-messages) or [**Send WhatsApp Message Without Template**](/guides/notifier-system/zapier-overview#non-template-messages) in the **Action event** dropdown depending on your messaging needs
       2. Click **Sign In** in the **Account** field and you will be prompted to enter your API Key
       3. Enter your Notifyer System API key that you copied earlier      
       4. Click **Yes, Continue to Notifyer System** to store your credential
       5. Next, click the **Continue** button in the Setup screen to proceed to the **Configure** section
 
     <Frame caption="Configuring Notifyer System credentials">
-      <img src="   " alt="Configuring Notifyer System credentials" />
+      <img src="/images/configuring_notifyer_credentials.gif" alt="Configuring Notifyer System credentials" />
     </Frame>
     </Accordion>
   </Step>
@@ -201,20 +194,38 @@ Now that you have your Notifyer System account configured, let's connect it to Z
     <Tabs>
       <Tab title="Template Messages">
         <Steps>
-          <Step title="Select operation">
-            In the **Operation Name or ID** dropdown, select **Send Template (Notifyer)**
+          <Step title="Select Action event">
+            In the **Setup** section, select **Send a WhatsApp Message with your template** in the **Action event** dropdown and continue to the **Configure** section
           </Step>
           <Step title="Configure message">
-            Complete the required fields:
+            Complete the required fields in the **Configure** section:
             
+            <ResponseField name="Template" type="string" required>
+              Select from your pre-approved templates in the dropdown
+            </ResponseField>
             <ResponseField name="Phone Number" type="string" required>
               Enter the recipient's phone number with country code (e.g., +14155552671) or use dynamic data from previous nodes
             </ResponseField>
-            <ResponseField name="Template Name or ID" type="string" required>
-              Select from your pre-approved templates in the dropdown
+            <ResponseField name="Note" type="string" optional>
+              Add note for internal tracking. This data won't be sent to the recipient
             </ResponseField>
-            <ResponseField name="Template Variables" type="string[]">
-              Fill in values for each variable in your template, mapping them to dynamic data when applicable
+            <ResponseField name="Labels" type="multiselect" optional>
+              Select label(s) for internal tracking. This data won't be sent to the recipient
+            </ResponseField>
+            <ResponseField name="Media" type="string" required>
+              Enter publicly accessible media URL for Media (image/video/document) header.
+              <Info>
+               This field will only appear if you have a Media (image/video/document) header configured in your selected template.
+              </Info>
+            </ResponseField>
+            <ResponseField name="Body ()" type="string" required>
+              Fill in values for each Body(s) in your template, mapping them to dynamic data when applicable
+            </ResponseField>
+            <ResponseField name="Button(s)" type="string" required>
+              Fill in values for each button in your template, mapping them to dynamic data when applicable.
+              <Info>
+               This field(s) will only appear if you have configured button(s) in your selected template. You will see the button name as the field name.
+              </Info>
             </ResponseField>
           </Step>
           <Step title="Complete message details">
@@ -433,5 +444,5 @@ Our support team is ready to assist you:
 </CardGroup>
 
 <Info>
-  For additional automation platform integrations (Make.com, Zapier, etc.), please contact our support team or check our integration documentation.
+  For additional automation platform integrations (Make.com, n8n, etc.), please contact our support team or check our integration documentation.
 </Info>

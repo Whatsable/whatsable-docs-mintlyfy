@@ -61,25 +61,22 @@ Before getting started, make sure you have:
           <ResponseField name="Template Name" type="string" required>
             Choose a descriptive name for internal reference
           </ResponseField>
-          <ResponseField name="Category" type="string" required>
-            Select the appropriate message category
-          </ResponseField>
           <ResponseField name="Language" type="string" required>
             Choose your template's primary language
+          </ResponseField>
+          <ResponseField name="Category" type="string" required>
+            Select the appropriate message category
+          </ResponseField>          
+          <ResponseField name="Header" type="image | document | video">
+            Optional: Add an image, document, or video header
           </ResponseField>
           <ResponseField name="Message Body" type="string" required>
             Craft your message content
           </ResponseField>
           <ResponseField name="Variables" type="string">
             Add placeholders using `{{1}}`, `{{2}}` format for personalization
-          </ResponseField>
-          <ResponseField name="Header" type="image | document | video">
-            Optional: Add an image, document, or video header
-          </ResponseField>
-          <ResponseField name="Footer" type="string">
-            Optional: Add a standard footer message
-          </ResponseField>
-          <ResponseField name="Buttons" type="button[]">
+          </ResponseField>          
+          <ResponseField name="Buttons" type="button">
             Optional: Configure call-to-action buttons
           </ResponseField>
         </Step>
