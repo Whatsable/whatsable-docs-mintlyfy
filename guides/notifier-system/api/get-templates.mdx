@@ -270,20 +270,6 @@ print(response.json())
   </Card>
 </CardGroup>
 
-## Rate Limiting
-
-This API endpoint is subject to the following rate limits:
-
-| Plan | Rate Limit |
-| ---- | ---------- |
-| Free | 60 requests per hour |
-| Pro  | 600 requests per hour |
-| Enterprise | Custom limits |
-
-<Warning>
-If you exceed your rate limit, the API will return a 429 status code. Implement exponential backoff and retries in your code to handle rate limiting gracefully.
-</Warning>
-
 ## FAQs
 
 <AccordionGroup>
