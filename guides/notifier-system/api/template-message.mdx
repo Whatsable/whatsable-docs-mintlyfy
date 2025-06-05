@@ -468,51 +468,6 @@ When including media in your templates, follow these guidelines for optimal deli
 Media URLs must be publicly accessible without requiring authentication. For security, we recommend using signed URLs with limited-time access.
 </Warning>
 
-## Sending to Multiple Recipients
-
-While this API is designed for sending to a single recipient, you can efficiently send to multiple recipients by implementing a batch process in your application:
-
-```javascript
-async function sendToMultipleRecipients(templateId, recipients, baseVariables) {
-  const results = [];
-  
-  for (const recipient of recipients) {
-    // Customize variables for each recipient if needed
-    const variables = {
-      ...baseVariables,
-      body1: recipient.name,
-      // Other recipient-specific variables
-    };
-    
-    try {
-      const response = await sendTemplateMessage(templateId, recipient.phone, variables);
-      results.push({ recipient: recipient.phone, success: true, response });
-    } catch (error) {
-      results.push({ recipient: recipient.phone, success: false, error });
-    }
-    
-    // Add a small delay to avoid rate limiting
-    await new Promise(resolve => setTimeout(resolve, 100));
-  }
-  
-  return results;
-}
-```
-
-## Rate Limiting
-
-This API endpoint is subject to the following rate limits:
-
-| Plan | Rate Limit |
-| ---- | ---------- |
-| Free | 50 messages per day |
-| Pro  | 1,000 messages per day |
-| Enterprise | Custom limits |
-
-<Warning>
-If you exceed your rate limit, the API will return a 429 status code. Implement exponential backoff and retries in your code to handle rate limiting gracefully.
-</Warning>
-
 ## Best Practices
 
 <CardGroup cols={2}>
