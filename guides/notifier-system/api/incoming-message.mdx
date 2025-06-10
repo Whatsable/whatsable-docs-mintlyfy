@@ -34,12 +34,6 @@ Webhooks are HTTP callbacks that deliver notifications to your server whenever s
   <Step title="Configure Endpoint">
     Add a new webhook URL where you want to receive incoming message notifications.
   </Step>
-  <Step title="Set Up Authentication">
-    We recommend implementing signature verification to ensure webhook security.
-  </Step>
-  <Step title="Test Your Endpoint">
-    Use the test feature to verify your webhook is properly receiving and processing events.
-  </Step>
 </Steps>
 
 ### Endpoint Requirements
@@ -211,57 +205,6 @@ When a user replies to your WhatsApp message, we'll send a POST request to your 
 
 You can programmatically manage your webhook endpoints using our API.
 
-### List Webhook Endpoints
-
-Retrieve all configured webhook endpoints for your account.
-
-<CodeGroup>
-```bash cURL
-curl -X GET \
-  https://api.insightssystem.com/api:qh9OQ3OW/webhook/dev/create \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer YOUR_API_KEY'
-```
-
-```javascript Node.js
-const axios = require('axios');
-
-async function listWebhooks() {
-  try {
-    const response = await axios.get(
-      'https://api.insightssystem.com/api:qh9OQ3OW/webhook/dev/create',
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer YOUR_API_KEY'
-        }
-      }
-    );
-    console.log(response.data);
-    return response.data;
-  } catch (error) {
-    console.error('Error listing webhooks:', error);
-  }
-}
-
-listWebhooks();
-```
-
-```python Python
-import requests
-
-url = "https://api.insightssystem.com/api:qh9OQ3OW/webhook/dev/create"
-
-headers = {
-    "Content-Type": "application/json",
-    "Authorization": "Bearer YOUR_API_KEY"
-}
-
-response = requests.get(url, headers=headers)
-print(response.json())
-```
-</CodeGroup>
-
 ### Create Webhook Endpoint
 
 Register a new webhook endpoint to receive incoming message notifications.
@@ -273,9 +216,7 @@ curl -X POST \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer YOUR_API_KEY' \
   -d '{
-    "url": "https://your-domain.com/api/webhooks/whatsapp",
-    "description": "Production webhook endpoint for WhatsApp message notifications",
-    "events": ["incoming_message"]
+    "url": "https://your-domain.com/api/webhooks/whatsapp"
   }'
 ```
 
@@ -287,9 +228,7 @@ async function createWebhook() {
     const response = await axios.post(
       'https://api.insightssystem.com/api:qh9OQ3OW/webhook/dev/create',
       {
-        url: "https://your-domain.com/api/webhooks/whatsapp",
-        description: "Production webhook endpoint for WhatsApp message notifications",
-        events: ["incoming_message"]
+        url: "https://your-domain.com/api/webhooks/whatsapp"
       },
       {
         headers: {
@@ -319,9 +258,7 @@ headers = {
 }
 
 data = {
-    "url": "https://your-domain.com/api/webhooks/whatsapp",
-    "description": "Production webhook endpoint for WhatsApp message notifications",
-    "events": ["incoming_message"]
+    "url": "https://your-domain.com/api/webhooks/whatsapp"
 }
 
 response = requests.post(url, headers=headers, json=data)
@@ -333,218 +270,14 @@ print(response.json())
 Always verify webhook signatures to ensure the authenticity of incoming requests. This prevents malicious actors from sending fraudulent events to your endpoint.
 </Warning>
 
-## Best Practices
-
-<CardGroup cols={2}>
-  <Card title="Idempotency" icon="rotate">
-    Implement idempotency key checks to prevent duplicate processing of events. Use the combination of `user_id` and `user_last_message_time` fields to detect and handle retries.
-  </Card>
-  <Card title="Graceful Error Handling" icon="shield-check">
-    Design your webhook handler to gracefully process unexpected payload structures or event types. This ensures compatibility with future API updates.
-  </Card>
-  <Card title="Quick Response" icon="bolt">
-    Always respond quickly with a 2xx status code, then process the webhook asynchronously. Responses taking longer than 10 seconds may cause webhook delivery retries.
-  </Card>
-  <Card title="Multiple Endpoints" icon="network-wired">
-    Consider configuring multiple webhook endpoints for different environments (development, staging, production) or different types of processing.
-  </Card>
-</CardGroup>
-
-### Handling Media Files
-
-When receiving media messages:
-
-1. Download the media file from the `attachment_url` or `media_url` provided in the webhook as soon as possible
-2. Media URLs expire after 24 hours
-3. Store media files securely in your system
-
-<CodeGroup>
-```javascript Node.js
-const axios = require('axios');
-const fs = require('fs');
-const path = require('path');
-
-async function downloadMedia(mediaUrl) {
-  try {
-    // Download the media file with appropriate headers
-    const response = await axios({
-      method: 'GET',
-      url: mediaUrl,
-      responseType: 'arraybuffer',
-      timeout: 30000, // 30 second timeout
-      headers: {
-        'User-Agent': 'WhatsApp-Webhook-Client/1.0'
-      }
-    });
-    
-    // Generate secure filename with timestamp
-    const fileBuffer = Buffer.from(response.data);
-    const fileExtension = path.extname(new URL(mediaUrl).pathname) || '.bin';
-    const filename = `media_${Date.now()}_${Math.random().toString(36).substr(2, 9)}${fileExtension}`;
-    
-    // Ensure media directory exists
-    const mediaDir = './media_files';
-    if (!fs.existsSync(mediaDir)) {
-      fs.mkdirSync(mediaDir, { recursive: true });
-    }
-    
-    const filePath = path.join(mediaDir, filename);
-    fs.writeFileSync(filePath, fileBuffer);
-    
-    return filePath;
-  } catch (error) {
-    console.error('Media download error:', error.message);
-    throw new Error(`Failed to download media: ${error.message}`);
-  }
-}
-
-// Example webhook handler for media messages
-app.post('/api/webhooks/whatsapp', express.json(), async (req, res) => {
-  const payload = req.body;
-  
-  // Handle media messages with attachments
-  if (payload.message_type !== 'text' && payload.attachment_url) {
-    try {
-      const savedFile = await downloadMedia(payload.attachment_url);
-      console.log(`Media file processed successfully: ${savedFile}`);
-      
-      // Additional processing logic for media files
-      await processMediaFile(savedFile, payload.message_type);
-      
-    } catch (error) {
-      console.error('Media processing failed:', error);
-      // Implement appropriate error handling
-    }
-  }
-  
-  // Process text messages
-  if (payload.message_type === 'text') {
-    await processTextMessage(payload);
-  }
-  
-  res.status(200).json({ 
-    status: 'received', 
-    message: 'Webhook processed successfully' 
-  });
-});
-```
-
-```python Python
-import requests
-import os
-import time
-from urllib.parse import urlparse
-
-def download_media(media_url):
-    try:
-        # Download the media file with appropriate headers
-        response = requests.get(
-            media_url, 
-            timeout=30,  # 30 second timeout
-            headers={'User-Agent': 'WhatsApp-Webhook-Client/1.0'}
-        )
-        response.raise_for_status()
-        
-        # Generate secure filename with timestamp
-        file_data = response.content
-        file_extension = os.path.splitext(urlparse(media_url).path)[1] or '.bin'
-        filename = f"media_{int(time.time())}_{secrets.token_hex(4)}{file_extension}"
-        
-        # Ensure media directory exists
-        media_dir = './media_files'
-        os.makedirs(media_dir, exist_ok=True)
-        
-        file_path = os.path.join(media_dir, filename)
-        with open(file_path, 'wb') as f:
-            f.write(file_data)
-        
-        return file_path
-    except Exception as e:
-        print(f"Media download error: {e}")
-        raise Exception(f"Failed to download media: {e}")
-
-# Example webhook handler for media messages
-@app.route('/api/webhooks/whatsapp', methods=['POST'])
-def handle_webhook():
-    payload = request.json
-    
-    # Handle media messages with attachments
-    if payload.get('message_type') != 'text' and payload.get('attachment_url'):
-        try:
-            saved_file = download_media(payload['attachment_url'])
-            print(f"Media file processed successfully: {saved_file}")
-            
-            # Additional processing logic for media files
-            process_media_file(saved_file, payload['message_type'])
-            
-        except Exception as e:
-            print(f"Media processing failed: {e}")
-            # Implement appropriate error handling
-    
-    # Process text messages
-    if payload.get('message_type') == 'text':
-        process_text_message(payload)
-    
-    return jsonify({
-        'status': 'received', 
-        'message': 'Webhook processed successfully'
-    }), 200
-```
-</CodeGroup>
-
-## Rate Limiting and Quotas
-
-<AccordionGroup>
-  <Accordion title="Webhook Delivery Attempts">
-    If your endpoint fails to respond with a 2xx status code, we'll retry delivery using an exponential backoff strategy: 5s, 30s, 2m, 10m, 30m, 2h, 6h, 12h up to 3 days.
-  </Accordion>
-  <Accordion title="Endpoint Performance">
-    Your endpoint should respond within 10 seconds. If it takes longer, we may time out and retry the delivery.
-  </Accordion>
-  <Accordion title="Concurrency Limits">
-    We may send up to 25 concurrent webhook requests to a single endpoint. Design your system to handle this level of concurrency.
-  </Accordion>
-</AccordionGroup>
-
-## Testing Webhooks
-
-Test your webhook implementation before going live:
-
-1. Create a test webhook endpoint using a service like [webhook.site](https://webhook.site/) or [RequestBin](https://requestbin.com/)
-2. Configure this test URL in your webhook settings through the developer dashboard
-3. Send a test WhatsApp message to trigger the webhook delivery
-4. Inspect the received payload to verify the data structure matches your expectations
-5. Implement comprehensive handling in your application with proper error management
-
-<Warning>
-Always test your webhook implementation thoroughly in a development environment before configuring production endpoints.
-</Warning>
-
 ## Troubleshooting
 
 <AccordionGroup>
-  <Accordion title="Webhook Not Receiving Events">
+  <Accordion title="Webhook Not Receiving Events" defaultOpen={true}>
     - Verify your endpoint is publicly accessible
     - Check for HTTP 4xx or 5xx responses
     - Ensure proper SSL certificate configuration
     - Verify your webhook is enabled in the dashboard
-  </Accordion>
-  <Accordion title="Invalid Signature Errors">
-    - Confirm you're using the correct webhook secret
-    - Ensure you're using the raw request body for signature calculation
-    - Check that you're using HMAC-SHA256 for verification
-    - Verify your implementation handles base64 or hex encoding correctly
-  </Accordion>
-  <Accordion title="Missing Media Files">
-    - Media URLs expire after 24 hours
-    - Download and store media files immediately
-    - Check for proper handling of MIME types
-    - Verify network connectivity to the media URL
-  </Accordion>
-  <Accordion title="Duplicate Event Processing">
-    - Implement idempotency using the combination of `user_id` and `user_last_message_time`
-    - Store processed event IDs in a persistent database
-    - Add timeout logic to your idempotency check
   </Accordion>
 </AccordionGroup>
 
