@@ -109,7 +109,7 @@ When a user replies to your WhatsApp message, we'll send a POST request to your 
   "phone_number": "14155552671",
   "recipient_name": "Sarah Johnson",
   "user_id": "9232fcef-a570-4a2c-b46b-6cab53aec304",
-  "last_message_of_user": "",
+  "last_message_of_user": "", // For image, video & document files, this field contains the caption if provided
   "last_message_of_bot": "Please upload the signed contract document when ready, and I'll process it immediately.",
   "message_type": "document",
   "user_last_message_time": 1749472312,
@@ -299,5 +299,5 @@ Always verify webhook signatures to ensure the authenticity of incoming requests
 </AccordionGroup>
 
 <Card title="Need assistance?" icon="headset" href="mailto:support@whatsable.app">
-  Our technical support team is available to assist with webhook configuration, payload handling, and integration questions
+  Our technical support team is available to assist with webhook configuration, payload handling, and integration questions.
 </Card>
