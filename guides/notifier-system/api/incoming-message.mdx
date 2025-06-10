@@ -64,211 +64,147 @@ When a user replies to your WhatsApp message, we'll send a POST request to your 
 <CodeGroup>
 ```json Incoming Text Message
 {
-  "event_type": "incoming_message",
-  "event_id": "evt_1nHs82jKla92mzP",
-  "timestamp": "2025-04-15T13:42:27Z",
-  "data": {
-    "conversation_id": "conv_87Hj2k9Lm5",
-    "phone_number": "8801734363287",
-    "recipient_name": "John Doe",
-    "user_id": "6fb11ff2-d9b2-4560-8437-0fe58ec9f4a6",
-    "message": {
-      "type": "text",
-      "content": "How can I use notifier by whatsable api?",
-      "timestamp": "2025-04-15T13:42:27Z"
+  "last_messages": [
+    {
+      "type": "user",
+      "content": "Thank you for the quick response. Can you provide more details about your premium service plans?",
+      "timestamp": "2025-06-09T22:08:11.990Z",
+      "content_type": "text"
     },
-    "conversation_context": {
-      "last_user_message": "How can I use notifier by whatsable api?",
-      "last_bot_message": "Hello! How can I assist you today?",
-      "user_timestamp": 1718470947,
-      "bot_timestamp": 1718470865
-    },
-    "conversation_history": [
-      {
-        "type": "bot",
-        "content": "Hello! How can I assist you today?",
-        "timestamp": "2025-04-15T13:41:05Z",
-        "content_type": "text"
-      },
-      {
-        "type": "user",
-        "content": "How can I use notifier by whatsable api?",
-        "timestamp": "2025-04-15T13:42:27Z",
-        "content_type": "text"
-      }
-    ]
-  },
-  "version": "2025-04-01"
+    {
+      "type": "bot",
+      "content": "I'd be happy to help you explore our premium service options. Let me connect you with a specialist who can provide detailed information.",
+      "timestamp": "2025-06-09T21:45:30.417Z",
+      "content_type": "text"
+    }
+  ],
+  "conversation_paragraph": "User (10:08:11 PM): Thank you for the quick response. Can you provide more details about your premium service plans? ; Bot (9:45:30 PM): I'd be happy to help you explore our premium service options. Let me connect you with a specialist who can provide detailed information.",
+  "phone_number": "14155552671",
+  "recipient_name": "Sarah Johnson",
+  "user_id": "9232fcef-a570-4a2c-b46b-6cab53aec304",
+  "last_message_of_user": "Thank you for the quick response. Can you provide more details about your premium service plans?",
+  "last_message_of_bot": "I'd be happy to help you explore our premium service options. Let me connect you with a specialist who can provide detailed information.",
+  "message_type": "text",
+  "user_last_message_time": 1749506891,
+  "bot_last_message_time": 1749504330,
+  "attachment_url": null,
+  "note": "",
+  "note_automation": "",
+  "labels": "sales, premium-inquiry"
 }
 ```
 
 ```json Incoming Media Message
 {
-  "event_type": "incoming_message",
-  "event_id": "evt_2mJt93kLmb93nzQ",
-  "timestamp": "2025-04-15T14:05:12Z",
-  "data": {
-    "conversation_id": "conv_87Hj2k9Lm5",
-    "phone_number": "8801734363287",
-    "recipient_name": "John Doe",
-    "user_id": "6fb11ff2-d9b2-4560-8437-0fe58ec9f4a6",
-    "message": {
-      "type": "image",
+  "last_messages": [
+    {
+      "type": "user",
       "content": "",
-      "timestamp": "2025-04-15T14:05:12Z",
-      "media": {
-        "url": "https://api.insightssystem.com/vault/LSMumRx1/VR-1aHOci6nP28eHWHJH7JauJkc/Ew7R9w../whatsapp_media_706123978455438.jpg",
-        "mime_type": "image/jpeg",
-        "sha256": "2fd4e1c67a2d28fced849ee1bb76e7391b93eb12",
-        "file_size": 12345
-      }
+      "timestamp": "2025-06-09T14:05:12.000Z",
+      "content_type": "document",
+      "media_url": "https://api.insightssystem.com/vault/LSMumRx1/VR-1aHOci6nP28eHWHJH7JauJkc/Ew7R9w../contract_proposal_v2.pdf"
     },
-    "conversation_context": {
-      "last_user_message": "",
-      "last_bot_message": "Can you share a screenshot of the issue?",
-      "user_timestamp": 1718472312,
-      "bot_timestamp": 1718472200
-    },
-    "conversation_history": [
-      {
-        "type": "bot",
-        "content": "Can you share a screenshot of the issue?",
-        "timestamp": "2025-04-15T14:03:20Z",
-        "content_type": "text"
-      },
-      {
-        "type": "user",
-        "content": "",
-        "timestamp": "2025-04-15T14:05:12Z",
-        "content_type": "image",
-        "media_url": "https://api.insightssystem.com/vault/LSMumRx1/VR-1aHOci6nP28eHWHJH7JauJkc/Ew7R9w../whatsapp_media_706123978455438.jpg"
-      }
-    ]
-  },
-  "version": "2025-04-01"
+    {
+      "type": "bot",
+      "content": "Please upload the signed contract document when ready, and I'll process it immediately.",
+      "timestamp": "2025-06-09T14:03:20.000Z",
+      "content_type": "text"
+    }
+  ],
+  "conversation_paragraph": "User (2:05:12 PM): [Document] ; Bot (2:03:20 PM): Please upload the signed contract document when ready, and I'll process it immediately.",
+  "phone_number": "14155552671",
+  "recipient_name": "Sarah Johnson",
+  "user_id": "9232fcef-a570-4a2c-b46b-6cab53aec304",
+  "last_message_of_user": "",
+  "last_message_of_bot": "Please upload the signed contract document when ready, and I'll process it immediately.",
+  "message_type": "document",
+  "user_last_message_time": 1749472312,
+  "bot_last_message_time": 1749472200,
+  "attachment_url": "https://api.insightssystem.com/vault/LSMumRx1/VR-1aHOci6nP28eHWHJH7JauJkc/Ew7R9w../contract_proposal_v2.pdf",
+  "note": "",
+  "note_automation": "",
+  "labels": "contracts, document-processing"
 }
 ```
 </CodeGroup>
 
 ### Payload Fields
 
-<ResponseField name="event_type" type="string" required>
-  Type of event, always "incoming_message" for incoming messages
-</ResponseField>
-
-<ResponseField name="event_id" type="string" required>
-  Unique identifier for the event, use this for deduplication
-</ResponseField>
-
-<ResponseField name="timestamp" type="string" required>
-  ISO 8601 timestamp when the event occurred
-</ResponseField>
-
-<ResponseField name="data" type="object" required>
-  <Expandable title="data object">
-    <ResponseField name="conversation_id" type="string" required>
-      Unique identifier for the conversation thread
+<ResponseField name="last_messages" type="array" required>
+  Array containing the recent messages in the conversation
+  <Expandable title="last_messages array">
+    <ResponseField name="type" type="string" required>
+      Sender type ("user" or "bot")
     </ResponseField>
 
-    <ResponseField name="phone_number" type="string" required>
-      The phone number of the recipient who sent the message
+    <ResponseField name="content" type="string">
+      Message content (empty for media messages)
     </ResponseField>
 
-    <ResponseField name="recipient_name" type="string">
-      The name of the recipient if available
+    <ResponseField name="timestamp" type="string" required>
+      ISO 8601 timestamp when the message was sent
     </ResponseField>
 
-    <ResponseField name="user_id" type="string" required>
-      Unique identifier for the user in your system
+    <ResponseField name="content_type" type="string" required>
+      Type of content (text, image, audio, video, document, location)
     </ResponseField>
 
-    <ResponseField name="message" type="object" required>
-      <Expandable title="message object">
-        <ResponseField name="type" type="string" required>
-          The type of message (text, image, audio, video, document, location)
-        </ResponseField>
-
-        <ResponseField name="content" type="string">
-          The text content of the message (empty for media messages)
-        </ResponseField>
-
-        <ResponseField name="timestamp" type="string" required>
-          ISO 8601 timestamp when the message was sent
-        </ResponseField>
-
-        <ResponseField name="media" type="object">
-          Present only for media messages (image, audio, video, document)
-          <Expandable title="media object">
-            <ResponseField name="url" type="string" required>
-              Secure URL to download the media file (valid for 24 hours)
-            </ResponseField>
-
-            <ResponseField name="mime_type" type="string" required>
-              MIME type of the media file
-            </ResponseField>
-
-            <ResponseField name="sha256" type="string">
-              SHA-256 hash of the file for verification
-            </ResponseField>
-
-            <ResponseField name="file_size" type="integer">
-              Size of the file in bytes
-            </ResponseField>
-          </Expandable>
-        </ResponseField>
-      </Expandable>
-    </ResponseField>
-
-    <ResponseField name="conversation_context" type="object">
-      Context information about the conversation
-      <Expandable title="conversation_context object">
-        <ResponseField name="last_user_message" type="string">
-          The last message sent by the user
-        </ResponseField>
-
-        <ResponseField name="last_bot_message" type="string">
-          The last message sent by your system
-        </ResponseField>
-
-        <ResponseField name="user_timestamp" type="integer">
-          Unix timestamp of the user's last message
-        </ResponseField>
-
-        <ResponseField name="bot_timestamp" type="integer">
-          Unix timestamp of your system's last message
-        </ResponseField>
-      </Expandable>
-    </ResponseField>
-
-    <ResponseField name="conversation_history" type="array">
-      Array of the last 10 messages in the conversation
-      <Expandable title="conversation_history array">
-        <ResponseField name="type" type="string" required>
-          Sender type ("user" or "bot")
-        </ResponseField>
-
-        <ResponseField name="content" type="string">
-          Message content
-        </ResponseField>
-
-        <ResponseField name="timestamp" type="string" required>
-          ISO 8601 timestamp of when the message was sent
-        </ResponseField>
-
-        <ResponseField name="content_type" type="string" required>
-          Type of content (text, image, audio, video, document, location)
-        </ResponseField>
-
-        <ResponseField name="media_url" type="string">
-          URL to media file if applicable
-        </ResponseField>
-      </Expandable>
+    <ResponseField name="media_url" type="string">
+      URL to media file if applicable (valid for 24 hours)
     </ResponseField>
   </Expandable>
 </ResponseField>
 
-<ResponseField name="version" type="string" required>
-  API version identifier
+<ResponseField name="conversation_paragraph" type="string" required>
+  Human-readable summary of the recent conversation
+</ResponseField>
+
+<ResponseField name="phone_number" type="string" required>
+  The phone number of the recipient who sent the message
+</ResponseField>
+
+<ResponseField name="recipient_name" type="string">
+  The name of the recipient if available
+</ResponseField>
+
+<ResponseField name="user_id" type="string" required>
+  Unique identifier for the user in your system
+</ResponseField>
+
+<ResponseField name="last_message_of_user" type="string">
+  The last message sent by the user
+</ResponseField>
+
+<ResponseField name="last_message_of_bot" type="string">
+  The last message sent by your system
+</ResponseField>
+
+<ResponseField name="message_type" type="string" required>
+  The type of the latest message (text, image, audio, video, document, location)
+</ResponseField>
+
+<ResponseField name="user_last_message_time" type="integer" required>
+  Unix timestamp of the user's last message
+</ResponseField>
+
+<ResponseField name="bot_last_message_time" type="integer" required>
+  Unix timestamp of your system's last message
+</ResponseField>
+
+<ResponseField name="attachment_url" type="string">
+  URL to media file if the latest message contains media (null for text messages)
+</ResponseField>
+
+<ResponseField name="note" type="string">
+  Custom note field for additional context
+</ResponseField>
+
+<ResponseField name="note_automation" type="string">
+  Automation-related notes
+</ResponseField>
+
+<ResponseField name="labels" type="string">
+  Comma-separated labels for categorizing the conversation
 </ResponseField>
 
 ## Webhook Management API
@@ -282,7 +218,7 @@ Retrieve all configured webhook endpoints for your account.
 <CodeGroup>
 ```bash cURL
 curl -X GET \
-  https://api.insightssystem.com/api:AFRA_QCy/webhooks \
+  https://api.insightssystem.com/api:qh9OQ3OW/webhook/dev/create \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer YOUR_API_KEY'
 ```
@@ -293,7 +229,7 @@ const axios = require('axios');
 async function listWebhooks() {
   try {
     const response = await axios.get(
-      'https://api.insightssystem.com/api:AFRA_QCy/webhooks',
+      'https://api.insightssystem.com/api:qh9OQ3OW/webhook/dev/create',
       {
         headers: {
           'Content-Type': 'application/json',
@@ -314,7 +250,7 @@ listWebhooks();
 ```python Python
 import requests
 
-url = "https://api.insightssystem.com/api:AFRA_QCy/webhooks"
+url = "https://api.insightssystem.com/api:qh9OQ3OW/webhook/dev/create"
 
 headers = {
     "Content-Type": "application/json",
@@ -333,12 +269,12 @@ Register a new webhook endpoint to receive incoming message notifications.
 <CodeGroup>
 ```bash cURL
 curl -X POST \
-  https://api.insightssystem.com/api:AFRA_QCy/webhooks \
+  https://api.insightssystem.com/api:qh9OQ3OW/webhook/dev/create \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer YOUR_API_KEY' \
   -d '{
-    "url": "https://example.com/webhooks/whatsapp",
-    "description": "Production webhook for WhatsApp replies",
+    "url": "https://your-domain.com/api/webhooks/whatsapp",
+    "description": "Production webhook endpoint for WhatsApp message notifications",
     "events": ["incoming_message"]
   }'
 ```
@@ -349,10 +285,10 @@ const axios = require('axios');
 async function createWebhook() {
   try {
     const response = await axios.post(
-      'https://api.insightssystem.com/api:AFRA_QCy/webhooks',
+      'https://api.insightssystem.com/api:qh9OQ3OW/webhook/dev/create',
       {
-        url: "https://example.com/webhooks/whatsapp",
-        description: "Production webhook for WhatsApp replies",
+        url: "https://your-domain.com/api/webhooks/whatsapp",
+        description: "Production webhook endpoint for WhatsApp message notifications",
         events: ["incoming_message"]
       },
       {
@@ -375,7 +311,7 @@ createWebhook();
 ```python Python
 import requests
 
-url = "https://api.insightssystem.com/api:AFRA_QCy/webhooks"
+url = "https://api.insightssystem.com/api:qh9OQ3OW/webhook/dev/create"
 
 headers = {
     "Content-Type": "application/json",
@@ -383,8 +319,8 @@ headers = {
 }
 
 data = {
-    "url": "https://example.com/webhooks/whatsapp",
-    "description": "Production webhook for WhatsApp replies",
+    "url": "https://your-domain.com/api/webhooks/whatsapp",
+    "description": "Production webhook endpoint for WhatsApp message notifications",
     "events": ["incoming_message"]
 }
 
@@ -393,127 +329,15 @@ print(response.json())
 ```
 </CodeGroup>
 
-## Webhook Security
-
 <Warning>
 Always verify webhook signatures to ensure the authenticity of incoming requests. This prevents malicious actors from sending fraudulent events to your endpoint.
 </Warning>
-
-### Signature Verification
-
-Every webhook request includes a signature in the `X-Webhook-Signature` header. Verify this signature by:
-
-1. Extract the `X-Webhook-Signature` header value
-2. Compute an HMAC-SHA256 signature using your webhook secret and the raw request body
-3. Compare the computed signature with the header value
-
-<CodeGroup>
-```javascript Node.js
-const crypto = require('crypto');
-
-function verifyWebhookSignature(requestBody, signatureHeader, webhookSecret) {
-  const hmac = crypto.createHmac('sha256', webhookSecret);
-  const signature = hmac.update(requestBody).digest('hex');
-  return crypto.timingSafeEqual(
-    Buffer.from(signature, 'hex'),
-    Buffer.from(signatureHeader, 'hex')
-  );
-}
-
-// Express.js example
-app.post('/webhooks/whatsapp', express.raw({type: 'application/json'}), (req, res) => {
-  const signature = req.headers['x-webhook-signature'];
-  
-  if (!signature) {
-    return res.status(400).send('No signature header');
-  }
-  
-  const isValid = verifyWebhookSignature(
-    req.body.toString(),
-    signature,
-    'YOUR_WEBHOOK_SECRET'
-  );
-  
-  if (!isValid) {
-    return res.status(401).send('Invalid signature');
-  }
-  
-  const payload = JSON.parse(req.body.toString());
-  // Process the webhook payload
-  
-  res.status(200).send('Webhook received');
-});
-```
-
-```python Python
-import hmac
-import hashlib
-from flask import Flask, request, jsonify
-
-app = Flask(__name__)
-WEBHOOK_SECRET = 'YOUR_WEBHOOK_SECRET'
-
-@app.route('/webhooks/whatsapp', methods=['POST'])
-def handle_webhook():
-    signature_header = request.headers.get('X-Webhook-Signature')
-    
-    if not signature_header:
-        return jsonify({'error': 'No signature header'}), 400
-    
-    request_body = request.get_data()
-    
-    calculated_signature = hmac.new(
-        WEBHOOK_SECRET.encode('utf-8'),
-        request_body,
-        hashlib.sha256
-    ).hexdigest()
-    
-    if not hmac.compare_digest(calculated_signature, signature_header):
-        return jsonify({'error': 'Invalid signature'}), 401
-    
-    payload = request.json
-    # Process the webhook payload
-    
-    return jsonify({'status': 'success'}), 200
-
-if __name__ == '__main__':
-    app.run(port=3000)
-```
-
-```php PHP
-<?php
-$webhookSecret = 'YOUR_WEBHOOK_SECRET';
-
-// Get the signature from the request headers
-$signatureHeader = $_SERVER['HTTP_X_WEBHOOK_SIGNATURE'] ?? '';
-
-// Get the raw POST data
-$requestBody = file_get_contents('php://input');
-
-// Calculate the expected signature
-$calculatedSignature = hash_hmac('sha256', $requestBody, $webhookSecret);
-
-// Verify the signature
-if (!hash_equals($calculatedSignature, $signatureHeader)) {
-    http_response_code(401);
-    echo json_encode(['error' => 'Invalid signature']);
-    exit;
-}
-
-// Process the webhook payload
-$payload = json_decode($requestBody, true);
-
-// Respond to the webhook
-http_response_code(200);
-echo json_encode(['status' => 'success']);
-```
-</CodeGroup>
 
 ## Best Practices
 
 <CardGroup cols={2}>
   <Card title="Idempotency" icon="rotate">
-    Implement idempotency key checks to prevent duplicate processing of events. Use the `event_id` field to detect and handle retries.
+    Implement idempotency key checks to prevent duplicate processing of events. Use the combination of `user_id` and `user_last_message_time` fields to detect and handle retries.
   </Card>
   <Card title="Graceful Error Handling" icon="shield-check">
     Design your webhook handler to gracefully process unexpected payload structures or event types. This ensures compatibility with future API updates.
@@ -530,80 +354,141 @@ echo json_encode(['status' => 'success']);
 
 When receiving media messages:
 
-1. Download the media file from the URL provided in the webhook as soon as possible
+1. Download the media file from the `attachment_url` or `media_url` provided in the webhook as soon as possible
 2. Media URLs expire after 24 hours
-3. Verify the SHA-256 hash to ensure file integrity
-4. Store media files securely in your system
+3. Store media files securely in your system
 
 <CodeGroup>
 ```javascript Node.js
 const axios = require('axios');
 const fs = require('fs');
-const crypto = require('crypto');
 const path = require('path');
 
-async function downloadAndVerifyMedia(mediaUrl, expectedSha256) {
+async function downloadMedia(mediaUrl) {
   try {
-    // Download the file
+    // Download the media file with appropriate headers
     const response = await axios({
       method: 'GET',
       url: mediaUrl,
-      responseType: 'arraybuffer'
+      responseType: 'arraybuffer',
+      timeout: 30000, // 30 second timeout
+      headers: {
+        'User-Agent': 'WhatsApp-Webhook-Client/1.0'
+      }
     });
     
-    // Calculate SHA-256 hash
+    // Generate secure filename with timestamp
     const fileBuffer = Buffer.from(response.data);
-    const calculatedHash = crypto
-      .createHash('sha256')
-      .update(fileBuffer)
-      .digest('hex');
+    const fileExtension = path.extname(new URL(mediaUrl).pathname) || '.bin';
+    const filename = `media_${Date.now()}_${Math.random().toString(36).substr(2, 9)}${fileExtension}`;
     
-    // Verify hash
-    if (calculatedHash !== expectedSha256) {
-      throw new Error('File hash verification failed');
+    // Ensure media directory exists
+    const mediaDir = './media_files';
+    if (!fs.existsSync(mediaDir)) {
+      fs.mkdirSync(mediaDir, { recursive: true });
     }
     
-    // Save file
-    const filename = `media_${Date.now()}${path.extname(mediaUrl)}`;
-    fs.writeFileSync(filename, fileBuffer);
+    const filePath = path.join(mediaDir, filename);
+    fs.writeFileSync(filePath, fileBuffer);
     
-    return filename;
+    return filePath;
   } catch (error) {
-    console.error('Error downloading media:', error);
-    throw error;
+    console.error('Media download error:', error.message);
+    throw new Error(`Failed to download media: ${error.message}`);
   }
 }
+
+// Example webhook handler for media messages
+app.post('/api/webhooks/whatsapp', express.json(), async (req, res) => {
+  const payload = req.body;
+  
+  // Handle media messages with attachments
+  if (payload.message_type !== 'text' && payload.attachment_url) {
+    try {
+      const savedFile = await downloadMedia(payload.attachment_url);
+      console.log(`Media file processed successfully: ${savedFile}`);
+      
+      // Additional processing logic for media files
+      await processMediaFile(savedFile, payload.message_type);
+      
+    } catch (error) {
+      console.error('Media processing failed:', error);
+      // Implement appropriate error handling
+    }
+  }
+  
+  // Process text messages
+  if (payload.message_type === 'text') {
+    await processTextMessage(payload);
+  }
+  
+  res.status(200).json({ 
+    status: 'received', 
+    message: 'Webhook processed successfully' 
+  });
+});
 ```
 
 ```python Python
 import requests
-import hashlib
 import os
+import time
 from urllib.parse import urlparse
 
-def download_and_verify_media(media_url, expected_sha256):
+def download_media(media_url):
     try:
-        # Download the file
-        response = requests.get(media_url)
+        # Download the media file with appropriate headers
+        response = requests.get(
+            media_url, 
+            timeout=30,  # 30 second timeout
+            headers={'User-Agent': 'WhatsApp-Webhook-Client/1.0'}
+        )
         response.raise_for_status()
         
-        # Calculate SHA-256 hash
+        # Generate secure filename with timestamp
         file_data = response.content
-        calculated_hash = hashlib.sha256(file_data).hexdigest()
+        file_extension = os.path.splitext(urlparse(media_url).path)[1] or '.bin'
+        filename = f"media_{int(time.time())}_{secrets.token_hex(4)}{file_extension}"
         
-        # Verify hash
-        if calculated_hash != expected_sha256:
-            raise ValueError('File hash verification failed')
+        # Ensure media directory exists
+        media_dir = './media_files'
+        os.makedirs(media_dir, exist_ok=True)
         
-        # Save file
-        filename = f"media_{int(time.time())}{os.path.splitext(urlparse(media_url).path)[1]}"
-        with open(filename, 'wb') as f:
+        file_path = os.path.join(media_dir, filename)
+        with open(file_path, 'wb') as f:
             f.write(file_data)
         
-        return filename
+        return file_path
     except Exception as e:
-        print(f"Error downloading media: {e}")
-        raise
+        print(f"Media download error: {e}")
+        raise Exception(f"Failed to download media: {e}")
+
+# Example webhook handler for media messages
+@app.route('/api/webhooks/whatsapp', methods=['POST'])
+def handle_webhook():
+    payload = request.json
+    
+    # Handle media messages with attachments
+    if payload.get('message_type') != 'text' and payload.get('attachment_url'):
+        try:
+            saved_file = download_media(payload['attachment_url'])
+            print(f"Media file processed successfully: {saved_file}")
+            
+            # Additional processing logic for media files
+            process_media_file(saved_file, payload['message_type'])
+            
+        except Exception as e:
+            print(f"Media processing failed: {e}")
+            # Implement appropriate error handling
+    
+    # Process text messages
+    if payload.get('message_type') == 'text':
+        process_text_message(payload)
+    
+    return jsonify({
+        'status': 'received', 
+        'message': 'Webhook processed successfully'
+    }), 200
 ```
 </CodeGroup>
 
@@ -625,11 +510,11 @@ def download_and_verify_media(media_url, expected_sha256):
 
 Test your webhook implementation before going live:
 
-1. Create a test webhook endpoint using a service like [webhook.site](https://webhook.site/) or [Beeceptor](https://beeceptor.com/)
-2. Configure this test URL in your webhook settings
-3. Send a test WhatsApp message to trigger the webhook
-4. Inspect the payload to understand the data structure
-5. Implement proper handling in your application
+1. Create a test webhook endpoint using a service like [webhook.site](https://webhook.site/) or [RequestBin](https://requestbin.com/)
+2. Configure this test URL in your webhook settings through the developer dashboard
+3. Send a test WhatsApp message to trigger the webhook delivery
+4. Inspect the received payload to verify the data structure matches your expectations
+5. Implement comprehensive handling in your application with proper error management
 
 <Warning>
 Always test your webhook implementation thoroughly in a development environment before configuring production endpoints.
@@ -657,7 +542,7 @@ Always test your webhook implementation thoroughly in a development environment 
     - Verify network connectivity to the media URL
   </Accordion>
   <Accordion title="Duplicate Event Processing">
-    - Implement idempotency using the event_id
+    - Implement idempotency using the combination of `user_id` and `user_last_message_time`
     - Store processed event IDs in a persistent database
     - Add timeout logic to your idempotency check
   </Accordion>
@@ -670,7 +555,7 @@ Always test your webhook implementation thoroughly in a development environment 
     Currently, webhooks are available for incoming messages only. We're working on expanding support for additional event types like delivery receipts, read receipts, and account status changes.
   </Accordion>
   <Accordion title="How do I handle different message types?">
-    Check the `message.type` field in the webhook payload to determine the message type (text, image, audio, video, document, location) and process accordingly.
+    Check the `message_type` field in the webhook payload to determine the message type (text, image, audio, video, document, location) and process accordingly.
   </Accordion>
   <Accordion title="Do I need to respond to every webhook request?">
     Yes, your endpoint must respond with a 2xx HTTP status code for every webhook request to acknowledge receipt. This prevents unnecessary retries.
@@ -680,6 +565,6 @@ Always test your webhook implementation thoroughly in a development environment 
   </Accordion>
 </AccordionGroup>
 
-<Card title="Need help?" icon="headset" href="mailto:team@whatsable.app">
-  Our support team is available 24/7 to assist with webhook setup, event handling, or any other questions.
+<Card title="Need assistance?" icon="headset" href="mailto:support@whatsable.app">
+  Our technical support team is available to assist with webhook configuration, payload handling, and integration questions.
 </Card>
