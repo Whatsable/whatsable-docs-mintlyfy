@@ -53,9 +53,9 @@ Before getting started, make sure you have:
     <Note>
       After entering your WhatsApp number, Notifier will send a verification code to this number. Enter the code to verify ownership.
     </Note>
-    
+
     Once saved, you'll see a preview of how your messages will appear to recipients. The actual message structure may vary slightly based on variables and attachments you include.
-    
+
   </Step>
   
   <Step title="Get your API key">
@@ -81,15 +81,93 @@ Now that you have your Notifier account configured, let's connect it to n8n to a
     3. Add a trigger node of your choice:
        - Popular triggers include Google Forms, Jotform, ClickUp, or a Schedule trigger
        - Connect and configure your trigger according to your use case
+       
+    <Accordion title="WhatsAble trigger node (optional)">
+      <Info>
+        The WhatsAble trigger node enables your workflow to respond automatically to incoming WhatsApp messages. This setup is optional but recommended for building reactive communication flows.
+      </Info>
+
+      <Steps>
+        <Step title="Add WhatsAble trigger node">
+          Follow these steps to add the WhatsAble trigger node to your workflow:
+
+          1. Click the **+** button in your workflow canvas to add a new node
+          2. Search for "WhatsAble" in the node library search bar
+          3. Select the node displaying the official WhatsAble logo
+          4. From the available trigger options, choose **On new Incoming message event**
+
+          <Frame caption="Adding WhatsAble trigger node with 'On new Incoming message event' selection">
+            <img src="/images/trigger-node.png" alt="WhatsAble node selection showing trigger options" />
+          </Frame>
+
+          <Tip>
+            The trigger node will automatically listen for incoming messages and initiate your workflow when a new message is received.
+          </Tip>
+        </Step>
+
+        <Step title="Configure authentication credentials">
+          Set up your WhatsAble API credentials to establish a secure connection:
+
+          **Webhook URL Configuration:**
+          1. In the WhatsAble Trigger node parameters, locate the **Webhook URLs** section at the top
+          2. Select **Production URL** and copy the generated URL by clicking on it
+          3. Store this URL securely as you'll need it for the credential setup
+
+          <Frame caption="Copying the Production URL for webhook configuration">
+            <img src="/images/trigger-node-purl.png" alt="Production URL selection and copy interface" />
+          </Frame>
+
+          **Credential Creation:**
+          1. In the **Credential to connect with** dropdown, click **+ Create new credential**
+          2. Select **WhatsAble Notifier API** as your connection method
+          3. Enter your Notifier by WhatsAble API key in the **API Key** field
+          4. Paste the Production URL you copied earlier into the **Production URL** field
+          5. Assign a descriptive name to your credential (e.g., "WhatsAble Production")
+          6. Click **Save** to securely store your credentials
+
+          <Frame caption="Credential configuration for WhatsAble Trigger node">
+            <img src="/images/notifier-trigger-node.png" alt="WhatsAble credential configuration interface" />
+          </Frame>
+
+          <Note>
+            Your API credentials are encrypted and stored securely. Never share your API key publicly or commit it to version control.
+          </Note>
+        </Step>
+
+        <Step title="Test and activate workflow">
+          Complete the setup by testing and activating your trigger:
+
+          **Response Configuration:**
+          1. In the **Respond** dropdown, select your preferred response timing:
+             - **Immediately**: Responds as soon as the trigger fires
+             - **When Last Node Finishes**: Waits for the entire workflow to complete before responding
+
+          **Testing:**
+          1. Click **Execute step** on the WhatsAble node to run a test
+          2. Verify the connection is working by checking for a success confirmation
+          3. Review any error messages if the test fails and adjust your configuration accordingly
+
+          <Check>
+            Once activated, your workflow will automatically process incoming messages according to your configured logic.
+          </Check>
+
+          <Warning>
+            Remember to test your workflow thoroughly before activating it in production to ensure it behaves as expected.
+          </Warning>
+        </Step>
+
+      </Steps>
+    </Accordion>
   </Step>
   
   <Step title="Add the WhatsAble node">
     1. Click the **+** button to add a new node
     2. Search for "WhatsAble" in the node library
     3. Select the node with the official WhatsAble logo
+    4. After selecting the WhatsAble node, choose 'Send message via notifier' from the available actions menu
 
-    <Frame caption="WhatsAble node selection">
-      <img src="/images/whatsable_n8n_node.gif" alt="WhatsAble node selection" />
+    <Frame caption="WhatsAble Node: Send Message via Notifier Action Selection">
+      <img src="/images/notifier-node-action.png" alt="WhatsAble node selection" />
     </Frame>
 
   </Step>
@@ -108,34 +186,27 @@ Now that you have your Notifier account configured, let's connect it to n8n to a
   </Step>
   
   <Step title="Configure your message">
-    1. In the **Operation Name or ID** dropdown, select **Send Message (Notifier)**
-    2. Complete the required fields:
+    1. In **Resource** dropdown, select **Send Message**
+    2. In the **Operation** dropdown, select **Send Message Via Notifier**
+    3. Complete the required fields:
     
-    <ResponseField name="Phone Number" type="string" required>
+    <ResponseField name="Recipient" type="string" required>
       Enter the recipient's phone number (with country code) or use dynamic data from previous nodes
     </ResponseField>
     
-    <ResponseField name="Message Content" type="string" required>
+    <ResponseField name="Message" type="string" required>
       Type your message text or use variables from previous nodes
     </ResponseField>
     
     <Expandable title="Optional Parameters">
       <ResponseField name="Attachment" type="file">
-        Upload a file, image, or video to send with your message
+        Enter the URL of the file, image, or video you want to send with your message or use variables from previous nodes
       </ResponseField>
       
       <ResponseField name="File Name" type="string">
         Specify a custom filename for your attachment
       </ResponseField>
-      
-      <ResponseField name="Additional Parameters" type="object">
-        Customize advanced options as needed
-      </ResponseField>
     </Expandable>
-<br />
-    <Frame caption="Configuring message">
-      <img src="/images/notfier_n8n_config_msg.gif" alt="Configuring Notifier credentials" />
-    </Frame>  
   </Step>
   
   <Step title="Test and activate your workflow">
@@ -146,8 +217,9 @@ Now that you have your Notifier account configured, let's connect it to n8n to a
     5. Toggle the **Active** switch in the top-right corner to activate your workflow
 
     <Check>
-      Congratulations! Your Notifier and n8n inteYour automated messaging workflow is now operational! Whenever your trigger conditions are met, n8n will automatically send WhatsApp messages through Notifier.
+      Congratulations! Your Notifier and n8n integration is now complete! Your automated messaging workflow is now operational! Whenever your trigger conditions are met, n8n will automatically send WhatsApp messages through Notifier.
     </Check>
+
   </Step>
 </Steps>
 
