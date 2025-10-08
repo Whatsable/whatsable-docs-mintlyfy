@@ -1,0 +1,413 @@
+---
+title: 'Pipedrive'
+description: 'Learn how to seamlessly integrate Pipedrive with the Notifyer System for automated WhatsApp messaging'
+icon: 'command'
+---
+
+# Notifyer System Integration with Pipedrive
+
+<Frame caption="Automate your WhatsApp messaging workflows with Pipedrive and Notifyer System">
+  <img src="/images/pipedrive.svg" className="rounded-xl" />
+</Frame>
+
+<Tip>
+  This guide walks you through connecting Notifyer System with Pipedrive to create powerful automated WhatsApp messaging workflows for your sales and CRM processes
+</Tip>
+
+## Prerequisites
+
+Before getting started, make sure you have:
+
+<CardGroup cols={2}>
+  <Card title="Notifyer System Account" icon="user">
+    Active Notifyer System account with a subscription plan (Monthly or Pay-as-you-go)
+  </Card>
+  <Card title="Pipedrive Account" icon="user">
+    Access to [Pipedrive](https://www.pipedrive.com/) CRM platform
+  </Card>
+</CardGroup>
+
+<Tip>
+  New to Notifyer System? [Sign up here](https://console.notifyer-systems.com/)
+</Tip>
+
+## Setting up your Notifyer System account
+
+<Steps>
+  <Step title="Complete the Embedding Process">
+    Before sending WhatsApp messages, you must complete the platform [embedding process](/guides/notifier-system/embedding-process), which connects your WhatsApp Business account to Notifyer System.
+
+    <Info>
+      The embedding process is required by Meta to ensure proper business verification and compliance with WhatsApp Business Platform policies.
+    </Info>
+  </Step>
+  
+  <Step title="Set up message templates">
+    Notifyer System provides two methods for sending WhatsApp messages:
+
+    <Accordion title="Option A: Template messages" defaultOpen={true}>
+      <p>WhatsApp templates are pre-approved message formats that allow for personalization while maintaining compliance with WhatsApp policies.</p>
+      
+      <Steps>
+        <Step title="Navigate to Templates">
+          Go to **Your Templates** in your Notifyer dashboard
+        </Step>
+        <Step title="Create Template">
+          Click the **Create Template** tab at the top of the page
+        </Step>
+        <Step title="Fill out the form">
+          Complete the template creation form with the following details:
+          
+          <ResponseField name="Template Name" type="string" required>
+            Choose a descriptive name for internal reference
+          </ResponseField>
+          <ResponseField name="Language" type="string" required>
+            Choose your template's primary language
+          </ResponseField>
+          <ResponseField name="Category" type="string" required>
+            Select the appropriate message category
+          </ResponseField>          
+          <ResponseField name="Header" type="image | document | video">
+            Optional: Add an image, document, or video header
+          </ResponseField>
+          <ResponseField name="Message Body" type="string" required>
+            Craft your message content
+          </ResponseField>
+          <ResponseField name="Variables" type="string">
+            Add placeholders using `{{1}}`, `{{2}}` format for personalization
+          </ResponseField>          
+          <ResponseField name="Buttons" type="button">
+            Optional: Configure call-to-action buttons
+          </ResponseField>
+        </Step>
+        <Step title="Submit for review">
+          Click **Preview and Submit**
+        </Step>
+      </Steps>
+
+      <Frame caption="Template Creation Interface">
+        <img src="/images/notifyer_template_create.png" alt="Template Creation Interface" />
+      </Frame>
+
+      <Warning>
+        Templates typically get reviewed within 24 hours. Creating compliant templates that avoid promotional language increases approval chances.
+      </Warning>
+    </Accordion>
+
+    <Accordion title="Option B: Non-template messages">
+      <p>For simpler communications, you can send non-template messages that include:</p>
+      
+      <CardGroup cols={2}>
+        <Card title="Text" icon="message-text">
+          Plain text messages within the 24-hour window
+        </Card>
+        <Card title="Images" icon="image">
+          Photos and graphics in supported formats
+        </Card>
+        <Card title="Documents" icon="file-pdf">
+          PDFs, Word docs, and other file types
+        </Card>
+        <Card title="Videos" icon="video">
+          MP4 and other supported video formats
+        </Card>
+      </CardGroup>
+
+      <Note>
+        Non-template messages can only be sent within the 24-hour customer service window after a customer initiates contact with your business.
+      </Note>
+    </Accordion>
+  </Step>
+  
+  <Step title="Connect Notifyer System with Pipedrive">
+    Follow these simple steps to integrate your Pipedrive account with Notifyer System:
+
+    <Steps>
+      <Step title="Access the Integration Page">
+        In your Notifyer dashboard, go to [**Connect to Pipedrive**](https://console.notifyer-systems.com/pipedrive).
+      </Step>
+
+      <Step title="Initiate the Connection">
+        Click the 'Connect Pipedrive Organization' button.
+      </Step>
+
+      <Step title="Authorize Access">
+        You'll be redirected to Pipedrive's authorization page. Review the permissions and click 'Authorize' to grant Notifyer System access to your Pipedrive organization.
+      </Step>
+
+      <Step title="Confirm Connection">
+        After authorization, you'll be automatically redirected back to your Notifyer System dashboard. Look for the connection status showing 'Connected to Pipedrive' to confirm the integration was successful.
+      </Step>
+    </Steps>
+    
+    <Frame caption="Connecting Notifyer System with Pipedrive">
+      <img src="/images/pipedrive-connection.gif" alt="Connecting Notifyer System with Pipedrive" />
+    </Frame>
+  </Step>
+</Steps>
+
+## Integrating with Pipedrive
+
+<Steps>
+  <Step title="Choose your integration method">
+    You can integrate Notifyer System with Pipedrive using one of these methods:
+
+    <CardGroup cols={2}>
+      <Card title="Via Automation Platforms" icon="diagram-project">
+        Use Make, Zapier, or n8n to connect Pipedrive with Notifyer System
+      </Card>
+      <Card title="Via Webhooks" icon="webhook">
+        Set up Pipedrive webhooks to trigger Notifyer System API calls
+      </Card>
+    </CardGroup>
+
+    <Tip>
+      For most users, using an automation platform like Make or Zapier provides the easiest setup experience.
+    </Tip>
+  </Step>
+
+  <Step title="Set up Pipedrive triggers">
+    Configure Pipedrive to trigger WhatsApp messages based on your sales activities:
+
+    <Accordion title="Common trigger examples" defaultOpen>
+      <CardGroup cols={2}>
+        <Card title="New Deal" icon="handshake">
+          Send welcome messages when new deals are created
+        </Card>
+        <Card title="Deal Stage Changed" icon="arrows-rotate">
+          Notify contacts when deal moves to a new stage
+        </Card>
+        <Card title="Deal Won" icon="trophy">
+          Send congratulations and next steps when deals close
+        </Card>
+        <Card title="Activity Created" icon="calendar-plus">
+          Send reminders when new activities are scheduled
+        </Card>
+      </CardGroup>
+    </Accordion>
+  </Step>
+
+  <Step title="Map Pipedrive data to Notifyer System">
+    Connect your Pipedrive fields to Notifyer System message parameters:
+
+    <ResponseField name="Phone Number" type="string" required>
+      Map from Pipedrive person or organization phone field (ensure format includes country code)
+    </ResponseField>
+    <ResponseField name="Template Variables" type="string" optional>
+      Map Pipedrive fields (name, deal value, etc.) to template variables
+    </ResponseField>
+    <ResponseField name="Deal Information" type="object" optional>
+      Use deal title, stage, value, or custom fields for personalization
+    </ResponseField>
+
+    <Info>
+      Make sure phone numbers in Pipedrive include country codes (e.g., +1234567890) for successful message delivery.
+    </Info>
+  </Step>
+
+  <Step title="Test your integration">
+    1. Create a test deal or activity in Pipedrive
+    2. Verify the WhatsApp message is sent correctly
+    3. Check message content and variable substitution
+    4. Confirm delivery in your Notifyer System dashboard
+
+    <Check>
+      Your Pipedrive-Notifyer System integration is now active! Sales activities will automatically trigger WhatsApp messages.
+    </Check>
+  </Step>
+</Steps>
+
+## Example use cases
+
+<CardGroup cols={3}>
+  <Card title="Deal notifications" icon="bell">
+    Alert team members when new deals are created or updated
+  </Card>
+  <Card title="Follow-up reminders" icon="clock">
+    Send automatic follow-ups after meetings or calls
+  </Card>
+  <Card title="Quote delivery" icon="file-invoice">
+    Send quotes and proposals via WhatsApp
+  </Card>
+  <Card title="Payment reminders" icon="credit-card">
+    Remind clients about pending payments or invoices
+  </Card>
+  <Card title="Meeting confirmations" icon="calendar-check">
+    Confirm scheduled meetings with prospects
+  </Card>
+  <Card title="Welcome messages" icon="hand-wave">
+    Greet new contacts added to your pipeline
+  </Card>
+</CardGroup>
+
+## Integration via automation platforms
+
+<Tabs>
+  <Tab title="Using Make">
+    <Steps>
+      <Step title="Create scenario">
+        1. Log in to Make
+        2. Create a new scenario
+        3. Add Pipedrive as your trigger module
+        4. Select your trigger event (e.g., "Watch Deals")
+      </Step>
+      <Step title="Add Notifyer System module">
+        1. Click **+** to add a module
+        2. Search for "Notifyer System"
+        3. Select your action (Template or Non-template message)
+        4. Connect with your Notifyer System API key
+      </Step>
+      <Step title="Map fields">
+        1. Map Pipedrive phone field to recipient
+        2. Map relevant Pipedrive data to template variables
+        3. Test the mapping with sample data
+      </Step>
+    </Steps>
+
+    <Info>
+      See our [Make integration guide](/guides/notifier-system/make-overview) for detailed instructions.
+    </Info>
+  </Tab>
+
+  <Tab title="Using Zapier">
+    <Steps>
+      <Step title="Create Zap">
+        1. Log in to Zapier
+        2. Create a new Zap
+        3. Choose Pipedrive as your trigger app
+        4. Select trigger event (e.g., "New Deal")
+      </Step>
+      <Step title="Add Notifyer System action">
+        1. Add a new action step
+        2. Search for Notifyer System or WhatsAble
+        3. Connect your Notifyer System account
+        4. Choose your message action
+      </Step>
+      <Step title="Configure message">
+        1. Map phone number from Pipedrive
+        2. Select your template
+        3. Fill in template variables from Pipedrive fields
+        4. Test the Zap
+      </Step>
+    </Steps>
+
+    <Info>
+      See our [Zapier integration guide](/guides/notifier-system/zapier-overview) for detailed instructions.
+    </Info>
+  </Tab>
+
+  <Tab title="Using n8n">
+    <Steps>
+      <Step title="Create workflow">
+        1. Log in to n8n
+        2. Create a new workflow
+        3. Add Pipedrive trigger node
+        4. Configure trigger event
+      </Step>
+      <Step title="Add Notifyer node">
+        1. Add WhatsAble node
+        2. Choose Notifyer System action
+        3. Configure authentication with API key
+        4. Select message type
+      </Step>
+      <Step title="Connect data">
+        1. Map Pipedrive data to message fields
+        2. Configure template variables
+        3. Test the workflow
+      </Step>
+    </Steps>
+
+    <Info>
+      See our [n8n integration guide](/guides/notifier-system/n8n-overview) for detailed instructions.
+    </Info>
+  </Tab>
+</Tabs>
+
+## Best practices
+
+<AccordionGroup>
+  <Accordion title="Use proper phone formatting" icon="phone">
+    Ensure all phone numbers in Pipedrive include country codes and follow international format (+1234567890).
+  </Accordion>
+  <Accordion title="Personalize messages" icon="user">
+    Use Pipedrive custom fields to personalize WhatsApp messages with deal-specific information.
+  </Accordion>
+  <Accordion title="Follow up strategically" icon="bullseye">
+    Set up automated follow-ups based on deal stages to maintain engagement without overwhelming contacts.
+  </Accordion>
+  <Accordion title="Test before activating" icon="vial">
+    Always test your integration with sample data before activating it for live deals.
+  </Accordion>
+  <Accordion title="Monitor delivery" icon="chart-line">
+    Regularly check message delivery rates in your Notifyer dashboard to ensure optimal performance.
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Messages not sending?" icon="circle-exclamation">
+    <Steps>
+      <Step title="Verify API key">
+        Ensure your Notifyer System API key is entered correctly
+      </Step>
+      <Step title="Check phone format">
+        Confirm phone numbers include country codes (e.g., +14155552671)
+      </Step>
+      <Step title="Verify trigger">
+        Check that your Pipedrive trigger is firing correctly
+      </Step>
+      <Step title="Check subscription">
+        Verify your Notifyer subscription is active with available credits
+      </Step>
+    </Steps>
+  </Accordion>
+  
+  <Accordion title="Variables not populating?" icon="text">
+    <Steps>
+      <Step title="Check field mapping">
+        Verify Pipedrive fields are correctly mapped to template variables
+      </Step>
+      <Step title="Test data">
+        Ensure your test deal has data in the fields you're mapping
+      </Step>
+      <Step title="Field names">
+        Double-check that custom field names match exactly in your mapping
+      </Step>
+    </Steps>
+  </Accordion>
+  
+  <Accordion title="Duplicate messages?" icon="copy">
+    <Steps>
+      <Step title="Check trigger settings">
+        Review your automation platform trigger to avoid duplicate events
+      </Step>
+      <Step title="Add filters">
+        Use filters to prevent messages from sending multiple times for the same event
+      </Step>
+      <Step title="Review workflow">
+        Ensure you don't have multiple active workflows for the same trigger
+      </Step>
+    </Steps>
+  </Accordion>
+</AccordionGroup>
+
+## Need help?
+
+Our support team is ready to assist you:
+
+<CardGroup cols={3}>
+  <Card title="Email support" icon="envelope" href="mailto:team@whatsable.app">
+    Contact team@whatsable.app
+  </Card>
+  <Card title="Schedule a demo" icon="calendar" href="https://tidycal.com/axelmeta/notifyer-systems-demo">
+    Book a personalized walkthrough
+  </Card>
+  <Card title="Live chat" icon="message-dots" href="">
+    Click the green chat button in the bottom right corner of the Notifyer System dashboard
+  </Card>
+</CardGroup>
+
+<Info>
+  For additional automation platform integrations and advanced configurations, please contact our support team or check our integration documentation.
+</Info>
+

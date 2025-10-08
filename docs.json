@@ -51,6 +51,7 @@
               "guides/notifier-system/zapier-overview",
               "guides/notifier-system/make-overview",
               "guides/notifier-system/n8n-overview",
+              "guides/notifier-system/pipedrive-overview",
               {
                 "group": "API Documentation",
                 "pages": [
