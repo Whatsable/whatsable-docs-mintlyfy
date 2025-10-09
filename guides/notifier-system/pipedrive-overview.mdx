@@ -145,251 +145,440 @@ Before getting started, make sure you have:
   </Step>
 </Steps>
 
-## Integrating with Pipedrive
+## Sending WhatsApp Messages from Pipedrive
 
-<Steps>
-  <Step title="Choose your integration method">
-    You can integrate Notifyer System with Pipedrive using one of these methods:
+WhatsAble's integration with Pipedrive allows you to send WhatsApp messages directly from your deals and contacts without leaving your CRM. This guide will walk you through the complete process.
 
-    <CardGroup cols={2}>
-      <Card title="Via Automation Platforms" icon="diagram-project">
-        Use Make, Zapier, or n8n to connect Pipedrive with Notifyer System
-      </Card>
-      <Card title="Via Webhooks" icon="webhook">
-        Set up Pipedrive webhooks to trigger Notifyer System API calls
-      </Card>
-    </CardGroup>
+### Verifying Prerequisites
 
-    <Tip>
-      For most users, using an automation platform like Make or Zapier provides the easiest setup experience.
-    </Tip>
-  </Step>
-
-  <Step title="Set up Pipedrive triggers">
-    Configure Pipedrive to trigger WhatsApp messages based on your sales activities:
-
-    <Accordion title="Common trigger examples" defaultOpen>
-      <CardGroup cols={2}>
-        <Card title="New Deal" icon="handshake">
-          Send welcome messages when new deals are created
-        </Card>
-        <Card title="Deal Stage Changed" icon="arrows-rotate">
-          Notify contacts when deal moves to a new stage
-        </Card>
-        <Card title="Deal Won" icon="trophy">
-          Send congratulations and next steps when deals close
-        </Card>
-        <Card title="Activity Created" icon="calendar-plus">
-          Send reminders when new activities are scheduled
-        </Card>
-      </CardGroup>
-    </Accordion>
-  </Step>
-
-  <Step title="Map Pipedrive data to Notifyer System">
-    Connect your Pipedrive fields to Notifyer System message parameters:
-
-    <ResponseField name="Phone Number" type="string" required>
-      Map from Pipedrive person or organization phone field (ensure format includes country code)
-    </ResponseField>
-    <ResponseField name="Template Variables" type="string" optional>
-      Map Pipedrive fields (name, deal value, etc.) to template variables
-    </ResponseField>
-    <ResponseField name="Deal Information" type="object" optional>
-      Use deal title, stage, value, or custom fields for personalization
-    </ResponseField>
-
-    <Info>
-      Make sure phone numbers in Pipedrive include country codes (e.g., +1234567890) for successful message delivery.
-    </Info>
-  </Step>
-
-  <Step title="Test your integration">
-    1. Create a test deal or activity in Pipedrive
-    2. Verify the WhatsApp message is sent correctly
-    3. Check message content and variable substitution
-    4. Confirm delivery in your Notifyer System dashboard
-
-    <Check>
-      Your Pipedrive-Notifyer System integration is now active! Sales activities will automatically trigger WhatsApp messages.
-    </Check>
-  </Step>
-</Steps>
-
-## Example use cases
+Before sending WhatsApp messages, ensure the following requirements are met:
 
 <CardGroup cols={3}>
-  <Card title="Deal notifications" icon="bell">
-    Alert team members when new deals are created or updated
+  <Card title="WhatsAble License Status" icon="badge-check">
+    Must show as **PAID**
   </Card>
-  <Card title="Follow-up reminders" icon="clock">
-    Send automatic follow-ups after meetings or calls
+  <Card title="WhatsApp Connection Status" icon="signal">
+    Must show as **ACTIVE**
   </Card>
-  <Card title="Quote delivery" icon="file-invoice">
-    Send quotes and proposals via WhatsApp
-  </Card>
-  <Card title="Payment reminders" icon="credit-card">
-    Remind clients about pending payments or invoices
-  </Card>
-  <Card title="Meeting confirmations" icon="calendar-check">
-    Confirm scheduled meetings with prospects
-  </Card>
-  <Card title="Welcome messages" icon="hand-wave">
-    Greet new contacts added to your pipeline
+  <Card title="WhatsApp Business Account" icon="whatsapp">
+    Must be properly synced with WhatsAble
   </Card>
 </CardGroup>
 
-## Integration via automation platforms
+<Info>
+  You can verify these settings in the WhatsAble Integration section of any deal or contact.
+</Info>
 
-<Tabs>
-  <Tab title="Using Make">
-    <Steps>
-      <Step title="Create scenario">
-        1. Log in to Make
-        2. Create a new scenario
-        3. Add Pipedrive as your trigger module
-        4. Select your trigger event (e.g., "Watch Deals")
-      </Step>
-      <Step title="Add Notifyer System module">
-        1. Click **+** to add a module
-        2. Search for "Notifyer System"
-        3. Select your action (Template or Non-template message)
-        4. Connect with your Notifyer System API key
-      </Step>
-      <Step title="Map fields">
-        1. Map Pipedrive phone field to recipient
-        2. Map relevant Pipedrive data to template variables
-        3. Test the mapping with sample data
-      </Step>
-    </Steps>
+## Sending Messages from Deals
 
-    <Info>
-      See our [Make integration guide](/guides/notifier-system/make-overview) for detailed instructions.
-    </Info>
-  </Tab>
+### Accessing the WhatsAble Integration Panel
 
-  <Tab title="Using Zapier">
-    <Steps>
-      <Step title="Create Zap">
-        1. Log in to Zapier
-        2. Create a new Zap
-        3. Choose Pipedrive as your trigger app
-        4. Select trigger event (e.g., "New Deal")
-      </Step>
-      <Step title="Add Notifyer System action">
-        1. Add a new action step
-        2. Search for Notifyer System or WhatsAble
-        3. Connect your Notifyer System account
-        4. Choose your message action
-      </Step>
-      <Step title="Configure message">
-        1. Map phone number from Pipedrive
-        2. Select your template
-        3. Fill in template variables from Pipedrive fields
-        4. Test the Zap
-      </Step>
-    </Steps>
+<Steps>
+  <Step title="Navigate to your Pipeline">
+    1. Go to your **Pipedrive Dashboard**
+    2. Open your desired **Pipeline**
+    3. Select a **Deal** from your pipeline
+  </Step>
 
-    <Info>
-      See our [Zapier integration guide](/guides/notifier-system/zapier-overview) for detailed instructions.
-    </Info>
-  </Tab>
+  <Step title="Locate the Integration Panel">
+    1. On the right-hand panel, scroll down past the Summary section
+    2. Find the **WhatsAble Integration** section
+    
+    <Frame caption="WhatsAble Integration Panel">
+      <img src="/images/integration_panel.png" alt="WhatsAble Integration Panel" />
+    </Frame>
+  </Step>
+</Steps>
 
-  <Tab title="Using n8n">
-    <Steps>
-      <Step title="Create workflow">
-        1. Log in to n8n
-        2. Create a new workflow
-        3. Add Pipedrive trigger node
-        4. Configure trigger event
-      </Step>
-      <Step title="Add Notifyer node">
-        1. Add WhatsAble node
-        2. Choose Notifyer System action
-        3. Configure authentication with API key
-        4. Select message type
-      </Step>
-      <Step title="Connect data">
-        1. Map Pipedrive data to message fields
-        2. Configure template variables
-        3. Test the workflow
-      </Step>
-    </Steps>
+### Understanding the Integration Panel
 
-    <Info>
-      See our [n8n integration guide](/guides/notifier-system/n8n-overview) for detailed instructions.
-    </Info>
-  </Tab>
-</Tabs>
+The WhatsAble Integration panel displays important connection information:
 
-## Best practices
+<CardGroup cols={2}>
+  <Card title="WhatsAble License Status" icon="circle-check">
+    Confirms your subscription is active
+  </Card>
+  <Card title="Synced WhatsApp Account" icon="link">
+    Shows which WhatsApp Business account is connected
+  </Card>
+  <Card title="WhatsApp Connection Status" icon="signal-bars">
+    Indicates if your WhatsApp connection is active
+  </Card>
+  <Card title="Last WhatsApp Communication" icon="clock">
+    Displays the date and time of the most recent message
+  </Card>
+  <Card title="WhatsAble Chat URL" icon="arrow-up-right-from-square">
+    Provides a direct link to the conversation
+  </Card>
+</CardGroup>
+
+### Sending Options
+
+Within the WhatsAble Integration section, you'll find a green **"Live Chat"** button with a dropdown menu offering three options:
+
+<CardGroup cols={3}>
+  <Card title="Live Chat" icon="messages">
+    Opens the WhatsAble chat interface directly within Pipedrive
+  </Card>
+  <Card title="Send Scheduled Message" icon="clock">
+    Schedule a message to be sent at a specific date and time
+  </Card>
+  <Card title="Send Template" icon="paper-plane">
+    Send a pre-configured template message immediately
+  </Card>
+</CardGroup>
+
+## Option 1: Send Scheduled Message
+
+Use this option when you want to send a message at a specific future date and time.
+
+<Steps>
+  <Step title="Open the Scheduled Message Modal">
+    1. Click the dropdown next to the **Live Chat** button
+    2. Select **"Send Scheduled Message"**
+    3. A modal window will appear with the following fields
+  </Step>
+
+  <Step title="Configure Required Fields">
+    <ResponseField name="To" type="string" required>
+      The recipient's phone number(s) associated with the deal. This field is automatically populated from the deal's contact information.
+    </ResponseField>
+
+    <ResponseField name="From" type="string" required>
+      Your connected WhatsApp Business account. This field is pre-filled and cannot be modified from this interface.
+    </ResponseField>
+
+    <ResponseField name="Select Template" type="dropdown" required>
+      Choose from your pre-created message templates. These templates must be created beforehand in the **Notifyer by WhatsAble** dashboard.
+    </ResponseField>
+
+    <ResponseField name="Template Variables" type="string" required>
+      Once you select a template, all required placeholder fields will appear dynamically. Fill in each field carefully to personalize your message (e.g., customer name, appointment time, order details).
+    </ResponseField>
+
+    <ResponseField name="Scheduled Date and Time" type="datetime" required>
+      Select the exact date and time you want the message to be sent.
+    </ResponseField>
+
+    <ResponseField name="Timezone" type="dropdown" required>
+      Specify the timezone from which you're scheduling the message to ensure accurate delivery timing.
+    </ResponseField>
+  </Step>
+
+  <Step title="Add Optional Information">
+    <Expandable title="Optional Fields">
+      <ResponseField name="Add a Note" type="text">
+        Include an internal note for your team. This note is only visible within Pipedrive and helps with tracking and context.
+      </ResponseField>
+
+      <ResponseField name="Select Labels" type="tags">
+        Assign labels to categorize and organize your communications for easier filtering and reporting.
+      </ResponseField>
+    </Expandable>
+
+    <Note>
+      At the top of the modal, you'll see your **most recent messages** with this contact (if any previous conversations exist), providing helpful context before sending.
+    </Note>
+  </Step>
+
+  <Step title="Schedule the Message">
+    1. Review all information carefully
+    2. Click the **"Schedule Template"** button at the bottom of the modal
+    3. Your message is now scheduled and will be sent automatically at the specified time
+    
+    <Check>
+      Message successfully scheduled! It will be sent at the specified time.
+    </Check>
+    <Frame caption="Schedule Template Modal">
+          <img src="/images/pd_schedule_message.png" alt="Schedule Template Modal" />
+    </Frame>
+  </Step>  
+</Steps>
+
+## Option 2: Send Template (Immediate)
+
+Use this option to send a pre-configured template message immediately without scheduling.
+
+<Steps>
+  <Step title="Open the Send Template Modal">
+    1. Click the dropdown next to the **Live Chat** button
+    2. Select **"Send Template"**
+    3. A modal window will appear with the following fields
+  </Step>
+
+  <Step title="Configure Required Fields">
+    <ResponseField name="To" type="string" required>
+      The recipient's phone number(s) associated with the deal. This field is automatically populated from the deal's contact information.
+    </ResponseField>
+
+    <ResponseField name="From" type="string" required>
+      Your connected WhatsApp Business account. This field is pre-filled and cannot be modified from this interface.
+    </ResponseField>
+
+    <ResponseField name="Select Template" type="dropdown" required>
+      Choose from your pre-created message templates. These templates must be created beforehand in the **Notifyer by WhatsAble** dashboard.
+    </ResponseField>
+
+    <ResponseField name="Template Variables" type="string" required>
+      Once you select a template, all required placeholder fields will appear dynamically. Fill in each field carefully to personalize your message (e.g., customer name, product details, tracking numbers).
+    </ResponseField>
+  </Step>
+
+  <Step title="Add Optional Information">
+    <Expandable title="Optional Fields">
+      <ResponseField name="Add a Note" type="text">
+        Include an internal note for your team. This note is only visible within Pipedrive and helps with tracking and context.
+      </ResponseField>
+
+      <ResponseField name="Select Labels" type="tags">
+        Assign labels to categorize and organize your communications for easier filtering and reporting.
+      </ResponseField>
+    </Expandable>
+
+    <Note>
+      At the top of the modal, you'll see your **most recent messages** with this contact (if any previous conversations exist), providing helpful context before sending.
+    </Note>
+  </Step>
+
+  <Step title="Send the Message">
+    1. Review all information carefully
+    2. Click the **"Send Template"** button at the bottom of the modal
+    3. Your message will be sent immediately
+    
+    <Check>
+      Message sent successfully!
+    </Check>
+    <Frame caption="Send Template Modal">
+          <img src="/images/pd_template_message.png" alt="Send Template Modal" />
+    </Frame>
+  </Step>
+</Steps>
+
+## Sending Messages from Contacts
+
+The process for sending WhatsApp messages from contacts is nearly identical to sending from deals, with minor differences noted below.
+
+### Accessing the WhatsAble Integration Panel
+
+<Steps>
+  <Step title="Navigate to Contacts">
+    1. Go to your **Pipedrive Dashboard**
+    2. Navigate to the **Contacts** menu
+    3. Select your desired **Contact**
+  </Step>
+
+  <Step title="Locate the Integration Panel">
+    1. On the right-hand panel, scroll down past the Summary section
+    2. Find the **WhatsAble Integration** section
+    
+    <Frame caption="WhatsAble Integration Panel">
+      <img src="/images/contact_integration_panel.png" alt="WhatsAble Integration Panel" />
+    </Frame>
+  </Step>
+</Steps>
+
+### Understanding the Integration Panel
+
+The WhatsAble Integration panel displays the same connection information as in deals:
+
+<CardGroup cols={2}>
+  <Card title="WhatsAble License Status" icon="circle-check">
+    Confirms your subscription is active
+  </Card>
+  <Card title="Synced WhatsApp Account" icon="link">
+    Shows which WhatsApp Business account is connected
+  </Card>
+  <Card title="WhatsApp Connection Status" icon="signal-bars">
+    Indicates if your WhatsApp connection is active
+  </Card>
+  <Card title="Last WhatsApp Communication" icon="clock">
+    Displays the date and time of the most recent message
+  </Card>
+  <Card title="WhatsAble Chat URL" icon="arrow-up-right-from-square">
+    Provides a direct link to the conversation
+  </Card>
+</CardGroup>
+
+### Sending Options
+
+The same three options are available:
+
+<CardGroup cols={3}>
+  <Card title="Live Chat" icon="messages">
+    Opens the WhatsAble chat interface directly within Pipedrive
+  </Card>
+  <Card title="Send Scheduled Message" icon="clock">
+    Schedule a message for a specific date and time
+  </Card>
+  <Card title="Send Template" icon="paper-plane">
+    Send a template message immediately
+  </Card>
+</CardGroup>
+
+<Info>
+  **Key Difference**: Phone numbers are pulled from the contact's information rather than deal-specific numbers. All other fields and processes remain identical to sending from deals.
+</Info>
+
+## Best Practices
 
 <AccordionGroup>
-  <Accordion title="Use proper phone formatting" icon="phone">
-    Ensure all phone numbers in Pipedrive include country codes and follow international format (+1234567890).
+  <Accordion title="Verify Connection Status" icon="shield-check">
+    **Before Sending Messages**
+    
+    Always check that your WhatsApp connection shows as ACTIVE before attempting to send messages to avoid delivery failures.
   </Accordion>
-  <Accordion title="Personalize messages" icon="user">
-    Use Pipedrive custom fields to personalize WhatsApp messages with deal-specific information.
+
+  <Accordion title="Review Templates" icon="file-lines">
+    **Template Management**
+    
+    - Ensure your message templates are up-to-date in the Notifyer dashboard
+    - Test templates with yourself before using them with customers
+    - Create templates in advance for different scenarios
   </Accordion>
-  <Accordion title="Follow up strategically" icon="bullseye">
-    Set up automated follow-ups based on deal stages to maintain engagement without overwhelming contacts.
+
+  <Accordion title="Double-Check Phone Numbers" icon="phone-check">
+    **Phone Number Verification**
+    
+    - Confirm the recipient's phone number is correct
+    - Verify the number includes the country code (e.g., +1 for US)
+    - Update contact information if numbers are missing or incorrect
   </Accordion>
-  <Accordion title="Test before activating" icon="vial">
-    Always test your integration with sample data before activating it for live deals.
+
+  <Accordion title="Use Labels Consistently" icon="tags">
+    **Message Organization**
+    
+    - Develop a clear labeling system for easier tracking
+    - Apply consistent labels across your team
+    - Use labels for reporting and analytics purposes
   </Accordion>
-  <Accordion title="Monitor delivery" icon="chart-line">
-    Regularly check message delivery rates in your Notifyer dashboard to ensure optimal performance.
+
+  <Accordion title="Add Internal Notes" icon="note-sticky">
+    **Documentation Best Practices**
+    
+    - Document the purpose of each message for future reference
+    - Include context that will help team members understand the communication
+    - Keep notes concise but informative
+  </Accordion>
+
+  <Accordion title="Review Recent Messages" icon="message-lines">
+    **Maintain Context**
+    
+    - Always check conversation history before sending new messages
+    - Avoid sending duplicate or redundant information
+    - Ensure message continuity for better customer experience
+  </Accordion>
+
+  <Accordion title="Schedule Strategically" icon="calendar-clock">
+    **Timing Considerations**
+    
+    - Consider your recipient's timezone when scheduling messages
+    - Avoid sending messages during off-hours or weekends unless necessary
+    - Set reminders to follow up if no response is received
+  </Accordion>
+
+  <Accordion title="Create Clear Variable Names" icon="input-text">
+    **Template Creation**
+    
+    - Make placeholder fields intuitive for anyone on your team
+    - Use descriptive variable names (e.g., customer_name, order_date)
+    - Test variable population before mass sending
   </Accordion>
 </AccordionGroup>
 
 ## Troubleshooting
 
 <AccordionGroup>
-  <Accordion title="Messages not sending?" icon="circle-exclamation">
+  <Accordion title="WhatsApp Connection Shows as INACTIVE" icon="circle-exclamation">
     <Steps>
-      <Step title="Verify API key">
-        Ensure your Notifyer System API key is entered correctly
+      <Step title="Reconnect WhatsApp Account">
+        Reconnect your WhatsApp Business account in the WhatsAble dashboard
       </Step>
-      <Step title="Check phone format">
-        Confirm phone numbers include country codes (e.g., +14155552671)
+      <Step title="Verify Configuration">
+        Verify your WhatsApp Business account is properly configured
       </Step>
-      <Step title="Verify trigger">
-        Check that your Pipedrive trigger is firing correctly
-      </Step>
-      <Step title="Check subscription">
-        Verify your Notifyer subscription is active with available credits
+      <Step title="Contact Support">
+        Contact WhatsAble support if the issue persists after reconnection
       </Step>
     </Steps>
   </Accordion>
-  
-  <Accordion title="Variables not populating?" icon="text">
+
+  <Accordion title="No Templates Available in Dropdown" icon="empty-set">
     <Steps>
-      <Step title="Check field mapping">
-        Verify Pipedrive fields are correctly mapped to template variables
+      <Step title="Create Templates">
+        Create templates in the Notifyer by WhatsAble dashboard first
       </Step>
-      <Step title="Test data">
-        Ensure your test deal has data in the fields you're mapping
+      <Step title="Check Approval Status">
+        Ensure templates are approved by WhatsApp (if required for your template type)
       </Step>
-      <Step title="Field names">
-        Double-check that custom field names match exactly in your mapping
+      <Step title="Refresh Page">
+        Refresh your Pipedrive page after creating new templates to see them appear
       </Step>
     </Steps>
   </Accordion>
-  
-  <Accordion title="Duplicate messages?" icon="copy">
+
+  <Accordion title="Scheduled Message Not Sent" icon="clock-rotate-left">
     <Steps>
-      <Step title="Check trigger settings">
-        Review your automation platform trigger to avoid duplicate events
+      <Step title="Check Connection Status">
+        Verify your WhatsApp connection was active at the scheduled time
       </Step>
-      <Step title="Add filters">
-        Use filters to prevent messages from sending multiple times for the same event
+      <Step title="Verify Timezone">
+        Check that the timezone was set correctly when scheduling
       </Step>
-      <Step title="Review workflow">
-        Ensure you don't have multiple active workflows for the same trigger
+      <Step title="Review Message Logs">
+        Review the message logs in WhatsAble for error details and delivery status
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Phone Number Not Appearing" icon="phone-slash">
+    <Steps>
+      <Step title="Verify Phone Number Exists">
+        Ensure the contact or deal has a valid phone number in Pipedrive
+      </Step>
+      <Step title="Check Format">
+        Verify the phone number format includes the country code (e.g., +1234567890)
+      </Step>
+      <Step title="Update Contact">
+        Update the contact information if the phone number is missing or incorrect
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Template Variables Not Populating" icon="brackets-curly">
+    <Steps>
+      <Step title="Check Variable Names">
+        Ensure variable names in your template match the fields you're filling
+      </Step>
+      <Step title="Verify Data Source">
+        Confirm the data source (contact or deal) has the required information
+      </Step>
+      <Step title="Test Template">
+        Send a test message to yourself to verify variable population before sending to customers
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Message Delivery Failed" icon="triangle-exclamation">
+    <Steps>
+      <Step title="Verify Recipient Number">
+        Confirm the recipient has an active WhatsApp account on that number
+      </Step>
+      <Step title="Check Message Content">
+        Ensure your message complies with WhatsApp's business messaging policies
+      </Step>
+      <Step title="Review Credits">
+        Verify your WhatsAble account has sufficient credits or an active subscription
+      </Step>
+      <Step title="Contact Support">
+        If issues persist, contact WhatsAble support with the message details
       </Step>
     </Steps>
   </Accordion>
 </AccordionGroup>
+
+<Info>
+  For more information about template creation and management, visit the Notifyer by WhatsAble dashboard or contact our support team.
+</Info>
 
 ## Need help?
 
