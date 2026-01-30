@@ -2,6 +2,7 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "WhatsAble Documentation",
+  "description": "Official documentation for WhatsAble: WhatsApp automation for businesses. Guides for WhatsAble, Notifier by WhatsAble, and Notifier System—Zapier, Make, n8n, APIs, webhooks, and templates.",
   "colors": {
     "primary": "#16A34A",
     "light": "#07C983",
@@ -117,5 +118,14 @@
       "github": "https://github.com/whatsable",
       "linkedin": "https://linkedin.com/company/whatsable"
     }
+  },
+  "seo": {
+    "indexing": "all",
+    "metatags": {
+      "robots": "index, follow"
+    }
+  },
+  "contextual": {
+    "options": ["copy", "view", "chatgpt", "claude", "perplexity"]
   }
 }

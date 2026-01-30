@@ -1,0 +1,22 @@
+# Allow all crawlers including search engines and AI tools
+User-agent: *
+Allow: /
+
+# Explicitly allow AI/LLM crawlers for documentation indexing
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# Sitemap: replace docs.whatsable.app with your actual docs host if different
+Sitemap: https://docs.whatsable.app/sitemap.xml
