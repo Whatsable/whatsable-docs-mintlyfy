@@ -1,0 +1,663 @@
+---
+title: 'Monday.com'
+description: 'Learn how to seamlessly integrate Monday.com with the Notifyer System for automated WhatsApp messaging directly inside your boards'
+icon: 'monday'
+---
+
+# Notifyer System Integration with Monday.com
+
+<Frame caption="Automate your WhatsApp messaging workflows with Monday.com and Notifyer System">
+  <img src="/images/monday-sidebar.png" alt="Monday.com integration with Notifyer System" className="rounded-xl" />
+</Frame>
+
+<Tip>
+  This guide walks you through connecting Notifyer System with Monday.com to create powerful automated WhatsApp messaging workflows — syncing conversations to your boards and triggering messages from board events, all through Monday's built-in Workflow Builder.
+</Tip>
+
+## Prerequisites
+
+Before getting started, make sure you have:
+
+<CardGroup cols={2}>
+  <Card title="Notifyer System Account" icon="user">
+    Active Notifyer System account with a connected WhatsApp number and subscription plan (Monthly or Pay-as-you-go)
+  </Card>
+  <Card title="Monday.com Account" icon="user">
+    Access to [Monday.com](https://monday.com/) with admin or member-level permissions
+  </Card>
+</CardGroup>
+
+<Info>
+  Your WhatsApp number must already be connected inside Notifyer before starting the Monday integration.
+</Info>
+
+<Tip>
+  New to Notifyer System? [Sign up here](https://console.notifyer-systems.com/)
+</Tip>
+
+## Setting up your Notifyer System account
+
+<Steps>
+  <Step title="Complete the Embedding Process">
+    Before sending WhatsApp messages, you must complete the platform [embedding process](/guides/notifier-system/embedding-process), which connects your WhatsApp Business account to Notifyer System.
+
+    <Info>
+      The embedding process is required by Meta to ensure proper business verification and compliance with WhatsApp Business Platform policies.
+    </Info>
+  </Step>
+  
+  <Step title="Set up message templates">
+    To use the **Send Template Message** action in Monday workflows, configure your templates in Notifyer first. Notifyer System provides two methods for sending WhatsApp messages:
+
+    <Accordion title="Option A: Template messages" defaultOpen={false}>
+      <p>WhatsApp templates are pre-approved message formats that allow for personalization while maintaining compliance with WhatsApp policies.</p>
+      
+      <Steps>
+        <Step title="Navigate to Templates">
+          Go to **Your Templates** in your Notifyer dashboard
+        </Step>
+        <Step title="Create Template">
+          Click the **Create Template** tab at the top of the page
+        </Step>
+        <Step title="Fill out the form">
+          Complete the template creation form with the following details:
+          
+          <ResponseField name="Template Name" type="string" required>
+            Choose a descriptive name for internal reference
+          </ResponseField>
+          <ResponseField name="Language" type="string" required>
+            Choose your template's primary language
+          </ResponseField>
+          <ResponseField name="Category" type="string" required>
+            Select the appropriate message category
+          </ResponseField>
+          <ResponseField name="Header" type="image | document | video">
+            Optional: Add an image, document, or video header
+          </ResponseField>
+          <ResponseField name="Message Body" type="string" required>
+            Craft your message content
+          </ResponseField>
+          <ResponseField name="Variables" type="string">
+            Add placeholders using `{{1}}`, `{{2}}` format for personalization
+          </ResponseField>
+          <ResponseField name="Buttons" type="button">
+            Optional: Configure call-to-action buttons
+          </ResponseField>
+        </Step>
+        <Step title="Submit for review">
+          Click **Preview and Submit**
+        </Step>
+      </Steps>
+
+      <Frame caption="Template Creation Interface">
+        <img src="/images/notifyer_template_create.png" alt="Template Creation Interface" />
+      </Frame>
+
+      <Warning>
+        Templates typically get reviewed within 24 hours. Creating compliant templates that avoid promotional language increases approval chances.
+      </Warning>
+    </Accordion>
+
+    <Accordion title="Option B: Non-template messages">
+      <p>For simpler communications within the 24-hour window, you can send non-template messages that include:</p>
+      
+      <CardGroup cols={2}>
+        <Card title="Text" icon="message-text">
+          Plain text messages within the 24-hour window
+        </Card>
+        <Card title="Images" icon="image">
+          Photos and graphics in supported formats
+        </Card>
+        <Card title="Documents" icon="file-pdf">
+          PDFs, Word docs, and other file types
+        </Card>
+        <Card title="Videos" icon="video">
+          MP4 and other supported video formats
+        </Card>
+      </CardGroup>
+
+      <Note>
+        Non-template messages can only be sent within the 24-hour customer service window after a customer initiates contact with your business.
+      </Note>
+    </Accordion>
+  </Step>
+</Steps>
+
+## Connect Notifyer System to Monday.com
+
+Now that your Notifyer System account is configured, follow these steps to connect Monday.com and start building workflows.
+
+<Steps>
+  <Step title="Open the Monday integration page">
+    1. Log in to your **Notifyer Console**
+    2. In the left sidebar, scroll to the **Connect To** section
+    3. Click **Monday** from the list of available integrations (Make, Zapier, n8n, Pipedrive, Monday)
+
+    <Frame caption="Monday option in the Notifyer sidebar under Connect To">
+      <img src="/images/monday/image2.png" alt="Monday option in the Notifyer sidebar under Connect To" />
+    </Frame>
+
+    The Monday integration page opens with the **Get Started in 3 Simple Steps** panel.
+  </Step>
+
+  <Step title="Install WhatsAble on Monday">
+    1. On the integration page, click the green **Install WhatsAble** button next to Step 1
+    2. You will be redirected to the Monday.com marketplace listing
+    3. Follow Monday's standard installation flow to add WhatsAble to your workspace
+
+    <Frame caption="Install WhatsAble button on the Monday integration page">
+      <img src="/images/monday/image3.png" alt="Install WhatsAble button on the Monday integration page" />
+    </Frame>
+
+    <Tip>
+      If you are already logged into Monday.com in your browser, the installation proceeds directly. Otherwise, Monday will prompt you to log in first.
+    </Tip>
+  </Step>
+
+  <Step title="Log in and authorize WhatsAble">
+    1. Sign in to Monday.com using **Email and password**, **Google**, or **Microsoft**
+    2. Review the permission consent screen titled **Authorize WhatsAble — WhatsApp Automation with AI**
+    3. Click **Authorize** to grant the required permissions
+
+    <Frame caption="Monday authorization permissions screen for WhatsAble">
+      <img src="/images/monday/image4.png" alt="Monday authorization permissions screen for WhatsAble" />
+    </Frame>
+
+    WhatsAble requests the following permissions exclusively for workflow automation:
+
+    | Permission | Purpose |
+    |---|---|
+    | Modify any of your boards' data | Create and update items on your boards |
+    | Read user's documents | Access documents for workflow actions |
+    | Modify user's documents | Attach files and notes to board items |
+    | Read all of your workspaces data | Access the correct workspace for automation |
+    | Modify any of your workspaces data | Configure automation within your workspace |
+    | Read the profile information of the users in your account | Identify users in workflow context |
+    | Modify the profile information of the users on the account | Update user-related workflow data |
+    | Read general information about your account | Link your Monday account to WhatsAble |
+    | Send notifications on your behalf | Deliver workflow-triggered notifications |
+    | Post or edit updates on your behalf | Add message activity to board items |
+    | Read updates and replies that you can see | Sync conversation context to workflows |
+    | Read information of files that were uploaded to your account | Access attachments for board sync |
+    | Read your account's tags | Map labels and tags in workflow logic |
+    | Read information about teams in your account | Route workflows by team context |
+    | Create and modify teams in your account | Configure team-based automation |
+    | Create and modify webhooks | Enable real-time workflow triggers |
+    | Read existing webhooks configuration | Verify and manage webhook setup |
+    | Read your profile information | Identify the connected user |
+
+    <Warning>
+      WhatsAble is an official Meta Tech Provider and the integration is safe to authorize.
+    </Warning>
+  </Step>
+
+  <Step title="Confirm the connection">
+    After authorization, you will be redirected back to the Notifyer Console. The green **Successfully Connected to Monday** banner confirms the integration is live.
+
+    <Frame caption="Successfully Connected to Monday confirmation screen">
+      <img src="/images/monday/image5.png" alt="Successfully Connected to Monday confirmation screen" />
+    </Frame>
+
+    The panel displays your **User ID**, **Account ID**, and **Connected** timestamp. You can now start building workflows in Monday's Workflow Builder.
+
+    <Check>
+      Your Notifyer System account is now linked to Monday.com. Proceed to create workflows using the triggers and actions below.
+    </Check>
+  </Step>
+</Steps>
+
+## Workflow automation
+
+With the integration connected, WhatsAble exposes **3 triggers** and **2 actions** directly inside Monday's Workflow Builder.
+
+### What you can do
+
+<CardGroup cols={2}>
+  <Card title="Sync leads to boards" icon="user-plus">
+    Create a Monday item automatically when a new WhatsApp contact messages your business
+  </Card>
+  <Card title="Keep items in sync" icon="arrows-rotate">
+    Update existing items when follow-up messages are sent or received
+  </Card>
+  <Card title="Trigger from status" icon="arrow-right">
+    Send WhatsApp template messages when board item status changes
+  </Card>
+  <Card title="Map WhatsApp data" icon="table-columns">
+    Map phone number, country, label, AI state, attachments, and timestamps to board columns
+  </Card>
+</CardGroup>
+
+### Triggers
+
+Triggers define *when* a workflow fires.
+
+#### Trigger 1 — When New Incoming Chat Received
+
+**Fires:** Once, the first time an unknown contact sends your business a WhatsApp message.
+
+This trigger activates when a message arrives from a phone number that does not yet exist as a recipient in your WhatsAble system. If the contact already exists, this trigger will not fire again.
+
+**Best for:** Creating a new Monday item (lead, support ticket, customer record) the moment a brand-new contact reaches out.
+
+**Output fields:**
+
+| Field | Type | Description |
+|---|---|---|
+| `name` | Text | Contact's display name |
+| `phone` | Phone | Number in international format |
+| `country` | Text | Country detected from the phone number |
+| `label` | Text | Label auto-assigned by WhatsAble rules |
+| `message` | Text | Body of the incoming message |
+| `attachment_url` | URL | Direct link to any media attachment |
+| `last_message_time` | Date/Time | Timestamp of the incoming message |
+| `ai_enabled` | Boolean | Whether the AI agent is active for this chat |
+| `automation_note` | Text | Note injected by an upstream automation rule |
+
+<Note>
+  `sent_by` and `is_incoming` are not available on this trigger — the message is always incoming by definition.
+</Note>
+
+---
+
+#### Trigger 2 — When New Outgoing Chat Created
+
+**Fires:** Once, the first time you send a WhatsApp message to a contact that does not yet exist in your WhatsAble system.
+
+This trigger activates when your team initiates a conversation with a brand-new contact, whether via WhatsAble's chat interface, Make, Zapier, n8n, or any connected platform.
+
+**Best for:** Automatically logging a Monday item when your sales team reaches out to a new prospect.
+
+**Output fields:**
+
+| Field | Type | Description |
+|---|---|---|
+| `name` | Text | Contact's display name (may be blank if not yet resolved) |
+| `phone` | Phone | Contact's phone number |
+| `country` | Text | Detected country |
+| `label` | Text | Label assigned to the contact |
+| `message` | Text | Body of the outgoing message |
+| `attachment_url` | URL | Link to any attached media |
+| `last_message_time` | Date/Time | Timestamp of the outgoing message |
+| `sent_by` | Text | Sender name — team member or automation/app name |
+| `ai_enabled` | Boolean | Whether the AI agent is active |
+| `automation_note` | Text | Note from an automation rule, if applicable |
+
+<Note>
+  `is_incoming` is not available on this trigger — the message is always outgoing by definition.
+</Note>
+
+---
+
+#### Trigger 3 — When New Message Received or Sent in WhatsApp
+
+**Fires:** Every time, for every message — both incoming and outgoing — for any contact, new or existing.
+
+Unlike Triggers 1 and 2, this trigger is not limited to first-time contacts. It fires on every message event, making it ideal for keeping Monday items continuously in sync with live conversations.
+
+**Best for:** Updating an existing Monday item's status, last message time, or activity log every time a conversation progresses.
+
+**Output fields:**
+
+| Field | Type | Description |
+|---|---|---|
+| `name` | Text | Contact's display name |
+| `phone` | Phone | Contact's phone number |
+| `country` | Text | Detected country |
+| `label` | Text | Assigned label |
+| `message` | Text | Message body |
+| `attachment_url` | URL | URL of any media attachment |
+| `last_message_time` | Date/Time | Message timestamp |
+| `sent_by` | Text | Sender identifier (outgoing messages only) |
+| `is_incoming` | Boolean | `true` if received, `false` if sent |
+| `ai_enabled` | Boolean | AI agent state |
+| `automation_note` | Text | Automation-injected note, if any |
+
+<Tip>
+  Map `is_incoming` to a **Checkbox** column in Monday to visually distinguish customer messages from agent replies at a glance.
+</Tip>
+
+---
+
+#### Trigger quick reference
+
+| Trigger | Fires for existing contacts? | Fires multiple times? | Direction |
+|---|---|---|---|
+| New Incoming Chat Received | No | First time only | Inbound |
+| New Outgoing Chat Created | No | First time only | Outbound |
+| New Message Received or Sent | Yes | Every message | Both |
+
+**Rule of thumb:** Use Triggers 1 and 2 for contact *creation*. Use Trigger 3 for ongoing conversation *updates*.
+
+---
+
+### Actions
+
+Actions define *what happens* when a trigger fires. WhatsAble provides two actions.
+
+#### Action 1 — Send Template Message
+
+Sends an approved WhatsApp Business template message to a contact.
+
+**Configuration:**
+
+1. Select **Send Template Message** from the WhatsAble action list in Workflow Builder
+2. Choose the template from the dropdown — all Meta-approved templates in your WABA account are listed
+3. Map each template variable (e.g. `{{1}}`, `{{2}}`) to a column value from your Monday board
+4. Map the **phone number** field to your board's phone/mobile column
+
+<Warning>
+  Only Meta-approved WhatsApp Business templates appear in the dropdown. Templates pending review will not be listed.
+</Warning>
+
+#### Action 2 — Send Follow-Up Message
+
+<Info>
+  This action is currently **in development** and will be available in a future release. It will support scheduled follow-up messages with timezone-aware delivery windows.
+</Info>
+
+---
+
+### Data field reference
+
+**Accessing trigger data:** All trigger fields are accessible inside Monday's action configuration via the dynamic data picker. When mapping a field, click the dropdown and look for **Step 1 — [Trigger Name]** to find WhatsAble's data outputs.
+
+**Boolean fields:** `ai_enabled` and `is_incoming` return `true` or `false`. Map these to **Checkbox** columns in Monday. They cannot be mapped to text or status columns directly.
+
+**Attachment handling:** `attachment_url` returns a direct URL to any media file sent in the message — image, video, PDF, or audio. Map it to a **Link** column to make files accessible from the board. When mapped inside a **Create Update** action, the media appears inline in the board item's activity feed.
+
+**`sent_by` field:** Identifies the sender of an outgoing message — returns the logged-in user's name from WhatsAble chat UI, or the automation/app name for Make, Zapier, n8n, or API. Not available on Trigger 1 (Incoming Chat).
+
+**`automation_note` field:** Populated only when a WhatsAble automation rule explicitly injects a note. Blank for manually sent messages or automations without a configured note.
+
+---
+
+## Workflow examples
+
+### Example 1 — Capture new inbound leads as Monday items
+
+**Goal:** When a new contact messages your WhatsApp number for the first time, automatically create a Monday item with their full details.
+
+**Trigger:** When New Incoming Chat Received
+
+<Steps>
+  <Step title="Add trigger and create item">
+    1. Open **Workflow Builder** in your Monday board
+    2. Click **+ Add Trigger** → search for *WhatsAble* → select **When New Incoming Chat Received**
+    3. Click **+ Add Action** → select Monday's native **Create Item**
+    4. Configure the item mapping:
+
+    | Monday Column | Map From |
+    |---|---|
+    | Name | `{name}` |
+    | Phone / Mobile | `{phone}` |
+    | Country | `{country}` |
+    | Label | `{label}` |
+    | Status | Set default: *Working on it* |
+    | AI Active (checkbox) | `{ai_enabled}` |
+    | Last Message Time | `{last_message_time}` |
+    | Link | `{attachment_url}` |
+  </Step>
+  <Step title="Add activity update">
+    5. Click **+ Add Action** → select Monday's native **Create Update**
+    6. Set the update body to `{message}` — optionally include `{attachment_url}` to attach media to the activity
+    7. Click **Publish**
+  </Step>
+</Steps>
+
+**Result:** Every brand-new WhatsApp contact instantly becomes a tracked Monday item, with their opening message logged as a board activity update.
+
+---
+
+### Example 2 — Keep existing items in sync with every message
+
+**Goal:** For ongoing conversations, update the relevant Monday item each time a message is sent or received — and create it automatically if it doesn't exist yet.
+
+**Trigger:** When New Message Received or Sent in WhatsApp
+
+<Steps>
+  <Step title="Add trigger and find matching item">
+    1. Create a new workflow → select **When New Message Received or Sent in WhatsApp**
+    2. Add a **Find Matching Item** block (Monday native):
+       - **Board:** Your target board
+       - **Column to match:** Phone / Mobile
+       - **Value:** `{phone}` from Step 1
+       - **If multiple matches:** Last Created Item
+  </Step>
+  <Step title="Configure branches">
+    3. **If Found** branch:
+       - Add **Change Column Value** to update status, label, AI state, last message time, etc.
+       - Add **Create Update** with `{message}` to log the message in the activity feed
+    4. **If Not Found** branch:
+       - Add **Create Item** — map all fields as in Example 1
+       - Add **Create Update** with `{message}`
+    5. Click **Publish**
+  </Step>
+</Steps>
+
+**Result:** Every WhatsApp message either updates an existing Monday item or creates a new one — no duplicates, always current.
+
+---
+
+### Example 3 — Send WhatsApp template when status changes
+
+**Goal:** When a board item's status changes to *Done*, automatically send the contact a WhatsApp confirmation message.
+
+**Trigger:** Monday native — *When status changes to* → **Done**
+
+<Steps>
+  <Step title="Configure workflow">
+    1. Create a new workflow → use Monday's default **When status changes to** trigger
+    2. Select your **Status** column and set the value to **Done**
+    3. Add WhatsAble action **Send Template Message**:
+       - Select your approved template from the dropdown
+       - Map template variables — e.g. `{{1}}` → **Name** column
+       - Map **Phone Number** → your board's phone/mobile column
+    4. Click **Publish**
+  </Step>
+</Steps>
+
+**Result:** The moment your team marks an item as Done, the contact receives a WhatsApp message — no manual follow-up needed.
+
+---
+
+## Example use cases
+
+<CardGroup cols={3}>
+  <Card title="Lead capture" icon="user-plus">
+    Automatically create Monday items when new WhatsApp contacts reach out
+  </Card>
+  <Card title="Support tickets" icon="ticket">
+    Sync support conversations to your board and track resolution status
+  </Card>
+  <Card title="Order confirmations" icon="box-check">
+    Send template messages when order status changes to Done
+  </Card>
+  <Card title="Sales follow-up" icon="user-check">
+    Log outbound prospecting messages as new Monday items
+  </Card>
+  <Card title="Activity updates" icon="arrows-rotate">
+    Keep board items in sync with every message sent or received
+  </Card>
+  <Card title="Appointment reminders" icon="calendar">
+    Trigger WhatsApp reminders when board status changes
+  </Card>
+</CardGroup>
+
+---
+
+## Disconnecting
+
+To remove the connection, go to **Notifyer Console → Connect To → Monday** and click the red **Disconnect WhatsAble from Monday** button.
+
+<Warning>
+  Disconnecting immediately stops all active WhatsAble-powered workflows in Monday. Any workflows using WhatsAble triggers or actions will fail until the integration is reconnected.
+</Warning>
+
+To reconnect, repeat the connection steps above. Your existing Monday workflow configurations remain intact — only the authorization needs to be re-established.
+
+---
+
+## Best practices
+
+<AccordionGroup>
+  <Accordion title="Use Find Matching Item for deduplication" icon="magnifying-glass">
+    Use Monday's native **Find Matching Item** block filtering on the phone column to avoid duplicate items. Match type: `equals` | Result: `last_created_item` | Branch: `found` / `not_found`
+
+  </Accordion>
+  <Accordion title="Store phone numbers in E.164 format" icon="phone">
+    WhatsAble returns phone numbers in E.164 format (e.g. `+34612345678`). Ensure your Monday phone column stores numbers in the same format for reliable matching.
+
+  </Accordion>
+  <Accordion title="Use templates for compliance" icon="file-lines">
+    Whenever possible, use pre-approved templates for better deliverability and compliance with WhatsApp Business policies.
+
+  </Accordion>
+  <Accordion title="Test workflows before production" icon="vial">
+    Always test your workflows with test phone numbers before activating them for production use.
+
+  </Accordion>
+  <Accordion title="Monitor Run History" icon="chart-line">
+    Regularly check **Run History** in Monday's Workflow Builder to identify and resolve any failed runs.
+
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Install WhatsAble button opens Monday but nothing happens" icon="circle-exclamation">
+    <Steps>
+      <Step title="Check popup blocker">
+        Pop-ups may be blocked in your browser. Allow popups from your Notifyer Console URL.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Step 1 still shows incomplete after installation" icon="circle-exclamation">
+    <Steps>
+      <Step title="Refresh the page">
+        Refresh the Notifyer Console page. It needs a reload to detect that Step 1 is complete before enabling the Authorize button.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Authorization screen shows an error" icon="circle-exclamation">
+    <Steps>
+      <Step title="Verify account permissions">
+        Ensure you are authorizing with a Monday account that has admin or sufficient member-level permissions. Guest accounts cannot authorize third-party integrations.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Workflow triggered but no item was created" icon="circle-exclamation">
+    <Steps>
+      <Step title="Check contact status">
+        If using Trigger 1 or 2, verify whether the contact already exists in your WhatsAble system. These triggers only fire for first-time contacts. Use Trigger 3 for existing contacts.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Phone number not matching in Find Matching Item" icon="circle-exclamation">
+    <Steps>
+      <Step title="Verify format">
+        WhatsAble returns phone numbers in E.164 format (e.g. `+34612345678`). Ensure your Monday phone column stores numbers in the same format.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Template not appearing in Send Template dropdown" icon="file-exclamation">
+    <Steps>
+      <Step title="Check approval status">
+        Only Meta-approved templates are listed. Check the template status in Notifyer under **Settings → Templates**.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="sent_by field is blank" icon="circle-exclamation">
+    <Steps>
+      <Step title="Understand field availability">
+        `sent_by` is only populated on outgoing messages. It is always empty on Trigger 1 (Incoming Chat), and blank for incoming messages on Trigger 3.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Workflow shows Failed in Run History" icon="triangle-exclamation">
+    <Steps>
+      <Step title="Diagnose the failure">
+        Open **Run History** in Monday's Workflow Builder. Expand the failed run to see which step errored. Common causes: unmapped required phone number field on Send Template, invalid template variables, or a deleted board column that was previously mapped.
+      </Step>
+    </Steps>
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Technical reference
+
+<Expandable title="Trigger and action schemas for automation builders">
+  <p>This section describes the integration's behavior in structured terms for programmatic parsing and AI-assisted automation building.</p>
+
+  **App identifier in Monday Workflow Builder:** Search for *"WhatsAble"* or *"Words"*. App category: *"Automation with AI"*.
+
+  **Trigger schemas:**
+  ```
+  Trigger: when_new_incoming_chat_received
+    fires_once_per_contact: true
+    direction: inbound
+    output_fields: name, phone, country, label, message, attachment_url,
+                   last_message_time, ai_enabled, automation_note
+
+  Trigger: when_new_outgoing_chat_created
+    fires_once_per_contact: true
+    direction: outbound
+    output_fields: name, phone, country, label, message, attachment_url,
+                   last_message_time, sent_by, ai_enabled, automation_note
+
+  Trigger: when_new_message_received_or_sent
+    fires_once_per_contact: false
+    fires_on_every_message: true
+    direction: both
+    output_fields: name, phone, country, label, message, attachment_url,
+                   last_message_time, sent_by, is_incoming, ai_enabled, automation_note
+  ```
+
+  **Action schemas:**
+  ```
+  Action: send_template_message
+    status: available
+    required_inputs: template_id, phone_number
+    optional_inputs: template_variables[] (mapped from board columns)
+
+  Action: send_follow_up_message
+    status: in_development
+  ```
+
+  **Idempotency notes:**
+  - Triggers 1 and 2 are inherently idempotent per contact (fire at most once per phone number)
+  - Trigger 3 fires on every message event and requires explicit deduplication via the Find Matching Item pattern
+</Expandable>
+
+---
+
+## Need help?
+
+Our support team is ready to assist you:
+
+<CardGroup cols={3}>
+  <Card title="Email support" icon="envelope" href="mailto:team@whatsable.app">
+    Contact team@whatsable.app
+  </Card>
+  <Card title="Schedule a demo" icon="calendar" href="https://tidycal.com/axelmeta/notifyer-systems-demo">
+    Book a personalized walkthrough
+  </Card>
+  <Card title="Live chat" icon="message-dots" href="">
+    Click the green chat button in the bottom right corner of the Notifyer System dashboard
+  </Card>
+</CardGroup>
+
+<Info>
+  For additional automation platform integrations (Make, Zapier, n8n, Pipedrive), please contact our support team or check our integration documentation.
+</Info>
+

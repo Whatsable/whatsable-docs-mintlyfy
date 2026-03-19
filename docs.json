@@ -53,6 +53,7 @@
               "guides/notifier-system/make-overview",
               "guides/notifier-system/n8n-overview",
               "guides/notifier-system/pipedrive-overview",
+              "guides/notifier-system/monday-overview",
               {
                 "group": "API Documentation",
                 "pages": [
