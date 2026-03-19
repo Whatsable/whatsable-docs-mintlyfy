@@ -1,13 +1,14 @@
 ---
 title: 'Monday.com'
 description: 'Learn how to seamlessly integrate Monday.com with the Notifyer System for automated WhatsApp messaging directly inside your boards'
-icon: 'monday'
+icon: 'm'
+iconStyle: 'solid'
 ---
 
 # Notifyer System Integration with Monday.com
 
 <Frame caption="Automate your WhatsApp messaging workflows with Monday.com and Notifyer System">
-  <img src="/images/monday-sidebar.png" alt="Monday.com integration with Notifyer System" className="rounded-xl" />
+  <img src="/images/monday/mondayxnotifyer.svg" alt="Monday.com integration with Notifyer System" className="rounded-xl" />
 </Frame>
 
 <Tip>
@@ -237,6 +238,10 @@ Triggers define *when* a workflow fires.
 
 This trigger activates when a message arrives from a phone number that does not yet exist as a recipient in your WhatsAble system. If the contact already exists, this trigger will not fire again.
 
+<Frame caption="Select 'When you receive a WhatsApp message from a new phone number' in the Choose a trigger panel">
+  <img src="/images/monday/trigger1.png" alt="WhatsAble trigger: When you receive a WhatsApp message from a new phone number" />
+</Frame>
+
 **Best for:** Creating a new Monday item (lead, support ticket, customer record) the moment a brand-new contact reaches out.
 
 **Output fields:**
@@ -264,6 +269,10 @@ This trigger activates when a message arrives from a phone number that does not 
 **Fires:** Once, the first time you send a WhatsApp message to a contact that does not yet exist in your WhatsAble system.
 
 This trigger activates when your team initiates a conversation with a brand-new contact, whether via WhatsAble's chat interface, Make, Zapier, n8n, or any connected platform.
+
+<Frame caption="Select 'When you send a message to a new WhatsApp contact' in the Choose a trigger panel">
+  <img src="/images/monday/trigger2.png" alt="WhatsAble trigger: When you send a message to a new WhatsApp contact" />
+</Frame>
 
 **Best for:** Automatically logging a Monday item when your sales team reaches out to a new prospect.
 
@@ -293,6 +302,10 @@ This trigger activates when your team initiates a conversation with a brand-new 
 **Fires:** Every time, for every message — both incoming and outgoing — for any contact, new or existing.
 
 Unlike Triggers 1 and 2, this trigger is not limited to first-time contacts. It fires on every message event, making it ideal for keeping Monday items continuously in sync with live conversations.
+
+<Frame caption="Select 'When you receive or send any WhatsApp message' in the Choose a trigger panel">
+  <img src="/images/monday/trigger3.png" alt="WhatsAble trigger: When you receive or send any WhatsApp message" />
+</Frame>
 
 **Best for:** Updating an existing Monday item's status, last message time, or activity log every time a conversation progresses.
 
@@ -338,6 +351,10 @@ Actions define *what happens* when a trigger fires. WhatsAble provides two actio
 
 Sends an approved WhatsApp Business template message to a contact.
 
+<Frame caption="Select 'Send WhatsApp Message' in the Choose an action panel">
+  <img src="/images/monday/action1.png" alt="WhatsAble action: Send a template message" />
+</Frame>
+
 **Configuration:**
 
 1. Select **Send Template Message** from the WhatsAble action list in Workflow Builder
@@ -373,90 +390,161 @@ Sends an approved WhatsApp Business template message to a contact.
 
 ## Workflow examples
 
+The following examples are real working workflows you can replicate inside Monday's Workflow Builder using WhatsAble triggers and actions.
+
+{/* Commented out — previous examples for reference:
 ### Example 1 — Capture new inbound leads as Monday items
-
 **Goal:** When a new contact messages your WhatsApp number for the first time, automatically create a Monday item with their full details.
-
 **Trigger:** When New Incoming Chat Received
+### Example 2 — Keep existing items in sync with every message
+**Goal:** For ongoing conversations, update the relevant Monday item each time a message is sent or received — and create it automatically if it doesn't exist yet.
+**Trigger:** When New Message Received or Sent in WhatsApp
+### Example 3 — Send WhatsApp template when status changes
+**Goal:** When a board item's status changes to Done, automatically send the contact a WhatsApp confirmation message.
+**Trigger:** Monday native — When status changes to → Done
+*/}
+
+---
+
+### Example 1 — Sync Every WhatsApp Message to Your Board
+
+**What it does:** Every time a WhatsApp message is sent or received — from any contact, new or existing — this workflow either updates the matching Monday item or creates a new one if it doesn't exist yet. This is the recommended workflow for teams who want a live, always-current view of their WhatsApp conversations inside Monday.
+
+**Trigger:** When New Message Received or Sent in WhatsApp
+
+**Workflow structure:**
+
+- Step 1 — Trigger: When you receive or send any WhatsApp message
+- Step 2 — Find matching item (Column: mobile)
+  - Found → Step 3: Create update on the matched item
+  - Not found → Step 4: Create item on the Development board
+    - Step 5: Create update on the new item
+
+<Frame caption="Sync Every WhatsApp Message to Your Board — workflow with Find Matching Item, Found/Not found branches">
+  <img src="/images/monday/example1.png" alt="Workflow: Sync Every WhatsApp Message to Your Board" />
+</Frame>
+
+**How to build it:**
 
 <Steps>
-  <Step title="Add trigger and create item">
-    1. Open **Workflow Builder** in your Monday board
-    2. Click **+ Add Trigger** → search for *WhatsAble* → select **When New Incoming Chat Received**
-    3. Click **+ Add Action** → select Monday's native **Create Item**
-    4. Configure the item mapping:
-
-    | Monday Column | Map From |
-    |---|---|
-    | Name | `{name}` |
-    | Phone / Mobile | `{phone}` |
-    | Country | `{country}` |
-    | Label | `{label}` |
-    | Status | Set default: *Working on it* |
-    | AI Active (checkbox) | `{ai_enabled}` |
-    | Last Message Time | `{last_message_time}` |
-    | Link | `{attachment_url}` |
+  <Step title="Add trigger and Find Matching Item">
+    1. Open **Workflow Builder** on your Monday board → **Create Workflow**
+    2. Add trigger → search *WhatsAble* → select **When New Message Received or Sent in WhatsApp**
+    3. Add **Find Matching Item** (Monday native):
+       - **Board:** your target board
+       - **Column:** your phone/mobile column
+       - **Value:** `{phone}` from Step 1
+       - **If multiple matches:** Last Created Item
   </Step>
-  <Step title="Add activity update">
-    5. Click **+ Add Action** → select Monday's native **Create Update**
-    6. Set the update body to `{message}` — optionally include `{attachment_url}` to attach media to the activity
+  <Step title="Configure Found branch">
+    4. **Found** branch → Add **Create Update**:
+       - **Item:** Item ID from Step 2
+       - **Update body:** `{message}` from Step 1
+  </Step>
+  <Step title="Configure Not Found branch">
+    5. **Not Found** branch → Add **Create Item**:
+       - **Board:** your target board
+       - Map **Name** → `{name}`, **Phone** → `{phone}`, **Country** → `{country}`, **Label** → `{label}`, **Last Message Time** → `{last_message_time}`, **AI Active** → `{ai_enabled}`
+    6. Below Create Item → Add **Create Update**:
+       - **Item:** Item ID from Step 4
+       - **Update body:** `{message}` from Step 1
     7. Click **Publish**
   </Step>
 </Steps>
 
-**Result:** Every brand-new WhatsApp contact instantly becomes a tracked Monday item, with their opening message logged as a board activity update.
+**Result:** New contacts are created automatically. Returning contacts get their board item updated with every new message. The activity feed on each item becomes a full log of the conversation.
+
+<Note>
+  This workflow uses Monday's **Find Matching Item** block to prevent duplicate items. Phone numbers are matched in E.164 format (e.g. `+34612345678`) — make sure your mobile column stores numbers in the same format.
+</Note>
 
 ---
 
-### Example 2 — Keep existing items in sync with every message
+### Example 2 — Log New Outbound Contacts as Monday Items
 
-**Goal:** For ongoing conversations, update the relevant Monday item each time a message is sent or received — and create it automatically if it doesn't exist yet.
+**What it does:** The moment your team sends a WhatsApp message to a contact that doesn't yet exist in WhatsAble, this workflow automatically creates a Monday item on your board and logs the opening message as a board activity update.
 
-**Trigger:** When New Message Received or Sent in WhatsApp
+**Trigger:** When New Outgoing Chat Created
+
+**Workflow structure:**
+
+- Step 1 — Trigger: When you send a message to a new WhatsApp contact
+- Step 2 — Create item on the Development board
+- Step 3 — Create update on the new item (Item ID from Step 2)
+
+<Frame caption="Log New Outbound Contacts as Monday Items — workflow with Create Item and Create Update">
+  <img src="/images/monday/example2.png" alt="Workflow: Log New Outbound Contacts as Monday Items" />
+</Frame>
+
+**How to build it:**
 
 <Steps>
-  <Step title="Add trigger and find matching item">
-    1. Create a new workflow → select **When New Message Received or Sent in WhatsApp**
-    2. Add a **Find Matching Item** block (Monday native):
-       - **Board:** Your target board
-       - **Column to match:** Phone / Mobile
-       - **Value:** `{phone}` from Step 1
-       - **If multiple matches:** Last Created Item
+  <Step title="Add trigger and Create Item">
+    1. Open **Workflow Builder** → **Create Workflow**
+    2. Add trigger → search *WhatsAble* → select **When New Outgoing Chat Created**
+    3. Add **Create Item** (Monday native):
+       - **Board:** your target board
+       - **Group:** your preferred group (e.g. Leads, Prospects)
+       - Map **Name** → `{name}`, **Phone** → `{phone}`, **Country** → `{country}`, **Label** → `{label}`, **Sent By** → `{sent_by}`, **Last Message Time** → `{last_message_time}`, **AI Active** → `{ai_enabled}`
   </Step>
-  <Step title="Configure branches">
-    3. **If Found** branch:
-       - Add **Change Column Value** to update status, label, AI state, last message time, etc.
-       - Add **Create Update** with `{message}` to log the message in the activity feed
-    4. **If Not Found** branch:
-       - Add **Create Item** — map all fields as in Example 1
-       - Add **Create Update** with `{message}`
+  <Step title="Add Create Update and publish">
+    4. Add **Create Update**:
+       - **Item:** Item ID from Step 2
+       - **Update body:** `{message}` from Step 1
     5. Click **Publish**
   </Step>
 </Steps>
 
-**Result:** Every WhatsApp message either updates an existing Monday item or creates a new one — no duplicates, always current.
+**Result:** Every new outbound conversation your team initiates is instantly captured in Monday — complete with the contact's details and the first message your team sent. The `sent_by` field tells you which team member or automation initiated the conversation.
+
+<Note>
+  This trigger fires **only once per contact** — the first time you message them. If the contact already exists in WhatsAble, this workflow will not fire. For ongoing message tracking, combine this workflow with Example 1.
+</Note>
 
 ---
 
-### Example 3 — Send WhatsApp template when status changes
+### Example 3 — Notify Customer via WhatsApp on Status Change
 
-**Goal:** When a board item's status changes to *Done*, automatically send the contact a WhatsApp confirmation message.
+**What it does:** When a Monday item's status column changes, this workflow automatically sends the contact an approved WhatsApp template message. Use it to notify customers when their order is shipped, their ticket is resolved, their proposal is ready, or any other status-driven event.
 
-**Trigger:** Monday native — *When status changes to* → **Done**
+**Trigger:** Monday native — When status changes to something
+
+**Workflow structure:**
+
+- Step 1 — Trigger: When status changes to [value] (Monday native)
+- Step 2 — Send a template message (WhatsAble action)
+
+<Frame caption="Notify Customer via WhatsApp on Status Change — workflow with status trigger and Send Template Message">
+  <img src="/images/monday/example3.png" alt="Workflow: Notify Customer via WhatsApp on Status Change" />
+</Frame>
+
+**How to build it:**
 
 <Steps>
-  <Step title="Configure workflow">
-    1. Create a new workflow → use Monday's default **When status changes to** trigger
-    2. Select your **Status** column and set the value to **Done**
-    3. Add WhatsAble action **Send Template Message**:
+  <Step title="Add trigger">
+    1. Open **Workflow Builder** → **Create Workflow**
+    2. Add trigger → use Monday's default **When status changes to something**:
+       - Select your **Status** column
+       - Set the value to the status that should fire the workflow (e.g. Done, Shipped, Resolved)
+  </Step>
+  <Step title="Add Send Template Message and publish">
+    3. Add WhatsAble action **Send a Template Message**:
        - Select your approved template from the dropdown
-       - Map template variables — e.g. `{{1}}` → **Name** column
+       - Map each template variable (e.g. `{{1}}`) to a board column — typically the contact's name
        - Map **Phone Number** → your board's phone/mobile column
     4. Click **Publish**
   </Step>
 </Steps>
 
-**Result:** The moment your team marks an item as Done, the contact receives a WhatsApp message — no manual follow-up needed.
+**Result:** The moment your team moves an item to the configured status, the contact automatically receives a WhatsApp message — no manual outreach required.
+
+<Tip>
+  You can create multiple versions of this workflow for different status values — one for *Shipped*, another for *Resolved*, another for *Awaiting Payment* — each sending a different approved template.
+</Tip>
+
+<Warning>
+  Only **Meta-approved** WhatsApp Business templates can be sent via this action. Make sure your template is approved before publishing the workflow, or the action will fail silently.
+</Warning>
 
 ---
 
