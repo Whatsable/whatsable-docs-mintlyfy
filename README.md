@@ -24,7 +24,7 @@ WhatsAble provides enterprise-grade WhatsApp automation solutions for business c
 - **Pricing**: Subscription or Pay-as-you-go
 - **Dashboard**: [https://notifier.whatsable.app](https://notifier.whatsable.app/sign-up)
 
-### 🟣 Notifier System
+### 🟣 Notifyer System
 **Enterprise Communication Solution**
 - **Best For**: Professional businesses with own brand
 - **Features**: Real-time chat, brand messaging, two-way communication
@@ -53,7 +53,7 @@ whatsable-docs-mintlyfy/
 ├── guides/                 # Product guides and tutorials
 │   ├── whatsable/         # WhatsAble product guides
 │   ├── notifier/          # Notifier product guides
-│   ├── notifier-system/   # Notifier System guides
+│   ├── notifyer-system/   # Notifyer System guides
 │   ├── error-handling.mdx
 │   ├── rate-limits.mdx
 │   └── webhooks.mdx
@@ -171,8 +171,7 @@ The documentation is organized into the following sections:
 ### API Reference Tab
 
 - **WhatsAble API**: Complete OpenAPI documentation
-- **Notifier API**: Complete OpenAPI documentation
-- **Notifier System API**: Complete OpenAPI documentation
+- **Notifyer System API**: Complete OpenAPI documentation
 
 ## 🔧 Configuration
 

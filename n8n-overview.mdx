@@ -1,6 +1,6 @@
 ---
 title: 'WhatsAble Suite with n8n'
-description: 'Integrate n8n with the WhatsAble Suite (WhatsAble, Notifier, and Notifyer System) for powerful messaging automation'
+description: 'Integrate n8n with the WhatsAble Suite (WhatsAble and Notifyer System) for powerful messaging automation'
 icon: 'scroll'
 ---
 
@@ -16,7 +16,7 @@ icon: 'scroll'
 
 ## Overview
 
-The WhatsAble Suite comprises three powerful messaging platforms—WhatsAble, Notifier, and Notifyer System—each designed to meet different business needs while integrating perfectly with n8n's workflow automation capabilities.
+The WhatsAble Suite comprises powerful messaging platforms—WhatsAble and Notifyer System—each designed to meet different business needs while integrating perfectly with n8n's workflow automation capabilities.
 
 <Info>
   This guide introduces the WhatsAble Suite and its integration with n8n, helping you select the right platform from the suite for your specific business requirements.
@@ -24,7 +24,7 @@ The WhatsAble Suite comprises three powerful messaging platforms—WhatsAble, No
 
 ## The WhatsAble Suite
 
-The WhatsAble Suite consists of three complementary messaging platforms that integrate with n8n, each designed for different business needs:
+The WhatsAble Suite consists of complementary messaging platforms that integrate with n8n, each designed for different business needs:
 
 <CardGroup cols={2}>
   <Card href="https://docs.whatsable.app/guides/whatsable/n8n" className="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-50 to-white hover:shadow-lg transition-all duration-300 h-full">
@@ -42,6 +42,7 @@ The WhatsAble Suite consists of three complementary messaging platforms that int
     </div>
   </Card>
 
+  {/* Notifier by WhatsAble
   <Card href="https://docs.whatsable.app/guides/notifier/n8n" className="relative overflow-hidden rounded-xl bg-gradient-to-br from-purple-50 to-white hover:shadow-lg transition-all duration-300 h-full">
     <div className="absolute top-0 right-0 w-64 h-64 bg-purple-100 rounded-full -mr-32 -mt-32 opacity-50"></div>
     <div className="relative p-6 space-y-4">
@@ -56,19 +57,20 @@ The WhatsAble Suite consists of three complementary messaging platforms that int
       <p className="text-gray-700 leading-relaxed">The Notifier Bot offers an accessible entry point for businesses looking to automate their WhatsApp communications with external contacts.</p>
     </div>
   </Card>
+  */}
 
-  <Card href="https://docs.whatsable.app/guides/notifier-system/n8n-overview" className="relative overflow-hidden rounded-xl bg-gradient-to-br from-green-50 to-white hover:shadow-lg transition-all duration-300 h-full">
+  <Card href="https://docs.whatsable.app/guides/notifyer-system/n8n-overview" className="relative overflow-hidden rounded-xl bg-gradient-to-br from-green-50 to-white hover:shadow-lg transition-all duration-300 h-full">
     <div className="absolute top-0 right-0 w-64 h-64 bg-green-100 rounded-full -mr-32 -mt-32 opacity-50"></div>
     <div className="relative p-6 space-y-4">
       <div className="flex justify-center mb-6">
         <img 
           src="https://res.cloudinary.com/subframe/image/upload/v1732805023/uploads/4086/ugfj4rhxhdoo4kvhbbg5.png" 
-          alt="Notifier System Logo" 
+          alt="Notifyer System Logo" 
           className="h-20 w-auto transform hover:scale-105 transition-transform duration-300"
         />
       </div>
       <h3 className="text-2xl font-bold text-center text-green-700 mb-4">Notifyer System</h3>
-      <p className="text-gray-700 leading-relaxed">Our most comprehensive solution, the Notifier System provides complete messaging capabilities for businesses seeking to communicate with customers and leads while maintaining professional branding.</p>
+      <p className="text-gray-700 leading-relaxed">Our most comprehensive solution, the Notifyer System provides complete messaging capabilities for businesses seeking to communicate with customers and leads while maintaining professional branding.</p>
     </div>
   </Card>
   {/*<Card title="Get Inspiration" icon="stars" href="https://mintlify.com/customers">
@@ -105,7 +107,6 @@ Selecting the optimal platform from the WhatsAble Suite depends on your specific
       <tr>
         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Feature</th>
         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">WhatsAble</th>
-        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Notifier</th>
         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Notifyer System</th>
       </tr>
     </thead>
@@ -113,43 +114,43 @@ Selecting the optimal platform from the WhatsAble Suite depends on your specific
       <tr>
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Target Business Size</td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Small & Startups</td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Medium</td>
+        {/* Notifier: Medium */}
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Enterprise</td>
       </tr>
       <tr>
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">n8n Integration Ease</td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Very Simple</td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Simple</td>
+        {/* Notifier: Simple */}
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Moderate</td>
       </tr>
       <tr>
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Business Verification</td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Not Required</td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Basic</td>
+        {/* Notifier: Basic */}
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Full Official Verification</td>
       </tr>
       <tr>
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Message Templates</td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">No</td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Basic</td>
+        {/* Notifier: Basic */}
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Advanced</td>
       </tr>
       <tr>
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Media Support</td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Basic</td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Standard</td>
+        {/* Notifier: Standard */}
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Advanced</td>
       </tr>
       <tr>
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Pricing Model</td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Subscription</td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Subscription or Pay-as-you-go</td>
+        {/* Notifier: Subscription or Pay-as-you-go */}
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Enterprise Pricing</td>
       </tr>
       <tr>
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Free Trial</td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">7 days</td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Available</td>
+        {/* Notifier: Available */}
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Contact Sales</td>
       </tr>
     </tbody>
@@ -158,7 +159,7 @@ Selecting the optimal platform from the WhatsAble Suite depends on your specific
 
 ## Integrating the WhatsAble Suite with n8n
 
-All three platforms in the WhatsAble Suite integrate with n8n through a similar workflow pattern:
+Both platforms in the WhatsAble Suite integrate with n8n through a similar workflow pattern:
 
 <Frame caption="Introducing the New Features of N8N Nodes Version 2.3.3">
   <iframe 
@@ -226,10 +227,8 @@ Here's how a simple order confirmation workflow might look using the WhatsAble S
     B --> C[Format Message]
     C --> D{Select Suite Platform}
     D -->|WhatsAble| E[WhatsAble Node]
-    D -->|Notifier| F[Notifier Node]
     D -->|Notifyer System| G[Notifyer System Node]
     E --> H[Send Confirmation]
-    F --> H
     G --> H
     H --> I[Update Order Status]
   ```
@@ -273,14 +272,14 @@ Here's how a simple order confirmation workflow might look using the WhatsAble S
 
 Ready to enhance your messaging capabilities with the WhatsAble Suite and n8n? Follow our platform-specific integration guides:
 
-<CardGroup cols={3}>
+<CardGroup cols={2}>
   <Card title="WhatsAble + n8n" icon="rocket" href="https://docs.whatsable.app/guides/whatsable/n8n">
     Quick setup with personal numbers - ideal for small businesses and solopreneurs looking for simple integration.
   </Card>
-  <Card title="Notifier + n8n" icon="bell" href="https://docs.whatsable.app/guides/notifier/n8n">
+  {/* <Card title="Notifier + n8n" icon="bell" href="https://docs.whatsable.app/guides/notifier/n8n">
     Business-focused messaging with customization options for growing companies requiring more advanced features.
-  </Card>
-  <Card title="Notifyer System + n8n" icon="building" href="https://docs.whatsable.app/guides/notifier-system/n8n-overview">
+  </Card> */}
+  <Card title="Notifyer System + n8n" icon="building" href="https://docs.whatsable.app/guides/notifyer-system/n8n-overview">
     Enterprise-grade messaging solution with advanced template capabilities and robust API features.
   </Card>
 </CardGroup>
@@ -304,7 +303,7 @@ Ready to enhance your messaging capabilities with the WhatsAble Suite and n8n? F
     <p>It depends on which platform in the WhatsAble Suite you choose:</p>
     <ul className="list-disc pl-6">
       <li><strong>WhatsAble:</strong> Works with regular numbers - no business account required</li>
-      <li><strong>Notifier:</strong> Requires a business number for full functionality</li>
+      {/* <li><strong>Notifier:</strong> Requires a business number for full functionality</li> */}
       <li><strong>Notifyer System:</strong> Requires complete business API integration</li>
     </ul>
   </Accordion>
@@ -333,7 +332,7 @@ Ready to enhance your messaging capabilities with the WhatsAble Suite and n8n? F
     <p>Yes, all platforms in the WhatsAble Suite support dynamic content from n8n workflows:</p>
     <ul className="list-disc pl-6">
       <li><strong>WhatsAble:</strong> Use variables directly in message content with no restrictions</li>
-      <li><strong>Notifier:</strong> Supports variables in message body and media captions</li>
+      {/* <li><strong>Notifier:</strong> Supports variables in message body and media captions</li> */}
       <li><strong>Notifyer System:</strong> Offers template variables for approved templates and regular variables for non-template messages</li>
     </ul>
   </Accordion>

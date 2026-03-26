@@ -1,14 +1,14 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Notifier System API",
-    "description": "Notifier System API Documentation - A comprehensive API for sending WhatsApp messages and managing templates",
+    "title": "Notifyer System API",
+    "description": "Notifyer System API Documentation - A comprehensive API for sending WhatsApp messages and managing templates",
     "version": "1.0.0"
   },
   "servers": [
     {
       "url": "https://api.insightssystem.com",
-      "description": "Notifier System API"
+      "description": "Notifyer System API"
     }
   ],
   "paths": {
@@ -175,7 +175,7 @@
       "BearerAuth": {
         "type": "http",
         "scheme": "bearer",
-        "description": "Your Notifier System API Token"
+        "description": "Your Notifyer System API Token"
       }
     },
     "schemas": {

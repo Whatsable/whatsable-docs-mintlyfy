@@ -1,9 +1,9 @@
 {
   "asyncapi": "3.0.0",
   "info": {
-    "title": "Notifier System WebSocket API",
+    "title": "Notifyer System WebSocket API",
     "version": "1.0.0",
-    "description": "Real-time WebSocket API for Notifier System, enabling live message updates and notifications"
+    "description": "Real-time WebSocket API for Notifyer System, enabling live message updates and notifications"
   },
   "servers": {
     "production": {
