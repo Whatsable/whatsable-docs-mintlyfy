@@ -6,7 +6,7 @@ This repository contains the complete documentation for the WhatsAble suite of p
 
 ## 📚 About WhatsAble
 
-WhatsAble provides enterprise-grade WhatsApp automation solutions for business communication. The platform offers three specialized products designed to meet different business needs:
+WhatsAble provides enterprise-grade WhatsApp automation solutions for business communication. The platform offers two specialized products designed to meet different business needs:
 
 ### 🟢 WhatsAble
 **Internal Communication Solution**
@@ -15,14 +15,6 @@ WhatsAble provides enterprise-grade WhatsApp automation solutions for business c
 - **Identity**: WhatsAble branding
 - **Pricing**: Subscription-based
 - **Dashboard**: [https://dashboard.whatsable.app](https://dashboard.whatsable.app/signin)
-
-### 🔵 Notifier by WhatsAble
-**Starter Automation Solution**
-- **Best For**: Professional businesses starting with automation
-- **Features**: Message analytics, open tracking, custom notifications
-- **Identity**: Notifier branding
-- **Pricing**: Subscription or Pay-as-you-go
-- **Dashboard**: [https://notifier.whatsable.app](https://notifier.whatsable.app/sign-up)
 
 ### 🟣 Notifyer System
 **Enterprise Communication Solution**
@@ -52,14 +44,12 @@ whatsable-docs-mintlyfy/
 │   └── introduction.mdx    # API overview
 ├── guides/                 # Product guides and tutorials
 │   ├── whatsable/         # WhatsAble product guides
-│   ├── notifier/          # Notifier product guides
 │   ├── notifyer-system/   # Notifyer System guides
 │   ├── error-handling.mdx
 │   ├── rate-limits.mdx
 │   └── webhooks.mdx
 ├── openapi/               # OpenAPI specification files
 │   ├── whatsable-api.json
-│   ├── notifier-api.json
 │   └── notifier-system-api.json
 ├── images/                # Documentation images and assets
 ├── logo/                  # Brand logos (light/dark variants)
@@ -150,13 +140,7 @@ The documentation is organized into the following sections:
    - n8n Integration
    - API Documentation
 
-3. **Notifier by WhatsAble**
-   - Zapier Integration
-   - Make Integration
-   - n8n Integration
-   - API Documentation
-
-4. **Notifyer System**
+3. **Notifyer System**
    - Embedding Process
    - Zapier Overview
    - Make Overview
