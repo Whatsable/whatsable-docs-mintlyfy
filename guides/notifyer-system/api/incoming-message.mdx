@@ -207,16 +207,88 @@ You can programmatically manage your webhook endpoints using our API.
 
 ### Create Webhook Endpoint
 
-Register a new webhook endpoint to receive incoming message notifications.
+`POST https://api.insightssystem.com/api:qh9OQ3OW/webhook/dev/create`
+
+Register a new webhook endpoint to receive incoming message notifications. Send a valid **Bearer** token (same credential used for the dashboard).
+
+#### Request Body
+
+<ParamField body="webhooks" type="string" required>
+  Full HTTPS URL of your endpoint.
+</ParamField>
+
+<ParamField body="status" type="boolean" required>
+  Whether the webhook is enabled.
+</ParamField>
+
+<ParamField body="incoming" type="boolean" required>
+  Incoming message trigger on/off.
+</ParamField>
+
+<ParamField body="schedule_activity" type="boolean" required>
+  Schedule activity trigger on/off. When enabled, your bot can send multiple sequential messages with natural delays between them — useful for simulating human-like conversation flow.
+</ParamField>
+
+**How to enable in the dashboard**
+
+Navigate to **Incoming Webhooks**, click the settings icon next to your webhook, then enable **Schedule Activity**. A dropdown will appear where you can select your preferred delay duration between messages.
+
+<Frame>
+  <img src="/images/how-to-delay.gif" alt="How to enable Schedule Activity and set delay duration" />
+</Frame>
+
+**Example workflow**
+
+When a user sends an incoming message, you can respond with a sequence of messages each sent after a specified delay:
+
+```json
+{
+  "messages": [
+    {
+      "text": "Great! Let me check available slots for you...",
+      "delay": 0
+    },
+    {
+      "text": "I can see openings on Monday and Wednesday.",
+      "delay": 2000
+    },
+    {
+      "text": "Which day works better for you?",
+      "delay": 3500
+    }
+  ]
+}
+```
+
+Set `waiting_duration` to the maximum delay window you need. When `schedule_activity` is `false`, set `waiting_duration` to `0`.
+
+<ParamField body="waiting_duration" type="number" required>
+  How long (in **seconds**) to wait for schedule activity when `schedule_activity` is `true`. Set to `0` when schedule activity is off.
+
+  Dashboard presets: `15`, `30`, `60`, `1800`, `3600`, `18000`, `36000`, `86400`, `172800`, `259200`, `432000`, `604800`, `1209600`, `2592000`, `5184000` (15 seconds → 2 months). Prefer these values if mirroring the app UI.
+</ParamField>
+
+<ParamField body="active_signature" type="boolean" required>
+  If `true`, enables request signing. The server returns a `signature_secret` **once** in the response — copy and store it immediately, as it will not be shown again.
+</ParamField>
+
+<Frame>
+  <img src="/images/enable-webhook-signature.png" alt="Webhook signature toggle in the Add Endpoint dialog" />
+</Frame>
 
 <CodeGroup>
 ```bash cURL
 curl -X POST \
   https://api.insightssystem.com/api:qh9OQ3OW/webhook/dev/create \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -H 'Authorization: Bearer YOUR_TOKEN' \
   -d '{
-    "url": "https://your-domain.com/api/webhooks/whatsapp"
+    "webhooks": "https://your-domain.com/api/webhooks/whatsapp",
+    "status": true,
+    "incoming": true,
+    "schedule_activity": false,
+    "waiting_duration": 0,
+    "active_signature": false
   }'
 ```
 
@@ -228,12 +300,17 @@ async function createWebhook() {
     const response = await axios.post(
       'https://api.insightssystem.com/api:qh9OQ3OW/webhook/dev/create',
       {
-        url: "https://your-domain.com/api/webhooks/whatsapp"
+        webhooks: "https://your-domain.com/api/webhooks/whatsapp",
+        status: true,
+        incoming: true,
+        schedule_activity: false,
+        waiting_duration: 0,
+        active_signature: false
       },
       {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer YOUR_API_KEY'
+          'Authorization': 'Bearer YOUR_TOKEN'
         }
       }
     );
@@ -254,11 +331,16 @@ url = "https://api.insightssystem.com/api:qh9OQ3OW/webhook/dev/create"
 
 headers = {
     "Content-Type": "application/json",
-    "Authorization": "Bearer YOUR_API_KEY"
+    "Authorization": "Bearer YOUR_TOKEN"
 }
 
 data = {
-    "url": "https://your-domain.com/api/webhooks/whatsapp"
+    "webhooks": "https://your-domain.com/api/webhooks/whatsapp",
+    "status": True,
+    "incoming": True,
+    "schedule_activity": False,
+    "waiting_duration": 0,
+    "active_signature": False
 }
 
 response = requests.post(url, headers=headers, json=data)
@@ -266,8 +348,96 @@ print(response.json())
 ```
 </CodeGroup>
 
+#### Response
+
+Returns a JSON object for the created webhook row.
+
+<ResponseField name="id" type="number">
+  Webhook ID.
+</ResponseField>
+
+<ResponseField name="status" type="boolean">
+  Whether the webhook is enabled.
+</ResponseField>
+
+<ResponseField name="incoming" type="boolean">
+  Incoming message trigger.
+</ResponseField>
+
+<ResponseField name="outgoing" type="boolean">
+  Outgoing message trigger.
+</ResponseField>
+
+<ResponseField name="webhooks" type="string">
+  Stored endpoint URL.
+</ResponseField>
+
+<ResponseField name="created_at" type="number">
+  Unix timestamp in milliseconds.
+</ResponseField>
+
+<ResponseField name="waiting_duration" type="number">
+  Schedule activity wait time in seconds.
+</ResponseField>
+
+<ResponseField name="schedule_activity" type="boolean">
+  Schedule activity flag.
+</ResponseField>
+
+<ResponseField name="signature_secret" type="string | null">
+  When `active_signature` was `true`: a **one-time** secret string — copy and store it immediately, it will not be retrievable again. When `active_signature` was `false`: `null`.
+</ResponseField>
+
+<CodeGroup>
+```json With Signature (active_signature: true)
+{
+  "id": 1205,
+  "status": true,
+  "incoming": true,
+  "outgoing": false,
+  "webhooks": "https://your-domain.com/api/webhooks/whatsapp",
+  "created_at": 1775471874139,
+  "signature_secret": "<one-time secret — copy immediately>",
+  "waiting_duration": 0,
+  "schedule_activity": false
+}
+```
+
+```json Without Signature (active_signature: false)
+{
+  "id": 1205,
+  "status": true,
+  "incoming": true,
+  "outgoing": false,
+  "webhooks": "https://your-domain.com/api/webhooks/whatsapp",
+  "created_at": 1775471874139,
+  "signature_secret": null,
+  "waiting_duration": 0,
+  "schedule_activity": false
+}
+```
+</CodeGroup>
+
 <Warning>
-Always verify webhook signatures to ensure the authenticity of incoming requests. This prevents malicious actors from sending fraudulent events to your endpoint.
+When `active_signature` is `true`, the `signature_secret` is returned **only once** at creation time. Store it securely — it cannot be retrieved again. Use it to verify the authenticity of incoming webhook requests.
+</Warning>
+
+### Webhook Signature Verification
+
+When a webhook is created with `active_signature: true`, every request our system sends to your endpoint will include an **`X-Webhook-Signature`** header. Use it to confirm the request genuinely came from us and was not tampered with.
+
+| Header                | Example value |
+|-----------------------|---------------|
+| `X-Webhook-Signature` | `RNEefV2V_tiDZeiOpeqMzWsR3X4zGOxIYARIF5-Ia2MXWIgT48jO-M4A1-bgr9bxdoHy5vb7azy_Vd-Gsp4qoAVhQCVyWZxhD1ZNJTQi9VNezJ6C7mnPy--osqcDSq1bfjjppAXBlyenWIa8_506ez5Z92p-eGucalu3-1g6wOk` |
+
+The value is derived from the `signature_secret` returned at creation time. Compare it in your endpoint handler to validate each incoming request.
+
+<Info>
+If `active_signature` was `false` when the webhook was created, this header will **not** be present in requests sent to your endpoint.
+</Info>
+
+<Warning>
+Never log or expose your `signature_secret` in client-side code or public repositories. If it is compromised, delete the webhook and create a new one with a fresh secret.
 </Warning>
 
 ## Troubleshooting
@@ -279,9 +449,17 @@ Always verify webhook signatures to ensure the authenticity of incoming requests
     - Ensure proper SSL certificate configuration
     - Verify your webhook is enabled in the dashboard
   </Accordion>
+  <Accordion title='"Same webhook exist" error when creating a webhook'>
+    Each endpoint URL must be unique. If you submit a `webhooks` URL that is already registered, the API will return a **"Same webhook exist"** error.
+
+    To resolve this:
+    - Check your existing webhooks in the **Developer → Incoming Webhooks** tab of the dashboard to confirm whether the URL is already registered.
+    - If you want to update settings on an existing webhook (e.g. toggle `incoming`, change `waiting_duration`), use the update/edit endpoint instead of re-creating it.
+    - If you genuinely need a fresh webhook at the same URL, delete the existing one first, then create a new one.
+  </Accordion>
 </AccordionGroup>
 
-## FAQs
+{/* ## FAQs
 
 <AccordionGroup>
   <Accordion title="Can I receive notifications for all WhatsApp account events?">
@@ -296,7 +474,7 @@ Always verify webhook signatures to ensure the authenticity of incoming requests
   <Accordion title="How can I test webhook delivery?">
     Use the "Test Webhook" feature in the Developer section of your dashboard to send a sample webhook payload to your endpoint.
   </Accordion>
-</AccordionGroup>
+</AccordionGroup> */}
 
 <Card title="Need assistance?" icon="headset" href="mailto:support@whatsable.app">
   Our technical support team is available to assist with webhook configuration, payload handling, and integration questions.
