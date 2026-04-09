@@ -62,10 +62,6 @@ headers: {
   The type of message to send. Must be one of: `text`, `image`, `video`, `audio`, `document`.
 </ParamField>
 
-<ParamField body="api_key" type="string" required>
-  Your API key for authentication (also required in request body).
-</ParamField>
-
 <ParamField body="recipient_type" type="string" default="individual">
   The type of recipient. Always use "individual" for single recipients.
 </ParamField>
@@ -217,7 +213,6 @@ The API returns a detailed response indicating whether the message was accepted 
           "body": "Hello! Thank you for contacting our support team. How can we help you today?",
           "preview_url": true
         },
-        "api_key": "YOUR_API_KEY",
         "recipient_type": "individual",
         "messaging_product": "whatsapp",
         "labels": ["support", "greeting"]
@@ -242,7 +237,6 @@ The API returns a detailed response indicating whether the message was accepted 
               body: 'Hello! Thank you for contacting our support team. How can we help you today?',
               preview_url: true
             },
-            api_key: apiKey,
             recipient_type: 'individual',
             messaging_product: 'whatsapp',
             labels: ['support', 'greeting']
@@ -273,7 +267,6 @@ The API returns a detailed response indicating whether the message was accepted 
             "body": "Hello! Thank you for contacting our support team. How can we help you today?",
             "preview_url": True
         },
-        "api_key": api_key,
         "recipient_type": "individual",
         "messaging_product": "whatsapp",
         "labels": ["support", "greeting"]
@@ -304,7 +297,6 @@ The API returns a detailed response indicating whether the message was accepted 
           "link": "https://storage.googleapis.com/your-bucket/product-demo.jpg",
           "caption": "Here'\''s a visual guide to help you get started with our product!"
         },
-        "api_key": "YOUR_API_KEY",
         "recipient_type": "individual",
         "messaging_product": "whatsapp",
         "labels": ["support", "tutorial"]
@@ -313,7 +305,7 @@ The API returns a detailed response indicating whether the message was accepted 
 
     ```javascript Node.js
     const apiKey = 'YOUR_API_KEY';
-    
+
     async function sendImageMessage() {
       try {
         const response = await fetch('https://api.insightssystem.com/api:U9ztporN/send/message', {
@@ -329,13 +321,12 @@ The API returns a detailed response indicating whether the message was accepted 
               link: 'https://storage.googleapis.com/your-bucket/product-demo.jpg',
               caption: 'Here\'s a visual guide to help you get started with our product!'
             },
-            api_key: apiKey,
             recipient_type: 'individual',
             messaging_product: 'whatsapp',
             labels: ['support', 'tutorial']
           })
         });
-        
+
         const result = await response.json();
         console.log(result);
         return result;
@@ -363,7 +354,6 @@ The API returns a detailed response indicating whether the message was accepted 
           "link": "https://storage.googleapis.com/your-bucket/tutorial-video.mp4",
           "caption": "Watch this step-by-step tutorial to get started quickly!"
         },
-        "api_key": "YOUR_API_KEY",
         "recipient_type": "individual",
         "messaging_product": "whatsapp",
         "labels": ["support", "tutorial"]
@@ -372,7 +362,7 @@ The API returns a detailed response indicating whether the message was accepted 
 
     ```javascript Node.js
     const apiKey = 'YOUR_API_KEY';
-    
+
     async function sendVideoMessage() {
       try {
         const response = await fetch('https://api.insightssystem.com/api:U9ztporN/send/message', {
@@ -388,13 +378,12 @@ The API returns a detailed response indicating whether the message was accepted 
               link: 'https://storage.googleapis.com/your-bucket/tutorial-video.mp4',
               caption: 'Watch this step-by-step tutorial to get started quickly!'
             },
-            api_key: apiKey,
             recipient_type: 'individual',
             messaging_product: 'whatsapp',
             labels: ['support', 'tutorial']
           })
         });
-        
+
         const result = await response.json();
         console.log(result);
         return result;
@@ -419,7 +408,6 @@ The API returns a detailed response indicating whether the message was accepted 
             "link": "https://storage.googleapis.com/your-bucket/tutorial-video.mp4",
             "caption": "Watch this step-by-step tutorial to get started quickly!"
         },
-        "api_key": api_key,
         "recipient_type": "individual",
         "messaging_product": "whatsapp",
         "labels": ["support", "tutorial"]
@@ -449,7 +437,6 @@ The API returns a detailed response indicating whether the message was accepted 
         "audio": {
           "link": "https://storage.googleapis.com/your-bucket/voice-instructions.mp3"
         },
-        "api_key": "YOUR_API_KEY",
         "recipient_type": "individual",
         "messaging_product": "whatsapp",
         "labels": ["support", "voice-note"]
@@ -473,7 +460,6 @@ The API returns a detailed response indicating whether the message was accepted 
             audio: {
               link: 'https://storage.googleapis.com/your-bucket/voice-instructions.mp3'
             },
-            api_key: apiKey,
             recipient_type: 'individual',
             messaging_product: 'whatsapp',
             labels: ['support', 'voice-note']
@@ -503,7 +489,6 @@ The API returns a detailed response indicating whether the message was accepted 
         "audio": {
             "link": "https://storage.googleapis.com/your-bucket/voice-instructions.mp3"
         },
-        "api_key": api_key,
         "recipient_type": "individual",
         "messaging_product": "whatsapp",
         "labels": ["support", "voice-note"]
@@ -535,7 +520,6 @@ The API returns a detailed response indicating whether the message was accepted 
           "caption": "Here is the complete user manual you requested.",
           "filename": "Product_User_Manual_v2.1.pdf"
         },
-        "api_key": "YOUR_API_KEY",
         "recipient_type": "individual",
         "messaging_product": "whatsapp",
         "labels": ["support", "documentation"]
@@ -561,7 +545,6 @@ The API returns a detailed response indicating whether the message was accepted 
               caption: 'Here is the complete user manual you requested.',
               filename: 'Product_User_Manual_v2.1.pdf'
             },
-            api_key: apiKey,
             recipient_type: 'individual',
             messaging_product: 'whatsapp',
             labels: ['support', 'documentation']
@@ -593,7 +576,6 @@ The API returns a detailed response indicating whether the message was accepted 
             "caption": "Here is the complete user manual you requested.",
             "filename": "Product_User_Manual_v2.1.pdf"
         },
-        "api_key": api_key,
         "recipient_type": "individual",
         "messaging_product": "whatsapp",
         "labels": ["support", "documentation"]
@@ -665,7 +647,7 @@ The API returns a detailed response indicating whether the message was accepted 
     ```
   </Accordion>
   <Accordion title="401: Unauthorized">
-    Authentication failed. Verify that you're using a valid API key in both the header and request body.
+    Authentication failed. Verify that you're using a valid API key in the Authorization header.
     ```json
     {
       "success": false,
