@@ -1,0 +1,75 @@
+---
+title: "Auth & environment"
+description: "Environment variables, auth header modes (Console vs Chat vs Developer), and origin/CORS behavior used by Notifyer Agent Skills."
+icon: "key"
+---
+
+<Warning>
+Never commit tokens or API keys to Git. Treat `NOTIFYER_API_TOKEN` and the Developer API key as production secrets.
+</Warning>
+
+## Required environment variables
+
+| Variable | Required | Default | Used for |
+|---|---:|---|---|
+| `NOTIFYER_API_BASE_URL` | **yes** | — | Base API host (must be HTTPS), e.g. `https://api.insightssystem.com` |
+| `NOTIFYER_API_TOKEN` | **yes** (most scripts) | — | JWT returned by `setup-notifyer/scripts/login.js` |
+| `NOTIFYER_CHAT_ORIGIN` | no | `https://chat.notifyer-systems.com` | Origin header for chat endpoints when overridden |
+
+```bash
+export NOTIFYER_API_BASE_URL="https://api.insightssystem.com"
+export NOTIFYER_API_TOKEN="eyJ..."
+```
+
+## Auth modes (critical)
+
+Notifyer has **three auth modes** depending on the API surface. **The same JWT** is used for Console and Chat modes — only the header formatting differs.
+
+| Mode | Header | Where it’s used |
+|---|---|---|
+| **Console** | `Authorization: Bearer <jwt>` | `setup-notifyer` and `automate-notifyer` (most endpoints) |
+| **Chat** | `Authorization: <jwt>` (raw) | `chat-notifyer` and some web endpoints (labels/recipients/chat) |
+| **Developer** | `Authorization: <api_key>` (raw) | Make/Zapier/n8n modules + direct developer send APIs |
+
+<Tip>
+If you see HTTP 401 across many scripts, your JWT likely expired. Re-run `setup-notifyer/scripts/login.js` and re-export `NOTIFYER_API_TOKEN`.
+</Tip>
+
+## Origin headers & CORS behavior
+
+Many Xano endpoints enforce allowed origins. The skills’ shared HTTP client automatically sends a correct `Origin` header per mode:
+
+- Console-mode requests use `Origin: https://console.notifyer-systems.com`
+- Chat-mode requests use `Origin: https://chat.notifyer-systems.com` (override with `NOTIFYER_CHAT_ORIGIN`)
+
+This is important because “missing Origin” can cause silent or confusing auth failures on endpoints that validate it.
+
+## Persisting environment variables
+
+Add these exports to your shell profile:
+
+<CodeGroup>
+```bash
+# ~/.zshrc
+export NOTIFYER_API_BASE_URL="https://api.insightssystem.com"
+export NOTIFYER_API_TOKEN="eyJ..."
+```
+
+```bash
+# ~/.bashrc
+export NOTIFYER_API_BASE_URL="https://api.insightssystem.com"
+export NOTIFYER_API_TOKEN="eyJ..."
+```
+</CodeGroup>
+
+## Security notes for CLI usage
+
+<Warning>
+Passing secrets via CLI flags (like `--password`) can expose them via process lists (`ps aux`) on shared machines. Prefer using a password manager/secure terminal, and avoid logging stdout in shared CI environments.
+</Warning>
+
+## Related pages
+
+- [`setup-notifyer`](/guides/notifyer-system/agent-skills/setup-notifyer) (login, doctor, API key)
+- [`chat-notifyer`](/guides/notifyer-system/agent-skills/chat-notifyer) (chat origin and 24h window policy)
+- [Security](/guides/notifyer-system/agent-skills/security)

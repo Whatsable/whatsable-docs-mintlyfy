@@ -1,0 +1,133 @@
+---
+title: "setup-notifyer"
+description: "Account + workspace setup scripts: login, health checks, WhatsApp connection status, plans, team/roles, labels, and Developer API key."
+icon: "wrench"
+---
+
+<Tip>
+Start here. `setup-notifyer` provides authentication and **pre-flight validation** used by all other skills.
+</Tip>
+
+## What this skill covers
+
+`setup-notifyer` is used for:
+
+- Creating accounts and logging in (JWT acquisition)
+- Verifying token, plan status, and WhatsApp connection health
+- Managing team members, roles, and label assignment
+- Creating and managing workspace labels + keywords
+- Retrieving the **Developer API key** used by Make/Zapier/n8n modules
+
+## Setup
+
+```bash
+cd skills/setup-notifyer
+```
+
+Set env vars (see [Auth & environment](/guides/notifyer-system/agent-skills/auth-and-env)):
+
+```bash
+export NOTIFYER_API_BASE_URL="https://api.insightssystem.com"
+export NOTIFYER_API_TOKEN="eyJ..."  # after login
+```
+
+## Core workflows
+
+### 1) Login (get a JWT)
+
+```bash
+node scripts/login.js --email you@example.com --password "YourPassword@1"
+```
+
+Export `authToken` into `NOTIFYER_API_TOKEN`.
+
+### 2) Pre-flight health check (recommended before any automation)
+
+```bash
+node scripts/doctor.js --pretty
+```
+
+This checks:
+
+- Base URL is HTTPS
+- Token is valid via `/auth/me`
+- WhatsApp connection is **connected** and not **degraded**
+- Plan is in an allowed state
+
+### 3) WhatsApp connection checks
+
+```bash
+node scripts/get-connection-status.js --pretty
+```
+
+If connection state is stale after UI onboarding:
+
+```bash
+node scripts/refresh-connection.js --pretty
+```
+
+<Warning>
+Initial WhatsApp connection (embedded signup / QR scan) is **browser-only**. Scripts can manage a connection *after* it exists, but cannot complete first-time setup.
+</Warning>
+
+### 4) Plans & usage
+
+```bash
+node scripts/list-plans.js --pretty
+node scripts/get-user-plan.js --pretty
+```
+
+<Tip>
+If you’re guiding an automation that needs integrations or bots, gate it by plan status first using `get-user-plan.js`.
+</Tip>
+
+### 5) Team & roles
+
+```bash
+node scripts/list-members.js --labels --pretty
+node scripts/invite-member.js --name "John" --email john@co.com --password "Pass@1" --role "Team Member" --labels "Sales,Support"
+node scripts/update-member.js --id <id> --role Admin
+node scripts/remove-member.js --id <id> --confirm
+```
+
+Roles:
+
+- `Admin`
+- `Team Member (All Labels)`
+- `Team Member`
+
+### 6) Labels & keywords
+
+```bash
+node scripts/list-labels.js --pretty
+node scripts/create-label.js --label "Support" --keywords "help,issue,ticket"
+node scripts/update-label-keywords.js --id 5 --add "urgent"
+node scripts/delete-label.js --id 5 --confirm
+```
+
+## Developer API key (Make/Zapier/n8n)
+
+Retrieve the Developer API key:
+
+```bash
+node scripts/get-api-key.js --pretty
+```
+
+<Warning>
+The Developer API key is **not** the JWT token. It is used as `Authorization: <api_key>` (raw) by external tools and developer endpoints.
+</Warning>
+
+## Script index (high-signal)
+
+- **Auth**: `create-account.js`, `login.js`, `get-me.js`
+- **Health**: `doctor.js`
+- **Connection**: `get-connection-status.js`, `refresh-connection.js`
+- **Plans**: `list-plans.js`, `get-user-plan.js`
+- **Team**: `list-members.js`, `invite-member.js`, `update-member.js`, `remove-member.js`
+- **Labels**: `list-labels.js`, `create-label.js`, `update-label-keywords.js`, `delete-label.js`
+- **API key**: `get-api-key.js`
+
+## Next
+
+- Move to automation: [`automate-notifyer`](/guides/notifyer-system/agent-skills/automate-notifyer)
+- Or operate live chat: [`chat-notifyer`](/guides/notifyer-system/agent-skills/chat-notifyer)

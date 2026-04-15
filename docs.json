@@ -46,6 +46,20 @@
               "guides/notifyer-system/pipedrive-overview",
               "guides/notifyer-system/monday-overview",
               {
+                "group": "Agent Skills",
+                "pages": [
+                  "guides/notifyer-system/agent-skills/overview",
+                  "guides/notifyer-system/agent-skills/quickstart",
+                  "guides/notifyer-system/agent-skills/auth-and-env",
+                  "guides/notifyer-system/agent-skills/setup-notifyer",
+                  "guides/notifyer-system/agent-skills/automate-notifyer",
+                  "guides/notifyer-system/agent-skills/chat-notifyer",
+                  "guides/notifyer-system/agent-skills/use-cases",
+                  "guides/notifyer-system/agent-skills/troubleshooting",
+                  "guides/notifyer-system/agent-skills/security"
+                ]
+              },
+              {
                 "group": "API Documentation",
                 "pages": [
                   "guides/notifyer-system/api/get-templates",

@@ -1,0 +1,84 @@
+---
+title: "Agent Skills (Notifyer)"
+description: "What Notifyer Agent Skills are, what they enable, and how they map to setup, automation, and chat operations."
+icon: "sparkles"
+---
+
+<Tip>
+Agent Skills let AI coding agents (Cursor, OpenClaw, Claude Code, Copilot, etc.) authenticate into Notifyer and operate your workspace programmatically — using the same backend API surface as the Notifyer Console and Chat apps.
+</Tip>
+
+## What are Agent Skills?
+
+**Notifyer Agent Skills** are a set of **Node.js scripts + a `SKILL.md` instruction file** that teach compatible AI agents how to:
+
+- Authenticate into a Notifyer workspace
+- Validate prerequisites (connection, plan, token health)
+- Configure workspace infrastructure (labels, team, API key)
+- Manage automation primitives (templates, AI bots, broadcasts, webhooks, analytics)
+- Operate live chat workflows (recipients, messages, handoff, notes, scheduling)
+
+They follow the open [AgentSkills standard](https://agentskills.io/specification), which allows many agents to discover and load skills on demand.
+
+## How this fits inside Notifyer System docs
+
+Notifyer System can be operated via:
+
+<Tabs>
+  <Tab title="Developer API (integrations)">
+    Use API keys for Make/Zapier/n8n or your backend services. This is the best choice when you’re building **event-driven automations** and do not need to manage workspace configuration.
+  </Tab>
+  <Tab title="Agent Skills (operations)">
+    Use Agent Skills when you want an AI coding agent to **set up**, **configure**, or **operate** a Notifyer workspace end-to-end: onboarding, template lifecycle, broadcasts, webhooks, and live chat operations.
+  </Tab>
+  <Tab title="Console/Chat UI (manual)">
+    Use the web apps when you’re doing the initial WhatsApp onboarding, billing changes, or manual team operations.
+  </Tab>
+</Tabs>
+
+## Skill set overview (3 phases)
+
+The skills are designed as a progressive sequence.
+
+| Phase | Skill | Primary purpose |
+|---|---|---|
+| 1 | `setup-notifyer` | Authentication, workspace identity, WhatsApp connection status, plans, team/roles, labels, Developer API key |
+| 2 | `automate-notifyer` | Templates, AI bots, broadcasts, analytics/logs, webhooks |
+| 3 | `chat-notifyer` | Recipients, messaging, labels, AI/human handoff, scheduled sends, notes, conversation history |
+
+## What you can automate (examples)
+
+- **Workspace onboarding**: create labels, invite members, verify connection and plan, fetch the Developer API key.
+- **Template lifecycle**: create templates, monitor Meta approval status, use approved templates in broadcasts.
+- **Customer support ops**: fetch conversation context, take over from bot, respond, label, add notes, return to bot.
+- **Webhook configuration**: create dev and IO webhooks with HMAC signature, list and update triggers, rotate URLs.
+
+For end-to-end workflows, see [Use cases](/guides/notifyer-system/agent-skills/use-cases).
+
+## Important constraints (read before you automate)
+
+<Warning>
+Some actions are intentionally not scriptable:
+- First-time WhatsApp connection (embedded signup / QR scan) is **browser-only**.
+- Billing changes and Stripe flows are **browser-only**.
+- Meta template approval timing is **not controllable** via API.
+</Warning>
+
+## Next steps
+
+- Start with [Quickstart](/guides/notifyer-system/agent-skills/quickstart)
+- Configure [Auth & environment](/guides/notifyer-system/agent-skills/auth-and-env)
+- Dive into each skill:
+  - [`setup-notifyer`](/guides/notifyer-system/agent-skills/setup-notifyer)
+  - [`automate-notifyer`](/guides/notifyer-system/agent-skills/automate-notifyer)
+  - [`chat-notifyer`](/guides/notifyer-system/agent-skills/chat-notifyer)
+
+<CardGroup>
+  <Card
+    title="Whatsable/agent-skills-by-notifyer"
+    icon="github"
+    href="https://github.com/Whatsable/agent-skills-by-notifyer"
+  >
+    Official repository for Notifyer Agent Skills, including scripts, reference material, and `SKILL.md` entrypoints.
+  </Card>
+</CardGroup>

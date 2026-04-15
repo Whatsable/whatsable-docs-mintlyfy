@@ -1,0 +1,126 @@
+---
+title: "Use cases"
+description: "End-to-end playbooks: onboarding, templates, broadcasts, chat triage, and webhook-driven operations."
+icon: "layer-group"
+---
+
+## Workspace onboarding automation
+
+Goal: create a clean, operational workspace baseline that’s ready for automation and live chat.
+
+```bash
+# 1) Authenticate
+cd skills/setup-notifyer
+node scripts/login.js --email you@example.com --password "YourPassword@1"
+export NOTIFYER_API_TOKEN="eyJ..."
+
+# 2) Validate health
+node scripts/doctor.js --pretty
+
+# 3) Create labels
+node scripts/create-label.js --label "Sales" --keywords "pricing,quote,buy"
+node scripts/create-label.js --label "Support" --keywords "help,issue,ticket"
+node scripts/create-label.js --label "VIP"
+
+# 4) Invite team
+node scripts/invite-member.js --name "Amina" --email amina@co.com --password "Pass@1" --role "Team Member" --labels "Support"
+node scripts/invite-member.js --name "Omar" --email omar@co.com --password "Pass@1" --role "Team Member" --labels "Sales"
+
+# 5) Fetch Developer API key (for Make/Zapier/n8n)
+node scripts/get-api-key.js --pretty
+```
+
+## Template lifecycle management
+
+Goal: submit a template, track approval, then use it in a broadcast.
+
+```bash
+cd skills/automate-notifyer
+
+# Create template
+node scripts/create-template.js \
+  --name order_shipped \
+  --category UTILITY \
+  --body "Hi {{1}}, your order {{2}} has shipped!" \
+  --variables '{"1":"John","2":"#12345"}'
+
+# Poll status (also syncs PENDING from Meta)
+node scripts/list-templates.js --pretty
+
+# Use only after approved
+node scripts/list-templates.js --status approved --pretty
+```
+
+## Broadcast campaign management
+
+Goal: test + upload audience + schedule a bulk send.
+
+```bash
+cd skills/automate-notifyer
+
+node scripts/create-broadcast.js \
+  --name "Feb Promo" \
+  --template-id 42 \
+  --test-phone "+14155550123" \
+  --recipients ./recipients.csv \
+  --schedule "01/02/2026 10:00" \
+  --delivery-mode smart \
+  --delivery-size 4
+
+node scripts/list-broadcasts.js --status upcoming --pretty
+```
+
+## Live support triage loop
+
+Goal: find unread high-priority conversations, take over, respond, document, and return to bot.
+
+```bash
+cd skills/chat-notifyer
+
+# 1) Find unread VIP
+node scripts/filter-recipients-by-label.js --labels "VIP" --status unread --pretty
+
+# 2) Load context
+node scripts/get-recipient.js --phone 14155550123 --pretty
+node scripts/get-notes.js --phone 14155550123 --pretty
+node scripts/get-conversation.js --phone 14155550123 --pretty
+
+# 3) Take over + respond
+node scripts/set-handoff.js --phone 14155550123 --mode human
+node scripts/send-text.js --phone 14155550123 --text "Hi — I’m looking into this now."
+
+# 4) Record internal context + route
+node scripts/add-note.js --phone 14155550123 --append "Escalated — awaiting refund approval"
+node scripts/assign-label.js --phone 14155550123 --label "Escalated"
+
+# 5) Return to bot
+node scripts/set-handoff.js --phone 14155550123 --mode bot
+```
+
+## Pre-flight gating before any send
+
+These checks prevent most “why didn’t it send?” incidents.
+
+```bash
+# Workspace health: token + connection + plan
+cd skills/setup-notifyer
+node scripts/doctor.js --pretty
+
+# Recipient window state (templates always allowed; text/media need window open)
+cd ../chat-notifyer
+node scripts/get-recipient.js --phone 14155550123 --pretty
+```
+
+## Webhook-driven automation setup
+
+Goal: configure a webhook endpoint and secure it with HMAC signature.
+
+```bash
+cd skills/automate-notifyer
+
+node scripts/create-webhook.js --type dev \
+  --url "https://my.app/webhook" \
+  --incoming --outgoing --signature
+
+node scripts/list-webhooks.js --type dev --pretty
+```

@@ -1,0 +1,128 @@
+---
+title: "Troubleshooting"
+description: "Diagnose common failures (401, degraded WhatsApp connection, plan blocks, template status, 24h window, webhooks)."
+icon: "bug"
+---
+
+## First command to run
+
+Before debugging anything else:
+
+```bash
+cd skills/setup-notifyer
+node scripts/doctor.js --pretty
+```
+
+It validates the most common root causes in one pass (base URL, token, connection, plan).
+
+## Authentication failures (HTTP 401 / 403)
+
+### Token expired or missing
+
+Symptoms:
+
+- Most scripts return 401
+- `get-me.js` fails
+
+Fix:
+
+```bash
+cd skills/setup-notifyer
+node scripts/login.js --email you@example.com --password "YourPassword@1"
+export NOTIFYER_API_TOKEN="eyJ..."
+node scripts/get-me.js --pretty
+```
+
+### Wrong auth mode header
+
+Symptoms:
+
+- Console scripts work, chat scripts fail (or vice versa)
+
+What to know:
+
+- Console uses `Authorization: Bearer <jwt>`
+- Chat uses `Authorization: <jwt>` (raw)
+
+The skills handle this automatically, but custom wrappers often get it wrong. See [Auth & environment](/guides/notifyer-system/agent-skills/auth-and-env).
+
+## WhatsApp connection issues
+
+### `isConnected: false`
+
+Run:
+
+```bash
+cd skills/setup-notifyer
+node scripts/get-connection-status.js --pretty
+```
+
+If the number was just connected in the UI, refresh:
+
+```bash
+node scripts/refresh-connection.js --pretty
+```
+
+<Warning>
+If this is a first-time setup, you must complete the embedded signup / QR scan in the console UI. It is not scriptable.
+</Warning>
+
+### `degraded: true`
+
+This can mean Meta returned hidden errors that may cause silent send failures. Treat it as “not healthy” until resolved. Use the console UI to resolve Meta-side issues, then re-check status.
+
+## Plan blocks (features not available)
+
+Symptoms:
+
+- Developer API key exists but integrations/bots fail
+- Bot creation fails due to missing OpenAI key/settings
+
+Check:
+
+```bash
+cd skills/setup-notifyer
+node scripts/get-user-plan.js --pretty
+```
+
+## Template issues
+
+### Template not usable yet
+
+Templates must be `APPROVED` by Meta before use in automation/broadcasts.
+
+```bash
+cd skills/automate-notifyer
+node scripts/list-templates.js --pretty
+node scripts/list-templates.js --status approved --pretty
+```
+
+## Message send failures in chat
+
+### 24-hour window is closed
+
+If free text fails, check:
+
+```bash
+cd skills/chat-notifyer
+node scripts/get-recipient.js --phone 14155550123 --pretty
+```
+
+Fix: use a template send (`send-template.js`) until the recipient messages again.
+
+## Webhook issues
+
+### Wrong webhook type / id
+
+- Dev webhook id is **integer**
+- IO webhook id is a **text UUID**
+
+```bash
+cd skills/automate-notifyer
+node scripts/list-webhooks.js --type dev --pretty
+node scripts/list-webhooks.js --type io --pretty
+```
+
+### Signature secret lost
+
+If you created a webhook with `--signature`, the secret is shown only once. If you didn’t store it, create a new webhook and deprecate the old one.

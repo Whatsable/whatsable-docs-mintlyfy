@@ -1,0 +1,51 @@
+---
+title: "Security"
+description: "Security model and best practices for using Notifyer Agent Skills, JWTs, Developer API keys, and webhook signatures."
+icon: "shield"
+---
+
+## Secrets you must protect
+
+| Secret | What it does | Treat as |
+|---|---|---|
+| `NOTIFYER_API_TOKEN` (JWT) | Authenticates Console + Chat script access | Session secret |
+| Developer API key | Authenticates Make/Zapier/n8n + developer send endpoints | Long-lived API secret |
+| Webhook signature secret | Validates inbound webhook authenticity (HMAC) | Long-lived signing secret |
+
+<Warning>
+Do not store any of these in Git, client-side code, screenshots, or public pastebins.
+</Warning>
+
+## Recommended storage
+
+- **Local dev**: `.env` (gitignored) or your shell profile + a password manager
+- **CI/CD**: secrets manager (GitHub Actions secrets, Vercel env, 1Password, etc.)
+- **Servers**: environment variables provisioned at deploy time
+
+## CLI operational security
+
+### Avoid leaking passwords via process lists
+
+When using `--password` flags, be aware flags can show up in process lists while the script is running. On shared machines, consider running login in a private terminal session and avoid persistent command history.
+
+### Avoid logging tokens
+
+Some scripts print structured JSON to stdout by design. If you pipe outputs into logs, redact secrets.
+
+## Webhook authenticity
+
+If you enable `--signature` during webhook creation, Notifyer generates an HMAC secret. You should:
+
+- Store it immediately
+- Verify webhook payload signatures on your server
+- Rotate by creating a new webhook (if rotation is needed)
+
+<Tip>
+If you lose the signature secret, you generally cannot retrieve it again. Create a new webhook.
+</Tip>
+
+## Least privilege + operational controls
+
+- Prefer using an **Admin** token only when required (team, labels, bot defaults).
+- Use `setup-notifyer/scripts/doctor.js` as a gating step before production automation runs.
+- For incident response, revoke/rotate credentials in the UI where available and update your secrets store.

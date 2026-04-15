@@ -1,0 +1,126 @@
+---
+title: "chat-notifyer"
+description: "Live chat operations: recipients, messaging (text/template/attachments), labels, handoff, scheduling, notes, and conversation history."
+icon: "messages"
+---
+
+<Tip>
+Use `chat-notifyer` when you want an agent to operate active WhatsApp conversations (similar to `chat.notifyer-systems.com`) via scripts.
+</Tip>
+
+## Prerequisites
+
+- You have a valid JWT in `NOTIFYER_API_TOKEN` (from `setup-notifyer/scripts/login.js`)
+- WhatsApp connection is active (verify with `setup-notifyer/scripts/get-connection-status.js`)
+
+## Auth mode difference (don’t miss this)
+
+<Warning>
+Chat endpoints use **raw JWT** auth: `Authorization: <jwt>` (no `Bearer` prefix). Console endpoints use `Authorization: Bearer <jwt>`.
+</Warning>
+
+The shared client handles this automatically. See [Auth & environment](/guides/notifyer-system/agent-skills/auth-and-env).
+
+## The 24-hour window rule (critical)
+
+WhatsApp allows **free text** and **attachments** only within **24 hours** of a user’s last inbound message.
+
+| Window | Allowed |
+|---|---|
+| Open | Text ✓, Template ✓, Attachment ✓ |
+| Closed | Template only ✓ |
+
+Check window state:
+
+```bash
+node scripts/get-recipient.js --phone 14155550123 --pretty
+```
+
+`send-text.js` enforces this automatically and will refuse if the window is closed.
+
+## Common workflows
+
+### List/search recipients
+
+```bash
+node scripts/list-recipients.js --pretty
+node scripts/list-recipients.js --search "John" --pretty
+node scripts/list-recipients.js --status unread --pretty
+```
+
+### Filter recipients by label
+
+```bash
+node scripts/filter-recipients-by-label.js --labels "Support" --status unread --pretty
+```
+
+### Send a text message
+
+```bash
+node scripts/send-text.js --phone 14155550123 --text "Hello! How can I help?"
+```
+
+### Send a template message (works any time)
+
+```bash
+node scripts/send-template.js --list
+node scripts/send-template.js --phone 14155550123 --name order_confirm \
+  --variables '{"body1":"John","body2":"#12345"}'
+node scripts/send-template.js --phone 14155550123 --name order_confirm --dry-run
+```
+
+### Send an attachment
+
+```bash
+node scripts/send-attachment.js --phone 14155550123 --file ./invoice.pdf --pretty
+node scripts/send-attachment.js --phone 14155550123 --file ./photo.jpg --caption "Your order photo"
+```
+
+### Schedule a send
+
+```bash
+node scripts/send-template.js --phone 14155550123 --name order_confirm --schedule "25/01/2025 14:00"
+node scripts/list-scheduled.js --pretty
+node scripts/delete-scheduled.js --id 7 --confirm
+```
+
+### Labels (assign/remove)
+
+```bash
+node scripts/assign-label.js --phone 14155550123 --label "Support" --pretty
+node scripts/remove-label.js --phone 14155550123 --label "Support" --pretty
+```
+
+Labels must exist first (create via `setup-notifyer/create-label.js`).
+
+### AI ↔ Human handoff
+
+```bash
+node scripts/set-handoff.js --phone 14155550123 --mode human --pretty
+node scripts/set-handoff.js --phone 14155550123 --mode bot --pretty
+```
+
+Assign a specific bot:
+
+```bash
+node scripts/list-bots.js --pretty
+node scripts/assign-bot.js --phone 14155550123 --bot-id 5 --pretty
+```
+
+### Conversation + notes
+
+```bash
+node scripts/get-conversation.js --phone 14155550123 --pretty
+node scripts/get-conversation-log.js --phone 14155550123 --pretty
+node scripts/get-notes.js --phone 14155550123 --pretty
+node scripts/add-note.js --phone 14155550123 --append "Requested callback on 15 Feb"
+```
+
+<Tip>
+`get-conversation.js` returns the **full** thread (sent + received). `get-conversation-log.js` is **outbound-only** delivery history.
+</Tip>
+
+## Next
+
+- End-to-end operational playbooks: [Use cases](/guides/notifyer-system/agent-skills/use-cases)
+- If you hit send failures: [Troubleshooting](/guides/notifyer-system/agent-skills/troubleshooting)

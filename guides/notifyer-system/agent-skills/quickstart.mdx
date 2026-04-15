@@ -1,0 +1,108 @@
+---
+title: "Quickstart"
+description: "Install Notifyer Agent Skills and run the first health checks and API calls."
+icon: "rocket"
+---
+
+<Tip>
+This guide assumes **Node.js 18+**. The skills use native `fetch` and ESM and intentionally avoid third-party dependencies.
+</Tip>
+
+## Choose an installation path
+
+<Tabs>
+  <Tab title="Install via AgentSkills CLI (recommended)">
+    If your agent supports the AgentSkills ecosystem, install directly from the repository:
+
+    <CodeGroup>
+    ```bash
+    # Interactive — choose which skills to install
+    npx skills add whatsable/agent-skills-by-notifyer
+    ```
+
+    ```bash
+    # Install all 3 skills at once (no prompt)
+    npx skills add whatsable/agent-skills-by-notifyer --all
+    ```
+
+    ```bash
+    # Install only one skill
+    npx skills add whatsable/agent-skills-by-notifyer --skill chat-notifyer
+    ```
+    </CodeGroup>
+
+    <Tip>
+    If your goal is “just make my agent fully capable in Notifyer”, use `--all` so it can load `setup-notifyer`, `automate-notifyer`, and `chat-notifyer` as needed.
+    </Tip>
+  </Tab>
+  <Tab title="Manual clone (scripts only)">
+    ```bash
+    git clone https://github.com/Whatsable/agent-skills-by-notifyer
+    cd agent-skills-by-notifyer
+    ```
+
+    Each skill is self-contained under `skills/<skill-name>/`.
+  </Tab>
+</Tabs>
+
+## Set required environment variables
+
+You need:
+
+- `NOTIFYER_API_BASE_URL`
+- `NOTIFYER_API_TOKEN` (JWT from `setup-notifyer/scripts/login.js`)
+
+```bash
+export NOTIFYER_API_BASE_URL="https://api.insightssystem.com"
+export NOTIFYER_API_TOKEN="eyJ..."  # set after login
+```
+
+For deeper detail (auth modes, origins, and safety), see [Auth & environment](/guides/notifyer-system/agent-skills/auth-and-env).
+
+## Log in and capture a token
+
+```bash
+cd skills/setup-notifyer
+node scripts/login.js --email you@example.com --password "YourPassword@1"
+```
+
+The output includes `authToken`. Export it:
+
+```bash
+export NOTIFYER_API_TOKEN="eyJ..."
+```
+
+<Tip>
+If you’re also running the Notifyer Chat frontend locally for UI testing, use the pinned dev URL `http://localhost:5173/` as documented in `chat.notifyer_frontend/README.md`.
+</Tip>
+
+## Run a pre-flight health check
+
+Before running any automation or chat script, validate the account is in a healthy state.
+
+```bash
+cd skills/setup-notifyer
+node scripts/doctor.js --pretty
+```
+
+`doctor.js` validates, in one command:
+
+- Base URL is set and HTTPS
+- Token is valid (`/auth/me`)
+- WhatsApp connection is usable (`isConnected` + degraded detection)
+- Subscription is in an allowed state
+
+## Verify identity + WhatsApp connection
+
+```bash
+node scripts/get-me.js --pretty
+node scripts/get-connection-status.js --pretty
+```
+
+## Next steps (pick your goal)
+
+- **Workspace setup & infra**: [`setup-notifyer`](/guides/notifyer-system/agent-skills/setup-notifyer)
+- **Automation primitives**: [`automate-notifyer`](/guides/notifyer-system/agent-skills/automate-notifyer)
+- **Live chat ops**: [`chat-notifyer`](/guides/notifyer-system/agent-skills/chat-notifyer)
+
+If you’re stuck, see [Troubleshooting](/guides/notifyer-system/agent-skills/troubleshooting).

@@ -1,0 +1,142 @@
+---
+title: "automate-notifyer"
+description: "Automation scripts for templates, AI bots, broadcasts, analytics, and webhooks."
+icon: "gear"
+---
+
+<Tip>
+`automate-notifyer` builds on `setup-notifyer`. Always run `setup-notifyer/scripts/doctor.js` before sending templates, creating broadcasts, or configuring webhooks.
+</Tip>
+
+## What this skill covers
+
+- **Templates**: create/list/get/delete; monitor Meta approval lifecycle
+- **AI bots**: create/update/delete bots; set default bot
+- **Broadcasts**: create/schedule campaigns using template + recipient CSV
+- **Analytics & logs**: read rates, delivery rates, message logs
+- **Webhooks**: create/update/delete **dev** and **IO** webhooks; optional HMAC signatures
+
+## Prerequisites
+
+<Warning>
+Some features require a Pro or Agency plan (and an OpenAI key configured in Notifyer settings for bots). If you’re not sure, check with `setup-notifyer/scripts/get-user-plan.js`.
+</Warning>
+
+## Setup
+
+```bash
+cd skills/automate-notifyer
+export NOTIFYER_API_BASE_URL="https://api.insightssystem.com"
+export NOTIFYER_API_TOKEN="eyJ..."
+```
+
+## Templates
+
+List templates:
+
+```bash
+node scripts/list-templates.js --pretty
+node scripts/list-templates.js --status approved --pretty
+```
+
+Create a template (text with variables):
+
+```bash
+node scripts/create-template.js \
+  --name order_confirmation \
+  --category MARKETING \
+  --body "Hello {{1}}, your order #{{2}} is confirmed." \
+  --variables '{"1":"John","2":"12345"}'
+```
+
+<Tip>
+`list-templates.js` auto-syncs `PENDING` template statuses from Meta on each call — you can re-run it to observe approval changes.
+</Tip>
+
+Delete a template:
+
+```bash
+node scripts/delete-template.js --id 987654321 --confirm
+```
+
+## AI bots
+
+```bash
+node scripts/list-bots.js --pretty
+node scripts/create-bot.js --name "Support Bot" \
+  --mission "Help users resolve support issues." \
+  --knowledge-base "Return policy: 30 days. Shipping: 3-5 days." \
+  --tone "Friendly" --delay 3 \
+  --trigger-keywords "agent,human" --notification --default
+node scripts/update-bot.js --id 12 --tone "Professional" --delay 5
+node scripts/set-default-bot.js --id 12 --pretty
+node scripts/delete-bot.js --id 12 --confirm --pretty
+```
+
+## Broadcasts
+
+Create and schedule a broadcast (3-step flow):
+
+```bash
+node scripts/create-broadcast.js \
+  --name "January Sale" \
+  --template-id 42 \
+  --test-phone "+14155550123" \
+  --recipients ./recipients.csv \
+  --schedule "25/01/2025 14:00" \
+  --delivery-mode smart \
+  --delivery-size 4
+```
+
+<Warning>
+Phone numbers in the CSV must be **integers without `+`**. The schedule format is strictly `DD/MM/YYYY HH:mm` and is timezone-sensitive.
+</Warning>
+
+## Analytics & logs
+
+```bash
+node scripts/get-message-analytics.js --days 30 --pretty
+node scripts/get-message-analytics.js --from 2025-01-01 --to 2025-01-31 --pretty
+node scripts/get-message-logs.js --filter broadcast --phone 14155550123 --pretty
+```
+
+## Webhooks
+
+List webhooks:
+
+```bash
+node scripts/list-webhooks.js --type dev --pretty
+node scripts/list-webhooks.js --type io --pretty
+```
+
+Create a dev webhook (Make/Zapier/n8n style):
+
+```bash
+node scripts/create-webhook.js --type dev \
+  --url "https://hook.eu2.make.com/abc" \
+  --incoming --outgoing --signature
+```
+
+Create an IO webhook (bidirectional pipeline style):
+
+```bash
+node scripts/create-webhook.js --type io \
+  --url "https://myapp.com/webhook" \
+  --signature
+```
+
+Update/delete:
+
+```bash
+node scripts/update-webhook.js --type dev --id 5 --status false
+node scripts/delete-webhook.js --type dev --id 5 --confirm
+```
+
+<Tip>
+Dev webhook `id` is an integer. IO webhook `id` is a **text UUID** — treat it as a string.
+</Tip>
+
+## Next
+
+- Operate conversations: [`chat-notifyer`](/guides/notifyer-system/agent-skills/chat-notifyer)
+- See end-to-end automation flows: [Use cases](/guides/notifyer-system/agent-skills/use-cases)
