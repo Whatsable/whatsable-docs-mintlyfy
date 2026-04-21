@@ -46,6 +46,13 @@
               "guides/notifyer-system/pipedrive-overview",
               "guides/notifyer-system/monday-overview",
               {
+                "group": "AI Chatbot",
+                "pages": [
+                  "guides/notifyer-system/ai-chatbot/overview",
+                  "guides/notifyer-system/ai-chatbot/configuration"
+                ]
+              },
+              {
                 "group": "Agent Skills",
                 "pages": [
                   "guides/notifyer-system/agent-skills/overview",

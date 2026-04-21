@@ -1,0 +1,199 @@
+---
+title: "Bot Configuration"
+description: "A complete reference for every field in the AI Chatbot configuration form — identity, knowledge base, response settings, and human handoff."
+icon: "sliders"
+---
+
+<Tip>
+You can create as many bots as needed and designate one as the **default**. The configuration form is identical whether you are creating a new bot or editing an existing one.
+</Tip>
+
+## Opening the form
+
+- **Create**: From the [AI Chatbots](/guides/notifyer-system/ai-chatbot/overview) dashboard, click **Create New Bot**.
+- **Edit**: Click **Edit** on any existing bot card. The form loads with all saved values pre-filled.
+
+The form is divided into four sections: **Core Identity & Mission**, **Knowledge Base**, **Response Settings**, and **Notifications**.
+
+---
+
+## Core Identity & Mission
+
+Defines who your bot is and what it is trying to achieve. These two fields are **required** — the bot cannot be saved without them.
+
+<ResponseField name="Agent Name" type="string" required>
+  An internal label for this bot (e.g. `Support Specialist`, `Sales Assistant`). Visible in the bot dashboard card and internal logs. Not shown to customers.
+</ResponseField>
+
+<ResponseField name="Business Mission" type="string" required>
+  A plain-language description of what your business does and what this bot should help customers with. The AI uses this as its primary framing context for every reply.
+
+  **Good example:** `We are a SaaS company selling project management software. The bot should help prospects understand our pricing tiers, answer questions about integrations, and guide trial users through onboarding steps.`
+
+  Keep this focused. The more specific the mission, the more accurate and on-topic the bot's replies will be.
+</ResponseField>
+
+---
+
+## Knowledge Base
+
+The knowledge base is the information the bot draws on when answering customer questions. At least one of — **text** or **uploaded files** — must contain content before the bot can be saved.
+
+<ResponseField name="Text Knowledge Base" type="string">
+  A freeform text block containing everything the bot should know: FAQs, pricing, business hours, product descriptions, policies, contact details, and so on.
+
+  You can leave this empty if you are supplying all content via uploaded files, but combining both is recommended for best coverage.
+</ResponseField>
+
+<ResponseField name="Data Sources (file uploads)" type="file[]">
+  Upload documents to supplement or replace the text knowledge base. Files are parsed server-side to extract plain text, which is then embedded alongside any manual text you have entered.
+
+  | Supported format | Notes |
+  |-----------------|-------|
+  | `.txt` | Plain text; read as-is |
+  | `.csv` | Read as plain text; useful for product catalogues or FAQs in tabular form |
+  | `.pdf` | Text is extracted automatically; image-only PDFs will yield no content |
+  | `.docx` | Word documents; text is extracted automatically |
+
+  **Limits:** Each file must be **10 MB or smaller**. There is no cap on the number of files.
+
+  Uploaded files appear in the **Connected Sources** list below the text area. Click the trash icon on any source to remove it.
+</ResponseField>
+
+<Warning>
+If both the text knowledge base **and** all uploaded files are empty, the save button will return a validation error: *"Please add some content to the Knowledge Base."*
+</Warning>
+
+---
+
+## Custom Instructions
+
+<ResponseField name="Custom Instructions" type="string">
+  Additional behavioural rules layered on top of the knowledge base (mapped to `system_prompt` internally). These instructions are injected directly into the AI system prompt, giving you fine-grained control over bot behaviour.
+
+  Use this field to:
+  - Restrict topics the bot should never discuss
+  - Define mandatory questions the bot must ask before proceeding
+  - Set formatting rules (e.g. "always reply in bullet points")
+  - Override default politeness patterns
+
+  **Example:** `Always ask for the customer's order number before discussing any refund. Never mention competitor products. If a customer asks about pricing, direct them to our pricing page at https://example.com/pricing.`
+
+  This field is optional. Leave it blank if the Mission and Knowledge Base are sufficient.
+</ResponseField>
+
+---
+
+## Response Settings
+
+Controls how the bot communicates, not what it says.
+
+### Conversation Tone
+
+<ResponseField name="Conversation Tone" type="enum">
+  Sets the overall communication style of all AI-generated replies.
+
+  | Value | Description |
+  |-------|-------------|
+  | `friendly` | Warm, approachable, and conversational — good for consumer brands and lifestyle products |
+  | `professional` | Formal and precise — good for B2B, legal, financial, or healthcare contexts |
+  | `balanced` | A middle ground between friendly and professional — suitable for most businesses |
+  | `enthusiastic` | High energy and upbeat — good for e-commerce, events, or promotional contexts |
+
+  Selecting a tone shapes word choice, sentence structure, and the overall feel of every response. It does not affect factual accuracy.
+</ResponseField>
+
+### Response Delay
+
+<ResponseField name="Response Delay" type="integer (seconds)" default="5">
+  How many seconds the bot waits after receiving a message before sending a reply. Adjustable between **5** and **60** seconds via a slider.
+
+  <Tip>
+  A short delay makes the bot feel more human. When a customer sends multiple messages in quick succession — e.g. "Hi", then "I have a question about my order" — waiting a few seconds lets the bot read all of them before replying once with full context, rather than reacting to each message individually.
+  </Tip>
+
+  **Recommended starting point:** 8–12 seconds for most businesses. Reduce to 5 seconds for high-volume support queues where speed is critical. Increase toward 30+ seconds if your customers tend to send long, multi-message context before asking their question.
+</ResponseField>
+
+---
+
+## Notifications
+
+Governs what happens when the AI cannot — or should not — handle a conversation any further and a human needs to take over.
+
+### Human Agent Request Notification
+
+<ResponseField name="Human Agent Request Notification" type="boolean" default="false">
+  When **enabled**, WhatsAble sends you a real-time notification the moment the system detects a customer wants to speak with a human agent.
+
+  Detection is triggered by:
+  1. Any message that matches one of the configured **Trigger Keywords**
+  2. Any situation described in the **Custom Handoff Scenarios** field
+
+  Enable this if your team should be alerted and available to take over the conversation.
+</ResponseField>
+
+### Trigger Keywords
+
+<ResponseField name="Trigger Keywords" type="string[]">
+  A list of words or short phrases that, when detected anywhere in an incoming customer message, signal that the customer wants human assistance.
+
+  The bot stops its automated replies when a match is found and (if notification is enabled) alerts your team.
+
+  **Common examples:** `agent`, `human`, `speak to someone`, `real person`, `talk to a person`, `help me`
+
+  You can add as many keywords as needed using the **+** button. Remove any with the **×** button. Matching is case-insensitive.
+</ResponseField>
+
+<Info>
+Trigger keywords work independently of the Handoff Scenarios. Both mechanisms can be active simultaneously — keywords catch explicit requests, while Handoff Scenarios catch contextual ones.
+</Info>
+
+### Custom Handoff Scenarios
+
+<ResponseField name="Custom Handoff Scenarios" type="string">
+  A plain-language description of **situational** escalation conditions — circumstances where the AI should transfer to a human even if the customer has not explicitly asked for one.
+
+  The AI reads this field as part of its system prompt and uses it to decide when to stop replying.
+
+  **Example:** `Escalate to a human agent when: the customer expresses strong frustration or uses angry language; the conversation involves a refund request over $500; the customer reports a product safety issue; three or more back-and-forth exchanges have not resolved the customer's issue.`
+
+  Leave blank if you only want keyword-based handoff.
+</ResponseField>
+
+---
+
+## Saving the configuration
+
+Click **Save Configuration** (bottom-right of the form). The bot validates that:
+
+1. **Agent Name** is not empty
+2. **Business Mission** is not empty
+3. **Knowledge Base** contains at least some content (text or files)
+
+If all checks pass, the bot is created (or updated) and you are returned to the AI Chatbots dashboard. The new bot is not set as default automatically — use **Set Default** on the dashboard to promote it.
+
+<Note>
+Editing a bot does **not** affect any conversations already in progress. Changes take effect for the next incoming message processed after the save completes.
+</Note>
+
+---
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card
+    title="AI Chatbots Overview"
+    icon="bot"
+    href="/guides/notifyer-system/ai-chatbot/overview"
+  >
+    Dashboard actions, plan requirements, and how a bot processes messages end-to-end.
+  </Card>
+  <Card
+    title="Embedding Process"
+    icon="plug"
+    href="/guides/notifyer-system/embedding-process"
+  >
+    Connect a WhatsApp number to your workspace before a bot can go live.
+  </Card>
+</CardGroup>

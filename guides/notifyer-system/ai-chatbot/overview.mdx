@@ -1,0 +1,148 @@
+---
+title: "AI Chatbots"
+description: "Create and manage AI-powered WhatsApp assistants that handle customer conversations automatically — 24/7, on-brand, and with built-in human handoff."
+icon: "message-bot"
+---
+
+<Tip>
+AI Chatbots are available on the **Pro** and **Agency** plans. Bulk Message subscribers will see an upgrade prompt instead of the bot dashboard.
+</Tip>
+
+## What are AI Chatbots?
+
+WhatsAble AI Chatbots are intelligent WhatsApp assistants powered by OpenAI. Each bot is trained with your business's own knowledge base and configured with a distinct personality, response style, and escalation rules — so customers get accurate, on-brand answers around the clock without any manual effort.
+
+Once live, your bot:
+
+- Reads each incoming WhatsApp message and generates a contextually accurate reply from your knowledge base
+- Waits a configurable delay before sending (to feel human, not robotic)
+- Detects human-handoff keywords and notifies your team the moment a customer asks to speak with someone
+- Follows your custom escalation instructions for edge cases that go beyond the knowledge base
+
+## Dashboard overview
+
+The AI Chatbots dashboard (`/ai-bots`) lists every bot in your workspace as cards. The default bot always appears first with a **Default** star badge.
+
+| Action | How |
+|--------|-----|
+| **Create a bot** | Click **Create New Bot** in the top-right corner |
+| **Search** | Type in the search bar to filter bots by name |
+| **Sort** | Use the sort dropdown to switch between **Newest** and **Oldest** |
+| **Edit** | Click **Edit** on a bot card to open the full configuration form |
+| **Set as default** | Click **Set Default** on any non-default bot card |
+| **Duplicate** | Open the ⋮ menu → **Duplicate** — clones all settings as a new bot named `(Copy)` |
+| **Delete** | Open the ⋮ menu → **Delete** — requires confirmation |
+
+<Info>
+Only one bot can be **default** at a time. The default bot is the one WhatsAble uses when no specific bot is assigned to an incoming conversation.
+</Info>
+
+## Plan requirements
+
+<Warning>
+AI Chatbots require a **Pro** or **Agency** subscription. Workspace owners on the Bulk Message plan will see an upgrade notice in place of the bot dashboard. Visit your [Pricing Plans](/pricing-plans) page to upgrade.
+</Warning>
+
+| Plan | AI Chatbot access |
+|------|------------------|
+| Bulk Message | ✗ Not included |
+| Pro | ✓ Full access |
+| Agency | ✓ Full access + multiple phone numbers |
+
+## How a bot processes a message
+
+<Steps>
+  <Step title="Message arrives">
+    A customer sends a WhatsApp message to your connected number.
+  </Step>
+  <Step title="Delay window">
+    The bot waits for the configured **Response Delay** (5–60 seconds). If the customer sends more messages in that window, they are batched and answered together.
+  </Step>
+  <Step title="AI generates a reply">
+    The bot constructs a response using your **Business Mission**, **Knowledge Base**, **Custom Instructions**, and selected **Tone**.
+  </Step>
+  <Step title="Handoff check">
+    If any **Trigger Keyword** is detected, or the **Custom Handoff Scenarios** condition is met, the bot stops replying and (optionally) sends you a notification.
+  </Step>
+  <Step title="Reply sent">
+    The response is delivered to the customer over WhatsApp.
+  </Step>
+</Steps>
+
+---
+
+## Bot assignment in Notifyer Chat
+
+Once you have bots configured, you control which bot handles each conversation from the [Notifyer Chat](https://chat.notifyer-systems.com/) interface. Assignment can be automatic (via the default bot) or manually overridden per conversation.
+
+### Auto-assignment — the default bot
+
+When a new inbound WhatsApp message starts a conversation and no specific bot has been manually assigned to that contact, the system automatically uses the bot marked as **Default** in your AI Chatbots dashboard.
+
+<Info>
+Only one bot can be the default at a time. To change which bot handles new conversations automatically, go to the [AI Chatbots dashboard](/guides/notifyer-system/ai-chatbot/overview) and click **Set Default** on the bot you want.
+</Info>
+
+### Manual assignment per conversation
+
+Every conversation in Notifyer Chat has a right-side contact panel. Inside that panel, under the **AI Assistant** section, is a **Bot Assign** dropdown.
+
+<Steps>
+  <Step title="Open the contact panel">
+    In [Notifyer Chat](https://chat.notifyer-systems.com/), select any conversation. The contact details panel opens on the right.
+  </Step>
+  <Step title="Find the Bot Assign dropdown">
+    Scroll to the **AI Assistant** section. Below the AI / Human Agent toggle you will see a **Bot Assign** selector showing either the currently assigned bot name or **Select Bot**.
+  </Step>
+  <Step title="Pick a bot">
+    Click the dropdown and choose any bot from your workspace. The assignment updates immediately — the selected bot takes over responses for that conversation from the next incoming message.
+
+    A checkmark appears next to the currently assigned bot so you always know which one is active.
+  </Step>
+  <Step title="Unassign if needed">
+    If a bot is already assigned, the dropdown shows an **Unassign Bot** option at the top. Selecting it removes the bot assignment from that contact entirely and falls back to the default bot for any future messages.
+  </Step>
+</Steps>
+
+### AI Assistant / Human Agent toggle
+
+Alongside bot assignment, each conversation has a **Human Agent ↔ AI Assistant** toggle.
+
+| Position | Behaviour |
+|----------|-----------|
+| **AI Assistant** (on) | The assigned bot handles replies automatically; messages are also synced with connected automation tools (Zapier, Make, n8n, etc.) |
+| **Human Agent** (off) | The bot stops replying; a team member takes over manually; automation sync is paused |
+
+<Tip>
+When a customer triggers a **handoff keyword** or the bot's **Custom Handoff Scenarios** are met, flip this toggle to **Human Agent** to mute the bot and take control of the conversation yourself.
+</Tip>
+
+### Assignment priority summary
+
+| Scenario | Bot used |
+|----------|----------|
+| New conversation, no manual assignment | Default bot |
+| Manual assignment set in the contact panel | Manually assigned bot |
+| Bot unassigned in the contact panel | Default bot (fallback) |
+| Toggle switched to Human Agent | No bot — human only |
+
+---
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Bot Configuration"
+    icon="sliders"
+    href="/guides/notifyer-system/ai-chatbot/configuration"
+  >
+    A field-by-field breakdown of every setting in the bot configuration form — identity, knowledge base, tone, delay, and handoff.
+  </Card>
+  <Card
+    title="Embedding Process"
+    icon="plug"
+    href="/guides/notifyer-system/embedding-process"
+  >
+    Connect a WhatsApp number to your workspace before deploying a bot.
+  </Card>
+</CardGroup>
