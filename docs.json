@@ -33,7 +33,8 @@
               "guides/whatsable/zapier",
               "guides/whatsable/make",
               "guides/whatsable/n8n",
-              "guides/whatsable/api-documentation"
+              "guides/whatsable/api-documentation",
+              "guides/whatsable/webhooks"
             ]
           },
           {
