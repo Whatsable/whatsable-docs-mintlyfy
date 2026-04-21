@@ -1,0 +1,540 @@
+---
+title: "Webhooks"
+description: "Receive real-time notifications when WhatsApp events happen in your WhatsAble account — configure, manage, and handle webhook endpoints directly from the dashboard."
+icon: "webhook"
+---
+
+<Tip>
+Webhooks let your external server react to WhatsApp activity the moment it happens — no polling required. Register an HTTPS endpoint once and WhatsAble pushes a JSON payload to it automatically.
+</Tip>
+<Frame>
+  <iframe
+    width="100%"
+    style={{ aspectRatio: "16/9" }}
+    src="https://www.youtube.com/embed/B4clTratT_w"
+    title="Getting Started with WhatsAble Webhooks"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+  />
+</Frame>
+
+---
+
+## WhatsAble Bot vs Notifier System
+
+Before setting up a webhook, make sure you're using the right product for your use case.
+
+| | **WhatsAble Bot (this page)** | **Notifier System** |
+|---|---|---|
+| **How it works** | You (or a customer) sends a WhatsApp message **to WhatsAble's number** → triggers your n8n / Make / Zapier scenario | You send WhatsApp messages **from your own WhatsApp Business number** to your leads or customers |
+| **Best for** | Building AI agents, personal automation triggers, developer workflows | Customer outreach, marketing, CRM notifications |
+| **Webhook direction** | Inbound — WhatsAble calls your endpoint | Inbound — your automation platform receives the event |
+
+<Info>
+If you want to **send** messages to leads or customers from your own WhatsApp Business number, use the [Notifier System](/guides/notifyer-system/embedding-process) instead.
+</Info>
+
+---
+
+## What are Webhooks?
+
+A webhook is an HTTP endpoint you host that WhatsAble calls every time a relevant event occurs in your account. Instead of repeatedly asking *"did anything happen?"*, your server receives a real-time `POST` request with the full event payload the instant the event fires.
+
+Common things you can do with WhatsAble webhooks:
+
+- Trigger n8n, Make, or Zapier scenarios the moment someone messages your WhatsAble bot number
+- Build AI agents that react to WhatsApp messages in real time
+- Pipe incoming customer messages into your CRM or support desk
+- Log chat history to your own database
+
+---
+
+## The Webhooks Dashboard
+
+Navigate to **Operations → Webhooks** (`/operations/webhook`) in your WhatsAble dashboard to manage all your registered endpoints.
+
+| Action | How |
+|--------|-----|
+| **Add a webhook** | Click **New Webhook** in the toolbar |
+| **Search** | Type in the search bar to filter endpoints by URL |
+| **Copy a URL** | Click the copy icon next to any endpoint URL |
+| **Delete** | Open the ⋮ menu on any row → **Delete** — requires confirmation |
+
+<Info>
+The **Active Webhooks** counter in the toolbar shows how many endpoints are currently registered in your account.
+</Info>
+
+### Adding a new endpoint
+
+<Steps>
+  <Step title="Open the Add Webhook dialog">
+    Click **New Webhook** in the top toolbar of the Webhooks page.
+  </Step>
+  <Step title="Enter your Endpoint URL">
+    Paste the full URL of your server endpoint into the **Endpoint URL** field.
+    The URL must begin with `http://` or `https://`. HTTPS is strongly recommended for production.
+  </Step>
+  <Step title="Save">
+    Click **Create Webhook**. WhatsAble stores the endpoint and begins routing eligible events to it immediately.
+  </Step>
+</Steps>
+
+### Deleting an endpoint
+
+<Steps>
+  <Step title="Find the webhook">
+    Use the search bar or scroll through the table to locate the endpoint you want to remove.
+  </Step>
+  <Step title="Open the action menu">
+    Click the ⋮ icon in the **Actions** column of that row.
+  </Step>
+  <Step title="Confirm deletion">
+    Select **Delete** and confirm in the dialog that appears. Deletion is permanent and cannot be undone.
+  </Step>
+</Steps>
+
+<Warning>
+Deleting a webhook immediately stops all future event deliveries to that endpoint. Make sure nothing critical depends on the endpoint before removing it.
+</Warning>
+
+---
+
+## Webhook Data Model
+
+Every webhook you register is stored with the following fields.
+
+<ResponseField name="id" type="number" required>
+  Auto-incremented integer that uniquely identifies this webhook within your account. Use it to target specific webhooks in API operations.
+</ResponseField>
+
+<ResponseField name="webhook" type="string" required>
+  The full endpoint URL WhatsAble POSTs events to (e.g. `https://api.example.com/whatsapp/events`). Must be a valid HTTP or HTTPS URL.
+</ResponseField>
+
+<ResponseField name="user_id" type="string" required>
+  UUID of the WhatsAble account that owns this webhook. Set automatically at creation — you cannot assign a webhook to a different account.
+</ResponseField>
+
+<ResponseField name="created_at" type="string" required>
+  ISO 8601 timestamp recording when the webhook was registered. Webhooks are returned in newest-first order by default.
+</ResponseField>
+
+---
+
+## Incoming Webhook Payload
+
+When an event fires, WhatsAble sends an HTTP `POST` to your endpoint with a `Content-Type: application/json` body.
+
+### Incoming message payload
+
+<CodeGroup>
+```json Text Message
+{
+  "last_messages": [
+    {
+      "type": "user",
+      "content": "Can I reschedule my appointment for Thursday?",
+      "timestamp": "2025-06-09T22:08:11.990Z",
+      "content_type": "text"
+    },
+    {
+      "type": "bot",
+      "content": "Of course! Let me pull up available slots for you.",
+      "timestamp": "2025-06-09T21:45:30.417Z",
+      "content_type": "text"
+    }
+  ],
+  "conversation_paragraph": "User (10:08:11 PM): Can I reschedule my appointment for Thursday? ; Bot (9:45:30 PM): Of course! Let me pull up available slots for you.",
+  "phone_number": "14155552671",
+  "recipient_name": "Alex Martinez",
+  "user_id": "9232fcef-a570-4a2c-b46b-6cab53aec304",
+  "last_message_of_user": "Can I reschedule my appointment for Thursday?",
+  "last_message_of_bot": "Of course! Let me pull up available slots for you.",
+  "message_type": "text",
+  "user_last_message_time": 1749506891,
+  "bot_last_message_time": 1749504330,
+  "attachment_url": null,
+  "note": "",
+  "note_automation": "",
+  "labels": "appointments, rescheduling"
+}
+```
+
+```json Media Message (Document)
+{
+  "last_messages": [
+    {
+      "type": "user",
+      "content": "",
+      "timestamp": "2025-06-09T14:05:12.000Z",
+      "content_type": "document",
+      "media_url": "https://api.insightssystem.com/vault/contract_v2.pdf"
+    },
+    {
+      "type": "bot",
+      "content": "Please send the signed contract when ready.",
+      "timestamp": "2025-06-09T14:03:20.000Z",
+      "content_type": "text"
+    }
+  ],
+  "conversation_paragraph": "User (2:05:12 PM): [Document] ; Bot (2:03:20 PM): Please send the signed contract when ready.",
+  "phone_number": "14155552671",
+  "recipient_name": "Alex Martinez",
+  "user_id": "9232fcef-a570-4a2c-b46b-6cab53aec304",
+  "last_message_of_user": "",
+  "last_message_of_bot": "Please send the signed contract when ready.",
+  "message_type": "document",
+  "user_last_message_time": 1749472312,
+  "bot_last_message_time": 1749472200,
+  "attachment_url": "https://api.insightssystem.com/vault/contract_v2.pdf",
+  "note": "",
+  "note_automation": "",
+  "labels": "contracts"
+}
+```
+</CodeGroup>
+
+### Payload fields
+
+<ResponseField name="last_messages" type="array" required>
+  Ordered array of recent messages in the conversation, newest last.
+
+  <Expandable title="last_messages item">
+    <ResponseField name="type" type="string" required>
+      Sender of this message — `"user"` for the customer or `"bot"` for your WhatsAble assistant.
+    </ResponseField>
+
+    <ResponseField name="content" type="string">
+      Text body of the message. Empty string for media-only messages (image, video, document, audio).
+    </ResponseField>
+
+    <ResponseField name="timestamp" type="string" required>
+      ISO 8601 UTC timestamp of when this message was sent.
+    </ResponseField>
+
+    <ResponseField name="content_type" type="string" required>
+      Media type of the message. One of: `text`, `image`, `audio`, `video`, `document`, `location`.
+    </ResponseField>
+
+    <ResponseField name="media_url" type="string">
+      Temporary URL to the media file. Present only when `content_type` is not `text`. URLs expire after **24 hours** — download the file promptly if you need to retain it.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="conversation_paragraph" type="string" required>
+  Human-readable plain-text transcript of the recent exchange. Useful for passing directly to an LLM or storing as a summary without parsing the full `last_messages` array.
+</ResponseField>
+
+<ResponseField name="phone_number" type="string" required>
+  The WhatsApp phone number of the customer who sent the message (digits only, no `+` prefix).
+</ResponseField>
+
+<ResponseField name="recipient_name" type="string">
+  Display name of the customer as stored in their WhatsApp profile. May be empty if WhatsApp has not provided a name.
+</ResponseField>
+
+<ResponseField name="user_id" type="string" required>
+  UUID of the WhatsAble account that received this message. Matches the `user_id` stored on the webhook registration.
+</ResponseField>
+
+<ResponseField name="last_message_of_user" type="string">
+  Text of the customer's most recent message. For image, video, and document messages this contains the **caption** if one was provided, otherwise an empty string.
+</ResponseField>
+
+<ResponseField name="last_message_of_bot" type="string">
+  Text of the last message your system sent to this customer.
+</ResponseField>
+
+<ResponseField name="message_type" type="string" required>
+  Type of the **latest** message in the conversation. Same values as `content_type` above: `text`, `image`, `audio`, `video`, `document`, `location`.
+</ResponseField>
+
+<ResponseField name="user_last_message_time" type="integer" required>
+  Unix timestamp (seconds) of the customer's last message. Use this to calculate response latency or enforce time-based rules.
+</ResponseField>
+
+<ResponseField name="bot_last_message_time" type="integer" required>
+  Unix timestamp (seconds) of your system's last reply to this customer.
+</ResponseField>
+
+<ResponseField name="attachment_url" type="string | null">
+  URL to the media file if the **latest** message contains media. `null` for text-only messages. Same 24-hour expiry applies.
+</ResponseField>
+
+<ResponseField name="note" type="string">
+  Free-form text note attached to the conversation. Set manually by agents in Notifyer Chat.
+</ResponseField>
+
+<ResponseField name="note_automation" type="string">
+  Automation-related notes written by internal workflows. Available for your server to read and act on.
+</ResponseField>
+
+<ResponseField name="labels" type="string">
+  Comma-separated list of labels assigned to the conversation (e.g. `"sales, premium-inquiry"`). Use these to route events to different handlers in your webhook server.
+</ResponseField>
+
+---
+
+## Internal API Reference
+
+The WhatsAble dashboard manages webhooks through three authenticated internal endpoints. All requests require a valid **Bearer** token from the active session.
+
+### List webhooks
+
+```
+GET /api/webhooks/get
+```
+
+Returns all webhooks registered by the authenticated user, sorted newest first.
+
+**Authentication:** `Authorization: Bearer <access_token>`
+
+**Response:** Array of webhook objects.
+
+```json
+[
+  {
+    "id": 42,
+    "created_at": "2025-06-01T10:22:33.000Z",
+    "webhook": "https://api.example.com/events",
+    "user_id": "6fb11ff2-d9b2-4560-8437-0fe58ec9f4a6"
+  }
+]
+```
+
+---
+
+### Create a webhook
+
+```
+POST /api/webhooks/create
+```
+
+Registers a new webhook endpoint.
+
+**Authentication:** `Authorization: Bearer <access_token>`
+
+**Request body:**
+
+<ParamField body="webhook" type="string" required>
+  Full HTTP or HTTPS URL of your endpoint. Must be a valid URL — invalid formats are rejected with a `400` error.
+</ParamField>
+
+**Response:**
+
+```json
+{
+  "data": {
+    "id": 43,
+    "created_at": "2025-06-09T12:00:00.000Z",
+    "webhook": "https://api.example.com/events",
+    "user_id": "6fb11ff2-d9b2-4560-8437-0fe58ec9f4a6"
+  }
+}
+```
+
+**Error codes:**
+
+| Status | Meaning |
+|--------|---------|
+| `400` | `webhook` field missing, empty, or not a valid URL |
+| `401` | No valid session token provided |
+| `500` | Database error — retry after a short delay |
+
+---
+
+### Delete a webhook
+
+```
+DELETE /api/webhooks/delete?id={id}
+```
+
+Permanently removes a webhook. The server verifies ownership before deleting — you cannot delete another account's webhooks.
+
+**Authentication:** `Authorization: Bearer <access_token>`
+
+**Query parameter:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `id` | number | Yes | The `id` of the webhook to delete |
+
+**Response:**
+
+```json
+{ "success": true }
+```
+
+**Error codes:**
+
+| Status | Meaning |
+|--------|---------|
+| `400` | `id` query parameter not provided |
+| `401` | No valid session token |
+| `403` | The webhook exists but belongs to a different account |
+| `404` | No webhook found with the given `id` |
+| `500` | Database error |
+
+---
+
+## Going to Production
+
+When you're done testing and ready to go live, follow these steps to switch from your test webhook URL to your production endpoint.
+
+<Warning>
+**Do not edit your existing test credential.** Editing a credential that was used for testing can break the connection. Always create a new credential for production.
+</Warning>
+
+<Steps>
+  <Step title="Pin your test data">
+    In your automation tool (n8n, Make, etc.), pin the sample payload you received during testing. This keeps the data structure available to configure downstream nodes even after you swap the endpoint.
+  </Step>
+  <Step title="Copy your production webhook URL">
+    In your automation platform, switch to the **Production** URL for your trigger node and copy it.
+  </Step>
+  <Step title="Create a new credential — do not edit the existing one">
+    In WhatsAble, go to **Operations → Webhooks** and click **New Webhook**. Paste the production URL and save.
+
+    In your automation tool, create a **new credential** (e.g. `WhatsAble Bot – Production`) rather than overwriting the test credential. Enter the production webhook URL and your API key, then save.
+  </Step>
+  <Step title="Update the trigger to use the new credential">
+    In your automation trigger node, switch the credential selection from the test credential to the new production one. Your workflow is now live.
+  </Step>
+</Steps>
+
+<Tip>
+Keep your test credential and test webhook intact — you'll want them next time you need to iterate or debug without touching the live flow.
+</Tip>
+
+---
+
+## Endpoint Requirements
+
+<Warning>
+Your endpoint must respond with a `2xx` HTTP status code within **10 seconds**. Responses outside that window are treated as failures.
+</Warning>
+
+Your webhook server must:
+
+1. Accept `HTTP POST` requests
+2. Parse `application/json` request bodies
+3. Respond with `200 OK` (or any `2xx`) promptly to acknowledge receipt
+4. Be publicly reachable — `localhost` and private network addresses will not work
+5. Use **HTTPS** in production environments
+
+---
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Use HTTPS in production">
+    Always verify webhook signatures and use HTTPS endpoints. HTTP may be acceptable for local development only. WhatsAble shows a reminder banner on the webhook page: *"Always verify webhook signatures and use HTTPS endpoints for secure communication."*
+  </Accordion>
+  <Accordion title="Respond fast, process async">
+    Return `200 OK` immediately, then process the payload in a background job or queue. Long-running synchronous handlers risk timing out before the work is done.
+  </Accordion>
+  <Accordion title="Handle duplicate deliveries">
+    Network retries can cause the same event to arrive more than once. Use the `user_last_message_time` + `phone_number` combination as an idempotency key to detect and skip duplicates.
+  </Accordion>
+  <Accordion title="Download media promptly">
+    `attachment_url` and `media_url` inside `last_messages` expire after **24 hours**. Download and store media files as soon as you receive the webhook — do not rely on the URL remaining valid later.
+  </Accordion>
+  <Accordion title="Route by labels and message_type">
+    Use the `labels` field and `message_type` to dispatch events to different handlers. For example, route `"document"` types to a contract-processing queue and messages labelled `"support"` to your helpdesk integration.
+  </Accordion>
+  <Accordion title="Log everything">
+    Store the raw payload for every incoming event before processing it. Logs are invaluable for debugging and replaying missed events.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Example Handler
+
+```javascript Node.js / Express
+const express = require('express');
+const app = express();
+app.use(express.json());
+
+app.post('/webhook', (req, res) => {
+  // Acknowledge immediately
+  res.status(200).send('OK');
+
+  // Process asynchronously
+  const payload = req.body;
+  const { phone_number, message_type, last_message_of_user, labels } = payload;
+
+  console.log(`New ${message_type} from ${phone_number}: "${last_message_of_user}"`);
+
+  if (message_type === 'document' || message_type === 'image') {
+    // Download media before the 24-hour URL expires
+    downloadMedia(payload.attachment_url);
+  }
+
+  if (labels?.includes('support')) {
+    forwardToHelpdesk(payload);
+  }
+});
+
+app.listen(3000);
+```
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="n8n / Make trigger not firing at all" defaultOpen={true}>
+    This is the **most common issue** when setting up the WhatsAble bot trigger. When configuring the WhatsApp trigger node in n8n or Make, you must explicitly select **Incoming Messages** as the event type. The option can be easy to miss, especially if the interface has changed recently.
+
+    **What to check:**
+    1. Open the trigger node settings in your automation tool
+    2. Look for an event type or trigger type selector
+    3. Make sure **Incoming Messages** (or equivalent) is selected — not "All Events" or left blank
+    4. Save and re-activate the trigger
+
+    If it still doesn't fire after sending a test message, move on to the duplicate webhook check below.
+  </Accordion>
+  <Accordion title="Already tried everything and it still doesn't work">
+    Before spending more time debugging, open **Operations → Webhooks** in the WhatsAble dashboard and check how many webhooks you have registered. It's easy to accumulate duplicate entries from previous test attempts. Multiple webhooks registered to different URLs (or stale test URLs) can cause unexpected behaviour.
+
+    **Fix:** Delete any old or duplicate webhook entries, keep only the one that matches your current trigger URL, then test again.
+  </Accordion>
+  <Accordion title="Webhook not receiving events">
+    - Confirm the endpoint is publicly accessible (not `localhost` or behind a firewall)
+    - Check your server logs for incoming `POST` requests
+    - Verify the webhook is listed and saved correctly in the dashboard
+    - Ensure your server returns a `2xx` response — otherwise deliveries may be dropped
+  </Accordion>
+  <Accordion title="Media URLs returning 404 or expired">
+    `attachment_url` and `media_url` values are temporary and expire within **24 hours** of generation. If you receive a 404, the file has expired. Download media immediately on receipt and store it in your own storage.
+  </Accordion>
+  <Accordion title="Getting 403 when deleting a webhook">
+    The `DELETE` endpoint enforces ownership checks. You can only delete webhooks that belong to the currently authenticated user. Make sure you are using the correct account session token.
+  </Accordion>
+  <Accordion title="Duplicate events arriving">
+    WhatsAble may redeliver events if your server did not respond with a `2xx` in time. Build idempotency into your handler using `phone_number` + `user_last_message_time` as a composite key.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card
+    title="API Documentation"
+    icon="code"
+    href="/guides/whatsable/api-documentation"
+  >
+    Explore the full WhatsAble REST API for sending messages, managing contacts, and more.
+  </Card>
+  <Card
+    title="Integrations"
+    icon="plug"
+    href="/guides/whatsable/integrations"
+  >
+    Connect WhatsAble to Zapier, Make, n8n, and other automation platforms.
+  </Card>
+</CardGroup>
