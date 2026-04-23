@@ -64,7 +64,15 @@
                   "guides/notifyer-system/agent-skills/chat-notifyer",
                   "guides/notifyer-system/agent-skills/use-cases",
                   "guides/notifyer-system/agent-skills/troubleshooting",
-                  "guides/notifyer-system/agent-skills/security"
+                  "guides/notifyer-system/agent-skills/security",
+                  {
+                    "group": "Platforms",
+                    "pages": [
+                      "guides/notifyer-system/agent-skills/platforms/cursor",
+                      "guides/notifyer-system/agent-skills/platforms/base44",
+                      "guides/notifyer-system/agent-skills/platforms/lovable"
+                    ]
+                  }
                 ]
               },
               {
