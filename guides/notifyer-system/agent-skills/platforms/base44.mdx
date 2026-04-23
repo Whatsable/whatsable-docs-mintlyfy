@@ -1,0 +1,185 @@
+---
+title: "Using with Base44"
+description: "Install Notifyer Agent Skills so your AI coding assistant can build and operate Notifyer integrations inside Base44 apps."
+icon: "cube"
+---
+
+<Tip>
+Base44 follows the open [AgentSkills specification](https://agentskills.io/specification). Notifyer Agent Skills can be installed globally so any AI coding assistant you use with Base44 — Claude, Cursor, Copilot, or others — knows how to call the Notifyer API.
+</Tip>
+
+## How skills work in Base44
+
+Base44 uses Agent Skills to give external AI coding tools reusable instructions for platform-specific tasks. When you install Notifyer skills globally, your AI assistant gains:
+
+- Knowledge of all Notifyer API endpoints, auth modes, and CORS rules
+- Ready-to-run Node.js scripts for every Notifyer operation
+- Reference documentation on templates, broadcasts, recipients, webhooks, and chat
+
+The skills are loaded from `~/.agents/skills/` (global) or `.agents/skills/` (project-level) and are used by the AI when you ask it to add Notifyer functionality to a Base44 app or backend function.
+
+---
+
+## Install the skills
+
+<Tabs>
+  <Tab title="Global install (recommended)">
+    Makes the skills available across all your Base44 projects:
+
+    ```bash
+    npx skills add whatsable/whatsapp-business-agent-skills -g
+    ```
+
+    When prompted, select **All 3 skills** to install `setup-notifyer`, `automate-notifyer`, and `chat-notifyer` at once.
+  </Tab>
+  <Tab title="Project-level install">
+    Installs only into the current project directory:
+
+    ```bash
+    npx skills add whatsable/whatsapp-business-agent-skills
+    ```
+  </Tab>
+</Tabs>
+
+<Tip>
+Base44 skills themselves are installed with `npx skills add base44/skills -g`. Notifyer skills are a separate add-on — install both if you're building a Base44 app that sends WhatsApp messages via Notifyer.
+</Tip>
+
+---
+
+## Set up environment variables
+
+The Notifyer scripts need these variables:
+
+```bash
+export NOTIFYER_API_BASE_URL="https://api.insightssystem.com"
+export NOTIFYER_API_TOKEN="eyJ..."   # obtained via setup-notifyer/scripts/login.js
+```
+
+For Base44 backend functions that call the Notifyer API directly (without running CLI scripts), store these as **environment variables in your Base44 project settings** and access them in your backend function code.
+
+<Warning>
+Never hardcode `NOTIFYER_API_TOKEN` in your Base44 app source. Use Base44's environment variable system to inject it at runtime.
+</Warning>
+
+---
+
+## Two ways to use Notifyer in a Base44 app
+
+### 1. AI-assisted integration (skills-guided)
+
+Tell your AI coding assistant to add Notifyer functionality to a Base44 backend function. With the skills installed, the AI already knows the correct API endpoints, auth headers, and payload shapes:
+
+```
+Add a Base44 backend function called sendWhatsAppTemplate that accepts a phone number
+and template name, authenticates with the Notifyer API using NOTIFYER_API_TOKEN,
+and sends the matching approved template.
+```
+
+```
+Create a Base44 backend function that checks if a recipient's 24-hour WhatsApp
+messaging window is open before sending a text message via Notifyer.
+```
+
+The AI will reference the skill's reference docs (`references/messaging-reference.md`, `references/recipients-reference.md`, etc.) to produce accurate code.
+
+### 2. Running skills scripts from a backend function
+
+You can also call the Notifyer scripts directly from a Base44 backend function or automation:
+
+```javascript
+// Inside a Base44 backend function
+import { execSync } from "child_process";
+
+const result = JSON.parse(
+  execSync(
+    `node ~/.agents/skills/chat-notifyer/scripts/send-text.js \
+      --phone ${phoneNumber} \
+      --text "${message}"`,
+    { env: { ...process.env } }
+  ).toString()
+);
+
+if (!result.ok) {
+  throw new Error(result.error);
+}
+```
+
+<Warning>
+This pattern requires Node.js ≥ 18 in the execution environment and the skills to be installed on the server running your backend functions.
+</Warning>
+
+---
+
+## Example AI prompts for Base44 projects
+
+With Notifyer skills installed, give your AI assistant these kinds of instructions:
+
+### Send WhatsApp messages from a Base44 app
+
+```
+Build a Base44 backend function called notifyCustomer.
+It should accept { phone, templateName, variables } and send a WhatsApp template
+message via the Notifyer API. Use NOTIFYER_API_BASE_URL and NOTIFYER_API_TOKEN
+from environment variables. Handle errors and return { ok, message_id } or { ok: false, error }.
+```
+
+### Trigger a broadcast from a Base44 automation
+
+```
+Add a Base44 automation that runs daily at 9am, fetches all customers from the
+Customers entity with status = "trial_expiring", and triggers a Notifyer broadcast
+using the trial_reminder template for each one.
+```
+
+### Webhook receiver in Base44
+
+```
+Create a Base44 backend function to receive incoming Notifyer IO webhook events.
+Validate the HMAC signature using NOTIFYER_WEBHOOK_SECRET.
+When a new inbound message arrives, create or update a record in the Conversations entity.
+```
+
+### Chat handoff from a Base44 agent
+
+```
+When a user sends the message "talk to a human" to our Base44 AI agent,
+call the Notifyer API to set handoff mode to "human" for that contact's phone number.
+Use the PATCH /web/recipient/:id endpoint with is_ai_assistant: false.
+```
+
+---
+
+## API reference for Base44 backend functions
+
+When building backend functions that call Notifyer directly (instead of using the CLI scripts), these are the key details:
+
+| | Console API | Chat API |
+|---|---|---|
+| **Base URL** | `NOTIFYER_API_BASE_URL` | `NOTIFYER_API_BASE_URL` |
+| **Auth header** | `Authorization: Bearer <jwt>` | `Authorization: <jwt>` (no Bearer) |
+| **Origin** | `https://console.notifyer-systems.com` | `https://chat.notifyer-systems.com` |
+| **Used for** | Templates, bots, broadcasts, webhooks | Recipients, messaging, labels, handoff |
+
+For complete endpoint reference, see the skills' `references/` directory after install:
+- `~/.agents/skills/automate-notifyer/references/`
+- `~/.agents/skills/chat-notifyer/references/`
+
+---
+
+## Keeping skills up to date
+
+```bash
+npx skills add whatsable/whatsapp-business-agent-skills -g
+```
+
+Re-running the install command pulls the latest version from the repository.
+
+---
+
+## Related pages
+
+- [Quickstart](/guides/notifyer-system/agent-skills/quickstart)
+- [Auth & environment](/guides/notifyer-system/agent-skills/auth-and-env)
+- [Use cases](/guides/notifyer-system/agent-skills/use-cases)
+- [Base44 Skills docs](https://docs.base44.com/developers/backend/overview/skills)

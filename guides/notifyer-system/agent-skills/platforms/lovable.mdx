@@ -1,0 +1,236 @@
+---
+title: "Using with Lovable"
+description: "Teach Lovable's AI agent how to build Notifyer WhatsApp integrations into your app using Knowledge and AGENTS.md."
+icon: "heart"
+---
+
+<Note>
+Lovable's web agent does not read skill files from `.agents/skills/` or `.cursor/skills/` — it only reads **Project knowledge**, **Workspace knowledge**, `AGENTS.md`, and `CLAUDE.md` from your GitHub repo. The `npx skills add` CLI has no direct effect on what Lovable sees.
+
+However, Lovable projects are GitHub-backed. If you also work on the same project locally in **Cursor** (a common hybrid workflow), you should install the skills there too — see the [Cursor guide](/guides/notifyer-system/agent-skills/platforms/cursor).
+</Note>
+
+## How Lovable reads context
+
+Lovable's agent considers several context sources when generating code:
+
+| Source | How to set it | Scope |
+|---|---|---|
+| **Project knowledge** | Project settings → Knowledge | One project |
+| **Workspace knowledge** | Settings → Knowledge | All projects in workspace |
+| **`AGENTS.md` / `CLAUDE.md`** | Root of the GitHub repo linked to the project | Always loaded regardless of session length |
+| **Integration knowledge** | Via connected services (e.g. Supabase) | Per integration |
+
+<Tip>
+`AGENTS.md` and `CLAUDE.md` at the repo root are always read by Lovable, even in very long sessions where project or workspace knowledge may not always be followed consistently. Use them for rules that must never be lost.
+</Tip>
+
+For Notifyer integrations, the most reliable approach is to put the critical API context in **Project knowledge** and keep the `AGENTS.md` file for structural rules that must persist across long sessions.
+
+---
+
+## Option 1 — Project Knowledge (recommended)
+
+Add the following to your project's **Project settings → Knowledge**. This tells Lovable's agent exactly how to call the Notifyer API when building your app.
+
+```text
+Notifyer WhatsApp API integration
+
+Base URL: stored in env var NOTIFYER_API_BASE_URL (e.g. https://api.insightssystem.com)
+Auth token: stored in env var NOTIFYER_API_TOKEN (JWT from login)
+
+Auth headers:
+- Console API (templates, bots, broadcasts, webhooks):
+    Authorization: Bearer <NOTIFYER_API_TOKEN>
+    Origin: https://console.notifyer-systems.com
+- Chat API (recipients, messaging, labels, handoff):
+    Authorization: <NOTIFYER_API_TOKEN>  (no Bearer prefix)
+    Origin: https://chat.notifyer-systems.com
+
+Key API groups:
+- /api:AFRA_QCy/ — templates
+- /api:ox_LN9zX/ — bots
+- /api:Mk_r6mq0/ — broadcasts
+- /api:bVXsw_FD/ — chat recipients and messaging
+- /api:qh9OQ3OW/ — message logs and analytics
+- /api:0hqyGRIz/ — webhooks
+
+Critical rules:
+- Never hardcode NOTIFYER_API_TOKEN in source code — always use env vars.
+- Text and attachment messages require the recipient to have messaged in the last 24 hours.
+  If window is closed, use a template message instead.
+- global_label is a string[] of label names, not IDs.
+- PATCH /web/recipient/:id requires the full recipient body (fetch first, then patch).
+- Schedule timestamp is ms since epoch; 0 means immediate send.
+- NOTIFYER_API_BASE_URL must be HTTPS — reject any http:// value.
+
+Reference:
+- Full API documentation: https://github.com/Whatsable/whatsapp-business-agent-skills
+- Script reference: skills/chat-notifyer/scripts/ and skills/automate-notifyer/scripts/
+```
+
+<Tip>
+Project Knowledge supports up to **10,000 characters**. The block above is intentionally concise. Expand it with specific endpoint shapes or payload examples if your project needs precise API call generation.
+</Tip>
+
+---
+
+## Option 2 — AGENTS.md in your GitHub repo
+
+For rules that must survive long Lovable chat sessions, add an `AGENTS.md` file to the root of the GitHub repository linked to your Lovable project. Lovable always reads root-level `AGENTS.md` files regardless of session length.
+
+Create `AGENTS.md` in your repo root:
+
+```markdown
+# Notifyer WhatsApp Integration Rules
+
+## Authentication
+- Console API: `Authorization: Bearer ${NOTIFYER_API_TOKEN}` + `Origin: https://console.notifyer-systems.com`
+- Chat API: `Authorization: ${NOTIFYER_API_TOKEN}` (no Bearer) + `Origin: https://chat.notifyer-systems.com`
+- Base URL from `NOTIFYER_API_BASE_URL` env var (always HTTPS)
+
+## 24-hour messaging window
+- Free-text and media can only be sent if the recipient messaged us within the last 24 hours
+- If window is closed, use a template message
+- Check window via GET /api:bVXsw_FD/web/recipient — look at expiration_timestamp
+
+## Safe PATCH pattern
+- Before PATCH /web/recipient/:id, always GET the full record first
+- Include all existing fields in the PATCH body (name, phone_number, phone_number_string,
+  global_label, is_ai_assistant, note) to prevent accidental data wipe
+
+## Environment variables
+- NOTIFYER_API_BASE_URL — required
+- NOTIFYER_API_TOKEN — required, JWT from login
+- Never commit tokens to Git
+```
+
+---
+
+## Example Lovable prompts
+
+With the project knowledge or `AGENTS.md` in place, use Lovable's Agent mode to build Notifyer-powered features:
+
+### Send a WhatsApp message from a form
+
+```
+Add a "Send WhatsApp" button to the CustomerDetail page.
+When clicked, it should call a Supabase Edge Function that sends a WhatsApp text message
+via the Notifyer Chat API to the customer's phone number.
+Use NOTIFYER_API_BASE_URL and NOTIFYER_API_TOKEN from environment variables.
+Only send if the 24-hour window is open; otherwise show an error: "Window closed — use a template."
+```
+
+### Send a template when window is closed
+
+```
+In the CustomerDetail page, add a "Send Reminder" button.
+The Edge Function should first check the recipient's expiration_timestamp.
+If the 24h window is open, send a free-text message.
+If closed, send the payment_reminder WhatsApp template instead.
+Both paths use the Notifyer Chat API with the correct auth header (no Bearer prefix).
+```
+
+### Broadcast from the dashboard
+
+```
+Add a "Send Broadcast" section to the Marketing page.
+It should let the user pick an approved template from a dropdown (fetched from
+GET /api:AFRA_QCy/templates_web on the Notifyer Console API with Bearer auth),
+upload a CSV of phone numbers, and trigger a broadcast via the Notifyer API.
+```
+
+### Webhook receiver
+
+```
+Create a Supabase Edge Function at /notifyer-webhook that receives POST requests
+from Notifyer's IO webhook. Validate the HMAC-SHA256 signature using NOTIFYER_WEBHOOK_SECRET.
+When a new inbound message event arrives, insert a row into the messages table
+with { phone, body, direction: "inbound", received_at }.
+```
+
+### Label and handoff from the app UI
+
+```
+In the ConversationView component, add two buttons:
+1. "Assign to Human" — calls PATCH /api:bVXsw_FD/web/recipient/:id with is_ai_assistant: false
+   using the Notifyer Chat API (Authorization: <token> without Bearer).
+2. "Assign Label" — shows a dropdown of available labels and calls the same PATCH endpoint
+   with the updated global_label array.
+Both should fetch the full recipient record first before patching.
+```
+
+---
+
+## Using Plan mode before building
+
+For complex integrations, click **Plan** next to the message input to switch to Plan mode before any code is written. Plan mode never modifies your code — it only reasons and proposes an approach.
+
+```
+I want to integrate Notifyer WhatsApp messaging into this app.
+We need to: send template messages when a new order is created, receive inbound
+messages via webhook and store them, and show chat history in the CustomerDetail page.
+What's the best architecture using Supabase Edge Functions?
+```
+
+When you're happy with the plan, approve it and Lovable automatically switches to **Agent mode** to implement each piece. The approved plan is saved to `.lovable/plan.md` in your project.
+
+---
+
+## Environment variables by backend
+
+Lovable supports two distinct backends. The env var workflow is different for each.
+
+<Tabs>
+  <Tab title="Lovable Cloud (built-in backend)">
+    Lovable Cloud is Lovable's own full-stack hosting platform — no external Supabase account needed. It handles the backend automatically.
+
+    When Lovable generates an Edge Function that calls the Notifyer API, instruct it to read secrets from environment variables:
+
+    ```
+    Store NOTIFYER_API_BASE_URL and NOTIFYER_API_TOKEN as secrets in
+    Lovable Cloud and read them inside the Edge Function with
+    Deno.env.get("NOTIFYER_API_TOKEN").
+    ```
+
+    Lovable Cloud manages the secret injection automatically as part of the Cloud environment. You can review and manage Cloud settings via **Connectors → App connectors → Lovable Cloud → Manage permissions**.
+  </Tab>
+  <Tab title="Supabase integration (external Supabase account)">
+    If your project uses the Supabase integration (you connected your own Supabase project via **Project settings → Integrations → Supabase**):
+
+    1. Open your **Supabase dashboard** → **Settings → Edge Functions → Secrets**
+    2. Add `NOTIFYER_API_BASE_URL` and `NOTIFYER_API_TOKEN` as secrets
+    3. Reference them in Edge Functions with `Deno.env.get("NOTIFYER_API_TOKEN")`
+
+    <Warning>
+    Never pass `NOTIFYER_API_TOKEN` as a hardcoded string in Edge Function code — it would be visible in your GitHub repository.
+    </Warning>
+  </Tab>
+  <Tab title="External / self-hosted deployment">
+    If you've exported your Lovable project to GitHub and are hosting it yourself, configure environment variables through your host's standard mechanism (e.g. Vercel env vars, Railway secrets, `.env` on a VPS).
+  </Tab>
+</Tabs>
+
+---
+
+## Important constraints
+
+<Warning>
+These operations **cannot** be done via Lovable or any API — they require the Notifyer Console web UI:
+
+- Initial WhatsApp number connection (embedded signup / QR scan)
+- Billing and Stripe plan changes
+- Meta template approval (timing is controlled by Meta, not the API)
+</Warning>
+
+---
+
+## Related pages
+
+- [Quickstart](/guides/notifyer-system/agent-skills/quickstart)
+- [Auth & environment](/guides/notifyer-system/agent-skills/auth-and-env)
+- [Security](/guides/notifyer-system/agent-skills/security)
+- [Using with Cursor](/guides/notifyer-system/agent-skills/platforms/cursor) — install skills locally if you work on the Lovable project in Cursor
+- [Lovable Agent mode docs](https://docs.lovable.dev/features/agent-mode)
+- [Lovable Knowledge docs](https://docs.lovable.dev/features/knowledge)
+- [Lovable Plan mode docs](https://docs.lovable.dev/features/plan-mode)
