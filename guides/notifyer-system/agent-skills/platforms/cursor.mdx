@@ -1,0 +1,200 @@
+---
+title: "Using with Cursor"
+description: "Install Notifyer Agent Skills into Cursor and have its Agent operate your Notifyer workspace from inside your IDE."
+icon: "circle-dot"
+---
+
+<Tip>
+Cursor has **native support** for the AgentSkills standard. Skills installed via `npx skills add` are automatically discovered by Cursor Agent — no manual configuration needed.
+</Tip>
+
+## How it works in Cursor
+
+Cursor Agent loads skills from these directories and presents them as available capabilities:
+
+| Location | Scope |
+|---|---|
+| `.cursor/skills/<skill-name>/` | Current project only |
+| `.agents/skills/<skill-name>/` | Current project only |
+| `~/.cursor/skills/<skill-name>/` | All projects (global) |
+| `~/.agents/skills/<skill-name>/` | All projects (global) |
+
+When a skill is installed, Agent reads its `SKILL.md` file and automatically decides when to apply it based on what you ask. You can also invoke any skill explicitly by typing `/skill-name` in the Agent chat.
+
+Skills are visible in **Cursor Settings → Rules → Agent Decides**.
+
+---
+
+## Install the skills
+
+<Tabs>
+  <Tab title="Global install (recommended)">
+    Installs the skills for all your projects. Run once:
+
+    ```bash
+    npx skills add whatsable/whatsapp-business-agent-skills -g
+    ```
+
+    This puts all 3 skills under `~/.cursor/skills/`:
+    - `~/.cursor/skills/setup-notifyer/`
+    - `~/.cursor/skills/automate-notifyer/`
+    - `~/.cursor/skills/chat-notifyer/`
+  </Tab>
+  <Tab title="Project-level install">
+    Installs only into the current project's `.cursor/skills/` directory:
+
+    ```bash
+    npx skills add whatsable/whatsapp-business-agent-skills
+    ```
+
+    When prompted, select the skills you want, or select **All 3 skills** to install everything at once.
+  </Tab>
+  <Tab title="Install a single skill">
+    ```bash
+    npx skills add whatsable/whatsapp-business-agent-skills --skill setup-notifyer
+    npx skills add whatsable/whatsapp-business-agent-skills --skill automate-notifyer
+    npx skills add whatsable/whatsapp-business-agent-skills --skill chat-notifyer
+    ```
+  </Tab>
+</Tabs>
+
+<Warning>
+The scripts in these skills are **Node.js CLI tools** that run in your terminal, not inside Cursor's chat UI. Cursor Agent reads the skill instructions and executes scripts using its terminal tool when needed.
+</Warning>
+
+---
+
+## Set up environment variables
+
+The scripts need two variables before Agent can use them:
+
+```bash
+export NOTIFYER_API_BASE_URL="https://api.insightssystem.com"
+export NOTIFYER_API_TOKEN="eyJ..."   # obtained via setup-notifyer/scripts/login.js
+```
+
+Add these to your shell profile (`~/.zshrc` or `~/.bashrc`) so they're always available when Cursor's terminal runs scripts. Alternatively, add a `.env` file to your project — Cursor Agent can read it if you reference it in your prompt.
+
+<Warning>
+Never commit `NOTIFYER_API_TOKEN` to Git. The `.gitignore` in the agent-skills repo already excludes `.env` and `.env.*` files.
+</Warning>
+
+For full environment variable reference, see [Auth & environment](/guides/notifyer-system/agent-skills/auth-and-env).
+
+---
+
+## Verify discovery
+
+After installing, confirm Cursor can see the skills:
+
+1. Open **Cursor Settings** → **Rules**
+2. Look for `setup-notifyer`, `automate-notifyer`, and `chat-notifyer` in the **Agent Decides** section
+
+Or run in Cursor Agent chat:
+
+```
+/setup-notifyer
+```
+
+Agent will display the skill instructions and confirm it's loaded.
+
+---
+
+## Example Agent prompts
+
+Once installed, use natural language in Cursor Agent chat. Agent will identify the relevant skill and execute the appropriate scripts.
+
+### Workspace setup
+
+```
+Log in to Notifyer with email=me@company.com and run a full health check.
+Tell me if the WhatsApp connection is active and what plan we're on.
+```
+
+```
+Create three labels: Sales, Support, and VIP.
+For each one, set up relevant keywords (e.g. "pricing, quote" for Sales).
+```
+
+### Template management
+
+```
+List all our approved WhatsApp templates and show me which ones have variables.
+```
+
+```
+Create a new template called order_shipped in the UTILITY category.
+Body: "Hi {{1}}, your order {{2}} has shipped and will arrive by {{3}}."
+```
+
+### Live chat operations
+
+```
+Find all unread conversations labeled VIP and show me the full context for each one.
+```
+
+```
+Check if the 24-hour messaging window is open for +14155550123, then send them
+"Hi! Just following up on your recent enquiry." if it is.
+```
+
+```
+Assign the Support label to +14155550123, take over from the bot, and add a note:
+"Customer escalated — awaiting approval from billing team."
+```
+
+### Broadcast campaigns
+
+```
+Create a broadcast called Feb Promo using template ID 42.
+Test it on +14155550123 first, then schedule it for 01/02/2026 at 10:00.
+```
+
+---
+
+## Manually invoking a skill
+
+If Agent doesn't pick up a skill automatically, invoke it with the `/` command:
+
+```
+/setup-notifyer Run doctor.js and tell me what's wrong.
+```
+
+```
+/chat-notifyer Get the last 20 messages from the conversation with +14155550123.
+```
+
+```
+/automate-notifyer List all webhooks and show me which ones have signatures enabled.
+```
+
+---
+
+## How Agent runs the scripts
+
+When you give Agent a task, it:
+
+1. Reads the relevant `SKILL.md` to understand available scripts and their flags
+2. Opens a terminal in the skill's directory (`skills/setup-notifyer/`, etc.)
+3. Runs the script with the correct flags
+4. Parses the JSON output (`ok`/`err` structure) and summarises the result
+
+All scripts output structured JSON, which Agent can read and act on — for example, it can check if `isConnected: false` and automatically suggest running `refresh-connection.js`.
+
+---
+
+## Keeping skills up to date
+
+```bash
+# Re-run the install command to pull the latest version
+npx skills add whatsable/whatsapp-business-agent-skills -g
+```
+
+---
+
+## Related pages
+
+- [Quickstart](/guides/notifyer-system/agent-skills/quickstart)
+- [Auth & environment](/guides/notifyer-system/agent-skills/auth-and-env)
+- [Use cases](/guides/notifyer-system/agent-skills/use-cases)
+- [Cursor Agent Skills docs](https://cursor.com/docs/skills)
