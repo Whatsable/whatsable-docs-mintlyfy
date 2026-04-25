@@ -28,16 +28,6 @@
             ]
           },
           {
-            "group": "WhatsAble",
-            "pages": [
-              "guides/whatsable/zapier",
-              "guides/whatsable/make",
-              "guides/whatsable/n8n",
-              "guides/whatsable/api-documentation",
-              "guides/whatsable/webhooks"
-            ]
-          },
-          {
             "group": "Notifyer System",
             "pages": [
               "guides/notifyer-system/embedding-process",
@@ -68,9 +58,7 @@
                   {
                     "group": "Platforms",
                     "pages": [
-                      "guides/notifyer-system/agent-skills/platforms/cursor",
-                      "guides/notifyer-system/agent-skills/platforms/base44",
-                      "guides/notifyer-system/agent-skills/platforms/lovable"
+                      "guides/notifyer-system/agent-skills/platforms/cursor"
                     ]
                   }
                 ]
@@ -84,6 +72,16 @@
                   "guides/notifyer-system/api/incoming-message"
                 ]
               }
+            ]
+          },
+          {
+            "group": "WhatsAble",
+            "pages": [
+              "guides/whatsable/zapier",
+              "guides/whatsable/make",
+              "guides/whatsable/n8n",
+              "guides/whatsable/api-documentation",
+              "guides/whatsable/webhooks"
             ]
           }
         ]
