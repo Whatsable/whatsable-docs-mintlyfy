@@ -58,7 +58,9 @@
                   {
                     "group": "Platforms",
                     "pages": [
-                      "guides/notifyer-system/agent-skills/platforms/cursor"
+                      "guides/notifyer-system/agent-skills/platforms/base44",
+                      "guides/notifyer-system/agent-skills/platforms/cursor",
+                      "guides/notifyer-system/agent-skills/platforms/lovable"
                     ]
                   }
                 ]

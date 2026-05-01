@@ -24,19 +24,31 @@ The skills are loaded from `~/.agents/skills/` (global) or `.agents/skills/` (pr
 
 <Tabs>
   <Tab title="Global install (recommended)">
-    Makes the skills available across all your Base44 projects:
+    Makes the skills available across all your Base44 projects. Use `--all` to install all three skills at once without an interactive prompt:
+
+    ```bash
+    npx skills add whatsable/whatsapp-business-agent-skills --all -g
+    ```
+
+    This installs `setup-notifyer`, `automate-notifyer`, and `chat-notifyer` together.
+
+    To install interactively (choose which skills to include):
 
     ```bash
     npx skills add whatsable/whatsapp-business-agent-skills -g
     ```
 
-    When prompted, select **All 3 skills** to install `setup-notifyer`, `automate-notifyer`, and `chat-notifyer` at once.
+    To install a single skill only:
+
+    ```bash
+    npx skills add whatsable/whatsapp-business-agent-skills --skill chat-notifyer -g
+    ```
   </Tab>
   <Tab title="Project-level install">
     Installs only into the current project directory:
 
     ```bash
-    npx skills add whatsable/whatsapp-business-agent-skills
+    npx skills add whatsable/whatsapp-business-agent-skills --all
     ```
   </Tab>
 </Tabs>
@@ -51,15 +63,28 @@ Base44 skills themselves are installed with `npx skills add base44/skills -g`. N
 
 The Notifyer scripts need these variables:
 
+| Variable | Required | Description |
+|---|---|---|
+| `NOTIFYER_API_BASE_URL` | **yes** | Always `https://api.insightssystem.com`. Must start with `https://` — all scripts enforce this at startup. |
+| `NOTIFYER_API_TOKEN` | **yes** | JWT token obtained via `setup-notifyer/scripts/login.js` |
+| `NOTIFYER_CHAT_ORIGIN` | no | CORS Origin override for Phase 3 chat endpoints. Defaults to `https://chat.notifyer-systems.com`. |
+
 ```bash
 export NOTIFYER_API_BASE_URL="https://api.insightssystem.com"
 export NOTIFYER_API_TOKEN="eyJ..."   # obtained via setup-notifyer/scripts/login.js
 ```
 
-For Base44 backend functions that call the Notifyer API directly (without running CLI scripts), store these as **environment variables in your Base44 project settings** and access them in your backend function code.
+For Base44 backend functions that call the Notifyer API directly, store these as **project secrets** using the Base44 CLI:
+
+```bash
+base44 secrets set NOTIFYER_API_BASE_URL=https://api.insightssystem.com
+base44 secrets set NOTIFYER_API_TOKEN=eyJ...
+```
+
+Inside your backend function code, access them with `Deno.env.get("NOTIFYER_API_TOKEN")`.
 
 <Warning>
-Never hardcode `NOTIFYER_API_TOKEN` in your Base44 app source. Use Base44's environment variable system to inject it at runtime.
+Never hardcode `NOTIFYER_API_TOKEN` in your Base44 app source. Use `base44 secrets set` to store it securely — it will be available as an environment variable in your deployed backend functions.
 </Warning>
 
 ---
@@ -83,30 +108,57 @@ messaging window is open before sending a text message via Notifyer.
 
 The AI will reference the skill's reference docs (`references/messaging-reference.md`, `references/recipients-reference.md`, etc.) to produce accurate code.
 
-### 2. Running skills scripts from a backend function
+### 2. Calling the Notifyer API directly from a Base44 backend function
 
-You can also call the Notifyer scripts directly from a Base44 backend function or automation:
+Base44 backend functions run on **Deno** — not Node.js. Call the Notifyer REST API directly using the built-in `fetch()`. The Notifyer scripts (which require Node.js 18+) cannot be executed from within a Deno backend function.
 
-```javascript
-// Inside a Base44 backend function
-import { execSync } from "child_process";
+The example below sends a WhatsApp template message using the Notifyer Chat API (`POST /api:bVXsw_FD/web/send/template`). Template messages work at any time — no 24-hour window required. Get the `templateId` from `automate-notifyer/scripts/list-templates.js`.
 
-const result = JSON.parse(
-  execSync(
-    `node ~/.agents/skills/chat-notifyer/scripts/send-text.js \
-      --phone ${phoneNumber} \
-      --text "${message}"`,
-    { env: { ...process.env } }
-  ).toString()
-);
+```typescript
+// Inside a Base44 backend function (Deno)
+Deno.serve(async (req) => {
+  try {
+    const { phone, templateId, variables } = await req.json();
 
-if (!result.ok) {
-  throw new Error(result.error);
-}
+    const token = Deno.env.get("NOTIFYER_API_TOKEN");
+    const baseUrl = Deno.env.get("NOTIFYER_API_BASE_URL");
+
+    const res = await fetch(`${baseUrl}/api:bVXsw_FD/web/send/template`, {
+      method: "POST",
+      headers: {
+        "Authorization": token,          // Chat auth — raw JWT, no Bearer prefix
+        "Origin": "https://chat.notifyer-systems.com",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        template: templateId,            // Template ID string from list-templates.js
+        variables: variables ?? {},      // e.g. { "body1": "John", "body2": "#12345" }
+        current_recipient: {
+          phone_number: parseInt(String(phone).replace(/^\+/, ""), 10),
+        },
+        scheduled_time: 0,              // 0 = send immediately
+      }),
+    });
+
+    const result = await res.json();
+
+    // Notifyer (Xano) can return HTTP 200 with success: false on Meta rejections
+    if (!res.ok || result.success === false) {
+      return Response.json(
+        { ok: false, error: result },
+        { status: res.ok ? 400 : res.status }
+      );
+    }
+
+    return Response.json({ ok: true, result });
+  } catch (error) {
+    return Response.json({ ok: false, error: error.message }, { status: 500 });
+  }
+});
 ```
 
 <Warning>
-This pattern requires Node.js ≥ 18 in the execution environment and the skills to be installed on the server running your backend functions.
+Base44 backend functions use the Deno runtime. Do not import Node.js-specific modules like `child_process`. Use `fetch()` to call the Notifyer REST API directly, and use `Deno.env.get()` to read secrets.
 </Warning>
 
 ---
@@ -144,15 +196,21 @@ When a new inbound message arrives, create or update a record in the Conversatio
 
 ```
 When a user sends the message "talk to a human" to our Base44 AI agent,
-call the Notifyer API to set handoff mode to "human" for that contact's phone number.
-Use the PATCH /web/recipient/:id endpoint with is_ai_assistant: false.
+perform a human handover for that contact's WhatsApp conversation in Notifyer.
+Use the assign-label workflow: first get the bot's handoff_label from list-bots.js,
+then assign that label to the recipient — this automatically stops the AI bot and
+routes the conversation to the human agent queue.
 ```
+
+<Note>
+The correct handover method is **always label-based**: assign the bot's configured `handoff_label` to the recipient. Notifyer automatically sets `is_ai_assistant = false` when the handoff label is detected. Do not use a direct PATCH to flip `is_ai_assistant` — it stops the bot but does not route to the human label queue.
+</Note>
 
 ---
 
 ## API reference for Base44 backend functions
 
-When building backend functions that call Notifyer directly (instead of using the CLI scripts), these are the key details:
+When building backend functions that call Notifyer directly, these are the key details:
 
 | | Console API | Chat API |
 |---|---|---|
@@ -160,6 +218,8 @@ When building backend functions that call Notifyer directly (instead of using th
 | **Auth header** | `Authorization: Bearer <jwt>` | `Authorization: <jwt>` (no Bearer) |
 | **Origin** | `https://console.notifyer-systems.com` | `https://chat.notifyer-systems.com` |
 | **Used for** | Templates, bots, broadcasts, webhooks | Recipients, messaging, labels, handoff |
+
+There is also a **Developer API key** mode (`Authorization: <api_key>` — no Bearer prefix) used by external tools such as Make, Zapier, and n8n. Retrieve the key with `setup-notifyer/scripts/get-api-key.js`. This is a separate long-lived credential, distinct from the JWT token.
 
 For complete endpoint reference, see the skills' `references/` directory after install:
 - `~/.agents/skills/automate-notifyer/references/`
@@ -170,7 +230,7 @@ For complete endpoint reference, see the skills' `references/` directory after i
 ## Keeping skills up to date
 
 ```bash
-npx skills add whatsable/whatsapp-business-agent-skills -g
+npx skills add whatsable/whatsapp-business-agent-skills --all -g
 ```
 
 Re-running the install command pulls the latest version from the repository.
@@ -183,3 +243,5 @@ Re-running the install command pulls the latest version from the repository.
 - [Auth & environment](/guides/notifyer-system/agent-skills/auth-and-env)
 - [Use cases](/guides/notifyer-system/agent-skills/use-cases)
 - [Base44 Skills docs](https://docs.base44.com/developers/backend/overview/skills)
+- [Base44 Backend Functions](https://docs.base44.com/developers/backend/resources/backend-functions/overview)
+- [Base44 Secrets (`secrets set`)](https://docs.base44.com/developers/references/cli/commands/secrets-set)
