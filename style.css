@@ -1,0 +1,8 @@
+/*
+ * Page-scoped UI — Mintlify: html[data-current-path="..."] (Custom scripts docs).
+ * Full top bar (logo, Guides/API tabs, search, CTA) hidden on onboarding only.
+ */
+html[data-current-path="/onboarding/get-started-with-whatsable"] #navbar,
+html[data-current-path="/onboarding/get-started-with-whatsable/"] #navbar {
+  display: none !important;
+}

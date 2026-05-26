@@ -1,0 +1,475 @@
+---
+title: 'Make'
+description: 'Learn how to seamlessly integrate Make with the Notifyer System for enterprise-level WhatsApp automation'
+icon: 'lines-leaning'
+---
+
+# Notifyer System Integration with Make
+
+<Frame caption="Automate your WhatsApp messaging workflows with Make and Notifyer System">
+  <img src=" " className="rounded-xl" />
+</Frame>
+
+<Tip>
+  This guide walks you through connecting Notifyer System with Make to create powerful automated WhatsApp messaging workflows for your business
+</Tip>
+
+## Prerequisites
+
+Before getting started, make sure you have:
+
+<CardGroup cols={2}>
+  <Card title="Notifyer System Account" icon="user">
+    Active Notifyer System account with a subscription plan (Monthly or Pay-as-you-go)
+  </Card>
+  <Card title="Make Account" icon="user">
+    Access to [Make](https://www.make.com/en/register) workflow automation platform
+  </Card>
+</CardGroup>
+
+<Tip>
+  New to Notifyer System? [Sign up here](https://console.notifyer-systems.com/)
+</Tip>
+
+## Setting up your Notifyer System account
+
+<Steps>
+  <Step title="Complete the Embedding Process">
+    Before sending WhatsApp messages, you must complete the platform embedding process, which connects your WhatsApp Business account to Notifyer System.
+
+    <Info>
+      The embedding process is required by Meta to ensure proper business verification and compliance with WhatsApp Business Platform policies.
+    </Info>
+  </Step>
+  
+  <Step title="Set up message templates">
+    Notifyer System provides two methods for sending WhatsApp messages:
+
+    <Accordion title="Option A: Template messages" defaultOpen={true}>
+      <p>WhatsApp templates are pre-approved message formats that allow for personalization while maintaining compliance with WhatsApp policies.</p>
+      
+      <Steps>
+        <Step title="Navigate to Templates">
+          Go to **Your Templates** in your Notifyer dashboard
+        </Step>
+        <Step title="Create Template">
+          Click the **Create Template** tab at the top of the page
+        </Step>
+        <Step title="Fill out the form">
+          Complete the template creation form with the following details:
+          
+          <ResponseField name="Template Name" type="string" required>
+            Choose a descriptive name for internal reference
+          </ResponseField>
+          <ResponseField name="Language" type="string" required>
+            Choose your template's primary language
+          </ResponseField>
+          <ResponseField name="Category" type="string" required>
+            Select the appropriate message category
+          </ResponseField>          
+          <ResponseField name="Header" type="image | document | video">
+            Optional: Add an image, document, or video header
+          </ResponseField>
+          <ResponseField name="Message Body" type="string" required>
+            Craft your message content
+          </ResponseField>
+          <ResponseField name="Variables" type="string">
+            Add placeholders using `{{1}}`, `{{2}}` format for personalization
+          </ResponseField>          
+          <ResponseField name="Buttons" type="button">
+            Optional: Configure call-to-action buttons
+          </ResponseField>
+        </Step>
+        <Step title="Submit for review">
+          Click **Preview and Submit**
+        </Step>
+      </Steps>
+
+      <Frame caption="Template Creation Interface">
+        <img src="/images/notifyer_template_create.png" alt="Template Creation Interface" />
+      </Frame>
+
+      <Warning>
+        Templates typically get reviewed within 24 hours. Creating compliant templates that avoid promotional language increases approval chances.
+      </Warning>
+    </Accordion>
+
+    <Accordion title="Option B: Non-template messages">
+      <p>For simpler communications, you can send non-template messages that include:</p>
+      
+      <CardGroup cols={2}>
+        <Card title="Text" icon="message-text">
+          Plain text messages within the 24-hour window
+        </Card>
+        <Card title="Images" icon="image">
+          Photos and graphics in supported formats
+        </Card>
+        <Card title="Documents" icon="file-pdf">
+          PDFs, Word docs, and other file types
+        </Card>
+        <Card title="Videos" icon="video">
+          MP4 and other supported video formats
+        </Card>
+      </CardGroup>
+
+      <Note>
+        Non-template messages can only be sent within the 24-hour customer service window after a customer initiates contact with your business.
+      </Note>
+    </Accordion>
+  </Step>
+  
+  <Step title="Get your API key">
+    To connect Notifyer System with Make, you'll need an API key:
+
+    1. In your Notifyer dashboard, navigate to [**API Keys**](https://console.notifyer-systems.com/api-key)
+    2. Copy your unique API key
+    3. Store it securely—you'll need it for the integration
+    <Warning>
+      Never share your API key publicly or commit it to version control systems.
+    </Warning>
+
+    <Frame caption="API Key Location">
+      <img src="/images/notifyer_apikey.png" alt="API Key Location" />
+    </Frame>
+  </Step>
+</Steps>
+
+## Connect Notifyer System to Make
+
+Now that you have Notifyer System set up, let's connect it to Make to automate your scenarios.
+
+<Steps>
+  <Step title="Install Notifyer System in Make">
+    1. Log in to your Make account
+    2. Navigate to Notifyer System dashboard and select **Connect to Make** in the side menu
+    3. Click **Continue** in the connection guide popup
+    4. Click **Install**, select your organization at the bottom of the screen, then click **Install** again. (Note: You need Admin, Owner, or App Developer role in your organization to install apps.)
+    <Check>
+      You're now ready to create scenarios with the Notifyer System app
+    </Check>
+    <Frame caption="Installing Notifyer System in Make">
+        <img src="/images/notifyer_make1.gif" alt="Installing Notifyer System in Make" />
+    </Frame>
+  </Step>
+
+  <Step title="Set up your Make Scenario">
+    1. Log in to your Make account
+    2. Create a new scenario by clicking **+ Create a new scenario**
+    3. (Optional) Add a trigger module of your choice:
+       - Popular triggers include Google Forms, Jotform, ClickUp, or a Schedule trigger
+       - Connect and configure your trigger according to your use case
+
+    <Frame caption="Setting up a module/trigger in Make">
+      <img src="/images/whatsable_make1.gif" alt="Setting up a module/trigger Make" />
+    </Frame>
+  </Step>
+  
+  <Step title="Add the Notifyer System module">
+    1. Click the **+** button to add a new module
+    2. Search for **Notifyer System** in the apps or modules library
+    3. Select the module with the official Notifyer System logo
+
+    <Frame caption="Adding the Notifyer System module">
+      <img src="/images/Notifyer_make2.gif" alt="Adding the Notifyer System module" />
+    </Frame>
+  </Step>
+  
+  <Step title="Configure Notifyer System credentials">
+    <Accordion title="Credential Setup" defaultOpen>
+      1. Once you click on Notifyer System module, select '**Send a WhatsApp Message with Your Template**' or '**Send a WhatsApp Message without Template**' from the **ACTIONS**
+      2. Click **Create a connection** in the **Connection** section of Notifyer System module and you will be prompted to enter your API Key
+      3. Enter your Notifyer System API key that you copied earlier
+      4. Rename your connection name if needed
+      4. Click **Save** to store your credential
+
+    <Frame caption="Configuring Notifyer System credentials">
+      <img src="/images/Notifyer_make3.gif" alt="Configuring Notifyer System credentials" />
+    </Frame>
+    </Accordion>
+  </Step>
+
+  <Step title="Configure your message">
+    Depending on your messaging needs, choose one of the following operations:
+
+    <Tabs>
+      <Tab title="Send a WhatsApp Message with Your Template">
+            Complete the required fields:
+            
+            <ResponseField name="Phone Number" type="string" required>
+              Enter the recipient's phone number with country code (e.g., +1234567890) or use dynamic data from previous nodes
+            </ResponseField>
+            <ResponseField name="Templates" type="dropdown" required>
+              Select from your pre-approved templates in the dropdown
+            </ResponseField>
+            <ResponseField name="Media" type="string" required>
+              Enter publicly accessible media URL for Media (image/video/document) header.
+              <Info>
+               This field will only appear if you have a Media (image/video/document) header configured in your selected template.
+              </Info>
+            </ResponseField>
+            <ResponseField name="Variables" type="string" required>
+              Fill in values for each variable in your template, mapping them to dynamic data when applicable
+            </ResponseField>
+            <ResponseField name="Add a Note" type="string" optional>
+              Add note for internal tracking. This data won't be sent to the recipient
+            </ResponseField>
+            <ResponseField name="Add Label(s)" type="multiselect" optional>
+              Select label(s) for internal tracking. This data won't be sent to the recipient
+            </ResponseField>
+
+        <Frame caption="Template Message Configuration">
+          <img src="/images/Notifyer_make4.gif" alt="Template Message Configuration" />
+        </Frame>
+      </Tab>
+      <Tab title="Send a WhatsApp Message without Template">
+            Complete the required fields:
+            
+            <ResponseField name="Phone Number" type="string" required>
+              Enter the recipient's phone number with country code (e.g., +1234567890) or use dynamic data from previous nodes
+            </ResponseField>
+            <ResponseField name="Message Type" type="dropdown" required>
+              Choose from the following message types:            
+               <CardGroup cols={3}>
+               <Card title="Text Message" icon="message">
+                  For plain text messages
+               </Card>
+               <Card title="Media Message (Image)" icon="image">
+                  For sending images (JPEG, PNG, etc.)
+               </Card>
+               <Card title="Media Message (Video)" icon="video">
+                  For sending videos (MP4, 3GP, etc.)
+               </Card>
+               <Card title="Document Message" icon="file">
+                  For sending documents (PDF, Word, etc.)
+               </Card>
+               <Card title="Audio Message" icon="volume">
+                  For sending videos (MP3, OGG, etc.)
+               </Card>
+               <Card title="Interactive URL Button" icon="square-arrow-up-right">
+                  For messages with button that contain URL or dynamic URL
+               </Card>
+               </CardGroup>
+            </ResponseField>
+            <ResponseField name="Message Details" type="object" required>
+              <Tabs>
+                <Tab title="Text Message">
+                  <Steps>
+                    <Step title="Message Details">
+                      <ResponseField name="Enable Link Preview" type="option">
+                        Keep the option at the default 'No'. If there is a link/URL in the text body and you want the recipient to see a preview, select 'Yes'
+                      </ResponseField>
+                      <ResponseField name="Message Text" type="string" required>
+                        Enter the text message content
+                      </ResponseField>
+                    </Step>
+                  </Steps>
+                </Tab>
+                <Tab title="Media Message (Image)">
+                  <Steps>
+                    <Step title="Image Details">
+                      <ResponseField name="Image URL" type="url" required>
+                        Enter the publicly accessible URL for your image file
+                      </ResponseField>
+                      <ResponseField name="Caption" type="string" optional>
+                        Optional caption for the image
+                      </ResponseField>
+                    </Step>
+                  </Steps>
+                </Tab>
+                <Tab title="Media Message (Video)">
+                  <Steps>
+                    <Step title="Video Details">
+                      <ResponseField name="Video URL" type="url" required>
+                        Enter the publicly accessible URL for your video file
+                      </ResponseField>
+                      <ResponseField name="Caption" type="string" optional>
+                        Optional caption for the video
+                      </ResponseField>
+                    </Step>
+                  </Steps>
+                </Tab>
+                <Tab title="Document Message">
+                  <Steps>
+                    <Step title="Document Details">
+                      <ResponseField name="Document URL" type="url" required>
+                        Enter the publicly accessible URL for your document
+                      </ResponseField>
+                      <ResponseField name="Caption" type="string" optional>
+                        Optional caption for the document
+                      </ResponseField>
+                    </Step>
+                    <Step>
+                      <ResponseField name="Filename" type="string" required>
+                        Enter the filename (e.g., report.pdf)
+                      </ResponseField>
+                    </Step>
+                  </Steps>
+                </Tab>
+                <Tab title="Audio Message">
+                  <Step title="Document Details">
+                      <ResponseField name="Audio URL" type="url" required>
+                        Enter the publicly accessible URL for your audio file (MP3, OGG)
+                      </ResponseField>
+                  </Step>
+                </Tab>
+                <Tab title="Interactive URL Button">
+                  <Steps>
+                    <Step title="Interactive Message Details">
+                      <ResponseField name="Header Text" type="string" optional>
+                        Enter optional text to show at the top
+                      </ResponseField>
+                      <ResponseField name="Message Body" type="string" required>
+                        Enter the main content of the message
+                      </ResponseField>
+                      <ResponseField name="Button Text" type="string" required>
+                        Enter the text to display on button
+                      </ResponseField>
+                      <ResponseField name="Button URL" type="url" required>
+                        Enter the URL for the button
+                      </ResponseField>
+                      <ResponseField name="Footer Text" type="string" optional>
+                        Enter the optional text to show at bottom
+                      </ResponseField>
+                    </Step>
+                  </Steps>
+                </Tab>
+              </Tabs>
+            </ResponseField>
+            <ResponseField name="Add Label(s)" type="multiselect" optional>
+              Select label(s) for internal tracking. This data won't be sent to the recipient
+            </ResponseField>        
+
+        <Frame caption="Non-Template Message Configuration">
+          <img src="/images/Notifyer_make5.gif" alt="Non-Template Message Configuration" />
+        </Frame>
+      </Tab>
+    </Tabs>
+  </Step>
+  
+  <Step title="Test and activate your scenario">
+    1. Click **Save** to save your message configuration
+    2. Right click on the WhatsAble module and select **Run this module only** to verify the module is working correctly
+        - or click **Run once** in the bottom-left corner of the screen to test the entire scenario
+    3. If the test is successful, you'll see a confirmation message
+    4. Click **Save** icon in the bottom-left corner to save your scenario (You can also set timer intarval for the scenario)
+    5. Toggle the **Active** switch in the bottom-left corner with time to activate your scenario
+    <Frame caption="Testing and activating your scenario">
+      <img src=" " alt="Testing and activating your scenario" />
+    </Frame>
+  </Step>
+</Steps>
+
+## Example use cases
+
+<CardGroup cols={3}>
+  <Card title="Order confirmations" icon="box-check">
+    Send automatic order confirmations when new orders are placed
+  </Card>
+  <Card title="Appointment reminders" icon="calendar">
+    Schedule reminders before upcoming appointments
+  </Card>
+  <Card title="Lead notifications" icon="user-plus">
+    Alert your sales team when new leads come in
+  </Card>
+  <Card title="Customer support" icon="headset">
+    Route support inquiries to the appropriate team member
+  </Card>
+  <Card title="Delivery updates" icon="truck">
+    Keep customers informed about their delivery status
+  </Card>
+  <Card title="Payment reminders" icon="credit-card">
+    Send automatic payment reminders for overdue accounts
+  </Card>
+</CardGroup>
+
+## Best practices
+
+<AccordionGroup>
+  <Accordion title="Test thoroughly" icon="vial">
+    Always test your workflows with test phone numbers before activating them for production use.
+  </Accordion>
+  <Accordion title="Use templates" icon="file-lines">
+    Whenever possible, use pre-approved templates for better deliverability and compliance.
+  </Accordion>
+  <Accordion title="Add personalization" icon="user">
+    Include customer names and specific details to increase engagement and response rates.
+  </Accordion>
+  <Accordion title="Follow WhatsApp policies" icon="shield-check">
+    Ensure all message content complies with WhatsApp Business policies to avoid account restrictions.
+  </Accordion>
+  <Accordion title="Monitor performance" icon="chart-line">
+    Regularly check your message delivery rates in your Notifyer dashboard.
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Messages not sending?" icon="circle-exclamation">
+    <Steps>
+      <Step title="Verify API key">
+        Ensure your API key is entered correctly in the Make credentials
+      </Step>
+      <Step title="Check phone numbers">
+        Confirm phone numbers are in the correct international format (e.g., +14155552671)
+      </Step>
+      <Step title="Check subscription">
+        Verify your Notifyer subscription is active and has available credits
+      </Step>
+      <Step title="Template verification">
+        For template messages, ensure you're using an approved template
+      </Step>
+    </Steps>
+  </Accordion>
+  
+  <Accordion title="Template errors?" icon="file-exclamation">
+    <Steps>
+      <Step title="Variable check">
+        Verify all required variables are included in your template message
+      </Step>
+      <Step title="Format verification">
+        Check that variable formats match the expected values (text, number, date, etc.)
+      </Step>
+      <Step title="Template name">
+        Ensure you're using the correct template name exactly as it appears in your dashboard
+      </Step>
+    </Steps>
+  </Accordion>
+  
+  <Accordion title="Media not displaying?" icon="image">
+    <Steps>
+      <Step title="URL access">
+        Confirm your media URLs are publicly accessible (test in an incognito browser)
+      </Step>
+      <Step title="File format">
+        Verify the file format is supported by WhatsApp
+      </Step>
+      <Step title="File size">
+        Check that file sizes are within WhatsApp limits:
+        - Images: up to 5MB
+        - Videos: up to 16MB
+        - Documents: up to 100MB
+      </Step>
+    </Steps>
+  </Accordion>
+</AccordionGroup>
+
+## Need help?
+
+Our support team is ready to assist you:
+
+<CardGroup cols={3}>
+  <Card title="Email support" icon="envelope" href="mailto:team@whatsable.app">
+    Contact team@whatsable.app
+  </Card>
+  <Card title="Schedule a demo" icon="calendar" href="https://tidycal.com/axelmeta/notifyer-systems-demo">
+    Book a personalized walkthrough
+  </Card>
+  <Card title="Live chat" icon="message-dots" href="">
+    Click the green chat button in the bottom right corner of the Notifyer System dashboard
+  </Card>
+</CardGroup>
+
+<Info>
+  For additional automation platform integrations (Make.com, Zapier, etc.), please contact our support team or check our integration documentation.
+</Info>

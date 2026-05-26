@@ -1,0 +1,64 @@
+---
+title: 'Getting Started with Notifier System'
+description: 'Learn how to get started with Notifier System, the flagship WhatsApp messaging solution'
+---
+
+# Getting Started with Notifier System
+
+Notifier System is our flagship WhatsApp messaging solution, designed for enterprise-level communication needs.
+
+## Prerequisites
+
+- WhatsApp Business API account
+- Business verification
+- Technical team for integration
+- Understanding of enterprise messaging
+- Your Notifier System API credentials
+
+## Quick Setup
+
+1. Contact our sales team for enterprise setup
+2. Complete business verification
+3. Set up your WhatsApp Business API account
+4. Configure your Notifier System instance
+5. Get your API credentials
+6. Set up webhooks and monitoring
+
+## First Message
+
+Here's a quick example of sending your first message:
+
+```bash
+curl -X POST https://api.notifiersystem.com/v1/messages \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "to": "+1234567890",
+    "template": "enterprise_welcome",
+    "variables": {
+      "name": "John",
+      "company": "Enterprise Corp",
+      "department": "Sales"
+    },
+    "metadata": {
+      "campaign_id": "welcome_2024",
+      "segment": "enterprise",
+      "priority": "high"
+    }
+  }'
+```
+
+## Enterprise Features
+
+- Multi-tenant support
+- Role-based access control
+- Advanced security features
+- Custom integrations
+- Enterprise-grade support
+
+## Next Steps
+
+- Learn about [Features](/guides/notifier-system/features)
+- Explore [Integrations](/guides/notifier-system/integrations)
+- Check out [Enterprise Features](/guides/notifier-system/enterprise/security)
+- Review our [API Reference](/api-reference/notifier-system) 

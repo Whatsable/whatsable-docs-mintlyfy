@@ -1,0 +1,142 @@
+---
+title: 'Notifier System Integrations'
+description: 'Learn how to integrate Notifier System with your enterprise applications'
+---
+
+# Notifier System Integrations
+
+Integrate Notifier System with your enterprise tools and platforms.
+
+## Available Integrations
+
+### Enterprise Platforms
+- Salesforce
+- SAP
+- Oracle
+- Microsoft Dynamics
+- ServiceNow
+
+### CRM Systems
+- Salesforce
+- HubSpot
+- Zoho CRM
+- Pipedrive
+- Microsoft Dynamics
+- Custom CRM solutions
+
+### E-commerce Platforms
+- Shopify Plus
+- Magento Enterprise
+- SAP Commerce
+- Oracle Commerce
+- Custom e-commerce solutions
+
+### Marketing Tools
+- Adobe Marketing Cloud
+- Salesforce Marketing Cloud
+- Oracle Marketing Cloud
+- HubSpot Enterprise
+- Custom marketing platforms
+
+## Custom Integration
+
+### REST API
+```javascript
+const axios = require('axios');
+
+const sendEnterpriseMessage = async (message) => {
+  try {
+    const response = await axios.post(
+      'https://api.notifiersystem.com/v1/messages',
+      message,
+      {
+        headers: {
+          'Authorization': `Bearer ${process.env.NOTIFIER_SYSTEM_API_KEY}`,
+          'Content-Type': 'application/json',
+          'X-Tenant-ID': process.env.TENANT_ID
+        }
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error sending message:', error);
+    throw error;
+  }
+};
+```
+
+### Webhooks
+Configure webhooks for enterprise-level monitoring:
+
+```json
+{
+  "event": "message.status",
+  "data": {
+    "message_id": "msg_123",
+    "status": "delivered",
+    "template": "enterprise_welcome",
+    "variables": {
+      "name": "John",
+      "company": "Enterprise Corp",
+      "department": "Sales"
+    },
+    "metadata": {
+      "campaign_id": "welcome_2024",
+      "segment": "enterprise",
+      "priority": "high"
+    },
+    "timestamp": "2024-03-20T10:00:00Z"
+  }
+}
+```
+
+## Enterprise Features
+
+### Multi-tenant Support
+- Separate API keys per tenant
+- Custom webhook endpoints
+- Tenant-specific templates
+- Independent analytics
+- Custom branding
+
+### Security
+- IP whitelisting
+- API key rotation
+- Audit logging
+- Data encryption
+- Compliance monitoring
+
+### Monitoring
+- Real-time status
+- Error tracking
+- Performance metrics
+- Usage analytics
+- Cost tracking
+
+## Best Practices
+
+### Integration
+- Use environment variables
+- Implement retry logic
+- Handle rate limits
+- Monitor webhook delivery
+- Use template variables
+- Implement proper error handling
+- Set up monitoring
+- Regular security audits
+
+### Development
+- Follow API guidelines
+- Use SDK when available
+- Test thoroughly
+- Document integration
+- Version control
+- CI/CD pipeline
+- Regular updates
+
+## Next Steps
+
+- Read our [Getting Started](/guides/notifier-system/getting-started) guide
+- Explore [Features](/guides/notifier-system/features)
+- Check out [Enterprise Features](/guides/notifier-system/enterprise/security)
+- Review our [API Reference](/api-reference/notifier-system) 
