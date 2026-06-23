@@ -151,5 +151,10 @@
       "cursor",
       "vscode"
     ]
+  },
+  "integrations": {
+    "telemetry": {
+      "enabled": false
+    }
   }
 }
