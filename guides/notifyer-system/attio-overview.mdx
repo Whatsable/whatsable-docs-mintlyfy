@@ -1,0 +1,497 @@
+---
+title: 'Attio'
+description: 'Learn how to sync WhatsApp conversations with Attio CRM using the Notifyer System'
+icon: 'address-book'
+tag: 'NEW'
+keywords:
+  [
+    'Attio',
+    'Attio CRM',
+    'WhatsApp sync',
+    'Notifyer System',
+    'WhatsAble',
+    'CRM integration',
+    'Live Chat Link',
+    'attribute mapping',
+  ]
+---
+
+# Notifyer System Integration with Attio
+
+<Frame caption="Attio, fully synced with WhatsApp — configure everything from one settings screen inside Notifyer">
+  <img src="/images/attio/sync-settings-hero.png" alt="Attio Sync Settings screen in Notifyer showing CRM Record Matching with Person object and Phone numbers field" className="rounded-xl" />
+</Frame>
+
+<Tip>
+  This guide walks you through connecting Notifyer System with Attio so WhatsApp conversations show up inside your CRM — matched to the right contact, logged as a note, and kept up to date as messages are sent and received.
+</Tip>
+
+## Prerequisites
+
+Before getting started, make sure you have:
+
+<CardGroup cols={2}>
+  <Card title="Notifyer System Account" icon="user">
+    Active Notifyer System account with a connected WhatsApp number and subscription plan (Pro or Agency)
+  </Card>
+  <Card title="Attio Workspace" icon="user">
+    Access to an [Attio](https://attio.com/) workspace, with permission to install and authorize third-party apps
+  </Card>
+</CardGroup>
+
+<Info>
+  Your WhatsApp number must already be connected inside Notifyer before you start the Attio integration. If you haven't done that yet, complete the [embedding process](/guides/notifyer-system/embedding-process) first.
+</Info>
+
+<Tip>
+  New to Notifyer System? [Sign up here](https://console.notifyer-systems.com/)
+</Tip>
+
+## What you get with this integration
+
+<CardGroup cols={2}>
+  <Card title="Automatic contact matching" icon="magnifying-glass">
+    Every WhatsApp message is matched to the right Attio record by phone number — no manual lookup needed
+  </Card>
+  <Card title="Auto-created contacts" icon="user-plus">
+    New WhatsApp senders that don't exist in your CRM yet can be created automatically, with their name and phone number filled in
+  </Card>
+  <Card title="Conversations logged as notes" icon="note-sticky">
+    Incoming and outgoing messages are written into an Attio Note on the matching record, so your team can read conversation history without leaving Attio
+  </Card>
+  <Card title="Live CRM fields" icon="arrows-rotate">
+    Last message, timestamps, labels, country, and more update on the record — visible in your People list
+  </Card>
+  <Card title="One click to the full conversation" icon="up-right-from-square">
+    A Live Chat Link field on every record opens the complete WhatsApp thread in Notifyer's live console, already matched to that contact
+  </Card>
+  <Card title="Full control over the mapping" icon="table-columns">
+    You choose which Attio object and which attributes receive WhatsApp data — nothing is hard-coded to People only
+  </Card>
+</CardGroup>
+
+<Frame caption="Your CRM fields, always up to date — last message, timestamps, labels, country, and your live chat link update on the record in real time">
+  <img src="/images/attio/crm-fields-updated.png" alt="Attio People list showing WhatsApp last message and timestamp columns kept up to date" className="rounded-xl" />
+</Frame>
+
+## Setting up your Notifyer System account
+
+<Steps>
+  <Step title="Complete the embedding process">
+    Before any WhatsApp message can sync anywhere, you must complete the platform [embedding process](/guides/notifyer-system/embedding-process), which connects your WhatsApp Business account to Notifyer System.
+
+    <Info>
+      The embedding process is required by Meta to ensure proper business verification and compliance with WhatsApp Business Platform policies.
+    </Info>
+  </Step>
+</Steps>
+
+<Note>
+  Unlike the Pipedrive and Monday.com integrations, the Attio integration does not currently include an action to send WhatsApp template messages from inside Attio. Attio is a sync-in integration today: WhatsApp conversations flow into Attio automatically, but sending messages still happens from the Notifyer chat console, Zapier, Make, n8n, or the WhatsAble API. You do not need to set up message templates specifically for Attio.
+</Note>
+
+## Connect Notifyer System to Attio
+
+<Steps>
+  <Step title="Open the Attio integration page">
+    1. Log in to your **Notifyer Console**
+    2. In the left sidebar, look for **Attio** in your list of connected tools (you'll see a **New** badge next to it)
+    3. Click **Attio**, or open it directly at [notifyer.whatsable.app/attio](https://notifyer.whatsable.app/attio)
+
+    <Info>
+      If you're going through the onboarding checklist for the first time, you'll also find an **Attio** card under **Connect Tools** with the description "See your messages inside Attio Notes and schedule follow-ups."
+    </Info>
+  </Step>
+
+  <Step title="Start the connection">
+    On the Attio integration page, click **Connect Attio** (it may read **Authorize Attio** if your workspace was already installed but not yet authorized by you — both start the same OAuth flow).
+  </Step>
+
+  <Step title="Authorize Notifyer in Attio">
+    You'll be redirected to Attio's authorization screen. Review the requested access and approve the connection so Notifyer can read and write records, attributes, and notes in your workspace.
+  </Step>
+
+  <Step title="Confirm the connection">
+    After you approve, Attio redirects you back to the Notifyer Console. You'll land on a green **Attio workspace connected** card showing:
+
+    - **Workspace** — your Attio workspace name, slug, and logo
+    - **Authorized by** — the name and email of the teammate who connected the account
+    - **Connected at** — the date and time the connection was made
+
+    <Check>
+      If you see this card, your Attio workspace is linked to Notifyer System. Continue below to configure how WhatsApp data flows into it.
+    </Check>
+  </Step>
+</Steps>
+
+<Warning>
+  Until **Sync Settings** and **Attribute Mapping** are fully configured and saved, Notifyer will not sync WhatsApp messages into Attio. Required fields are marked with a red asterisk (**\***). If anything is missing, **Save settings** shows a validation error.
+</Warning>
+
+## Sync Settings reference
+
+Once connected, scroll to **Sync Settings**. This is where you tell Notifyer which Attio object and fields should receive your WhatsApp data.
+
+| Setting | Options | Description |
+|---|---|---|
+| **Object** (CRM Record Matching) | Person / Company / Deal / User / Workspace, or any custom object | The Attio object incoming WhatsApp numbers are matched against. This also drives auto-create |
+| **Phone field** (CRM Record Matching) | Any phone-number attribute on the selected object | Field used to match a WhatsApp number to a record. Only phone-type attributes appear here |
+| **Note Destination** | Any object in your workspace | Which Attio object receives the synced WhatsApp conversation note |
+| **Note grouping** | Date-wise notes / Combined note | Whether messages are split into a new note per calendar day, or kept in one ongoing note |
+| **Auto-create person** | On / Off | Whether Notifyer creates a new record when an incoming WhatsApp number has no match |
+| **Timezone** | Any IANA timezone (e.g. `Asia/Dhaka`, `America/New_York`) | Used for message timestamps and for where one "day" starts and ends in date-wise mode |
+
+### CRM Record Matching
+
+<Steps>
+  <Step title="Choose your Object">
+    Open the **Object** dropdown and pick the Attio object you want WhatsApp contacts matched against. Every object in your workspace appears here — native ones like **Person**, **Company**, **Deal**, **User**, and **Workspace** are labeled **Native**, and anything you built yourself is labeled **Custom**.
+
+    <Tip>
+      Most teams should choose **Person**. It's Attio's default object for individual contacts, and it has the most built-in features (activity feed, emails, calls, tasks) compared to a custom object.
+    </Tip>
+
+    After you pick an object, Notifyer shows: *"This object drives later sync actions, including auto-create."* That means new contacts are created on this object, and later settings (like Auto-create) refer back to it.
+  </Step>
+  <Step title="Choose the Phone field">
+    Open the **Phone field** dropdown. It only lists attributes on your chosen object whose type is **phone number**. Attio stores phone numbers in that dedicated field type (with a country code selector), so only those attributes can reliably match a WhatsApp number.
+
+    If the object you picked has no phone-number field yet, the dropdown is empty (common on **Deal** or some custom objects). In Attio, add a phone-number attribute to that object — or use the built-in **Phone numbers** field on Person — then return to Notifyer and refresh.
+
+    Once selected, Notifyer confirms: *"WhatsApp numbers will be matched using the [field] field on [object]."*
+  </Step>
+</Steps>
+
+### Note Destination and Note grouping
+
+<Steps>
+  <Step title="Pick where notes should be written">
+    In **Note Destination**, choose the object that should receive the WhatsApp conversation note. In most setups this is the same object you picked for CRM Record Matching (for example Person), but you can point it elsewhere when contacts are linked to another object and you want the conversation there.
+
+    Notifyer explains the behavior: *"If a contact is linked to [match object], notes go to [note destination]. With no link, notes are saved on [match object]."*
+  </Step>
+  <Step title="Choose how messages are grouped">
+    Pick one of the two **Note grouping** options:
+
+    - **Date-wise notes** — a new note is created for each calendar day, titled like "WhatsApp Conversation - Jul 30, 2026." Useful for busy conversations you want to scan by day.
+    - **Combined note** — every message with that contact lives in one growing note, with each line timestamped (for example "at 9:10 pm: message"). Useful when you want the full history in one place.
+  </Step>
+</Steps>
+
+### Auto-create person
+
+<Frame caption="New contact or existing, your CRM stays current — when Auto-create is on, an unmatched incoming WhatsApp message can create a new Attio record">
+  <img src="/images/attio/auto-create-contact.png" alt="Attio Person profile showing WhatsAble automatically creating a Person and WhatsApp Conversation note" className="rounded-xl" />
+</Frame>
+
+Turn this toggle **on** if you want Notifyer to create a new record on your matched object whenever a WhatsApp number that doesn't exist in Attio messages you for the first time. Notifyer fills in the recipient's name (or "Unnamed person" if WhatsApp doesn't provide one) and their phone number, then logs the first message as a note.
+
+Leave it **off** if you only want to sync conversations for contacts already in Attio — messages from unknown numbers are skipped, with no error and no partial record created.
+
+<Info>
+  Despite the label **Auto-create person**, creation always uses the object you selected under **CRM Record Matching** — not only Attio's Person object.
+</Info>
+
+### Timezone Settings
+
+Select your timezone from the dropdown (for example `(GMT+6) Asia/Dhaka`). This controls how message times appear in Attio notes and mapped timestamp fields, and — for date-wise notes — where the boundary between "today" and "tomorrow" falls.
+
+When every Sync Settings field and Attribute Mapping field below is complete, click **Save settings**. You'll see a **Configuration Updated** confirmation when the save succeeds.
+
+## Attribute Mapping reference
+
+Scroll to **Attribute Mapping**. Instead of writing WhatsApp data into fixed columns, you choose which Attio attribute each Notifyer data point should update.
+
+<Frame caption="Attribute Mapping inside the Notifyer console — map each WhatsApp data point to an attribute on your chosen Attio object">
+  <img src="/images/attio/attribute-mapping-console.png" alt="Attribute Mapping section showing Name, last messages, timestamps, Labels, Country, Note, Automation Note, and Live chat link" className="rounded-xl" />
+</Frame>
+
+| WhatsApp / Notifyer data point | What gets written | Allowed attribute type |
+|---|---|---|
+| **Name column** | The contact's display name | `personal-name` (when the object is People/Person) or `text` (other objects) |
+| **Last incoming message** | Most recent message text received from this contact | `text` |
+| **Last outgoing message** | Most recent message text your team or AI sent | `text` |
+| **Last incoming message time/date** | Timestamp of the last received message | `timestamp` |
+| **Last outgoing message time/date** | Timestamp of the last sent message | `timestamp` |
+| **Labels** | Labels assigned to the conversation in Notifyer | `text` |
+| **Country** | Country detected from the contact's phone number | `text` |
+| **Note** | The chat note from Notifyer for that contact (if any) | `text` |
+| **Automation Note** | A note injected by an upstream automation rule, if one applies | `text` |
+| **Live chat link** | Clickable link that opens this contact's full conversation in Notifyer's live console | `text` |
+
+<Steps>
+  <Step title="Select an attribute for each field">
+    For every row, open the dropdown and choose an attribute on your matched object. If you need a purpose-built field (for example a custom "Last incoming message" text attribute), create it in Attio first, then refresh Notifyer.
+
+    Each option shows a badge: **System** for Attio built-in attributes, **Custom** for attributes you or your team created.
+  </Step>
+  <Step title="Avoid duplicate mappings">
+    Each Attio attribute can be used only once across the mapping. If it's already assigned elsewhere, it shows as **Already used** and can't be selected again.
+  </Step>
+  <Step title="Save your settings">
+    When every required field in **Sync Settings** and **Attribute Mapping** is filled in, click **Save settings**. You'll see **Configuration Updated** / *Sync settings have been saved successfully.*
+
+    <Check>
+      Your Attio sync is configured. Send yourself a test WhatsApp message before rolling it out to your team.
+    </Check>
+  </Step>
+</Steps>
+
+<Info>
+  If any required field is empty, Notifyer highlights incomplete fields with a red border and shows **"Please complete all required fields."**
+</Info>
+
+## How matching and auto-create work
+
+<Steps>
+  <Step title="A WhatsApp message arrives or is sent">
+    Notifyer checks the phone number against the **Phone field** on your **Object** in CRM Record Matching.
+  </Step>
+  <Step title="Match found">
+    The message is logged to that record's note (per Note Destination and Note grouping), and every mapped attribute is updated on the record.
+  </Step>
+  <Step title="No match found, Auto-create is on">
+    A new record is created on your matched object with the sender's name and phone number. Future messages from that number sync to this record — Notifyer does not create a second record for the same number.
+  </Step>
+  <Step title="No match found, Auto-create is off">
+    The message is skipped. No record is created and no error is raised. Sync for that number starts only after the contact exists in Attio.
+  </Step>
+</Steps>
+
+## Message logging behavior
+
+<Frame caption="Every message, logged automatically — incoming and outgoing messages sync into Attio Notes with sender, timestamp, and media, grouped by day or combined into one thread">
+  <img src="/images/attio/message-logging.png" alt="Attio Note titled WhatsApp Conversation showing a threaded chat between Lisa Kraus and Axel" className="rounded-xl" />
+</Frame>
+
+Every incoming and outgoing WhatsApp message is written into an Attio Note on the matching record:
+
+- **Sender is shown correctly.** Incoming messages show the contact's name (or phone number if no name is available). Outgoing messages show the teammate who sent it, or **AI Assistant** when your AI bot replied.
+- **Timestamps use your configured timezone.** In date-wise mode, the date is in the note title, so lines inside the note show time only. In combined mode, lines include a fuller time stamp (for example "at 8:41 pm, Jul 29, 2026").
+- **Media-only messages** (image, document, or voice note with no caption) show the media link instead of a blank line.
+- **Date-wise mode** creates a fresh note per day, titled "WhatsApp Conversation - [date]."
+- **Combined mode** keeps one ongoing note per contact. New messages are appended; the newest line is shown in bold so recent activity is easy to spot.
+
+<Frame caption="A synced WhatsApp conversation inside an Attio Note, opened from a contact's record">
+  <img src="/images/attio/attio-note-conversation.png" alt="Attio note modal showing WhatsApp Conversation for Jul 30, 2026 on Axel's Person record" className="rounded-xl" />
+</Frame>
+
+## Field auto-update reference
+
+Beyond the conversation note, these mapped fields update on the matched (or newly created) record when a message is sent or received:
+
+<CardGroup cols={3}>
+  <Card title="Last incoming / outgoing message" icon="message-lines">
+    Text of the most recent message in each direction
+  </Card>
+  <Card title="Last incoming / outgoing timestamp" icon="clock">
+    Exact time of the most recent message in each direction, in your configured timezone
+  </Card>
+  <Card title="Labels" icon="tags">
+    Labels Notifyer has assigned to the conversation
+  </Card>
+  <Card title="Country" icon="earth-americas">
+    Country detected from the contact's phone number
+  </Card>
+  <Card title="Note" icon="note-sticky">
+    Chat note from Notifyer for that contact, when one exists
+  </Card>
+  <Card title="Automation Note" icon="robot">
+    Populated only when a Notifyer automation rule injects a note; otherwise blank
+  </Card>
+  <Card title="Live Chat Link" icon="up-right-from-square">
+    Always-current link to the full conversation for that contact
+  </Card>
+</CardGroup>
+
+## The Live Chat Link
+
+<Frame caption="One click from Attio to the full conversation — the Live Chat Link opens the WhatsApp thread in Notifyer's live console">
+  <img src="/images/attio/live-chat-link.png" alt="Promotional overview of Live Chat Link opening WhatsAble Live Chat from Attio" className="rounded-xl" />
+</Frame>
+
+Every synced record can include a **Live chat link** attribute — a clickable link that opens that contact's full WhatsApp conversation in Notifyer's live chat console.
+
+<Steps>
+  <Step title="Open the link from Attio">
+    Click the **Live chat link** value on the record. It opens Notifyer's live console (for example at `chat.notifyer-systems.com`).
+  </Step>
+  <Step title="You're matched automatically">
+    The link includes a phone-number reference. Notifyer opens the correct conversation automatically — you don't need to search for the contact.
+  </Step>
+  <Step title="The link cleans itself up">
+    After the conversation loads, the URL parameter is removed so the address bar shows a clean URL with nothing exposed.
+  </Step>
+  <Step title="Log in if prompted">
+    If you're not signed in to Notifyer in that browser, you'll be asked to log in first. After you sign in, open the link again from Attio to land on the conversation.
+  </Step>
+</Steps>
+
+<Frame caption="Inside the live console opened from Attio: labels, AI assistant handoff, team assignment, and notes">
+  <img src="/images/attio/notifyer-live-console.png" alt="Notifyer live chat console for Axel showing labels, Human Agent / AI Assistant handoff, and AI summary" className="rounded-xl" />
+</Frame>
+
+<Note>
+  This is one click into the full conversation, not an embedded chat window inside Attio. Attio does not support embedding external apps via iframe, so the conversation opens in Notifyer's console in a new tab. From there, your team can see AI activity, hand off to a human, assign the chat, and manage labels — in Notifyer, not inside Attio itself.
+</Note>
+
+## Automation and workflows
+
+Unlike the Monday.com integration, Attio does not yet expose native WhatsAble triggers or actions inside Attio's Workflow Builder.
+
+<Warning>
+  **Coming soon.** Attio's Workflows SDK does not currently pass authentication context (such as a user or account ID) to workflow-triggered actions — only an API key is available, with no way to tie the run back to a specific Notifyer account. Until that is supported, we cannot ship the equivalent of Monday's "when a new WhatsApp message arrives → do something in Attio" workflow triggers and actions.
+</Warning>
+
+Today, build automation around Attio + WhatsApp through:
+
+<CardGroup cols={2}>
+  <Card title="Zapier, Make, or n8n" icon="diagram-project">
+    Connect Attio and Notifyer System through your automation platform — see the [Zapier](/guides/notifyer-system/zapier-overview), [Make](/guides/notifyer-system/make-overview), and [n8n](/guides/notifyer-system/n8n-overview) guides
+  </Card>
+  <Card title="The WhatsAble API" icon="code">
+    Call the [Notifyer System API](/guides/notifyer-system/api/template-message) from your backend or from an Attio automation that can reach external webhooks
+  </Card>
+</CardGroup>
+
+## Known limitations
+
+<AccordionGroup>
+  <Accordion title="No native Attio Workflow triggers or actions yet" icon="diagram-project">
+    WhatsAble triggers and actions inside Attio Workflows are not available yet because Attio's workflow runtime does not provide the user/account authentication context Notifyer needs. Use Zapier, Make, n8n, or the WhatsAble API for automation today.
+  </Accordion>
+
+  <Accordion title="No embedded chat panel inside Attio" icon="window-restore">
+    Attio does not support iframe embeds, so Notifyer cannot render a live chat window inside Attio. Use the **Live chat link** attribute to open the full conversation in Notifyer's console instead.
+  </Accordion>
+
+  <Accordion title="Attio Notes cannot be patched in place" icon="note-sticky">
+    Attio's note API does not support editing an existing note. Notifyer works around this by finding the note by title, reading its content, and rewriting it with the new message appended. Day to day this is invisible, but it can cause small formatting differences between older and newer lines. If someone deletes a WhatsApp conversation note in Attio, Notifyer creates a new one on the next message.
+  </Accordion>
+
+  <Accordion title="No send-template or schedule action from Attio" icon="paper-plane">
+    You cannot send WhatsApp templates or schedule messages from inside Attio yet. Reply, schedule, and broadcast from the Notifyer chat console (or Zapier / Make / n8n / API).
+  </Accordion>
+</AccordionGroup>
+
+## Disconnecting
+
+To remove the connection, open **Attio** in your Notifyer Console and click **Disconnect Attio** on the connected workspace card.
+
+<Warning>
+  Disconnecting stops the sync immediately — no further WhatsApp messages are written to Attio until you reconnect.
+</Warning>
+
+To reconnect, repeat the [connection steps](#connect-notifyer-system-to-attio). After authorizing again, open **Sync Settings** and **Attribute Mapping**, confirm every required field, and click **Save settings** before relying on sync again.
+
+## Best practices
+
+<AccordionGroup>
+  <Accordion title="Prefer the Person object for most teams" icon="user">
+    Person is Attio's native contact object and usually already has a system **Phone numbers** field. Custom objects work too, but they need a phone-number attribute before matching can work.
+  </Accordion>
+
+  <Accordion title="Keep phone numbers in Attio's phone field type" icon="phone">
+    Matching only uses Attio phone-number attributes (with country code). Don't store WhatsApp numbers in a plain text field if you need reliable matching.
+  </Accordion>
+
+  <Accordion title="Create clear custom attributes before mapping" icon="table-columns">
+    Create purpose-built text and timestamp attributes in Attio (for example "Last incoming message", "Live chat link") before you map them in Notifyer. That keeps your People list easy to scan.
+  </Accordion>
+
+  <Accordion title="Test with one number before going live" icon="vial">
+    After saving settings, send a test message from a known phone number and confirm the Attio record, note, and mapped fields update as expected.
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Connection succeeds, but no messages are syncing" icon="circle-exclamation">
+    <Steps>
+      <Step title="Check Object and Phone field">
+        Open **Sync Settings** and confirm **Object** and **Phone field** under **CRM Record Matching** are set, and that the phone field holds the number you're testing with.
+      </Step>
+      <Step title="Confirm everything was saved">
+        Every required Sync Settings and Attribute Mapping field must be filled. Click **Save settings** and wait for **Configuration Updated** before testing again.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Duplicate records are appearing for the same contact" icon="clone">
+    <Steps>
+      <Step title="Check phone formatting across records">
+        Notifyer matches by phone number and should not create duplicates for the same number. If you see duplicates, check whether the same contact exists twice in Attio with different phone formats (with and without country code, for example).
+      </Step>
+      <Step title="Contact support">
+        If duplicates persist, contact WhatsAble support with both record IDs so we can investigate.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Timestamps look wrong" icon="clock-rotate-left">
+    <Steps>
+      <Step title="Check Timezone Settings">
+        Open **Sync Settings** and confirm **Timezone** matches the timezone your team expects when reading messages.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Note formatting looks inconsistent" icon="note-sticky">
+    <Steps>
+      <Step title="This comes from an Attio API limitation">
+        Attio does not support patching an existing note. Notifyer finds the note by title and rewrites it with new content appended. Small bold/spacing differences between older and newer lines can appear because of that workaround.
+      </Step>
+      <Step title="If a note was deleted">
+        If someone deletes a WhatsApp conversation note in Attio, Notifyer creates a new one on the next message for that contact.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Phone field dropdown is empty" icon="phone-slash">
+    <Steps>
+      <Step title="Add a phone-number attribute in Attio">
+        The **Phone field** dropdown only lists phone-number attributes on the selected object. If none exist (common on custom objects or Deal), add a phone-number attribute in Attio, then refresh the Notifyer settings page.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Live Chat Link opens a login screen" icon="lock">
+    <Steps>
+      <Step title="Sign in to Notifyer first">
+        The Live Chat Link opens Notifyer's live console and requires a signed-in Notifyer session in that browser. Log in once, then open the link again from the Attio record.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="An attribute I want isn't showing in the mapping dropdown" icon="filter">
+    <Steps>
+      <Step title="Check the attribute type">
+        Each mapping field only lists compatible types (for example `timestamp` for time/date fields, `text` for message fields, `personal-name` for Name on Person). Create an attribute of the correct type in Attio if needed.
+      </Step>
+      <Step title="Check it isn't already mapped">
+        Attributes already used elsewhere show as **Already used**. Clear the other mapping first if you want to reuse that attribute.
+      </Step>
+    </Steps>
+  </Accordion>
+</AccordionGroup>
+
+## Need help?
+
+Our support team is ready to assist you:
+
+<CardGroup cols={3}>
+  <Card title="Email support" icon="envelope" href="mailto:team@whatsable.app">
+    Contact team@whatsable.app
+  </Card>
+  <Card title="Schedule a demo" icon="calendar" href="https://tidycal.com/axelmeta/notifyer-systems-demo">
+    Book a personalized walkthrough
+  </Card>
+  <Card title="Live chat" icon="message-dots" href="">
+    Click the green chat button in the bottom right corner of the Notifyer System dashboard
+  </Card>
+</CardGroup>
+
+<Info>
+  For additional automation platform integrations (Make, Zapier, n8n, Pipedrive, Monday.com), please contact our support team or check our integration documentation.
+</Info>
