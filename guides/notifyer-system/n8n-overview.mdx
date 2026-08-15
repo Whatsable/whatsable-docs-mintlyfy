@@ -175,9 +175,9 @@ Before getting started, make sure you have:
       1. Click the **+** button in your workflow canvas to add a new node
       2. Search for "WhatsAble" in the node library search bar
       3. Select the node displaying the official WhatsAble logo
-      4. From the available trigger options, choose **On new incoming or outgoing message** (the node may also list **On new Incoming message event** — pick the incoming **or outgoing** option if you need phone-app replies)
+      4. From the available trigger options, choose **On new Incoming message event**. That is the node's label — when outgoing is enabled (credential **Notifyer System incoming and outgoing messages**), the same trigger also fires for outgoing messages, including replies typed in the WhatsApp Business app. Filter with `incoming_message`.
 
-      <Frame caption="Adding WhatsAble trigger node with incoming or outgoing message selection">
+      <Frame caption="Adding the WhatsAble trigger labelled On new Incoming message event">
         <img src="/images/trigger-node.png" alt="WhatsAble node selection showing trigger options" />
       </Frame>
 
@@ -420,7 +420,7 @@ Before getting started, make sure you have:
         Verify your Notifyer subscription is active and has available credits
       </Step>
       <Step title="Outgoing events from the WhatsApp Business app">
-        Use the **incoming or outgoing** trigger and the **Notifyer System incoming and outgoing messages** credential. Confirm `incoming_message` is `false` and `send_by` is `WhatsApp App` when you type a test reply on your phone. You do not need to delete the WhatsApp Business app.
+        Use the trigger labelled **On new Incoming message event** with the **Notifyer System incoming and outgoing messages** credential. When outgoing is enabled, that same trigger also fires for outgoing messages. Confirm `incoming_message` is `false` and `send_by` is `WhatsApp App` when you type a test reply on your phone. You do not need to delete the WhatsApp Business app.
       </Step>
     </Steps>
   </Accordion>
