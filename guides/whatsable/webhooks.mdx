@@ -5,6 +5,12 @@ icon: "webhook"
 keywords: ["webhook", "outgoing messages", "coexistence", "Notifyer System"]
 ---
 
+<Warning>
+**This page is WhatsAble Bot** (messages sent to WhatsAble's number). The payload table below is incoming-only.
+
+If you use **your own WhatsApp Business number** (Notifyer System): [Meta WhatsApp Coexistence](/guides/notifyer-system/embedding-process#whatsapp-coexistence) is supported — you do **not** delete the WhatsApp Business app. Webhooks fire for **incoming and outgoing** messages, including replies typed on the phone. Fields: `incoming_message`, `send_by` (`WhatsApp App` or teammate name), `was_message_by_human`. Full reference: [Message webhooks](/guides/notifyer-system/api/incoming-message).
+</Warning>
+
 <Tip>
 Webhooks let your external server react to WhatsApp activity the moment it happens — no polling required. Register an HTTPS endpoint once and WhatsAble pushes a JSON payload to it automatically.
 </Tip>
