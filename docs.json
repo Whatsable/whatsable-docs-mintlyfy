@@ -125,7 +125,7 @@
     "primary": {
       "type": "button",
       "label": "Get Started",
-      "href": "https://www.whatsable.app/pricing"
+      "href": "https://whatsable.app/#pricing"
     }
   },
   "footer": {
@@ -152,5 +152,10 @@
       "cursor",
       "vscode"
     ]
+  },
+  "integrations": {
+    "telemetry": {
+      "enabled": false
+    }
   }
 }
