@@ -1,8 +1,11 @@
 ---
 title: "automate-notifyer"
-description: "Automation scripts for templates, AI bots, broadcasts, analytics, and webhooks."
+description: "Automation scripts for templates, AI bots, broadcasts, analytics, and webhooks — including outgoing WhatsApp Business app messages (coexistence)."
 icon: "gear"
+keywords: ["webhooks", "outgoing", "send_by", "coexistence"]
 ---
+
+import WebhookOutgoing from "/snippets/webhook-outgoing.mdx";
 
 <Tip>
 `automate-notifyer` builds on `setup-notifyer`. Always run `setup-notifyer/scripts/doctor.js` before sending templates, creating broadcasts, or configuring webhooks.
@@ -14,7 +17,7 @@ icon: "gear"
 - **AI bots**: create/update/delete bots; set default bot
 - **Broadcasts**: create/schedule campaigns using template + recipient CSV
 - **Analytics & logs**: read rates, delivery rates, message logs
-- **Webhooks**: create/update/delete **dev** and **IO** webhooks; optional HMAC signatures
+- **Webhooks**: create/update/delete **dev** and **IO** webhooks; optional HMAC signatures; `--incoming` and `--outgoing` so events include messages typed in the WhatsApp Business app
 
 ## Prerequisites
 
@@ -109,13 +112,17 @@ node scripts/list-webhooks.js --type dev --pretty
 node scripts/list-webhooks.js --type io --pretty
 ```
 
-Create a dev webhook (Make/Zapier/n8n style):
+Create a dev webhook (Make/Zapier/n8n style) that receives **incoming and outgoing** messages, including replies typed in the WhatsApp Business app:
 
 ```bash
 node scripts/create-webhook.js --type dev \
   --url "https://hook.eu2.make.com/abc" \
   --incoming --outgoing --signature
 ```
+
+`--outgoing` is required if an automation must react to messages sent from the phone app, the Notifyer chat inbox, or other integrations. Payload fields: `incoming_message`, `send_by`, `was_message_by_human`. Full reference: [Message webhooks](/guides/notifyer-system/api/incoming-message).
+
+<WebhookOutgoing />
 
 Create an IO webhook (bidirectional pipeline style):
 

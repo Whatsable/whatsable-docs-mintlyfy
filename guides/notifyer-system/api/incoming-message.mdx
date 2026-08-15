@@ -1,23 +1,33 @@
 ---
-title: 'Incoming Messages'
-description: 'Receive and manage real-time WhatsApp message notifications via webhooks'
+title: 'Message webhooks'
+sidebarTitle: 'Message webhooks'
+description: 'Receive incoming and outgoing WhatsApp messages via webhooks — including replies typed in the WhatsApp Business app. Payload fields cover direction, sending system, and which teammate sent the message.'
 icon: 'inbox'
+keywords: ['webhook', 'outgoing messages', 'incoming messages', 'send_by', 'was_message_by_human', 'incoming_message', 'WhatsApp Business app', 'coexistence', 'n8n']
 ---
 
+import Coexistence from "/snippets/coexistence.mdx";
+import WebhookOutgoing from "/snippets/webhook-outgoing.mdx";
+
 <Tip>
-Incoming message webhooks deliver real-time notifications when your recipients reply, enabling immediate responses and interactive conversations through WhatsApp.
+Message webhooks POST a JSON payload to your HTTPS endpoint whenever a WhatsApp message is **received or sent** on your connected number — including messages typed by hand in the WhatsApp Business app.
 </Tip>
 
-The Incoming Messages system provides a robust webhook infrastructure that enables your application to receive and process WhatsApp messages from your recipients in real-time. This guide covers how to configure, manage, and handle incoming message webhooks.
+<Coexistence />
+
+Configure an endpoint once, then use it from n8n, Make, Zapier, or your own server. This page is the full payload reference.
 
 ## Overview
 
-Webhooks are HTTP callbacks that deliver notifications to your server whenever specific events occur - in this case, when recipients reply to your WhatsApp messages. Benefits include:
+Webhooks are HTTP callbacks that Notifyer sends to your server when a message event occurs. They cover:
 
-- **Real-time processing** of customer responses
-- **Seamless integration** with your existing systems
-- **Automated workflows** triggered by customer messages
-- **Enhanced customer experience** through timely interactions
+- **Incoming messages** — a contact writes to your business
+- **Outgoing messages** — your business sends a message, including:
+  - Hand-typed replies in the **WhatsApp Business app** on a phone
+  - Messages sent from the **Notifyer chat inbox** (with the teammate's name)
+  - Messages sent by **Make, Zapier, n8n, the API, or a bot**
+
+Use this to trigger automations, sync CRMs, and log full conversation history — not only inbound chat.
 
 {/* <Card title="Try it in the API Reference" icon="arrow-right" href="https://docs.whatsable.app/api-reference/notifier-system/webhooks/manage-webhooks">
   Explore the Webhook Management API and start receiving incoming messages
@@ -32,7 +42,7 @@ Webhooks are HTTP callbacks that deliver notifications to your server whenever s
     Navigate to the Developer section in your dashboard sidebar to manage webhook configurations.
   </Step>
   <Step title="Configure Endpoint">
-    Add a new webhook URL where you want to receive incoming message notifications.
+    Add a new webhook URL. Enable **incoming**, **outgoing**, or both depending on which events your endpoint should receive.
   </Step>
 </Steps>
 
@@ -49,11 +59,13 @@ Your webhook endpoint must:
 3. Return a 2xx status code within 10 seconds
 4. Implement idempotency handling (see best practices below)
 
-## Webhook Payload
+<WebhookOutgoing />
 
-When a user replies to your WhatsApp message, we'll send a POST request to your configured endpoint with a detailed payload.
+## Webhook payload
 
-### Sample Payload
+When a message is received or sent on your connected number, Notifyer sends a `POST` request to your endpoint with a JSON body.
+
+### Sample payloads
 
 <CodeGroup>
 ```json Incoming Text Message
@@ -84,7 +96,10 @@ When a user replies to your WhatsApp message, we'll send a POST request to your 
   "attachment_url": null,
   "note": "",
   "note_automation": "",
-  "labels": "sales, premium-inquiry"
+  "labels": "sales, premium-inquiry",
+  "incoming_message": true,
+  "send_by": "",
+  "was_message_by_human": true
 }
 ```
 
@@ -109,7 +124,7 @@ When a user replies to your WhatsApp message, we'll send a POST request to your 
   "phone_number": "14155552671",
   "recipient_name": "Sarah Johnson",
   "user_id": "9232fcef-a570-4a2c-b46b-6cab53aec304",
-  "last_message_of_user": "", // For image, video & document files, this field contains the caption if provided
+  "last_message_of_user": "",
   "last_message_of_bot": "Please upload the signed contract document when ready, and I'll process it immediately.",
   "message_type": "document",
   "user_last_message_time": 1749472312,
@@ -117,15 +132,62 @@ When a user replies to your WhatsApp message, we'll send a POST request to your 
   "attachment_url": "https://api.insightssystem.com/vault/LSMumRx1/VR-1aHOci6nP28eHWHJH7JauJkc/Ew7R9w../contract_proposal_v2.pdf",
   "note": "",
   "note_automation": "",
-  "labels": "contracts, document-processing"
+  "labels": "contracts, document-processing",
+  "incoming_message": true,
+  "send_by": "",
+  "was_message_by_human": true
+}
+```
+
+```json Outgoing — typed in WhatsApp Business app
+{
+  "last_messages": "[{\"type\":\"bot\",\"content\":\"Hello n8n\",\"timestamp\":\"2026-08-15T12:24:47.000Z\",\"content_type\":\"text\"},{\"type\":\"user\",\"content\":\"hi\",\"timestamp\":\"2026-08-12T12:27:42.746Z\",\"content_type\":\"text\"}]",
+  "conversation_paragraph": "Bot (12:24:47 PM): Hello n8n ; User (12:27:42 PM): hi",
+  "phone_number": 14155552671,
+  "recipient_name": "Alex Martinez",
+  "user_id": "158c59e1-ea85-4d0b-b70c-65328ba67a8e",
+  "last_message_of_user": "hi",
+  "last_message_of_bot": "Hello n8n",
+  "message_type": "text",
+  "user_last_message_time": 1786722580,
+  "bot_last_message_time": 1786797014,
+  "attachment_url": null,
+  "note": "email: alex\nName: Alex",
+  "note_automation": "email: alex\nName: Alex",
+  "labels": "n8n, webhook-test",
+  "incoming_message": false,
+  "send_by": "WhatsApp App",
+  "was_message_by_human": true
+}
+```
+
+```json Outgoing — teammate in Notifyer chat
+{
+  "last_messages": "[{\"type\":\"bot\",\"content\":\"Hi, I can help with that.\",\"timestamp\":\"2026-08-15T14:02:10.000Z\",\"content_type\":\"text\"}]",
+  "conversation_paragraph": "Bot (2:02:10 PM): Hi, I can help with that.",
+  "phone_number": 14155552671,
+  "recipient_name": "Alex Martinez",
+  "user_id": "158c59e1-ea85-4d0b-b70c-65328ba67a8e",
+  "last_message_of_user": "Can you help with scheduling?",
+  "last_message_of_bot": "Hi, I can help with that.",
+  "message_type": "text",
+  "user_last_message_time": 1786722580,
+  "bot_last_message_time": 1786802530,
+  "attachment_url": null,
+  "note": "",
+  "note_automation": "",
+  "labels": "support",
+  "incoming_message": false,
+  "send_by": "Axel Meta",
+  "was_message_by_human": true
 }
 ```
 </CodeGroup>
 
 ### Payload Fields
 
-<ResponseField name="last_messages" type="array" required>
-  Array containing the recent messages in the conversation
+<ResponseField name="last_messages" type="string | array" required>
+  Recent messages in the conversation (about the last 20). On webhook deliveries this is typically a **JSON string** — parse it before iterating. Each item includes `type` (`user` or `bot`), `content`, `timestamp`, and `content_type`. Includes messages from the WhatsApp Business app, the Notifyer inbox, automations, and templates.
   <Expandable title="last_messages array">
     <ResponseField name="type" type="string" required>
       Sender type ("user" or "bot")
@@ -153,8 +215,8 @@ When a user replies to your WhatsApp message, we'll send a POST request to your 
   Human-readable summary of the recent conversation
 </ResponseField>
 
-<ResponseField name="phone_number" type="string" required>
-  The phone number of the recipient who sent the message
+<ResponseField name="phone_number" type="string | number" required>
+  WhatsApp number of the contact in this conversation (digits, often without `+`). On outgoing events this is the person your business messaged. May arrive as a number or a string.
 </ResponseField>
 
 <ResponseField name="recipient_name" type="string">
@@ -170,7 +232,7 @@ When a user replies to your WhatsApp message, we'll send a POST request to your 
 </ResponseField>
 
 <ResponseField name="last_message_of_bot" type="string">
-  The last message sent by your system
+  The last message your business sent — whether a human typed it in the WhatsApp Business app or Notifyer inbox, or a bot/automation sent it
 </ResponseField>
 
 <ResponseField name="message_type" type="string" required>
@@ -201,6 +263,18 @@ When a user replies to your WhatsApp message, we'll send a POST request to your 
   Comma-separated labels for categorizing the conversation
 </ResponseField>
 
+<ResponseField name="incoming_message" type="boolean" required>
+  `true` when the contact sent this message to your business. `false` when your business sent it (outgoing). Outgoing events include messages typed in the WhatsApp Business app, sent from the Notifyer chat inbox, or sent by Make, Zapier, n8n, the API, or a bot.
+</ResponseField>
+
+<ResponseField name="send_by" type="string">
+  Which system or person sent an outgoing message. `"WhatsApp App"` when typed in the WhatsApp Business app; the logged-in teammate's name when sent from the Notifyer chat inbox; the automation or app name for Make, Zapier, n8n, API, or a bot. Empty on incoming messages.
+</ResponseField>
+
+<ResponseField name="was_message_by_human" type="boolean">
+  `true` when a person sent the message (WhatsApp Business app or Notifyer chat inbox). `false` when a bot or automation sent it.
+</ResponseField>
+
 ## Webhook Management API
 
 You can programmatically manage your webhook endpoints using our API.
@@ -222,7 +296,11 @@ Register a new webhook endpoint to receive incoming message notifications. Send 
 </ParamField>
 
 <ParamField body="incoming" type="boolean" required>
-  Incoming message trigger on/off.
+  Incoming message trigger on/off. When `true`, your endpoint receives messages contacts send to your business.
+</ParamField>
+
+<ParamField body="outgoing" type="boolean">
+  Outgoing message trigger on/off. When `true`, your endpoint also receives messages your business sends — including hand-typed replies in the WhatsApp Business app, Notifyer chat inbox messages, and messages sent by Make, Zapier, n8n, the API, or a bot. Set this to `true` if an automation must react to messages typed on the phone.
 </ParamField>
 
 <ParamField body="schedule_activity" type="boolean" required>
@@ -286,6 +364,7 @@ curl -X POST \
     "webhooks": "https://your-domain.com/api/webhooks/whatsapp",
     "status": true,
     "incoming": true,
+    "outgoing": true,
     "schedule_activity": false,
     "waiting_duration": 0,
     "active_signature": false
@@ -303,6 +382,7 @@ async function createWebhook() {
         webhooks: "https://your-domain.com/api/webhooks/whatsapp",
         status: true,
         incoming: true,
+        outgoing: true,
         schedule_activity: false,
         waiting_duration: 0,
         active_signature: false
@@ -338,6 +418,7 @@ data = {
     "webhooks": "https://your-domain.com/api/webhooks/whatsapp",
     "status": True,
     "incoming": True,
+    "outgoing": True,
     "schedule_activity": False,
     "waiting_duration": 0,
     "active_signature": False
@@ -365,7 +446,7 @@ Returns a JSON object for the created webhook row.
 </ResponseField>
 
 <ResponseField name="outgoing" type="boolean">
-  Outgoing message trigger.
+  Outgoing message trigger. When `true`, the endpoint receives messages your business sends, including WhatsApp Business app replies.
 </ResponseField>
 
 <ResponseField name="webhooks" type="string">
@@ -394,7 +475,7 @@ Returns a JSON object for the created webhook row.
   "id": 1205,
   "status": true,
   "incoming": true,
-  "outgoing": false,
+  "outgoing": true,
   "webhooks": "https://your-domain.com/api/webhooks/whatsapp",
   "created_at": 1775471874139,
   "signature_secret": "<one-time secret — copy immediately>",
@@ -408,7 +489,7 @@ Returns a JSON object for the created webhook row.
   "id": 1205,
   "status": true,
   "incoming": true,
-  "outgoing": false,
+  "outgoing": true,
   "webhooks": "https://your-domain.com/api/webhooks/whatsapp",
   "created_at": 1775471874139,
   "signature_secret": null,
@@ -448,6 +529,7 @@ Never log or expose your `signature_secret` in client-side code or public reposi
     - Check for HTTP 4xx or 5xx responses
     - Ensure proper SSL certificate configuration
     - Verify your webhook is enabled in the dashboard
+    - Confirm **outgoing** is enabled if you expect events for messages you send (including the WhatsApp Business app)
   </Accordion>
   <Accordion title='"Same webhook exist" error when creating a webhook'>
     Each endpoint URL must be unique. If you submit a `webhooks` URL that is already registered, the API will return a **"Same webhook exist"** error.
@@ -459,22 +541,25 @@ Never log or expose your `signature_secret` in client-side code or public reposi
   </Accordion>
 </AccordionGroup>
 
-{/* ## FAQs
+## FAQs
 
 <AccordionGroup>
-  <Accordion title="Can I receive notifications for all WhatsApp account events?">
-    Currently, webhooks are available for incoming messages only. We're working on expanding support for additional event types like delivery receipts, read receipts, and account status changes.
+  <Accordion title="Do webhooks include messages typed in the WhatsApp Business app?">
+    Yes. With [Meta WhatsApp Coexistence](/guides/notifyer-system/embedding-process#whatsapp-coexistence) you keep the WhatsApp Business app on your phone. Enable the **outgoing** trigger. Those messages arrive with `incoming_message: false`, `send_by: "WhatsApp App"`, and `was_message_by_human: true`. They are POSTed to your webhook — they are not limited to the Notifyer web UI.
+  </Accordion>
+  <Accordion title="How do I tell which teammate sent an outgoing message?">
+    Read `send_by`. When the message was sent from the Notifyer chat inbox, `send_by` is that user's name (for example `"Axel Meta"`). When it was typed in the WhatsApp Business app, `send_by` is `"WhatsApp App"`. `was_message_by_human` is `true` in both human cases.
   </Accordion>
   <Accordion title="How do I handle different message types?">
-    Check the `message_type` field in the webhook payload to determine the message type (text, image, audio, video, document, location) and process accordingly.
+    Check `message_type` (text, image, audio, video, document, location). For audio, the transcription appears in the text fields when available.
   </Accordion>
   <Accordion title="Do I need to respond to every webhook request?">
-    Yes, your endpoint must respond with a 2xx HTTP status code for every webhook request to acknowledge receipt. This prevents unnecessary retries.
+    Yes. Return a 2xx HTTP status code for every request so Notifyer does not retry unnecessarily.
   </Accordion>
   <Accordion title="How can I test webhook delivery?">
-    Use the "Test Webhook" feature in the Developer section of your dashboard to send a sample webhook payload to your endpoint.
+    Use the Test Webhook feature in the Developer section of your dashboard, or send a message from the WhatsApp Business app after enabling outgoing events.
   </Accordion>
-</AccordionGroup> */}
+</AccordionGroup>
 
 <Card title="Need assistance?" icon="headset" href="mailto:support@whatsable.app">
   Our technical support team is available to assist with webhook configuration, payload handling, and integration questions.
