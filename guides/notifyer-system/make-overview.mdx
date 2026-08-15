@@ -1,8 +1,12 @@
 ---
 title: 'Make'
-description: 'Learn how to seamlessly integrate Make with the Notifyer System for enterprise-level WhatsApp automation'
+description: 'Notifyer System modules in Make — triggers for incoming and outgoing WhatsApp messages (including the WhatsApp Business app), actions, and search. Coexistence is supported.'
 icon: 'lines-leaning'
+keywords: ['Make', 'webhook', 'outgoing messages', 'incoming_message', 'send_by', 'was_message_by_human', 'coexistence']
 ---
+
+import Coexistence from "/snippets/coexistence.mdx";
+import WebhookOutgoing from "/snippets/webhook-outgoing.mdx";
 
 # Notifyer System Integration with Make
 
@@ -11,8 +15,35 @@ icon: 'lines-leaning'
 </Frame>
 
 <Tip>
-  This guide walks you through connecting Notifyer System with Make to create powerful automated WhatsApp messaging workflows for your business
+  This guide covers every module available for the Notifyer System inside Make — including all triggers, actions, and the search module — so you can build fully automated WhatsApp workflows.
 </Tip>
+
+<Coexistence />
+
+## Available modules at a glance
+
+The Notifyer System is part of the **WhatsAble for WhatsApp Business** app on Make. Once installed, you get access to the following modules using your Notifyer API key:
+
+<CardGroup cols={3}>
+  <Card title="Triggers (Instant)" icon="bolt">
+    - Incoming Messages from console (Notifyer System)
+    - Incoming & Outgoing Messages from console (Notifyer System)
+  </Card>
+  <Card title="Actions" icon="play">
+    - Send WhatsApp Message
+    - Schedule a follow-up Message
+    - Update a Contact
+  </Card>
+  <Card title="Search" icon="magnifying-glass">
+    - Get delivery status of a message
+  </Card>
+</CardGroup>
+
+<Info>
+  All modules in this guide are part of the **WhatsAble for WhatsApp Business** app on Make. Notifyer System users connect using their **Notifyer API key**.
+</Info>
+
+---
 
 ## Prerequisites
 
@@ -20,7 +51,7 @@ Before getting started, make sure you have:
 
 <CardGroup cols={2}>
   <Card title="Notifyer System Account" icon="user">
-    Active Notifyer System account with a subscription plan (Monthly or Pay-as-you-go)
+    Active Notifyer System account with a subscription plan (Monthly or Pay-as-you-go) and a connected WhatsApp number
   </Card>
   <Card title="Make Account" icon="user">
     Access to [Make](https://www.make.com/en/register) workflow automation platform
@@ -31,23 +62,23 @@ Before getting started, make sure you have:
   New to Notifyer System? [Sign up here](https://console.notifyer-systems.com/)
 </Tip>
 
+---
+
 ## Setting up your Notifyer System account
 
 <Steps>
   <Step title="Complete the Embedding Process">
-    Before sending WhatsApp messages, you must complete the platform embedding process, which connects your WhatsApp Business account to Notifyer System.
+    Before sending WhatsApp messages, complete the [embedding process](/guides/notifyer-system/embedding-process), which connects your WhatsApp Business account to Notifyer System. You do **not** need to delete the WhatsApp Business app — [coexistence](/guides/notifyer-system/embedding-process#whatsapp-coexistence) is supported.
 
     <Info>
       The embedding process is required by Meta to ensure proper business verification and compliance with WhatsApp Business Platform policies.
     </Info>
   </Step>
   
-  <Step title="Set up message templates">
-    Notifyer System provides two methods for sending WhatsApp messages:
+  <Step title="Set up message templates (if using template messages)">
+    WhatsApp templates are pre-approved message formats required to initiate a new conversation with a contact. Create and get them approved in Notifyer before using them in Make.
 
-    <Accordion title="Option A: Template messages" defaultOpen={true}>
-      <p>WhatsApp templates are pre-approved message formats that allow for personalization while maintaining compliance with WhatsApp policies.</p>
-      
+    <Accordion title="How to create a template">
       <Steps>
         <Step title="Navigate to Templates">
           Go to **Your Templates** in your Notifyer dashboard
@@ -56,8 +87,6 @@ Before getting started, make sure you have:
           Click the **Create Template** tab at the top of the page
         </Step>
         <Step title="Fill out the form">
-          Complete the template creation form with the following details:
-          
           <ResponseField name="Template Name" type="string" required>
             Choose a descriptive name for internal reference
           </ResponseField>
@@ -65,19 +94,16 @@ Before getting started, make sure you have:
             Choose your template's primary language
           </ResponseField>
           <ResponseField name="Category" type="string" required>
-            Select the appropriate message category
-          </ResponseField>          
+            Select the appropriate message category (Marketing, Utility, Authentication)
+          </ResponseField>
           <ResponseField name="Header" type="image | document | video">
             Optional: Add an image, document, or video header
           </ResponseField>
           <ResponseField name="Message Body" type="string" required>
-            Craft your message content
+            Craft your message content. Use `{{1}}`, `{{2}}` placeholders for dynamic variables
           </ResponseField>
-          <ResponseField name="Variables" type="string">
-            Add placeholders using `{{1}}`, `{{2}}` format for personalization
-          </ResponseField>          
           <ResponseField name="Buttons" type="button">
-            Optional: Configure call-to-action buttons
+            Optional: Configure call-to-action or quick reply buttons
           </ResponseField>
         </Step>
         <Step title="Submit for review">
@@ -85,378 +111,728 @@ Before getting started, make sure you have:
         </Step>
       </Steps>
 
-      <Frame caption="Template Creation Interface">
-        <img src="/images/notifyer_template_create.png" alt="Template Creation Interface" />
-      </Frame>
-
       <Warning>
-        Templates typically get reviewed within 24 hours. Creating compliant templates that avoid promotional language increases approval chances.
+        Templates are typically reviewed within 24 hours. Utility and Authentication templates have the highest approval rates.
       </Warning>
-    </Accordion>
-
-    <Accordion title="Option B: Non-template messages">
-      <p>For simpler communications, you can send non-template messages that include:</p>
-      
-      <CardGroup cols={2}>
-        <Card title="Text" icon="message-text">
-          Plain text messages within the 24-hour window
-        </Card>
-        <Card title="Images" icon="image">
-          Photos and graphics in supported formats
-        </Card>
-        <Card title="Documents" icon="file-pdf">
-          PDFs, Word docs, and other file types
-        </Card>
-        <Card title="Videos" icon="video">
-          MP4 and other supported video formats
-        </Card>
-      </CardGroup>
-
-      <Note>
-        Non-template messages can only be sent within the 24-hour customer service window after a customer initiates contact with your business.
-      </Note>
     </Accordion>
   </Step>
   
-  <Step title="Get your API key">
-    To connect Notifyer System with Make, you'll need an API key:
-
+  <Step title="Get your Notifyer API key">
     1. In your Notifyer dashboard, navigate to [**API Keys**](https://console.notifyer-systems.com/api-key)
     2. Copy your unique API key
-    3. Store it securely—you'll need it for the integration
+    3. Store it securely — you will need it when creating the Make connection
+
     <Warning>
       Never share your API key publicly or commit it to version control systems.
     </Warning>
-
-    <Frame caption="API Key Location">
-      <img src="/images/notifyer_apikey.png" alt="API Key Location" />
-    </Frame>
   </Step>
 </Steps>
+
+---
 
 ## Connect Notifyer System to Make
 
-Now that you have Notifyer System set up, let's connect it to Make to automate your scenarios.
+<Steps>
+  <Step title="Install the app in Make">
+    1. Log in to your Make account
+    2. Navigate to your Notifyer System dashboard and select **Connect to Make** in the side menu
+    3. Click **Continue** in the connection guide popup
+    4. Click **Install**, select your Make organization at the bottom of the screen, then click **Install** again
+
+    <Note>
+      You need Admin, Owner, or App Developer role in your Make organization to install apps.
+    </Note>
+
+    <Check>
+      The **WhatsAble for WhatsApp Business** app is now installed and ready to use in your Make scenarios
+    </Check>
+  </Step>
+
+  <Step title="Create a new Make scenario">
+    1. Log in to your Make account at [make.com](https://www.make.com)
+    2. Click **+ Create a new scenario**
+    3. You are now ready to add your first module — follow the trigger setup guide in the [Module Reference](#setting-up-a-notifyer-trigger-in-make) section below
+  </Step>
+</Steps>
+
+---
+
+## Module Reference
+
+### Triggers
+
+Instant triggers fire in real time whenever a qualifying event occurs in your Notifyer console. Both triggers below use the **WhatsAble for WhatsApp Business** app in Make and require a webhook plus your Notifyer API key connection.
+
+<Info>
+  Both triggers are **Instant** — they fire immediately when a message event occurs in your Notifyer console.
+</Info>
+
+---
+
+### Setting up a Notifyer trigger in Make
+
+Both Notifyer triggers follow the same 5-step setup in Make. The only difference is which trigger you select in Step 1.
 
 <Steps>
-  <Step title="Install Notifyer System in Make">
-    1. Log in to your Make account
-    2. Navigate to Notifyer System dashboard and select **Connect to Make** in the side menu
-    3. Click **Continue** in the connection guide popup
-    4. Click **Install**, select your organization at the bottom of the screen, then click **Install** again. (Note: You need Admin, Owner, or App Developer role in your organization to install apps.)
+  <Step title="Step 1 — Select your trigger">
+    1. In your scenario, click the large **+** button to add a module
+    2. Search for **WhatsAble** or **WhatsAble for WhatsApp Business**
+    3. Open the **WhatsAble for WhatsApp Business** app
+    4. Under **Triggers**, select the trigger you need:
+
+    | Trigger | When to use it |
+    |---------|----------------|
+    | **Incoming Messages from console (Notifyer System)** | Fires only when a contact sends your business a message |
+    | **Incoming & Outgoing Messages from console (Notifyer System)** | Fires on every message — both incoming and outgoing, including replies typed in the WhatsApp Business app |
+  </Step>
+
+  <Step title="Step 2 — Create a webhook">
+    After selecting the trigger, the module configuration window opens. The first required field is **Webhook**.
+
+    1. Click the **Add** button next to the **Webhook** dropdown (the dropdown will show "Choose a hook..." if no webhook exists yet)
+    2. This opens the **Create a webhook** dialog
+  </Step>
+
+  <Step title="Step 3 — Name your webhook and set up a connection">
+    In the **Create a webhook** dialog:
+
+    1. Enter a **Webhook name** — use something descriptive so you can identify it later (e.g. `My Notifyer Systems webhook`)
+    2. Under **Connection**, either:
+       - Select an existing connection if you have already connected Notifyer to Make before, **or**
+       - Click **Add** next to the Connection dropdown to create a new connection (continue to Step 4)
+    3. If you already have a connection selected, click **Save** to create the webhook and skip to Step 5
+  </Step>
+
+  <Step title="Step 4 — Create your Notifyer connection (first time only)">
+    If you clicked **Add** in Step 3, the **Create a connection** dialog opens on top of the webhook dialog.
+
+    1. Enter a **Connection name** (e.g. `My Notifyer only connection`)
+    2. Paste your **Notifyer API key** in the **API Key** field — get this from your [Notifyer API Keys page](https://console.notifyer-systems.com/api-key)
+    3. Click **Save**
+
+    Make validates your API key automatically. Once saved, you return to the **Create a webhook** dialog with your new connection selected.
+
+    <Info>
+      You only need to create this connection once. All future Notifyer modules in Make can reuse the same saved connection.
+    </Info>
+
+    Back in the **Create a webhook** dialog, click **Save** to finish creating the webhook.
+  </Step>
+
+  <Step title="Step 5 — Save the trigger and activate your scenario">
+    You are now back in the main module configuration window. The webhook you created is selected and a **Webhook URL** is displayed (e.g. `https://hook.eu1.make.com/...`).
+
+    1. Confirm your webhook is selected in the **Webhook** dropdown
+    2. Click **Save** to finish configuring the trigger module
+    3. Toggle your scenario to **Active** (or click **Run once** to test first)
+
     <Check>
-      You're now ready to create scenarios with the Notifyer System app
+      Your trigger is now live. When a matching message event occurs in your Notifyer console, Make will run your scenario automatically.
     </Check>
-    <Frame caption="Installing Notifyer System in Make">
-        <img src="/images/notifyer_make1.gif" alt="Installing Notifyer System in Make" />
-    </Frame>
+
+    <Tip>
+      Set the scenario schedule to **Immediately as data arrives** (shown in the bottom toolbar) so instant triggers fire without delay.
+    </Tip>
   </Step>
+</Steps>
 
-  <Step title="Set up your Make Scenario">
-    1. Log in to your Make account
-    2. Create a new scenario by clicking **+ Create a new scenario**
-    3. (Optional) Add a trigger module of your choice:
-       - Popular triggers include Google Forms, Jotform, ClickUp, or a Schedule trigger
-       - Connect and configure your trigger according to your use case
+---
 
-    <Frame caption="Setting up a module/trigger in Make">
-      <img src="/images/whatsable_make1.gif" alt="Setting up a module/trigger Make" />
-    </Frame>
+#### Incoming Messages from console (Notifyer System)
+
+<Info>
+  **Type:** Instant Trigger | **Connection:** Notifyer only
+</Info>
+
+Fires every time an **incoming message** arrives in your Notifyer console. This is the full-featured trigger for building AI chatbot workflows, lead qualification, CRM updates, and real-time automations — it exposes all conversation context fields including the AI note, conversation history, and scheduling data.
+
+**Description in Make:** *"Incoming Messages from console (Notifyer System)"*
+
+**How to set up:** Follow the [5-step trigger setup guide](#setting-up-a-notifyer-trigger-in-make) above. In Step 1, select **Incoming Messages from console (Notifyer System)** from the Triggers list.
+
+**Output fields — everything your scenario receives when triggered:**
+
+<AccordionGroup>
+  <Accordion title="Contact identity">
+    <ResponseField name="phone_number" type="text">
+      The phone number of the person who sent the message (e.g. `14155550187`)
+    </ResponseField>
+    <ResponseField name="user_id" type="text">
+      Unique internal ID for this contact in Notifyer (UUID format)
+    </ResponseField>
+    <ResponseField name="recipient_name" type="text">
+      The first name or display name used by the AI to address this contact in conversation
+    </ResponseField>
+    <ResponseField name="labels" type="text">
+      Comma-separated list of labels currently applied to this conversation (e.g. `Hot Lead, Buyer Qualified, Urgent`)
+    </ResponseField>
+  </Accordion>
+  <Accordion title="Message data">
+    <ResponseField name="message_type" type="text">
+      Type of the incoming message: `text`, `audio`, `image`, or `document`
+    </ResponseField>
+    <ResponseField name="incoming_message" type="boolean">
+      `true` for this trigger — confirms this is an inbound message from the contact
+    </ResponseField>
+    <ResponseField name="send_by" type="text">
+      Empty on this incoming-only trigger. On the incoming **and outgoing** trigger, this identifies the sending system or teammate (see below)
+    </ResponseField>
+    <ResponseField name="was_message_by_human" type="boolean">
+      `true` when a person sent the message
+    </ResponseField>
+    <ResponseField name="attachment_url" type="text">
+      Public URL of any file the contact attached (image, document, audio). Empty if no attachment
+    </ResponseField>
+    <ResponseField name="is_scheduled" type="boolean">
+      `true` if triggered by a scheduled message being delivered; `false` for real-time messages
+    </ResponseField>
+  </Accordion>
+  <Accordion title="Conversation history">
+    <ResponseField name="last_messages" type="text">
+      JSON array of recent messages. Each item includes: `type` (user/bot), `content`, `timestamp`, `content_type`. Useful for passing full history to an AI
+    </ResponseField>
+    <ResponseField name="last_message_of_user" type="text">
+      The most recent message sent by the contact — the message that triggered this run
+    </ResponseField>
+    <ResponseField name="last_message_of_bot" type="text">
+      The most recent message your business sent to this contact — helps AI avoid repeating itself
+    </ResponseField>
+    <ResponseField name="user_last_message_time" type="number">
+      Unix timestamp (ms) of when the contact's last message was received
+    </ResponseField>
+    <ResponseField name="bot_last_message_time" type="number">
+      Unix timestamp (ms) of when your business last messaged this contact
+    </ResponseField>
+    <ResponseField name="conversation_paragraph" type="text">
+      A flat, readable version of the full conversation history — ideal for passing directly to an AI/LLM prompt without parsing the `last_messages` JSON array
+    </ResponseField>
+  </Accordion>
+  <Accordion title="AI context & automation fields">
+    <ResponseField name="note" type="text">
+      The AI context note stored on this contact in Notifyer. Contains lead details: name, email, preferences, background, language, etc. Set this via the **Update a Contact** action or directly in the Notifyer console
+    </ResponseField>
+    <ResponseField name="note_automation" type="text">
+      Automation instructions for the AI — rules the AI follows automatically based on conversation events (e.g. "If budget confirmed and timeline under 6 months, notify the agent within 1 hour")
+    </ResponseField>
+    <ResponseField name="scheduled_messages" type="text">
+      Description of any messages currently queued/scheduled to be sent to this contact at a future time
+    </ResponseField>
+  </Accordion>
+</AccordionGroup>
+
+---
+
+#### Incoming & Outgoing Messages from console (Notifyer System)
+
+<Info>
+  **Type:** Instant Trigger | **Connection:** Notifyer only
+</Info>
+
+Fires on **both incoming and outgoing** messages — every message sent or received in your Notifyer console triggers this, including messages **typed by hand in the WhatsApp Business app**. Use it for conversation logging, CRM sync, or automations that must react when a teammate replies on their phone.
+
+**Description in Make:** *"Get your sent and incoming messages data through a single webhook."*
+
+**How to set up:** Follow the same [5-step trigger setup guide](#setting-up-a-notifyer-trigger-in-make) above. In Step 1, select **Incoming & Outgoing Messages from console (Notifyer System)** instead.
+
+**Key difference:** This trigger also fires when your business sends a message. Use the `incoming_message` field to branch your logic:
+- `incoming_message = true` → a contact sent your business a message
+- `incoming_message = false` → your business sent a message to a contact (phone app, Notifyer inbox, or automation)
+
+**Output fields:** Identical to the **Incoming Messages from console** trigger above, with these differences:
+
+<ResponseField name="incoming_message" type="boolean">
+  `true` when the contact sent a message, `false` when your business sent a message. Add a **Router** or **Filter** module after this trigger to branch logic based on direction
+</ResponseField>
+
+<ResponseField name="send_by" type="text">
+  Which system or person sent an outgoing message: `"WhatsApp App"` for the WhatsApp Business app, the teammate's name for the Notifyer chat inbox, or the automation/app name for Make, Zapier, n8n, or API
+</ResponseField>
+
+<ResponseField name="was_message_by_human" type="boolean">
+  `true` when a person sent the message (phone app or Notifyer inbox). `false` when a bot or automation sent it
+</ResponseField>
+
+<Note>
+  The `scheduled_messages` field is only available in the **Incoming Messages from console** trigger, not this one.
+</Note>
+
+<WebhookOutgoing />
+
+---
+
+### Actions
+
+Actions perform operations in Notifyer System — sending messages, scheduling follow-ups, and updating contacts.
+
+---
+
+#### Send WhatsApp Message
+
+<Info>
+  **Type:** Action | **Connection:** Notifyer only
+</Info>
+
+**Description in Make:** *"Send WhatsApp Messages using the official WhatsApp API. You can add labels to a WhatsApp conversation and also write notes about the lead that will appear in WhatsAble's chat interface."*
+
+Send a WhatsApp message immediately to any phone number. Supports both **template messages** (to start a new conversation) and **non-template messages** (within an active 24-hour window). Labels and notes set here appear directly in your Notifyer console — making this the primary send module for Notifyer System users.
+
+**API endpoint:** `https://api.insightssystem.com/api:pqxobaAo/send`
+
+**How to configure:**
+
+<Steps>
+  <Step title="Add the module">
+    Click **+** → search for **WhatsAble** or **WhatsAble for WhatsApp Business** → under **Actions**, select **Send WhatsApp Message**
   </Step>
-  
-  <Step title="Add the Notifyer System module">
-    1. Click the **+** button to add a new module
-    2. Search for **Notifyer System** in the apps or modules library
-    3. Select the module with the official Notifyer System logo
-
-    <Frame caption="Adding the Notifyer System module">
-      <img src="/images/Notifyer_make2.gif" alt="Adding the Notifyer System module" />
-    </Frame>
+  <Step title="Select your connection">
+    Choose your existing connection or create a new one with your **Notifyer API key**
   </Step>
-  
-  <Step title="Configure Notifyer System credentials">
-    <Accordion title="Credential Setup" defaultOpen>
-      1. Once you click on Notifyer System module, select '**Send a WhatsApp Message with Your Template**' or '**Send a WhatsApp Message without Template**' from the **ACTIONS**
-      2. Click **Create a connection** in the **Connection** section of Notifyer System module and you will be prompted to enter your API Key
-      3. Enter your Notifyer System API key that you copied earlier
-      4. Rename your connection name if needed
-      4. Click **Save** to store your credential
-
-    <Frame caption="Configuring Notifyer System credentials">
-      <img src="/images/Notifyer_make3.gif" alt="Configuring Notifyer System credentials" />
-    </Frame>
-    </Accordion>
-  </Step>
-
-  <Step title="Configure your message">
-    Depending on your messaging needs, choose one of the following operations:
+  <Step title="Choose your configuration">
+    Select from the **Configuration** dropdown:
 
     <Tabs>
-      <Tab title="Send a WhatsApp Message with Your Template">
-            Complete the required fields:
-            
-            <ResponseField name="Phone Number" type="string" required>
-              Enter the recipient's phone number with country code (e.g., +1234567890) or use dynamic data from previous nodes
-            </ResponseField>
-            <ResponseField name="Templates" type="dropdown" required>
-              Select from your pre-approved templates in the dropdown
-            </ResponseField>
-            <ResponseField name="Media" type="string" required>
-              Enter publicly accessible media URL for Media (image/video/document) header.
-              <Info>
-               This field will only appear if you have a Media (image/video/document) header configured in your selected template.
-              </Info>
-            </ResponseField>
-            <ResponseField name="Variables" type="string" required>
-              Fill in values for each variable in your template, mapping them to dynamic data when applicable
-            </ResponseField>
-            <ResponseField name="Add a Note" type="string" optional>
-              Add note for internal tracking. This data won't be sent to the recipient
-            </ResponseField>
-            <ResponseField name="Add Label(s)" type="multiselect" optional>
-              Select label(s) for internal tracking. This data won't be sent to the recipient
-            </ResponseField>
+      <Tab title="Send WhatsApp Template (to start conversation)">
+        Use this to **initiate a new conversation** or reach out proactively. Requires a Meta-approved template.
 
-        <Frame caption="Template Message Configuration">
-          <img src="/images/Notifyer_make4.gif" alt="Template Message Configuration" />
-        </Frame>
+        <ResponseField name="Phone Number" type="text" required>
+          Recipient's phone number in international format — digits only, no `+` or spaces (e.g. `14155550187`)
+        </ResponseField>
+        <ResponseField name="Template Name or ID" type="dropdown" required>
+          Select from your approved templates. The dropdown shows a live preview of each template's body, language, and category
+        </ResponseField>
+        <ResponseField name="Body 1, Body 2, ... (variables)" type="text" required>
+          If your template has variables (`{{1}}`, `{{2}}`...), a field appears for each. Map them to dynamic data from previous modules
+        </ResponseField>
+        <ResponseField name="Media" type="text">
+          If your template has a media header (image, video, document), enter the publicly accessible URL of that file
+        </ResponseField>
+        <ResponseField name="Visit Website URL" type="text">
+          If your template has a dynamic URL button, enter the URL value including the dynamic portion
+        </ResponseField>
+        <ResponseField name="Note" type="text" optional>
+          AI context about this contact (name, email, preferences, language). The AI reads this to personalize future replies and qualify leads more accurately
+        </ResponseField>
+        <ResponseField name="Label Names or IDs" type="multiselect" optional>
+          Labels to apply to this conversation for internal tracking and routing. Labels appear in your Notifyer console
+        </ResponseField>
       </Tab>
-      <Tab title="Send a WhatsApp Message without Template">
-            Complete the required fields:
-            
-            <ResponseField name="Phone Number" type="string" required>
-              Enter the recipient's phone number with country code (e.g., +1234567890) or use dynamic data from previous nodes
-            </ResponseField>
-            <ResponseField name="Message Type" type="dropdown" required>
-              Choose from the following message types:            
-               <CardGroup cols={3}>
-               <Card title="Text Message" icon="message">
-                  For plain text messages
-               </Card>
-               <Card title="Media Message (Image)" icon="image">
-                  For sending images (JPEG, PNG, etc.)
-               </Card>
-               <Card title="Media Message (Video)" icon="video">
-                  For sending videos (MP4, 3GP, etc.)
-               </Card>
-               <Card title="Document Message" icon="file">
-                  For sending documents (PDF, Word, etc.)
-               </Card>
-               <Card title="Audio Message" icon="volume">
-                  For sending videos (MP3, OGG, etc.)
-               </Card>
-               <Card title="Interactive URL Button" icon="square-arrow-up-right">
-                  For messages with button that contain URL or dynamic URL
-               </Card>
-               </CardGroup>
-            </ResponseField>
-            <ResponseField name="Message Details" type="object" required>
-              <Tabs>
-                <Tab title="Text Message">
-                  <Steps>
-                    <Step title="Message Details">
-                      <ResponseField name="Enable Link Preview" type="option">
-                        Keep the option at the default 'No'. If there is a link/URL in the text body and you want the recipient to see a preview, select 'Yes'
-                      </ResponseField>
-                      <ResponseField name="Message Text" type="string" required>
-                        Enter the text message content
-                      </ResponseField>
-                    </Step>
-                  </Steps>
-                </Tab>
-                <Tab title="Media Message (Image)">
-                  <Steps>
-                    <Step title="Image Details">
-                      <ResponseField name="Image URL" type="url" required>
-                        Enter the publicly accessible URL for your image file
-                      </ResponseField>
-                      <ResponseField name="Caption" type="string" optional>
-                        Optional caption for the image
-                      </ResponseField>
-                    </Step>
-                  </Steps>
-                </Tab>
-                <Tab title="Media Message (Video)">
-                  <Steps>
-                    <Step title="Video Details">
-                      <ResponseField name="Video URL" type="url" required>
-                        Enter the publicly accessible URL for your video file
-                      </ResponseField>
-                      <ResponseField name="Caption" type="string" optional>
-                        Optional caption for the video
-                      </ResponseField>
-                    </Step>
-                  </Steps>
-                </Tab>
-                <Tab title="Document Message">
-                  <Steps>
-                    <Step title="Document Details">
-                      <ResponseField name="Document URL" type="url" required>
-                        Enter the publicly accessible URL for your document
-                      </ResponseField>
-                      <ResponseField name="Caption" type="string" optional>
-                        Optional caption for the document
-                      </ResponseField>
-                    </Step>
-                    <Step>
-                      <ResponseField name="Filename" type="string" required>
-                        Enter the filename (e.g., report.pdf)
-                      </ResponseField>
-                    </Step>
-                  </Steps>
-                </Tab>
-                <Tab title="Audio Message">
-                  <Step title="Document Details">
-                      <ResponseField name="Audio URL" type="url" required>
-                        Enter the publicly accessible URL for your audio file (MP3, OGG)
-                      </ResponseField>
-                  </Step>
-                </Tab>
-                <Tab title="Interactive URL Button">
-                  <Steps>
-                    <Step title="Interactive Message Details">
-                      <ResponseField name="Header Text" type="string" optional>
-                        Enter optional text to show at the top
-                      </ResponseField>
-                      <ResponseField name="Message Body" type="string" required>
-                        Enter the main content of the message
-                      </ResponseField>
-                      <ResponseField name="Button Text" type="string" required>
-                        Enter the text to display on button
-                      </ResponseField>
-                      <ResponseField name="Button URL" type="url" required>
-                        Enter the URL for the button
-                      </ResponseField>
-                      <ResponseField name="Footer Text" type="string" optional>
-                        Enter the optional text to show at bottom
-                      </ResponseField>
-                    </Step>
-                  </Steps>
-                </Tab>
-              </Tabs>
-            </ResponseField>
-            <ResponseField name="Add Label(s)" type="multiselect" optional>
-              Select label(s) for internal tracking. This data won't be sent to the recipient
-            </ResponseField>        
+      <Tab title="Send a non-template message (person must write to you first)">
+        Use this to send a message **within an active conversation** — only possible within 24 hours of the contact's last incoming message.
 
-        <Frame caption="Non-Template Message Configuration">
-          <img src="/images/Notifyer_make5.gif" alt="Non-Template Message Configuration" />
-        </Frame>
+        <ResponseField name="Recipient Phone Number" type="text" required>
+          Phone number in international format — digits only (e.g. `14155550187`)
+        </ResponseField>
+        <ResponseField name="Message Type" type="dropdown" required>
+          Choose the type of message to send:
+
+          <AccordionGroup>
+            <Accordion title="Text Message">
+              <ResponseField name="Message Content" type="text" required>
+                The text content to send
+              </ResponseField>
+              <ResponseField name="Enable Link Preview" type="boolean">
+                Set to `true` to show a URL preview card when the message contains a link. Default: `false`
+              </ResponseField>
+            </Accordion>
+            <Accordion title="Image Message">
+              <ResponseField name="Image URL" type="url" required>
+                Publicly accessible URL of the image (JPEG, PNG, etc.)
+              </ResponseField>
+              <ResponseField name="Caption" type="text" optional>
+                Optional caption text below the image
+              </ResponseField>
+            </Accordion>
+            <Accordion title="Video Message">
+              <ResponseField name="Video URL" type="url" required>
+                Publicly accessible URL of the video (MP4, etc.)
+              </ResponseField>
+              <ResponseField name="Caption" type="text" optional>
+                Optional caption text below the video
+              </ResponseField>
+            </Accordion>
+            <Accordion title="Document Message">
+              <ResponseField name="Document URL" type="url" required>
+                Publicly accessible URL of the document (PDF, DOCX, etc.)
+              </ResponseField>
+              <ResponseField name="Caption" type="text" optional>
+                Optional caption for the document
+              </ResponseField>
+              <ResponseField name="Filename" type="text" required>
+                Filename to display (e.g. `invoice-2026.pdf`)
+              </ResponseField>
+            </Accordion>
+            <Accordion title="Audio Message">
+              <ResponseField name="Audio URL" type="url" required>
+                Publicly accessible URL of the audio file (MP3, OGG, etc.)
+              </ResponseField>
+            </Accordion>
+          </AccordionGroup>
+        </ResponseField>
+        <ResponseField name="Label Names or IDs" type="multiselect" optional>
+          Labels to apply to this conversation. Labels appear in your Notifyer console
+        </ResponseField>
+        <ResponseField name="Note" type="text" optional>
+          AI context note for this contact — set or update the note that the AI reads to personalize replies
+        </ResponseField>
       </Tab>
     </Tabs>
   </Step>
-  
-  <Step title="Test and activate your scenario">
-    1. Click **Save** to save your message configuration
-    2. Right click on the WhatsAble module and select **Run this module only** to verify the module is working correctly
-        - or click **Run once** in the bottom-left corner of the screen to test the entire scenario
-    3. If the test is successful, you'll see a confirmation message
-    4. Click **Save** icon in the bottom-left corner to save your scenario (You can also set timer intarval for the scenario)
-    5. Toggle the **Active** switch in the bottom-left corner with time to activate your scenario
-    <Frame caption="Testing and activating your scenario">
-      <img src=" " alt="Testing and activating your scenario" />
-    </Frame>
+</Steps>
+
+---
+
+#### Schedule a follow-up Message
+
+<Info>
+  **Type:** Action | **Connection:** Notifyer only
+</Info>
+
+**Description in Make:** *"Schedule a follow-up to get sent later and add conditions so it only gets sent if the lead did not reply to you."*
+
+Schedule a WhatsApp message to be sent at a **future time**, with an optional **reply condition** that automatically cancels the message if the recipient responds before it sends. This is one of Notifyer's most powerful automation features — use it to build no-reply follow-up sequences, re-engagement drips, and smart nurture workflows.
+
+**How to configure:**
+
+<Steps>
+  <Step title="Add the module">
+    Click **+** → search for **WhatsAble** or **WhatsAble for WhatsApp Business** → under **Actions**, select **Schedule a follow-up Message**
+  </Step>
+  <Step title="Select your connection">
+    Choose your **Notifyer only** connection
+  </Step>
+  <Step title="Choose your message type">
+    Select from the **Configuration** dropdown — either a template message or a non-template message. The fields are identical to the **Send WhatsApp Message** action above (phone number, template/message type, variables, labels, note).
+  </Step>
+  <Step title="Set when to send it">
+    <Tabs>
+      <Tab title="Relative (Delay)">
+        Send the message after a delay from the time the scenario runs:
+
+        <ResponseField name="Delay Value" type="select" required>
+          Choose: 1, 2, 3, 4, 5, 10, 15, 20, 30, 60, 90, or 120
+        </ResponseField>
+        <ResponseField name="Delay Unit" type="select" required>
+          Choose: **Minutes**, **Hours**, or **Days**
+        </ResponseField>
+      </Tab>
+      <Tab title="Specific Date & Time">
+        Send the message at an exact date and time:
+
+        <ResponseField name="Date & Time" type="datetime" required>
+          The exact date and time to send the message
+        </ResponseField>
+        <ResponseField name="Timezone" type="select" required>
+          The timezone for the scheduled time — full global timezone list available (GMT-11 through GMT+12)
+        </ResponseField>
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step title="Set a reply condition (recommended)">
+    The reply condition tells Notifyer to **cancel the scheduled message** if the recipient replies within the specified timeframe — preventing follow-ups to contacts who are already engaged.
+
+    <ResponseField name="Reply Condition" type="select">
+      | Condition | When the message is cancelled |
+      |-----------|-------------------------------|
+      | Recipient did not reply after my last message | Cancelled if the contact replies at any point before scheduled send |
+      | Recipient never replied to any of my messages | Cancelled only if the contact has never replied to you at all |
+      | Recipient did not reply within 20 minutes | Cancelled if contact replies within 20 minutes |
+      | Recipient did not reply within 45 minutes | Cancelled if contact replies within 45 minutes |
+      | Recipient did not reply within 3 hours | Cancelled if contact replies within 3 hours |
+      | Recipient did not reply within 6 hours | Cancelled if contact replies within 6 hours |
+      | Recipient did not reply within 12 hours | Cancelled if contact replies within 12 hours |
+      | Recipient did not reply within 24 hours | Cancelled if contact replies within 24 hours |
+      | Recipient did not reply within 48 hours | Cancelled if contact replies within 48 hours |
+      | Recipient did not reply within 72 hours | Cancelled if contact replies within 72 hours |
+    </ResponseField>
+
+    <Tip>
+      **"Recipient did not reply after my last message"** is the recommended default for most follow-up sequences — it ensures no follow-up is sent to contacts who are already in conversation with you.
+    </Tip>
+  </Step>
+  <Step title="Set a label condition (optional)">
+    Restrict the scheduled message to only send if the contact has (or does not have) a specific label:
+
+    <ResponseField name="Label Condition" type="select" optional>
+      **Include** — only send if the contact has this label  
+      **Does Not Include** — only send if the contact does NOT have this label
+    </ResponseField>
+    <ResponseField name="Label" type="select" optional>
+      The label to evaluate against
+    </ResponseField>
   </Step>
 </Steps>
+
+<Note>
+  Scheduled messages are visible in your Notifyer console under the contact's conversation. You can view or cancel them there at any time.
+</Note>
+
+---
+
+#### Update a Contact
+
+<Info>
+  **Type:** Action | **Connection:** Notifyer only
+</Info>
+
+**Description in Make:** *"Assign conversation to someone in your team, Add information in the notes, add/remove labels. Simply put the phone number and what information you want to change. This appears in the chat interface of our system."*
+
+Update a contact's details in your Notifyer console — set their display name, add or remove labels, or update the AI context note on their conversation. Use this to keep Notifyer contacts in sync with your CRM, form responses, or other external data.
+
+**API endpoint:** `https://api.insightssystem.com/api:hFrjh8a1/make/recipient/details/update` (PUT)
+
+**How to configure:**
+
+<Steps>
+  <Step title="Add the module">
+    Click **+** → search for **WhatsAble** or **WhatsAble for WhatsApp Business** → under **Actions**, select **Update a Contact**
+  </Step>
+  <Step title="Select your connection">
+    Choose your **Notifyer only** connection
+  </Step>
+  <Step title="Fill in the fields">
+    <ResponseField name="Phone Number" type="text" required>
+      The phone number of the contact to update, in international format — digits only (e.g. `14155550187`). This is used to look up the contact in Notifyer
+    </ResponseField>
+    <ResponseField name="Display Name" type="text" optional>
+      Update the display name shown for this contact in the Notifyer chat interface
+    </ResponseField>
+    <ResponseField name="Add a Note" type="text" optional>
+      Set or update the AI context note for this contact. The AI reads this field to personalize conversations. A well-structured note significantly improves AI response quality.
+
+      **Recommended note format:**
+      ```
+      email: john@example.com | Name: John Smith
+      Looking for: 3BR house, $500k budget, north suburbs
+      Pre-approved: Yes | Language: English
+      Best time to contact: evenings after 6pm
+      ```
+    </ResponseField>
+    <ResponseField name="Add Label Names or IDs" type="multiselect" optional>
+      One or more labels to **add** to this contact. Labels appear in the Notifyer console and can be used for routing, filtering, and automation conditions
+    </ResponseField>
+    <ResponseField name="Remove Label Names or IDs" type="multiselect" optional>
+      One or more labels to **remove** from this contact. Select **Remove All** to clear all labels from this contact at once
+    </ResponseField>
+  </Step>
+</Steps>
+
+<Tip>
+  Place **Update a Contact** at the very start of your scenario — before sending any message — to populate the AI Note from form or CRM data. This ensures the AI has full context before the first message is even sent.
+</Tip>
+
+---
+
+### Search
+
+---
+
+#### Get delivery status of a message
+
+<Info>
+  **Type:** Search | **Connection:** Notifyer only
+</Info>
+
+**Description in Make:** *"Check if the message was delivered or not. Use this if you're not sure the number is correct and want to check if it was delivered and want to send a fallback email."*
+
+Check whether a previously sent WhatsApp message was delivered. Use this to build fallback automation — if a message was not delivered (e.g. incorrect number), automatically trigger an alternative action such as sending a fallback email.
+
+**API endpoint:** `https://api.insightssystem.com/api:5l-RgW1B/conversation/{{messageId}}` (GET)
+
+**How to configure:**
+
+<Steps>
+  <Step title="Add the module">
+    Click **+** → search for **WhatsAble** or **WhatsAble for WhatsApp Business** → under **Searches**, select **Get delivery status of a message**
+  </Step>
+  <Step title="Select your connection">
+    Choose your **Notifyer only** connection
+  </Step>
+  <Step title="Enter the Message ID">
+    <ResponseField name="Message ID" type="text" required>
+      The ID of the message to check. This is the ID returned in the output bundle of a previous **Send WhatsApp Message** or **Schedule a follow-up Message** action in the same scenario
+    </ResponseField>
+  </Step>
+</Steps>
+
+<Tip>
+  Connect a **Router** module after this search to handle two paths: one for successfully delivered messages, and one for undelivered messages where you trigger a fallback (e.g. send a Gmail or Outlook email).
+</Tip>
+
+---
+
+## Building a complete scenario: step-by-step example
+
+Here is a practical end-to-end example: **New lead from a form → AI context set → Template message sent → Conditional follow-up scheduled**
+
+<Steps>
+  <Step title="Trigger: New form submission">
+    Start with a **Google Forms**, **Typeform**, or **Jotform** instant trigger that fires when someone fills in your lead capture form
+  </Step>
+  <Step title="Action: Update a Contact">
+    Add **Notifyer — Update a Contact**. Map form fields into the Note field:
+    ```
+    email: {{email}} | Name: {{name}} | Budget: {{budget}} | Language: {{language}}
+    ```
+    Add relevant labels: `New Lead`, `Form Submission`
+
+    This gives the AI complete context before any conversation starts
+  </Step>
+  <Step title="Action: Send WhatsApp Message (Template)">
+    Add **Notifyer — Send WhatsApp Message** set to the template configuration. Select your approved welcome template and map the recipient's phone number and any template variables from the form data
+  </Step>
+  <Step title="Action: Schedule a follow-up Message">
+    Add **Notifyer — Schedule a follow-up Message**. Configure:
+    - Message: a follow-up template (e.g. `Hi {{1}}, just checking in...`)
+    - Schedule: 24 hours (Relative)
+    - Reply condition: **Recipient did not reply after my last message**
+
+    This follow-up cancels automatically if the lead responds to your first message
+  </Step>
+  <Step title="Test and activate">
+    1. Click **Run once** to test with real data
+    2. Verify each module shows a green checkmark
+    3. Toggle the scenario **Active** switch to go live
+  </Step>
+</Steps>
+
+---
 
 ## Example use cases
 
 <CardGroup cols={3}>
-  <Card title="Order confirmations" icon="box-check">
-    Send automatic order confirmations when new orders are placed
+  <Card title="AI chatbot lead qualification" icon="robot">
+    Trigger on incoming messages, pass the `conversation_paragraph` and `note` to OpenAI, then send the AI's reply back via Send WhatsApp Message
   </Card>
-  <Card title="Appointment reminders" icon="calendar">
-    Schedule reminders before upcoming appointments
+  <Card title="Smart follow-up sequences" icon="calendar-clock">
+    Schedule a series of follow-ups with reply conditions — they automatically cancel when the lead engages
   </Card>
-  <Card title="Lead notifications" icon="user-plus">
-    Alert your sales team when new leads come in
+  <Card title="CRM-to-WhatsApp sync" icon="database">
+    When a deal stage changes in HubSpot or Pipedrive, use Update a Contact to update the AI note, then send a relevant WhatsApp template
   </Card>
-  <Card title="Customer support" icon="headset">
-    Route support inquiries to the appropriate team member
+  <Card title="Form-to-WhatsApp onboarding" icon="file-lines">
+    When a form is submitted, instantly set AI context via Update a Contact, then send a personalized onboarding template message
   </Card>
-  <Card title="Delivery updates" icon="truck">
-    Keep customers informed about their delivery status
+  <Card title="Delivery fallback" icon="envelope">
+    Use Get delivery status after sending a message — if undelivered, route to a fallback email via Gmail or Outlook
   </Card>
-  <Card title="Payment reminders" icon="credit-card">
-    Send automatic payment reminders for overdue accounts
+  <Card title="Full conversation logging" icon="list">
+    Use Incoming & Outgoing Messages trigger to log every WhatsApp exchange to a Google Sheet, Airtable, or CRM
   </Card>
 </CardGroup>
+
+---
 
 ## Best practices
 
 <AccordionGroup>
-  <Accordion title="Test thoroughly" icon="vial">
-    Always test your workflows with test phone numbers before activating them for production use.
+  <Accordion title="Set the AI Note before sending" icon="robot">
+    Always use **Update a Contact** before **Send WhatsApp Message** in new-lead scenarios. Setting the `note` field with structured lead data (name, email, preferences, language, budget) dramatically improves AI conversation quality and lead qualification accuracy.
   </Accordion>
-  <Accordion title="Use templates" icon="file-lines">
-    Whenever possible, use pre-approved templates for better deliverability and compliance.
+  <Accordion title="Always use reply conditions on follow-ups" icon="shield-check">
+    Set a reply condition on every **Schedule a follow-up Message**. "Recipient did not reply after my last message" is the safest choice — it ensures no follow-up annoys contacts who are already in an active conversation with you. This also protects your WhatsApp account reputation.
   </Accordion>
-  <Accordion title="Add personalization" icon="user">
-    Include customer names and specific details to increase engagement and response rates.
+  <Accordion title="Use labels and notes on every send" icon="paper-plane">
+    The **Send WhatsApp Message** action lets you attach labels and a note alongside every message. Use labels to tag conversations (e.g. `Hot Lead`, `Form Submission`) and the note field to keep AI context current. Both appear immediately in your Notifyer console.
   </Accordion>
-  <Accordion title="Follow WhatsApp policies" icon="shield-check">
-    Ensure all message content complies with WhatsApp Business policies to avoid account restrictions.
+  <Accordion title="Use conversation_paragraph for AI prompts" icon="paragraph">
+    When building AI chatbot scenarios, pass the `conversation_paragraph` field to your AI model. It is a pre-formatted, flat text version of the conversation — much simpler to include in a prompt than parsing the `last_messages` JSON array.
   </Accordion>
-  <Accordion title="Monitor performance" icon="chart-line">
-    Regularly check your message delivery rates in your Notifyer dashboard.
+  <Accordion title="Use Incoming & Outgoing trigger for full logging" icon="list">
+    If you need to log every message exchange to a CRM or database, use **Incoming & Outgoing Messages from console** and filter by `incoming_message` to handle both directions with separate scenario branches.
+  </Accordion>
+  <Accordion title="Phone number format" icon="phone">
+    Always provide phone numbers in full international format — digits only, no `+`, spaces, or dashes (e.g. `14155550187` for US, `447911123456` for UK, `966501234567` for Saudi Arabia).
   </Accordion>
 </AccordionGroup>
+
+---
 
 ## Troubleshooting
 
 <AccordionGroup>
-  <Accordion title="Messages not sending?" icon="circle-exclamation">
+  <Accordion title="Trigger not firing?" icon="circle-exclamation">
     <Steps>
-      <Step title="Verify API key">
-        Ensure your API key is entered correctly in the Make credentials
+      <Step title="Check the scenario is active">
+        Instant triggers only fire when the scenario is toggled **Active** in Make. Also confirm the schedule is set to **Immediately as data arrives**
       </Step>
-      <Step title="Check phone numbers">
-        Confirm phone numbers are in the correct international format (e.g., +14155552671)
+      <Step title="Verify the webhook is configured">
+        Open the trigger module and confirm a webhook is selected in the **Webhook** dropdown and a **Webhook URL** is displayed. If the field is empty, follow the [trigger setup guide](#setting-up-a-notifyer-trigger-in-make) to create one
       </Step>
-      <Step title="Check subscription">
-        Verify your Notifyer subscription is active and has available credits
+      <Step title="Verify your connection">
+        Open the connection settings and confirm your Notifyer API key is valid and the connection shows a green tick
       </Step>
-      <Step title="Template verification">
-        For template messages, ensure you're using an approved template
+      <Step title="Re-register the webhook">
+        Try deactivating and reactivating the scenario — this re-registers the webhook with Notifyer. Check your Notifyer console to confirm messages are arriving there
+      </Step>
+      <Step title="Check Notifyer console">
+        If messages appear in your Notifyer console but the trigger does not fire, contact support
       </Step>
     </Steps>
   </Accordion>
-  
-  <Accordion title="Template errors?" icon="file-exclamation">
+
+  <Accordion title="Messages not sending?" icon="message-xmark">
     <Steps>
-      <Step title="Variable check">
-        Verify all required variables are included in your template message
+      <Step title="Check the connection">
+        Verify your Notifyer API key is valid and the correct connection is selected
       </Step>
-      <Step title="Format verification">
-        Check that variable formats match the expected values (text, number, date, etc.)
+      <Step title="Check phone number format">
+        Phone number must be digits only, full international format, no `+` or spaces (e.g. `14155550187`)
       </Step>
-      <Step title="Template name">
-        Ensure you're using the correct template name exactly as it appears in your dashboard
+      <Step title="Template not approved?">
+        Ensure the selected template has **Approved** status in your Notifyer dashboard. Pending or rejected templates will cause an error
+      </Step>
+      <Step title="24-hour window for non-template">
+        Non-template messages can only be sent within 24 hours of the contact's last incoming message. Outside this window you must use a template
+      </Step>
+      <Step title="Check subscription credits">
+        Verify your Notifyer subscription is active and has sufficient message credits
       </Step>
     </Steps>
   </Accordion>
-  
-  <Accordion title="Media not displaying?" icon="image">
+
+  <Accordion title="Template variables not populating?" icon="brackets-curly">
     <Steps>
-      <Step title="URL access">
-        Confirm your media URLs are publicly accessible (test in an incognito browser)
+      <Step title="Fill all required variable fields">
+        All body variable fields (Body 1, Body 2, etc.) are required — ensure none are empty or mapped to empty values
       </Step>
-      <Step title="File format">
-        Verify the file format is supported by WhatsApp
+      <Step title="Check the template preview">
+        The template dropdown shows a live preview of the body text and example variable values — use this as a reference to understand what each variable slot expects
       </Step>
-      <Step title="File size">
-        Check that file sizes are within WhatsApp limits:
-        - Images: up to 5MB
-        - Videos: up to 16MB
-        - Documents: up to 100MB
+      <Step title="Media URL must be public">
+        If your template has a media header, the URL must be publicly accessible. Test it in an incognito browser window
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Scheduled message was not sent?" icon="clock">
+    <Steps>
+      <Step title="Reply condition may have cancelled it">
+        If you set a reply condition and the contact replied before the scheduled time, the message was intentionally cancelled. Check the contact's conversation in your Notifyer console
+      </Step>
+      <Step title="Check the scheduled time">
+        Verify the delay value and unit are correct (minutes vs hours vs days)
+      </Step>
+      <Step title="Check scenario run history">
+        Go to Make scenario history to confirm the Schedule a follow-up module executed without errors at the time the trigger fired
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Update a Contact changes not appearing in Notifyer?" icon="user-pen">
+    <Steps>
+      <Step title="Verify the phone number">
+        The phone number must exactly match the contact's number in Notifyer. If the contact doesn't exist yet, the update creates the record
+      </Step>
+      <Step title="Check you're using the right connection">
+        Update a Contact requires the **Notifyer only** connection — make sure you are not using a different connection type
       </Step>
     </Steps>
   </Accordion>
 </AccordionGroup>
 
-## Need help?
+---
 
-Our support team is ready to assist you:
+## Need help?
 
 <CardGroup cols={3}>
   <Card title="Email support" icon="envelope" href="mailto:team@whatsable.app">
@@ -465,11 +841,7 @@ Our support team is ready to assist you:
   <Card title="Schedule a demo" icon="calendar" href="https://tidycal.com/axelmeta/notifyer-systems-demo">
     Book a personalized walkthrough
   </Card>
-  <Card title="Live chat" icon="message-dots" href="">
+  <Card title="Live chat" icon="message-dots">
     Click the green chat button in the bottom right corner of the Notifyer System dashboard
   </Card>
 </CardGroup>
-
-<Info>
-  For additional automation platform integrations (Make.com, Zapier, etc.), please contact our support team or check our integration documentation.
-</Info>

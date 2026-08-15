@@ -1,0 +1,82 @@
+## Incoming and outgoing WhatsApp messages
+
+Notifyer delivers **both incoming and outgoing** messages to your webhook or automation trigger — including messages typed by hand in the **WhatsApp Business app** on your phone.
+
+This is possible because Notifyer supports [Meta WhatsApp Coexistence](/guides/notifyer-system/embedding-process#whatsapp-coexistence). You keep using WhatsApp Business on your phone; those hand-typed replies still reach an external webhook and can start an automation. They are not limited to the Notifyer web inbox.
+
+<Frame caption="Trigger n8n (or any webhook) from WhatsApp messages — including replies typed in the WhatsApp Business app">
+  <iframe
+    className="w-full aspect-video"
+    src="https://www.tella.tv/video/embed/trigger-n8n-workflows-with-whatsapp-messages-e1f3"
+    title="Trigger n8n workflows with WhatsApp messages"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+    allowFullScreen
+  ></iframe>
+</Frame>
+
+The payload is the same whether you use [n8n](/guides/notifyer-system/n8n-overview), [Make](/guides/notifyer-system/make-overview), [Zapier](/guides/notifyer-system/zapier-overview), or a [custom webhook](/guides/notifyer-system/api/incoming-message). [Watch the walkthrough on Tella](https://www.tella.tv/video/trigger-n8n-workflows-with-whatsapp-messages-e1f3).
+
+### Direction, sending system, and team member
+
+Use these three fields to tell *what happened* and *who sent it*:
+
+<ResponseField name="incoming_message" type="boolean">
+  `true` when a contact sent a message **to** your business. `false` when your business sent a message **to** the contact (outgoing). Filter on this field to run logic only for one direction.
+</ResponseField>
+
+<ResponseField name="send_by" type="string">
+  Which system or person sent an **outgoing** message:
+
+  | `send_by` value | Meaning |
+  |---|---|
+  | `WhatsApp App` | Typed by hand in the WhatsApp Business app on a phone |
+  | A team member's name (for example `Axel Meta`) | Sent from the Notifyer chat inbox by that logged-in user |
+  | An automation or app name (Make, Zapier, n8n, API, bot) | Sent by that integration or bot |
+
+  Empty or omitted on incoming messages.
+</ResponseField>
+
+<ResponseField name="was_message_by_human" type="boolean">
+  `true` when a person sent the message (WhatsApp Business app or Notifyer chat inbox). `false` when a bot or automation sent it. Combine with `send_by` to see both *whether* a human sent it and *which teammate or system* did.
+</ResponseField>
+
+### Example payload: message typed on the phone
+
+This is the JSON Notifyer POSTs when someone types a reply in the WhatsApp Business app. `incoming_message` is `false`, `send_by` is `"WhatsApp App"`, and `was_message_by_human` is `true`.
+
+```json
+{
+  "last_messages": "[{\"type\":\"bot\",\"content\":\"Hello n8n\",\"timestamp\":\"2026-08-15T12:24:47.000Z\",\"content_type\":\"text\"},{\"type\":\"user\",\"content\":\"hi\",\"timestamp\":\"2026-08-12T12:27:42.746Z\",\"content_type\":\"text\"}]",
+  "conversation_paragraph": "Bot (12:24:47 PM): Hello n8n ; User (12:27:42 PM): hi",
+  "phone_number": 14155552671,
+  "recipient_name": "Alex Martinez",
+  "user_id": "158c59e1-ea85-4d0b-b70c-65328ba67a8e",
+  "last_message_of_user": "hi",
+  "last_message_of_bot": "Hello n8n",
+  "message_type": "text",
+  "user_last_message_time": 1786722580,
+  "bot_last_message_time": 1786797014,
+  "attachment_url": null,
+  "note": "email: alex\nName: Alex",
+  "note_automation": "email: alex\nName: Alex",
+  "labels": "n8n, webhook-test",
+  "incoming_message": false,
+  "send_by": "WhatsApp App",
+  "was_message_by_human": true
+}
+```
+
+<Note>
+`last_message_of_bot` is the last message **your business** sent — whether a human typed it in the WhatsApp Business app or the Notifyer inbox, or a bot/automation sent it. `last_messages` is a JSON **string** of the last ~20 messages (parse it before iterating). `phone_number` may arrive as a number rather than a string.
+</Note>
+
+When the same person sends from the Notifyer chat inbox instead of the phone app, the payload is identical except:
+
+```json
+{
+  "incoming_message": false,
+  "send_by": "Axel Meta",
+  "was_message_by_human": true
+}
+```

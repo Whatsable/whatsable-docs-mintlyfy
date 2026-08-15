@@ -1,8 +1,12 @@
 ---
 title: 'Zapier'
-description: 'Learn how to seamlessly integrate Zapier with the Notifyer System for enterprise-level WhatsApp automation'
+description: 'Notifyer System triggers and actions in Zapier — incoming and outgoing WhatsApp messages, including replies typed in the WhatsApp Business app. Coexistence is supported; you do not delete the app on your phone.'
 icon: 'bolt'
+keywords: ['Zapier', 'webhook', 'outgoing messages', 'incoming_message', 'send_by', 'was_message_by_human', 'coexistence']
 ---
+
+import Coexistence from "/snippets/coexistence.mdx";
+import WebhookOutgoing from "/snippets/webhook-outgoing.mdx";
 
 # Notifyer System Integration with Zapier
 
@@ -11,8 +15,32 @@ icon: 'bolt'
 </Frame>
 
 <Tip>
-  This guide walks you through connecting Notifyer System with Zapier to create powerful automated WhatsApp messaging workflows for your business
+  This guide covers every trigger and action available for the Notifyer System inside Zapier — so you can build fully automated WhatsApp workflows that send messages, schedule follow-ups, update contacts, and react to incoming **and outgoing** messages in real time.
 </Tip>
+
+<Coexistence />
+
+## Available triggers & actions at a glance
+
+The Notifyer System connects to Zapier through the **WhatsAble** app. Once connected with your Notifyer API key, you get access to the following:
+
+<CardGroup cols={2}>
+  <Card title="Trigger (Instant)" icon="bolt">
+    - New Incoming or Outgoing WhatsApp Message
+  </Card>
+  <Card title="Actions" icon="play">
+    - Send WhatsApp Message
+    - Schedule a Follow-Up Message
+    - Update a Contact
+    - Get Delivery Status of a Message
+  </Card>
+</CardGroup>
+
+<Info>
+  All triggers and actions in this guide use the **WhatsAble** app on Zapier. Notifyer System users connect using their **Notifyer API key**.
+</Info>
+
+---
 
 ## Prerequisites
 
@@ -20,7 +48,7 @@ Before getting started, make sure you have:
 
 <CardGroup cols={2}>
   <Card title="Notifyer System Account" icon="user">
-    Active Notifyer System account with a subscription plan (Monthly or Pay-as-you-go)
+    Active Notifyer System account with a subscription plan (Monthly or Pay-as-you-go) and a connected WhatsApp number
   </Card>
   <Card title="Zapier Account" icon="user">
     Access to [Zapier](https://zapier.com/sign-up/) workflow automation platform
@@ -31,23 +59,23 @@ Before getting started, make sure you have:
   New to Notifyer System? [Sign up here](https://console.notifyer-systems.com/)
 </Tip>
 
+---
+
 ## Setting up your Notifyer System account
 
 <Steps>
   <Step title="Complete the Embedding Process">
-    Before sending WhatsApp messages, you must complete the platform embedding process, which connects your WhatsApp Business account to Notifyer System.
+    Before sending WhatsApp messages, complete the [embedding process](/guides/notifyer-system/embedding-process), which connects your WhatsApp Business account to Notifyer System. You do **not** need to delete the WhatsApp Business app — [coexistence](/guides/notifyer-system/embedding-process#whatsapp-coexistence) is supported.
 
     <Info>
       The embedding process is required by Meta to ensure proper business verification and compliance with WhatsApp Business Platform policies.
     </Info>
   </Step>
   
-  <Step title="Set up message templates">
-    Notifyer System provides two methods for sending WhatsApp messages:
+  <Step title="Set up message templates (if using template messages)">
+    WhatsApp templates are pre-approved message formats required to initiate a new conversation with a contact. Create and get them approved in Notifyer before using them in Zapier.
 
-    <Accordion title="Option A: Template messages" defaultOpen={true}>
-      <p>WhatsApp templates are pre-approved message formats that allow for personalization while maintaining compliance with WhatsApp policies.</p>
-      
+    <Accordion title="How to create a template">
       <Steps>
         <Step title="Navigate to Templates">
           Go to **Your Templates** in your Notifyer dashboard
@@ -56,8 +84,6 @@ Before getting started, make sure you have:
           Click the **Create Template** tab at the top of the page
         </Step>
         <Step title="Fill out the form">
-          Complete the template creation form with the following details:
-          
           <ResponseField name="Template Name" type="string" required>
             Choose a descriptive name for internal reference
           </ResponseField>
@@ -65,19 +91,16 @@ Before getting started, make sure you have:
             Choose your template's primary language
           </ResponseField>
           <ResponseField name="Category" type="string" required>
-            Select the appropriate message category
-          </ResponseField>          
+            Select the appropriate message category (Marketing, Utility, Authentication)
+          </ResponseField>
           <ResponseField name="Header" type="image | document | video">
             Optional: Add an image, document, or video header
           </ResponseField>
           <ResponseField name="Message Body" type="string" required>
-            Craft your message content
+            Craft your message content. Use `{{1}}`, `{{2}}` placeholders for dynamic variables
           </ResponseField>
-          <ResponseField name="Variables" type="string">
-            Add placeholders using `{{1}}`, `{{2}}` format for personalization
-          </ResponseField>          
           <ResponseField name="Buttons" type="button">
-            Optional: Configure call-to-action buttons
+            Optional: Configure call-to-action or quick reply buttons
           </ResponseField>
         </Step>
         <Step title="Submit for review">
@@ -85,351 +108,720 @@ Before getting started, make sure you have:
         </Step>
       </Steps>
 
-      <Frame caption="Template Creation Interface">
-        <img src="/images/notifyer_template_create.png" alt="Template Creation Interface" />
-      </Frame>
-
       <Warning>
-        Templates typically get reviewed within 24 hours. Creating compliant templates that avoid promotional language increases approval chances.
+        Templates are typically reviewed within 24 hours. Utility and Authentication templates have the highest approval rates.
       </Warning>
-    </Accordion>
-
-    <Accordion title="Option B: Non-template messages">
-      <p>For simpler communications, you can send non-template messages that include:</p>
-      
-      <CardGroup cols={2}>
-        <Card title="Text" icon="message-text">
-          Plain text messages within the 24-hour window
-        </Card>
-        <Card title="Images" icon="image">
-          Photos and graphics in supported formats
-        </Card>
-        <Card title="Documents" icon="file-pdf">
-          PDFs, Word docs, and other file types
-        </Card>
-        <Card title="Videos" icon="video">
-          MP4 and other supported video formats
-        </Card>
-      </CardGroup>
-
-      <Note>
-        Non-template messages can only be sent within the 24-hour customer service window after a customer initiates contact with your business.
-      </Note>
     </Accordion>
   </Step>
   
-  <Step title="Get your API key">
-    To connect Notifyer System with Zapier, you'll need an API key:
-
+  <Step title="Get your Notifyer API key">
     1. In your Notifyer dashboard, navigate to [**API Keys**](https://console.notifyer-systems.com/api-key)
     2. Copy your unique API key
-    3. Store it securely—you'll need it for the integration
+    3. Store it securely — you will need it when creating the Zapier connection
+
     <Warning>
       Never share your API key publicly or commit it to version control systems.
     </Warning>
-
-    <Frame caption="API Key Location">
-      <img src="/images/notifyer_apikey.png" alt="API Key Location" />
-    </Frame>
   </Step>
 </Steps>
+
+---
 
 ## Connect Notifyer System to Zapier
 
-Now that you have your Notifyer System account configured, let's connect it to Zapier to automate your messaging workflows.
-
 <Steps>
-  <Step title="Connect Notifyer System to Zapier">
-    1. Log in to your Zapier account
-    2. Navigate to Notifyer System dashboard and select **Connect to Zapier** in the side menu
+  <Step title="Accept the WhatsAble app invitation">
+    1. Log in to your Notifyer System dashboard
+    2. Navigate to **Connect to Zapier** in the side menu
     3. Click **Continue** in the connection guide popup
     4. Click **Accept & Build a Zap** on the invitation page
+
     <Check>
-      You're now ready to create Zaps with the Notifyer System app
+      The **WhatsAble** app is now available in your Zapier account. You can find it by searching "WhatsAble" in any Zap editor.
     </Check>
-    <Frame caption="Connecting Notifyer System to Zapier">
-      <img src="/images/connecting_notifyer_system_zapier.gif" alt="Connecting Notifyer System to Zapier" />
-    </Frame>
   </Step>
 
-  <Step title="Set up your Zapier Zaps">
-    1. Log in to your Zapier account
-    2. Create a new workflow/Zap by clicking **+ Create** and select **Zaps**/**New Zap**
-    3. Add a trigger step of your choice:
-       - Popular triggers include Google Forms, Jotform, ClickUp, or a Schedule trigger
-       - Connect and configure your trigger according to your use case
-
-    <Frame caption="Setting up Zapier Zaps">
-      <img src="/images/whatsable_zapier1.gif" alt="Setting up Zapier Zaps" />
-    </Frame>
-  </Step>
-  
-  <Step title="Add the Notifyer System app">
-    1. Select the next **Action** step or click the **+** button to add a new step
-    2. Search for "Notifyer System" in the apps and tools library
-    3. Select the app with the official Notifyer System logo
-
-    <Frame caption="Adding the Notifyer System app">
-      <img src="/images/adding_the_notifyer_system.gif" alt="Adding the WhatsAble app" />
-    </Frame>
-  </Step>
-  
-  <Step title="Configure Notifyer System credentials">
-    <Accordion title="Credential Setup" defaultOpen>
-      1. In the Notifyer System app Setup, select [**Send a WhatsApp Message with your template**](/guides/notifyer-system/zapier-overview#template-messages) or [**Send WhatsApp Message Without Template**](/guides/notifyer-system/zapier-overview#non-template-messages) in the **Action event** dropdown depending on your messaging needs
-      2. Click **Sign In** in the **Account** field and you will be prompted to enter your API Key
-      3. Enter your Notifyer System API key that you copied earlier      
-      4. Click **Yes, Continue to Notifyer System** to store your credential
-      5. Next, click the **Continue** button in the Setup screen to proceed to the **Configure** section
-
-    <Frame caption="Configuring Notifyer System credentials">
-      <img src="/images/configuring_notifyer_credentials.gif" alt="Configuring Notifyer System credentials" />
-    </Frame>
-    </Accordion>
-  </Step>
-  
-    <Step title="Configure your message">
-    Depending on your messaging needs, choose one of the following operations:
-
-    <Tabs>
-      <Tab title="Template Messages">
-        <Steps>
-          <Step title="Select Action event">
-            In the **Setup** section, select **Send a WhatsApp Message with your template** in the **Action event** dropdown and continue to the **Configure** section
-          </Step>
-          <Step title="Configure message">
-            Complete the required fields in the **Configure** section:
-            
-            <ResponseField name="Template" type="string" required>
-              Select from your pre-approved templates in the dropdown
-            </ResponseField>
-            <ResponseField name="Phone Number" type="string" required>
-              Enter the recipient's phone number with country code (e.g., +14155552671) or use dynamic data from previous nodes
-            </ResponseField>
-            <ResponseField name="Note" type="string" optional>
-              Add note for internal tracking. This data won't be sent to the recipient
-            </ResponseField>
-            <ResponseField name="Labels" type="multiselect" optional>
-              Select label(s) for internal tracking. This data won't be sent to the recipient
-            </ResponseField>
-            <ResponseField name="Media" type="string" required>
-              Enter publicly accessible media URL for Media (image/video/document) header.
-              <Info>
-               This field will only appear if you have a Media (image/video/document) header configured in your selected template.
-              </Info>
-            </ResponseField>
-            <ResponseField name="Body ()" type="string" required>
-              Fill in values for each Body(s) in your template, mapping them to dynamic data when applicable
-            </ResponseField>
-            <ResponseField name="Button(s)" type="string" required>
-              Fill in values for each button in your template, mapping them to dynamic data when applicable.
-              <Info>
-               This field(s) will only appear if you have configured button(s) in your selected template. You will see the button name as the field name.
-              </Info>
-            </ResponseField>
-          </Step>
-          <Step title="Complete message details">
-            Based on your selected message type, fill in the required fields:
-            - For text messages: Enter your message content
-            - For media messages: Provide a publicly accessible URL to your file
-            - Optional caption (for media files)
-          </Step>
-        </Steps>
-
-        <Frame caption="Template Message Configuration">
-          <img src="https://notifyer.app/docs/images/n8n-template-config.png" alt="Template Message Configuration" />
-        </Frame>
-      </Tab>
-      <Tab title="Non-Template Messages">
-        <Steps>
-          <Step title="Select operation">
-            In the **Operation Name or ID** dropdown, select **Send Non Template Message**
-          </Step>
-          <Step title="Enter phone number">
-            Enter the **Phone Number** with country code
-          </Step>
-          <Step title="Select message type">
-            Choose from the following message types:
-            
-            <CardGroup cols={2}>
-              <Card title="Text Message" icon="message">
-                For plain text messages
-              </Card>
-              <Card title="Document Message" icon="file">
-                For sending documents (PDF, Word, etc.)
-              </Card>
-              <Card title="Image Message" icon="image">
-                For sending images (JPEG, PNG, etc.)
-              </Card>
-              <Card title="Video Message" icon="video">
-                For sending videos (MP4, 3GP, etc.)
-              </Card>
-            </CardGroup>
-          </Step>
-          <Step title="Complete message details">
-            Based on your selected message type, fill in the required fields:
-            - For text messages: Enter your message content
-            - For media messages: Provide a publicly accessible URL to your file
-            - Optional caption (for media files)
-          </Step>
-        </Steps>
-
-        <Warning>
-          For all media types, ensure your file URLs are publicly accessible and match the supported file formats.
-        </Warning>
-
-        <Frame caption="Non-Template Message Configuration">
-          <img src="https://notifyer.app/docs/images/n8n-non-template-config.png" alt="Non-Template Message Configuration" />
-        </Frame>
-      </Tab>
-    </Tabs>
-  </Step>
-  
-  <Step title="Test and activate your Zap">
-    1. Click **Continue** and then click **Test step** in the **Test** to verify it's working correctly
-    2. If the test is successful, you'll see a confirmation message
-    3. Click **Publish** to save your entire Zap
-    5. Toggle the **Active** switch in the top-left corner to activate your Zap
+  <Step title="Create a new Zap">
+    1. Log in to your Zapier account at [zapier.com](https://zapier.com)
+    2. Click **+ Create** and select **Zaps** (or **New Zap**)
+    3. You are now in the Zap editor and ready to add your first step — follow the trigger or action setup guides in the [Step Reference](#step-reference) section below
   </Step>
 </Steps>
 
-## Example use cases
+---
 
-<CardGroup cols={2}>
-  <Card title="Customer Onboarding" icon="user-plus">
-    Send a welcome message when a new customer signs up
-  </Card>
-  
-  <Card title="Order Notifications" icon="box-check">
-    Update customers when their order status changes
-  </Card>
-  
-  <Card title="Appointment Reminders" icon="calendar">
-    Automatically send reminders before scheduled appointments
-  </Card>
-  
-  <Card title="Lead Follow-up" icon="user-check">
-    Send personalized messages to new leads from your form submissions
-  </Card>
-  
-  <Card title="Support Ticket Updates" icon="ticket">
-    Notify customers when their support ticket status changes
-  </Card>
-</CardGroup>
+## Step Reference
 
-## Workflow Diagram
+### Trigger
 
-<Frame caption="Sample Notifyer System Zapier Workflow">
-  ```mermaid
-  flowchart LR
-    A[Trigger Step] --> B[Data Transformation]
-    B --> C[Notifyer System App]
-    C --> D{Message Sent?}
-    D -->|Yes| E[Success Path]
-    D -->|No| F[Error Handling]
-    E --> G[Additional Actions]
-    F --> H[Retry Logic]
-  ```
-</Frame>
+---
+
+### New Incoming or Outgoing WhatsApp Message
+
+<Info>
+  **Type:** Instant Trigger | **App:** WhatsAble | **Connection:** Notifyer API key
+</Info>
+
+**Description in Zapier:** *"When you receive or send a WhatsApp message. You can choose to only trigger this when you send or receive a message, or both."*
+
+Fires in real time whenever a WhatsApp message event occurs in your Notifyer console. You can configure it to fire on **incoming messages only**, **outgoing messages only**, or **both directions**. Outgoing events include messages **typed by hand in the WhatsApp Business app**, messages sent from the Notifyer chat inbox, and messages sent by automations. This is the entry point for AI chatbot workflows, lead qualification, CRM syncing, and any automation that must react when a teammate replies on their phone.
+
+---
+
+#### Setting up the trigger
+
+<Steps>
+  <Step title="Add the trigger step">
+    1. In your Zap editor, click the **Trigger** step
+    2. Search for **WhatsAble** in the app search bar
+    3. Select **WhatsAble** from the results
+    4. Under **Trigger Event**, select **New Incoming or Outgoing WhatsApp Message**
+    5. Click **Continue**
+  </Step>
+
+  <Step title="Connect your Notifyer account">
+    1. In the **Account** section, click **Sign in to WhatsAble**
+    2. A dialog will appear asking for your API key — paste your **Notifyer API key**
+    3. Click **Yes, Continue to WhatsAble**
+
+    <Info>
+      You only need to do this once. Once your account is connected, you can reuse it across all WhatsAble steps in any of your Zaps.
+    </Info>
+
+    <Warning>
+      Make sure you are pasting the Notifyer API key, not the WhatsApp API key. Your Notifyer API key is found at [console.notifyer-systems.com/api-key](https://console.notifyer-systems.com/api-key).
+    </Warning>
+  </Step>
+
+  <Step title="Configure the trigger">
+    In the **Configure** section, you will see the following fields:
+
+    <ResponseField name="Credential Type" type="dropdown" required>
+      Select **Notifyer** — this tells the app you are authenticating with a Notifyer System API key
+    </ResponseField>
+
+    <ResponseField name="How to Map Trigger Data" type="dropdown" optional>
+      Choose how incoming trigger data is mapped to your Zap fields. Leave as default unless you have specific mapping requirements
+    </ResponseField>
+
+    Click **Continue** when done.
+  </Step>
+
+  <Step title="Test the trigger">
+    1. Click **Test trigger** — Zapier will attempt to fetch a recent message event from your Notifyer console
+    2. If a test record is found, Zapier displays a sample data payload showing all available output fields
+    3. Review the fields to confirm the data looks correct
+
+    <Tip>
+      If no test data appears, send a WhatsApp message to your connected number first, then click **Test trigger** again. Zapier needs at least one recent event to pull a sample.
+    </Tip>
+
+    <Check>
+      Once the test passes, your trigger is configured. Click **Continue** to add your first action step.
+    </Check>
+  </Step>
+</Steps>
+
+---
+
+#### Trigger output fields
+
+When this trigger fires, your Zap receives the following data fields from Notifyer. You can map any of these fields into your action steps.
+
+<AccordionGroup>
+  <Accordion title="Contact identity">
+    <ResponseField name="phone_number" type="text">
+      The phone number of the contact (e.g. `14155550187`). This is the contact who sent or received the message
+    </ResponseField>
+    <ResponseField name="user_id" type="text">
+      Unique internal ID for this contact in Notifyer (UUID format)
+    </ResponseField>
+    <ResponseField name="recipient_name" type="text">
+      The display name used for this contact in Notifyer
+    </ResponseField>
+    <ResponseField name="labels" type="text">
+      Comma-separated list of labels currently applied to this conversation (e.g. `Hot Lead, Buyer Qualified, Urgent`)
+    </ResponseField>
+  </Accordion>
+  <Accordion title="Message data">
+    <ResponseField name="message_type" type="text">
+      Type of the message: `text`, `audio`, `image`, or `document`
+    </ResponseField>
+    <ResponseField name="incoming_message" type="boolean">
+      `true` when the contact sent a message to your business; `false` when your business sent a message to the contact. Use a **Filter** step after the trigger to act only on incoming or outgoing messages
+    </ResponseField>
+    <ResponseField name="send_by" type="text">
+      Which system or person sent an outgoing message: `"WhatsApp App"` for the WhatsApp Business app, the teammate's name for the Notifyer chat inbox, or the automation/app name for Make, Zapier, n8n, or API. Empty on incoming messages
+    </ResponseField>
+    <ResponseField name="was_message_by_human" type="boolean">
+      `true` when a person sent the message (phone app or Notifyer inbox). `false` when a bot or automation sent it
+    </ResponseField>
+    <ResponseField name="attachment_url" type="text">
+      Public URL of any file attached to the message (image, document, audio). Empty if the message has no attachment
+    </ResponseField>
+    <ResponseField name="is_scheduled" type="boolean">
+      `true` if this trigger was fired by a scheduled message being delivered; `false` for real-time messages
+    </ResponseField>
+  </Accordion>
+  <Accordion title="Conversation history">
+    <ResponseField name="last_messages" type="text">
+      JSON array of recent messages in the conversation. Each item includes: `type` (user/bot), `content`, `timestamp`, `content_type`. Useful for passing full history to an AI model
+    </ResponseField>
+    <ResponseField name="last_message_of_user" type="text">
+      The most recent message sent by the contact — the message that triggered this Zap run
+    </ResponseField>
+    <ResponseField name="last_message_of_bot" type="text">
+      The most recent message your business sent to this contact — helps prevent an AI from repeating the same response
+    </ResponseField>
+    <ResponseField name="user_last_message_time" type="number">
+      Unix timestamp (milliseconds) of when the contact's last message was received
+    </ResponseField>
+    <ResponseField name="bot_last_message_time" type="number">
+      Unix timestamp (milliseconds) of when your business last messaged this contact
+    </ResponseField>
+    <ResponseField name="conversation_paragraph" type="text">
+      A flat, readable version of the full conversation history — ideal for passing directly into an AI/LLM prompt without needing to parse the `last_messages` JSON array
+    </ResponseField>
+  </Accordion>
+  <Accordion title="AI context & automation fields">
+    <ResponseField name="note" type="text">
+      The AI context note stored on this contact in Notifyer. Contains lead details: name, email, preferences, background, language, etc. Set or update this using the **Update a Contact** action
+    </ResponseField>
+    <ResponseField name="note_automation" type="text">
+      Automation instructions for the AI — rules the AI follows automatically based on conversation events (e.g. "If budget confirmed and timeline under 6 months, notify the agent within 1 hour")
+    </ResponseField>
+    <ResponseField name="scheduled_messages" type="text">
+      Description of any messages currently scheduled to be sent to this contact at a future time
+    </ResponseField>
+  </Accordion>
+</AccordionGroup>
+
+<Note>
+  Use the `incoming_message` field with a Zapier **Filter** step to split logic between incoming messages (contacts writing to you) and outgoing messages (your business sending). Use `send_by` and `was_message_by_human` to see whether the WhatsApp Business app, a named teammate, or an automation sent it.
+</Note>
+
+<WebhookOutgoing />
+
+---
+
+### Actions
+
+Actions perform operations in Notifyer System — sending messages, scheduling follow-ups, updating contacts, and checking delivery status.
+
+---
+
+### Send WhatsApp Message
+
+<Info>
+  **Type:** Action | **App:** WhatsAble | **Connection:** Notifyer API key
+</Info>
+
+**Description in Zapier:** *"Send WhatsApp Messages using the official WhatsApp API. You can add labels to a WhatsApp conversation and also write notes about the lead that will appear in WhatsAble's chat interface."*
+
+Send a WhatsApp message immediately to any phone number. Supports both **template messages** (to start a new conversation or send proactive outreach) and **non-template messages** (within an active 24-hour conversation window). Labels and notes set here appear directly in your Notifyer console — making this the core send action for all outbound WhatsApp automation.
+
+---
+
+#### Setting up the action
+
+<Steps>
+  <Step title="Add an action step">
+    1. In your Zap editor, click **+** to add a new step (or click an existing action step)
+    2. Search for **WhatsAble** in the app search bar and select it
+    3. Under **Action Event**, select **Send WhatsApp Message**
+    4. Click **Continue**
+  </Step>
+  <Step title="Connect your Notifyer account">
+    Select your connected Notifyer account from the dropdown, or click **Sign in to WhatsAble** to add a new one using your Notifyer API key
+  </Step>
+  <Step title="Configure the message">
+    In the **Configure** section, start by choosing your message type from the **Configuration** dropdown:
+
+    <Tabs>
+      <Tab title="Send WhatsApp Template (to start conversation)">
+        Use this to **initiate a new conversation** with a contact or send a proactive outreach message. Requires a Meta-approved WhatsApp template.
+
+        <ResponseField name="Phone Number" type="text" required>
+          The recipient's phone number in international format — digits only, no `+` or spaces (e.g. `14155550187`). Map this from a previous trigger step or enter it directly
+        </ResponseField>
+        <ResponseField name="Template Name or ID" type="dropdown" required>
+          Select from your approved templates. The dropdown shows a live preview of each template's body, language, and category
+        </ResponseField>
+        <ResponseField name="Body 1, Body 2, ... (variables)" type="text" required>
+          If your template contains variables (`{{1}}`, `{{2}}`...), a separate field appears for each one. Map them to dynamic data from previous steps (e.g. `{{contact_name}}` from a form submission)
+        </ResponseField>
+        <ResponseField name="Media" type="text">
+          If your template has a media header (image, video, or document), enter the publicly accessible URL of that file. Only appears if your selected template includes a media header
+        </ResponseField>
+        <ResponseField name="Visit Website URL" type="text">
+          If your template has a dynamic URL button, enter the full URL value including the dynamic portion
+        </ResponseField>
+        <ResponseField name="Note" type="text" optional>
+          AI context about this contact (name, email, preferences, language, budget). This note is stored on the contact in Notifyer and the AI reads it to personalize future replies. It is not sent to the recipient
+        </ResponseField>
+        <ResponseField name="Label Names or IDs" type="multiselect" optional>
+          Labels to apply to this conversation for internal tracking and routing. Labels appear in your Notifyer console and can be used in scheduling conditions
+        </ResponseField>
+      </Tab>
+      <Tab title="Send a non-template message (person must write to you first)">
+        Use this to send a message **within an active conversation** — only possible within 24 hours of the contact's last incoming message. Supports multiple message types.
+
+        <ResponseField name="Recipient Phone Number" type="text" required>
+          The recipient's phone number in international format — digits only, no `+` or spaces (e.g. `14155550187`)
+        </ResponseField>
+        <ResponseField name="Message Type" type="dropdown" required>
+          Choose what type of message to send:
+
+          <AccordionGroup>
+            <Accordion title="Text Message">
+              <ResponseField name="Message Content" type="text" required>
+                The text content to send to the contact
+              </ResponseField>
+              <ResponseField name="Enable Link Preview" type="boolean">
+                Set to `true` to show a URL preview card when the message contains a link. Default: `false`
+              </ResponseField>
+            </Accordion>
+            <Accordion title="Image Message">
+              <ResponseField name="Image URL" type="url" required>
+                Publicly accessible URL of the image file (JPEG, PNG, etc.)
+              </ResponseField>
+              <ResponseField name="Caption" type="text" optional>
+                Optional caption text displayed below the image
+              </ResponseField>
+            </Accordion>
+            <Accordion title="Video Message">
+              <ResponseField name="Video URL" type="url" required>
+                Publicly accessible URL of the video file (MP4, etc.)
+              </ResponseField>
+              <ResponseField name="Caption" type="text" optional>
+                Optional caption text displayed below the video
+              </ResponseField>
+            </Accordion>
+            <Accordion title="Document Message">
+              <ResponseField name="Document URL" type="url" required>
+                Publicly accessible URL of the document file (PDF, DOCX, etc.)
+              </ResponseField>
+              <ResponseField name="Caption" type="text" optional>
+                Optional caption for the document
+              </ResponseField>
+              <ResponseField name="Filename" type="text" required>
+                The filename to display to the recipient (e.g. `invoice-2026.pdf`)
+              </ResponseField>
+            </Accordion>
+            <Accordion title="Audio Message">
+              <ResponseField name="Audio URL" type="url" required>
+                Publicly accessible URL of the audio file (MP3, OGG, etc.)
+              </ResponseField>
+            </Accordion>
+          </AccordionGroup>
+        </ResponseField>
+        <ResponseField name="Label Names or IDs" type="multiselect" optional>
+          Labels to apply to this conversation. Labels appear in your Notifyer console
+        </ResponseField>
+        <ResponseField name="Note" type="text" optional>
+          AI context note for this contact — set or update the note that the AI reads to personalize future replies
+        </ResponseField>
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step title="Test the action">
+    1. Click **Continue** to proceed to the **Test** section
+    2. Click **Test step** — Zapier will attempt to send a real message using the configuration you set
+    3. Check your WhatsApp to confirm the message was received
+    4. If the test passes, click **Publish** to activate your Zap (or continue adding more steps first)
+
+    <Warning>
+      Testing this action sends a real WhatsApp message. Use a personal test number during setup to avoid sending unintended messages to real contacts.
+    </Warning>
+  </Step>
+</Steps>
+
+---
+
+### Schedule a Follow-Up Message
+
+<Info>
+  **Type:** Action | **App:** WhatsAble | **Connection:** Notifyer API key
+</Info>
+
+**Description in Zapier:** *"Schedule a follow-up to get sent later and add conditions so it only gets sent if the lead did not reply to you."*
+
+Schedule a WhatsApp message to be sent at a **future time**, with an optional **reply condition** that automatically cancels the scheduled message if the recipient responds before it is sent. This is one of Notifyer's most powerful features — use it to build no-reply follow-up sequences, re-engagement drips, and smart nurture workflows that stop automatically when a lead engages.
+
+---
+
+#### Setting up the action
+
+<Steps>
+  <Step title="Add an action step">
+    1. In your Zap editor, click **+** to add a new step
+    2. Search for **WhatsAble** and select it
+    3. Under **Action Event**, select **Schedule a Follow-Up Message**
+    4. Click **Continue**
+  </Step>
+  <Step title="Connect your Notifyer account">
+    Select your connected Notifyer account, or add a new one with your Notifyer API key
+  </Step>
+  <Step title="Choose your message type">
+    In the **Configure** section, select either **Send WhatsApp Template** or **Send a non-template message** from the **Configuration** dropdown.
+
+    The message fields are identical to the **Send WhatsApp Message** action above — fill in the phone number, select your template (or message type), map any variables, and optionally set labels and a note.
+  </Step>
+  <Step title="Set when to send the message">
+    <Tabs>
+      <Tab title="Relative (Delay from now)">
+        Send the message after a set delay from the moment this Zap step runs:
+
+        <ResponseField name="Delay Value" type="select" required>
+          Choose: 1, 2, 3, 4, 5, 10, 15, 20, 30, 60, 90, or 120
+        </ResponseField>
+        <ResponseField name="Delay Unit" type="select" required>
+          Choose: **Minutes**, **Hours**, or **Days**
+        </ResponseField>
+      </Tab>
+      <Tab title="Specific Date & Time">
+        Send the message at an exact date and time:
+
+        <ResponseField name="Date & Time" type="datetime" required>
+          The exact date and time to send the message. Map this from a previous step (e.g. an appointment datetime from a calendar trigger) or enter a fixed value
+        </ResponseField>
+        <ResponseField name="Timezone" type="select" required>
+          The timezone for the scheduled time — select from the full global timezone list (GMT-11 through GMT+12)
+        </ResponseField>
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step title="Set a reply condition (recommended)">
+    The reply condition tells Notifyer to **automatically cancel the scheduled message** if the recipient replies within the specified timeframe — preventing follow-up messages from reaching contacts who are already engaged in a conversation with you.
+
+    <ResponseField name="Reply Condition" type="select">
+      | Condition | The message is cancelled if... |
+      |-----------|-------------------------------|
+      | Recipient did not reply after my last message | The contact replies at any point before the scheduled send time |
+      | Recipient never replied to any of my messages | The contact has never replied to any of your messages |
+      | Recipient did not reply within 20 minutes | The contact replies within 20 minutes |
+      | Recipient did not reply within 45 minutes | The contact replies within 45 minutes |
+      | Recipient did not reply within 3 hours | The contact replies within 3 hours |
+      | Recipient did not reply within 6 hours | The contact replies within 6 hours |
+      | Recipient did not reply within 12 hours | The contact replies within 12 hours |
+      | Recipient did not reply within 24 hours | The contact replies within 24 hours |
+      | Recipient did not reply within 48 hours | The contact replies within 48 hours |
+      | Recipient did not reply within 72 hours | The contact replies within 72 hours |
+    </ResponseField>
+
+    <Tip>
+      **"Recipient did not reply after my last message"** is the recommended default for most follow-up sequences — it ensures that no follow-up is sent to contacts who are already in an active conversation with you. This protects your WhatsApp account reputation and keeps communication natural.
+    </Tip>
+  </Step>
+  <Step title="Set a label condition (optional)">
+    Restrict the scheduled message so it only sends if the contact has — or does not have — a specific label at the time of sending:
+
+    <ResponseField name="Label Condition" type="select" optional>
+      **Include** — only send the message if the contact currently has this label  
+      **Does Not Include** — only send the message if the contact does NOT have this label
+    </ResponseField>
+    <ResponseField name="Label" type="select" optional>
+      The label to evaluate when the scheduled send time arrives
+    </ResponseField>
+  </Step>
+  <Step title="Test and activate">
+    Click **Continue**, then **Test step** to confirm the follow-up is queued in Notifyer. You can view all pending scheduled messages in your Notifyer console under the contact's conversation.
+  </Step>
+</Steps>
+
+<Note>
+  Scheduled messages are visible in your Notifyer console under each contact's conversation. You can manually cancel any scheduled message there at any time.
+</Note>
+
+---
+
+### Update a Contact
+
+<Info>
+  **Type:** Action | **App:** WhatsAble | **Connection:** Notifyer API key
+</Info>
+
+**Description in Zapier:** *"Assign conversation to someone in your team, Add information in the notes, add/remove labels. Simply put the phone number and what information you want to change. This appears in the chat interface of our system."*
+
+Update a contact's details in your Notifyer console — set their display name, add or remove conversation labels, or update the AI context note. Use this to keep Notifyer contacts in sync with your CRM, form submissions, or any other external data source.
+
+---
+
+#### Setting up the action
+
+<Steps>
+  <Step title="Add an action step">
+    1. In your Zap editor, click **+** to add a new step
+    2. Search for **WhatsAble** and select it
+    3. Under **Action Event**, select **Update a Contact**
+    4. Click **Continue**
+  </Step>
+  <Step title="Connect your Notifyer account">
+    Select your connected Notifyer account, or add a new one with your Notifyer API key
+  </Step>
+  <Step title="Fill in the contact fields">
+    <ResponseField name="Phone Number" type="text" required>
+      The phone number of the contact to update, in international format — digits only, no `+` or spaces (e.g. `14155550187`). This is used to look up the contact in your Notifyer console. If the contact does not yet exist, a new record will be created
+    </ResponseField>
+    <ResponseField name="Display Name" type="text" optional>
+      Update the display name shown for this contact in the Notifyer chat interface
+    </ResponseField>
+    <ResponseField name="Add a Note" type="text" optional>
+      Set or update the AI context note for this contact. The AI reads this field to personalize its responses and qualify leads more accurately. A well-structured note dramatically improves AI conversation quality.
+
+      **Recommended note format:**
+      ```
+      email: john@example.com | Name: John Smith
+      Looking for: 3BR house, $500k budget, north suburbs
+      Pre-approved: Yes | Language: English
+      Best time to contact: evenings after 6pm
+      ```
+    </ResponseField>
+    <ResponseField name="Add Label Names or IDs" type="multiselect" optional>
+      One or more labels to **add** to this contact. Labels appear in the Notifyer console and can be used in scheduling conditions and routing rules
+    </ResponseField>
+    <ResponseField name="Remove Label Names or IDs" type="multiselect" optional>
+      One or more labels to **remove** from this contact. Select **Remove All** to clear every label from this contact at once
+    </ResponseField>
+  </Step>
+  <Step title="Test the action">
+    Click **Continue**, then **Test step** to confirm the contact is updated in your Notifyer console. Open the contact in your Notifyer dashboard to verify the name, labels, and note appear correctly.
+  </Step>
+</Steps>
+
+<Tip>
+  Place **Update a Contact** as the **first action step** in your Zap — before **Send WhatsApp Message** — to populate the AI Note from form or CRM data. This ensures the AI has full context about the lead before the very first message is sent.
+</Tip>
+
+---
+
+### Get Delivery Status of a Message
+
+<Info>
+  **Type:** Action | **App:** WhatsAble | **Connection:** Notifyer API key
+</Info>
+
+**Description in Zapier:** *"Check if the message was delivered or not. Use this if you're not sure the number is correct and want to check if it was delivered and want to send a fallback email."*
+
+Check whether a previously sent WhatsApp message was successfully delivered to the recipient. Use this to build fallback automation — if a message was not delivered (for example, because the phone number is incorrect or inactive), automatically trigger an alternative action such as sending a fallback email.
+
+---
+
+#### Setting up the action
+
+<Steps>
+  <Step title="Add an action step">
+    1. In your Zap editor, click **+** to add a new step **after** a Send WhatsApp Message or Schedule a Follow-Up Message action
+    2. Search for **WhatsAble** and select it
+    3. Under **Action Event**, select **Get Delivery Status of a Message**
+    4. Click **Continue**
+  </Step>
+  <Step title="Connect your Notifyer account">
+    Select your connected Notifyer account, or add a new one with your Notifyer API key
+  </Step>
+  <Step title="Enter the Message ID">
+    <ResponseField name="Message ID" type="text" required>
+      The ID of the message to check. This is returned in the output data of the **Send WhatsApp Message** or **Schedule a Follow-Up Message** action that ran earlier in the same Zap. Map it from that step's output using Zapier's data mapper
+    </ResponseField>
+
+    Click **Continue** when done.
+  </Step>
+  <Step title="Test and use the result">
+    Click **Test step**. Zapier will call Notifyer and return the delivery status of that message.
+
+    Use the returned status field in a **Filter** step immediately after this action to create two paths:
+    - **Delivered** → continue your main workflow
+    - **Not Delivered** → send a fallback email via Gmail, Outlook, or another email app
+  </Step>
+</Steps>
+
+<Tip>
+  Add a Zapier **Filter** or **Paths** step after **Get Delivery Status** to branch your Zap: route successfully delivered messages down one path and undelivered messages down another where you send a fallback email or alert.
+</Tip>
+
+---
+
+## Building a complete Zap: step-by-step example
+
+Here is a practical end-to-end example: **New lead from a form → AI context set → Template message sent → Conditional follow-up scheduled**
+
+<Steps>
+  <Step title="Trigger: New form submission">
+    Start with a **Google Forms**, **Typeform**, or **Jotform** trigger that fires instantly when someone fills in your lead capture form
+  </Step>
+  <Step title="Action: Update a Contact">
+    Add **WhatsAble — Update a Contact**. Map form fields into the Note field:
+    ```
+    email: {{email}} | Name: {{name}} | Budget: {{budget}} | Language: {{language}}
+    ```
+    Add relevant labels: `New Lead`, `Form Submission`
+
+    This gives the AI complete context before any conversation starts.
+  </Step>
+  <Step title="Action: Send WhatsApp Message (Template)">
+    Add **WhatsAble — Send WhatsApp Message** set to the template configuration. Select your approved welcome template, then map the recipient's phone number and any template variables from the form data
+  </Step>
+  <Step title="Action: Schedule a Follow-Up Message">
+    Add **WhatsAble — Schedule a Follow-Up Message**. Configure:
+    - Message: a follow-up template (e.g. `Hi {{1}}, just checking in...`)
+    - Schedule: **24 Hours** (Relative delay)
+    - Reply condition: **Recipient did not reply after my last message**
+
+    This follow-up cancels automatically if the lead responds to your first message.
+  </Step>
+  <Step title="Test and activate">
+    1. Click **Test** on each step to verify all steps show a success result
+    2. Click **Publish** to save your Zap
+    3. Toggle the **On/Off** switch to **On** to activate it
+  </Step>
+</Steps>
+
+---
 
 ## Example use cases
 
 <CardGroup cols={3}>
-  <Card title="Order confirmations" icon="box-check">
-    Send automatic order confirmations when new orders are placed
+  <Card title="AI chatbot lead qualification" icon="robot">
+    Trigger on incoming messages, pass `conversation_paragraph` and `note` to OpenAI, then send the AI's reply back via Send WhatsApp Message
   </Card>
-  <Card title="Appointment reminders" icon="calendar">
-    Schedule reminders before upcoming appointments
+  <Card title="Smart follow-up sequences" icon="calendar-clock">
+    Schedule a series of follow-ups with reply conditions — they cancel automatically when the lead engages so you never over-message
   </Card>
-  <Card title="Lead notifications" icon="user-plus">
-    Alert your sales team when new leads come in
+  <Card title="CRM-to-WhatsApp sync" icon="database">
+    When a deal stage changes in HubSpot or Pipedrive, use Update a Contact to update the AI note, then send a relevant WhatsApp template
   </Card>
-  <Card title="Customer support" icon="headset">
-    Route support inquiries to the appropriate team member
+  <Card title="Form-to-WhatsApp onboarding" icon="file-lines">
+    When a form is submitted, instantly set AI context via Update a Contact, then send a personalized onboarding template message
   </Card>
-  <Card title="Delivery updates" icon="truck">
-    Keep customers informed about their delivery status
+  <Card title="Delivery fallback" icon="envelope">
+    Use Get Delivery Status after sending a message — if undelivered, route to a fallback email via Gmail or Outlook
   </Card>
-  <Card title="Payment reminders" icon="credit-card">
-    Send automatic payment reminders for overdue accounts
+  <Card title="Real-time CRM logging" icon="list">
+    Trigger on every incoming or outgoing message and log the conversation data to a Google Sheet, Airtable, or your CRM in real time
   </Card>
 </CardGroup>
+
+---
 
 ## Best practices
 
 <AccordionGroup>
-  <Accordion title="Test thoroughly" icon="vial">
-    Always test your workflows with test phone numbers before activating them for production use.
+  <Accordion title="Set the AI Note before sending" icon="robot">
+    Always use **Update a Contact** as the first action in new-lead Zaps — before **Send WhatsApp Message**. Setting the `note` field with structured lead data (name, email, preferences, language, budget) dramatically improves AI conversation quality and lead qualification accuracy.
   </Accordion>
-  <Accordion title="Use templates" icon="file-lines">
-    Whenever possible, use pre-approved templates for better deliverability and compliance.
+  <Accordion title="Always use reply conditions on follow-ups" icon="shield-check">
+    Set a reply condition on every **Schedule a Follow-Up Message** action. "Recipient did not reply after my last message" is the safest choice — it ensures no follow-up is sent to contacts who are already in an active conversation. This also protects your WhatsApp account reputation.
   </Accordion>
-  <Accordion title="Add personalization" icon="user">
-    Include customer names and specific details to increase engagement and response rates.
+  <Accordion title="Use labels on every send and update" icon="tag">
+    Both **Send WhatsApp Message** and **Update a Contact** let you attach labels to conversations. Use labels to tag contacts (e.g. `Hot Lead`, `Form Submission`, `Appointment Set`) — they appear in your Notifyer console and can be used in label conditions for scheduling.
   </Accordion>
-  <Accordion title="Follow WhatsApp policies" icon="shield-check">
-    Ensure all message content complies with WhatsApp Business policies to avoid account restrictions.
+  <Accordion title="Use conversation_paragraph for AI prompts" icon="paragraph">
+    When building AI chatbot Zaps, map the `conversation_paragraph` trigger field to your OpenAI or Claude prompt. It is a pre-formatted, readable version of the full conversation — much simpler to include in a prompt than parsing the raw `last_messages` JSON array.
   </Accordion>
-  <Accordion title="Monitor performance" icon="chart-line">
-    Regularly check your message delivery rates in your Notifyer dashboard.
+  <Accordion title="Filter by incoming_message for one-direction flows" icon="filter">
+    The trigger fires on both incoming and outgoing messages by default. Add a Zapier **Filter** step immediately after the trigger and filter by `incoming_message = true` if you only want your Zap to react when a contact writes to you, or `incoming_message = false` to react only when your business sends a message (including replies typed in the WhatsApp Business app). Use `send_by` to distinguish `"WhatsApp App"`, a teammate name, and automations.
+  </Accordion>
+  <Accordion title="Phone number format" icon="phone">
+    Always provide phone numbers in full international format — digits only, no `+`, spaces, or dashes (e.g. `14155550187` for US, `447911123456` for UK, `966501234567` for Saudi Arabia).
   </Accordion>
 </AccordionGroup>
+
+---
 
 ## Troubleshooting
 
 <AccordionGroup>
-  <Accordion title="Messages not sending?" icon="circle-exclamation">
+  <Accordion title="Trigger not firing?" icon="circle-exclamation">
     <Steps>
-      <Step title="Verify API key">
-        Ensure your API key is entered correctly in the Zapier credentials
+      <Step title="Check your Zap is turned on">
+        The trigger only fires when the Zap is toggled **On**. Go to your Zap's overview page and confirm the On/Off switch is set to **On**
       </Step>
-      <Step title="Check phone numbers">
-        Confirm phone numbers are in the correct international format (e.g., +14155552671)
+      <Step title="Verify your connected account">
+        Open the trigger step in your Zap editor, go to the **Account** section, and confirm your WhatsAble connected account shows no errors. If it does, disconnect and reconnect with your Notifyer API key
       </Step>
-      <Step title="Check subscription">
-        Verify your Notifyer subscription is active and has available credits
+      <Step title="Send a test message">
+        Zapier's **Test trigger** button requires at least one recent event in your Notifyer console. Send a WhatsApp message to your connected number — or type a reply in the WhatsApp Business app — and then re-test. You do not need to delete the WhatsApp Business app.
       </Step>
-      <Step title="Template verification">
-        For template messages, ensure you're using an approved template
+      <Step title="Check your Notifyer console">
+        If messages appear in your Notifyer console but the trigger still does not fire, contact support — there may be a webhook configuration issue
       </Step>
     </Steps>
   </Accordion>
-  
-  <Accordion title="Template errors?" icon="file-exclamation">
+
+  <Accordion title="Messages not sending?" icon="message-xmark">
     <Steps>
-      <Step title="Variable check">
-        Verify all required variables are included in your template message
+      <Step title="Check the connected account">
+        Verify your Notifyer API key is valid and the correct connected account is selected in the action step
       </Step>
-      <Step title="Format verification">
-        Check that variable formats match the expected values (text, number, date, etc.)
+      <Step title="Check phone number format">
+        Phone number must be digits only in full international format, no `+` or spaces (e.g. `14155550187`)
       </Step>
-      <Step title="Template name">
-        Ensure you're using the correct template name exactly as it appears in your dashboard
+      <Step title="Template not approved?">
+        Ensure the selected template has **Approved** status in your Notifyer dashboard. Pending or rejected templates will cause an error
+      </Step>
+      <Step title="24-hour window for non-template messages">
+        Non-template messages can only be sent within 24 hours of the contact's last incoming message. Outside this window you must use an approved template
+      </Step>
+      <Step title="Check subscription credits">
+        Verify your Notifyer subscription is active and has sufficient message credits
       </Step>
     </Steps>
   </Accordion>
-  
-  <Accordion title="Media not displaying?" icon="image">
+
+  <Accordion title="Template variables not populating?" icon="brackets-curly">
     <Steps>
-      <Step title="URL access">
-        Confirm your media URLs are publicly accessible (test in an incognito browser)
+      <Step title="Fill all required variable fields">
+        All body variable fields (Body 1, Body 2, etc.) are required — confirm none are empty or mapped to fields that return empty values
       </Step>
-      <Step title="File format">
-        Verify the file format is supported by WhatsApp
+      <Step title="Check the template preview">
+        The template dropdown in the action configuration shows a preview of the body text and example values — use this as a reference to understand what each variable slot expects
       </Step>
-      <Step title="File size">
-        Check that file sizes are within WhatsApp limits:
-        - Images: up to 5MB
-        - Videos: up to 16MB
-        - Documents: up to 100MB
+      <Step title="Media URL must be public">
+        If your template has a media header, the URL must be publicly accessible. Test it by opening it in an incognito browser window
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Scheduled message was not sent?" icon="clock">
+    <Steps>
+      <Step title="Reply condition may have cancelled it">
+        If you set a reply condition and the contact replied before the scheduled send time, the message was intentionally cancelled. Check the contact's conversation in your Notifyer console
+      </Step>
+      <Step title="Verify the delay settings">
+        Confirm the delay value and unit are correct (e.g. `24` + `Hours`, not `24` + `Minutes`)
+      </Step>
+      <Step title="Check your Zap run history">
+        In Zapier, go to **Zap History** and find the run where the Schedule a Follow-Up Message step executed. Confirm the step shows a success status at the time the trigger fired
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Update a Contact changes not appearing in Notifyer?" icon="user-pen">
+    <Steps>
+      <Step title="Verify the phone number">
+        The phone number must exactly match the contact's number in Notifyer (same international format). If no contact with that number exists, Notifyer will create a new record
+      </Step>
+      <Step title="Confirm you are using the correct connection">
+        The **Update a Contact** action requires the Notifyer connection (the one authenticated with your Notifyer API key). Confirm the correct connected account is selected in the action step
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Get Delivery Status returning no result?" icon="circle-question">
+    <Steps>
+      <Step title="Map the correct Message ID">
+        The Message ID field must be mapped from the output of a **Send WhatsApp Message** or **Schedule a Follow-Up Message** step in the same Zap. Make sure you are mapping the `message_id` field from the correct preceding action step
+      </Step>
+      <Step title="Allow time for delivery">
+        Delivery status may take a few seconds to update after a message is sent. If checking status immediately after sending, consider adding a short delay using Zapier's **Delay** action before the Get Delivery Status step
       </Step>
     </Steps>
   </Accordion>
 </AccordionGroup>
 
-## Need help?
+---
 
-Our support team is ready to assist you:
+## Need help?
 
 <CardGroup cols={3}>
   <Card title="Email support" icon="envelope" href="mailto:team@whatsable.app">
@@ -438,11 +830,7 @@ Our support team is ready to assist you:
   <Card title="Schedule a demo" icon="calendar" href="https://tidycal.com/axelmeta/notifyer-systems-demo">
     Book a personalized walkthrough
   </Card>
-  <Card title="Live chat" icon="message-dots" href="">
+  <Card title="Live chat" icon="message-dots">
     Click the green chat button in the bottom right corner of the Notifyer System dashboard
   </Card>
 </CardGroup>
-
-<Info>
-  For additional automation platform integrations (Make.com, n8n, etc.), please contact our support team or check our integration documentation.
-</Info>

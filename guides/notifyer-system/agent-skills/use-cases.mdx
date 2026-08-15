@@ -113,7 +113,7 @@ node scripts/get-recipient.js --phone 14155550123 --pretty
 
 ## Webhook-driven automation setup
 
-Goal: configure a webhook endpoint and secure it with HMAC signature.
+Goal: configure a webhook endpoint that receives **incoming and outgoing** WhatsApp messages (including replies typed in the WhatsApp Business app) and secure it with HMAC signature.
 
 ```bash
 cd skills/automate-notifyer
@@ -124,3 +124,5 @@ node scripts/create-webhook.js --type dev \
 
 node scripts/list-webhooks.js --type dev --pretty
 ```
+
+`--outgoing` is required for phone-app and inbox replies. Payload fields: `incoming_message`, `send_by`, `was_message_by_human`. See [Message webhooks](/guides/notifyer-system/api/incoming-message) and [coexistence](/guides/notifyer-system/embedding-process#whatsapp-coexistence).

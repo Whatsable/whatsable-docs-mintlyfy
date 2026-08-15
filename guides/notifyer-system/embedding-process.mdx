@@ -1,8 +1,11 @@
 ---
 title: 'Embedding Process'
-description: 'Connect your WhatsApp Business Account to the Notifyer System to enable automated messaging capabilities'
+description: 'Connect your WhatsApp Business Account to Notifyer System. Meta WhatsApp Coexistence is supported — you do not need to delete the WhatsApp Business app on your phone.'
 icon: 'whatsapp'
+keywords: ['coexistence', 'WhatsApp Business app', 'embedded signup', 'connect number', 'Meta WhatsApp Coexistence']
 ---
+
+import Coexistence from "/snippets/coexistence.mdx";
 
 # WhatsApp Business Account Integration
 
@@ -36,11 +39,27 @@ Notifyer System enables businesses to send automated WhatsApp messages to custom
 </Check>
 
 <Check>
-  A phone number that isn't currently associated with any WhatsApp account
+  A business phone number you control. If that number already uses the **WhatsApp Business app**, keep the app — Notifyer supports Meta WhatsApp Coexistence
 </Check>
 
+## WhatsApp Coexistence
+
+<Coexistence />
+
+You can connect a number that is **already active** in the WhatsApp Business app. After Embedded Signup:
+
+- Keep chatting with customers from the WhatsApp Business app on your phone
+- Use the Notifyer chat inbox and team inboxes in the browser
+- Send and receive through Make, Zapier, n8n, the API, and [webhooks](/guides/notifyer-system/api/incoming-message)
+
+Messages typed by hand in the WhatsApp Business app are delivered to your webhook. See `incoming_message`, `send_by`, and `was_message_by_human` in the [message webhook payload](/guides/notifyer-system/api/incoming-message).
+
+<Note>
+Coexistence is a **Notifyer System** capability (your own WhatsApp Business number on the Cloud API). It is available on Notifyer System plans that complete Embedded Signup — not limited to a specific integration. WhatsAble's own support number also runs on coexistence.
+</Note>
+
 <Warning>
-  The phone number you use for your WhatsApp Business Account cannot have an existing WhatsApp account associated with it. If you're using a number that already has WhatsApp, you'll need to delete that account or use a different number.
+Coexistence applies to the **WhatsApp Business app** (the business client). If the number is registered on the consumer WhatsApp app instead, migrate it to WhatsApp Business or use a different number. You still do **not** delete the WhatsApp Business app to work with Notifyer.
 </Warning>
 
 ## Integration Process
@@ -283,8 +302,8 @@ After successfully embedding your WhatsApp Business Account, you can integrate N
   <Card title="Send Template Message" icon="paper-plane" href="https://docs.whatsable.app/guides/notifyer-system/api/template-message">
     Send messages using your approved templates
   </Card>
-  <Card title="Incoming Message" icon="inbox" href="https://docs.whatsable.app/guides/notifyer-system/api/incoming-message">
-    Handle incoming messages from customers
+  <Card title="Message webhooks" icon="inbox" href="/guides/notifyer-system/api/incoming-message">
+    Incoming and outgoing messages, including replies typed in the WhatsApp Business app
   </Card>
 </CardGroup>
 <Card title="Try it in the API Reference" icon="arrow-right" href="https://docs.whatsable.app/api-reference/">
@@ -305,11 +324,12 @@ After successfully embedding your WhatsApp Business Account, you can integrate N
 
 <Accordion title="Verification Failed" icon="triangle-exclamation">
   If your phone number verification fails:
-  
-  1. Ensure the phone number isn't already linked to a WhatsApp account
-  2. Wait 24 hours before trying again with the same number
-  3. Try a different verification method (SMS vs. call)
-  4. Contact support if issues persist
+
+  1. You do **not** need to delete the WhatsApp Business app. Coexistence is supported — keep using that app on your phone
+  2. If the number is on the **consumer** WhatsApp app (not WhatsApp Business), switch it to WhatsApp Business or use a different number
+  3. Wait 24 hours before trying again with the same number
+  4. Try a different verification method (SMS vs. call)
+  5. Contact support if issues persist
 </Accordion>
 
 <Accordion title="Business Verification Issues" icon="building-shield">

@@ -1,8 +1,12 @@
 ---
 title: 'n8n'
-description: 'Learn how to seamlessly integrate n8n with the Notifyer System for enterprise-level WhatsApp automation'
+description: 'Connect Notifyer System with n8n. Trigger workflows on incoming and outgoing WhatsApp messages — including replies typed in the WhatsApp Business app. Coexistence is supported; you do not delete the app on your phone.'
 icon: 'diagram-project'
+keywords: ['n8n', 'webhook', 'outgoing messages', 'incoming_message', 'send_by', 'was_message_by_human', 'coexistence', 'WhatsApp Business app']
 ---
+
+import Coexistence from "/snippets/coexistence.mdx";
+import WebhookOutgoing from "/snippets/webhook-outgoing.mdx";
 
 # Notifyer System Integration with n8n
 
@@ -11,8 +15,10 @@ icon: 'diagram-project'
 </Frame>
 
 <Tip>
-  This guide walks you through connecting Notifyer System with n8n to create powerful automated WhatsApp messaging workflows for your business
+  This guide walks you through connecting Notifyer System with n8n to create automated WhatsApp workflows — including triggers that fire when someone types a reply in the WhatsApp Business app.
 </Tip>
+
+<Coexistence />
 
 ## Prerequisites
 
@@ -35,7 +41,7 @@ Before getting started, make sure you have:
 
 <Steps>
   <Step title="Complete the Embedding Process">
-    Before sending WhatsApp messages, you must complete the platform embedding process, which connects your WhatsApp Business account to Notifyer System.
+    Before sending WhatsApp messages, complete the [embedding process](/guides/notifyer-system/embedding-process), which connects your WhatsApp Business account to Notifyer System. You do **not** need to delete the WhatsApp Business app — [coexistence](/guides/notifyer-system/embedding-process#whatsapp-coexistence) is supported.
 
     <Info>
       The embedding process is required by Meta to ensure proper business verification and compliance with WhatsApp Business Platform policies.
@@ -157,9 +163,9 @@ Before getting started, make sure you have:
     3. Add a trigger node of your choice:
        - Popular triggers include Google Forms, Jotform, ClickUp, or a Schedule trigger
        - Connect and configure your trigger according to your use case 
-      <Accordion title="WhatsAble trigger node (optional)">
+      <Accordion title="WhatsAble trigger node (incoming and outgoing)">
   <Info>
-    The WhatsAble trigger node enables your workflow to respond automatically to incoming WhatsApp messages. This setup is optional but recommended for building reactive communication flows.
+    Use the WhatsAble trigger so n8n runs when WhatsApp messages are **received or sent** — including replies typed in the WhatsApp Business app on your phone. Select the **incoming and outgoing** credential type so those events reach n8n, not only the Notifyer inbox.
   </Info>
 
   <Steps>
@@ -169,14 +175,14 @@ Before getting started, make sure you have:
       1. Click the **+** button in your workflow canvas to add a new node
       2. Search for "WhatsAble" in the node library search bar
       3. Select the node displaying the official WhatsAble logo
-      4. From the available trigger options, choose **On new Incoming message event**
+      4. From the available trigger options, choose **On new incoming or outgoing message** (the node may also list **On new Incoming message event** — pick the incoming **or outgoing** option if you need phone-app replies)
 
-      <Frame caption="Adding WhatsAble trigger node with 'On new Incoming message event' selection">
+      <Frame caption="Adding WhatsAble trigger node with incoming or outgoing message selection">
         <img src="/images/trigger-node.png" alt="WhatsAble node selection showing trigger options" />
       </Frame>
 
       <Tip>
-        The trigger node will automatically listen for incoming messages and initiate your workflow when a new message is received.
+        The trigger listens for WhatsApp activity and starts your workflow. Outgoing events include messages typed in the WhatsApp Business app (`send_by`: `WhatsApp App`).
       </Tip>
     </Step>
 
@@ -194,7 +200,7 @@ Before getting started, make sure you have:
 
       **Credential Creation:**
       1. In the **Credential to connect with** dropdown, click **+ Create new credential**
-      2. Select **WhatsAble Notifyer System API** as your connection method
+      2. Select **WhatsAble Notifyer System API** as your connection method. For phone-app and inbox replies, choose the credential that covers **Notifyer System incoming and outgoing messages**
       3. Enter your Notifyer System API key in the **API Key** field
       4. Paste the Production URL you copied earlier into the **Production URL** field
       5. Assign a descriptive name to your credential (e.g., "WhatsAble Production")
@@ -223,7 +229,7 @@ Before getting started, make sure you have:
       3. Review any error messages if the test fails and adjust your configuration accordingly
 
       <Check>
-        Once activated, your workflow will automatically process incoming messages according to your configured logic.
+        Once activated, your workflow processes incoming **and** outgoing messages according to your configured logic. Use `incoming_message`, `send_by`, and `was_message_by_human` in later nodes to branch on direction and sender.
       </Check>
 
       <Warning>
@@ -354,6 +360,8 @@ Before getting started, make sure you have:
   </Step>
 </Steps>
 
+<WebhookOutgoing />
+
 ## Example use cases
 
 <CardGroup cols={3}>
@@ -411,8 +419,8 @@ Before getting started, make sure you have:
       <Step title="Check subscription">
         Verify your Notifyer subscription is active and has available credits
       </Step>
-      <Step title="Template verification">
-        For template messages, ensure you're using an approved template
+      <Step title="Outgoing events from the WhatsApp Business app">
+        Use the **incoming or outgoing** trigger and the **Notifyer System incoming and outgoing messages** credential. Confirm `incoming_message` is `false` and `send_by` is `WhatsApp App` when you type a test reply on your phone. You do not need to delete the WhatsApp Business app.
       </Step>
     </Steps>
   </Accordion>

@@ -1,8 +1,14 @@
 ---
 title: "Using with Lovable"
-description: "Teach Lovable's AI agent how to build Notifyer WhatsApp integrations into your app using Knowledge and AGENTS.md."
+description: "Teach Lovable's AI agent how to build Notifyer WhatsApp integrations. Coexistence is supported; webhooks include outgoing messages with send_by and was_message_by_human."
 icon: "heart"
+keywords: ["Lovable", "webhook", "outgoing", "coexistence", "send_by"]
 ---
+
+import Coexistence from "/snippets/coexistence.mdx";
+import WebhookOutgoing from "/snippets/webhook-outgoing.mdx";
+
+<Coexistence />
 
 <Note>
 Lovable's web agent does not read skill files from `.agents/skills/` or `.cursor/skills/` — it only reads **Project knowledge**, **Workspace knowledge**, `AGENTS.md`, and `CLAUDE.md` from your GitHub repo. The `npx skills add` CLI has no direct effect on what Lovable sees.
@@ -53,7 +59,7 @@ Key API groups:
 - /api:Mk_r6mq0/ — broadcasts
 - /api:bVXsw_FD/ — chat recipients and messaging
 - /api:qh9OQ3OW/ — message logs and analytics
-- /api:0hqyGRIz/ — webhooks
+- /api:0hqyGRIz/ — webhooks (enable incoming AND outgoing)
 
 Critical rules:
 - Never hardcode NOTIFYER_API_TOKEN in source code — always use env vars.
@@ -63,6 +69,12 @@ Critical rules:
 - PATCH /web/recipient/:id requires the full recipient body (fetch first, then patch).
 - Schedule timestamp is ms since epoch; 0 means immediate send.
 - NOTIFYER_API_BASE_URL must be HTTPS — reject any http:// value.
+- Meta WhatsApp Coexistence is supported. Do NOT tell users to delete the WhatsApp Business app.
+- Webhooks fire for incoming AND outgoing messages (including hand-typed WhatsApp Business app replies).
+  Payload fields: incoming_message (boolean), send_by ("WhatsApp App" | teammate name | automation name),
+  was_message_by_human (boolean). last_messages is often a JSON string — parse it.
+- Full webhook reference: https://docs.whatsable.app/guides/notifyer-system/api/incoming-message
+- Coexistence / embedding: https://docs.whatsable.app/guides/notifyer-system/embedding-process
 
 Reference:
 - Full API documentation: https://github.com/Whatsable/whatsapp-business-agent-skills
@@ -93,6 +105,12 @@ Create `AGENTS.md` in your repo root:
 - Free-text and media can only be sent if the recipient messaged us within the last 24 hours
 - If window is closed, use a template message
 - Check window via GET /api:bVXsw_FD/web/recipient — look at expiration_timestamp
+
+## Coexistence and webhooks
+- Do NOT tell users to delete the WhatsApp Business app. Meta WhatsApp Coexistence is supported.
+- Webhooks fire for incoming AND outgoing messages, including hand-typed WhatsApp Business app replies.
+- Payload: `incoming_message` (boolean), `send_by` (`WhatsApp App` | teammate name | automation), `was_message_by_human` (boolean)
+- Docs: https://docs.whatsable.app/guides/notifyer-system/api/incoming-message
 
 ## Safe PATCH pattern
 - Before PATCH /web/recipient/:id, always GET the full record first
@@ -145,8 +163,13 @@ upload a CSV of phone numbers, and trigger a broadcast via the Notifyer API.
 ```
 Create a Supabase Edge Function at /notifyer-webhook that receives POST requests
 from Notifyer's IO webhook. Validate the HMAC-SHA256 signature using NOTIFYER_WEBHOOK_SECRET.
-When a new inbound message event arrives, insert a row into the messages table
-with { phone, body, direction: "inbound", received_at }.
+The webhook fires for incoming AND outgoing messages (including replies typed in the
+WhatsApp Business app — coexistence is supported; do not tell users to delete the app).
+Insert a row into the messages table with:
+  { phone, body, direction: incoming_message ? "inbound" : "outbound",
+    send_by, was_message_by_human, received_at }
+When incoming_message is false, send_by is "WhatsApp App" (phone), a teammate name
+(Notifyer inbox), or an automation name.
 ```
 
 ### Label and handoff from the app UI
@@ -160,6 +183,8 @@ In the ConversationView component, add two buttons:
 Both should fetch the full recipient record first before patching.
 ```
 
+<WebhookOutgoing />
+
 ---
 
 ## Using Plan mode before building
@@ -169,7 +194,8 @@ For complex integrations, click **Plan** next to the message input to switch to 
 ```
 I want to integrate Notifyer WhatsApp messaging into this app.
 We need to: send template messages when a new order is created, receive inbound
-messages via webhook and store them, and show chat history in the CustomerDetail page.
+AND outbound messages via webhook (including WhatsApp Business app replies;
+incoming_message, send_by, was_message_by_human), and show chat history in the CustomerDetail page.
 What's the best architecture using Supabase Edge Functions?
 ```
 

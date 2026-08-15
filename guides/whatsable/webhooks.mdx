@@ -1,7 +1,8 @@
 ---
 title: "Webhooks"
-description: "Receive real-time notifications when WhatsApp events happen in your WhatsAble account — configure, manage, and handle webhook endpoints directly from the dashboard."
+description: "Receive real-time WhatsApp events. For Notifyer System (your own WhatsApp Business number), webhooks include outgoing messages typed in the WhatsApp Business app — coexistence is supported; you do not delete the app."
 icon: "webhook"
+keywords: ["webhook", "outgoing messages", "coexistence", "Notifyer System"]
 ---
 
 <Tip>
@@ -28,10 +29,10 @@ Before setting up a webhook, make sure you're using the right product for your u
 |---|---|---|
 | **How it works** | You (or a customer) sends a WhatsApp message **to WhatsAble's number** → triggers your n8n / Make / Zapier scenario | You send WhatsApp messages **from your own WhatsApp Business number** to your leads or customers |
 | **Best for** | Building AI agents, personal automation triggers, developer workflows | Customer outreach, marketing, CRM notifications |
-| **Webhook direction** | Inbound — WhatsAble calls your endpoint | Inbound — your automation platform receives the event |
+| **Webhook direction** | Inbound — WhatsAble calls your endpoint | Inbound and **outgoing** — including replies typed in the WhatsApp Business app |
 
 <Info>
-If you want to **send** messages to leads or customers from your own WhatsApp Business number, use the [Notifier System](/guides/notifyer-system/embedding-process) instead.
+If you want to **send** messages to leads or customers from your own WhatsApp Business number, use the [Notifier System](/guides/notifyer-system/embedding-process) instead. Notifyer supports [Meta WhatsApp Coexistence](/guides/notifyer-system/embedding-process#whatsapp-coexistence) — you do **not** delete the WhatsApp Business app. Outgoing events (phone app, team inbox, automations) are documented in [Message webhooks](/guides/notifyer-system/api/incoming-message), with `incoming_message`, `send_by`, and `was_message_by_human`.
 </Info>
 
 ---

@@ -382,7 +382,7 @@ Sends an approved WhatsApp Business template message to a contact.
 
 **Attachment handling:** `attachment_url` returns a direct URL to any media file sent in the message — image, video, PDF, or audio. Map it to a **Link** column to make files accessible from the board. When mapped inside a **Create Update** action, the media appears inline in the board item's activity feed.
 
-**`sent_by` field:** Identifies the sender of an outgoing message — returns the logged-in user's name from WhatsAble chat UI, or the automation/app name for Make, Zapier, n8n, or API. Not available on Trigger 1 (Incoming Chat).
+**`sent_by` field:** Identifies the sender of an outgoing message — `"WhatsApp App"` when typed in the WhatsApp Business app, the logged-in user's name from the Notifyer chat UI, or the automation/app name for Make, Zapier, n8n, or API. Not available on Trigger 1 (Incoming Chat). You do not need to delete the WhatsApp Business app; [coexistence](/guides/notifyer-system/embedding-process#whatsapp-coexistence) is supported.
 
 **`automation_note` field:** Populated only when a WhatsAble automation rule explicitly injects a note. Blank for manually sent messages or automations without a configured note.
 
@@ -748,4 +748,3 @@ Our support team is ready to assist you:
 <Info>
   For additional automation platform integrations (Make, Zapier, n8n, Pipedrive), please contact our support team or check our integration documentation.
 </Info>
-

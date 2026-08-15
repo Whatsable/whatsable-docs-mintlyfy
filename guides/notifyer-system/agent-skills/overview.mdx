@@ -1,12 +1,17 @@
 ---
 title: "Agent Skills (Notifyer)"
-description: "What Notifyer Agent Skills are, what they enable, and how they map to setup, automation, and chat operations."
+description: "Notifyer Agent Skills for setup, automation, chat, and webhooks. Coexistence is supported — you do not delete the WhatsApp Business app. Webhooks include outgoing messages with send_by and was_message_by_human."
 icon: "sparkles"
+keywords: ["agent skills", "webhook", "outgoing", "coexistence", "send_by"]
 ---
+
+import Coexistence from "/snippets/coexistence.mdx";
 
 <Tip>
 Agent Skills let AI coding agents (Cursor, OpenClaw, Claude Code, Copilot, etc.) authenticate into Notifyer and operate your workspace programmatically — using the same backend API surface as the Notifyer Console and Chat apps.
 </Tip>
+
+<Coexistence />
 
 ## What are Agent Skills?
 
@@ -51,7 +56,7 @@ The skills are designed as a progressive sequence.
 - **Workspace onboarding**: create labels, invite members, verify connection and plan, fetch the Developer API key.
 - **Template lifecycle**: create templates, monitor Meta approval status, use approved templates in broadcasts.
 - **Customer support ops**: fetch conversation context, take over from bot, respond, label, add notes, return to bot.
-- **Webhook configuration**: create dev and IO webhooks with HMAC signature, list and update triggers, rotate URLs.
+- **Webhook configuration**: create dev and IO webhooks with HMAC signature; enable `--incoming` and `--outgoing` so events include messages typed in the WhatsApp Business app. Payload fields: `incoming_message`, `send_by` (system or teammate), `was_message_by_human`. See [Message webhooks](/guides/notifyer-system/api/incoming-message).
 
 For end-to-end workflows, see [Use cases](/guides/notifyer-system/agent-skills/use-cases).
 
@@ -59,7 +64,7 @@ For end-to-end workflows, see [Use cases](/guides/notifyer-system/agent-skills/u
 
 <Warning>
 Some actions are intentionally not scriptable:
-- First-time WhatsApp connection (embedded signup / QR scan) is **browser-only**.
+- First-time WhatsApp connection (embedded signup / QR scan) is **browser-only**. You do **not** need to delete the WhatsApp Business app — [coexistence](/guides/notifyer-system/embedding-process#whatsapp-coexistence) is supported.
 - Billing changes and Stripe flows are **browser-only**.
 - Meta template approval timing is **not controllable** via API.
 </Warning>
