@@ -1,0 +1,262 @@
+---
+title: 'Get Started with WhatsAble for monday.com'
+description:
+  Connect WhatsApp Business to your monday boards—from install and Meta setup to templates, workflows, and Live Chat. Includes video walkthrough and free setup offer.
+mode: center
+---
+
+# WhatsAble + monday.com
+
+<Frame caption="Full video walkthrough: WhatsAble with monday.com">
+  <iframe
+    className="w-full aspect-video"
+    src="https://www.youtube.com/embed/3cc4uvtF7AY"
+    title="WhatsAble monday.com walkthrough"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</Frame>
+
+WhatsAble connects WhatsApp Business to your monday boards. This guide takes you from zero to a working WhatsApp automation inside monday.
+
+<Tip>
+  If you’d rather we set this up for you, [**book a free setup call**](https://tidycal.com/axelmeta/whatsapp-notifications-by-whatsable)—included for all customers, even during the free trial.
+</Tip>
+
+---
+
+## Quick setup (3 steps)
+
+<Steps>
+  <Step title="Create your WhatsAble account">
+    Go to [**whatsable.app**](https://www.whatsable.app) and create your account
+  </Step>
+
+  <Step title="Connect your WhatsApp Business number">
+    Connect your WhatsApp Business number through WhatsAble and Meta—the detailed steps are in **[Connect your WhatsApp Business number](#2-connect-your-whatsapp-business-number-with-meta-through-whatsable)** below.
+  </Step>
+
+  <Step title="Start automating in monday">
+    Install WhatsAble from the monday marketplace, then build workflows and use **Live Chat** on your boards. Follow the **[Step-by-step walkthrough](#step-by-step-walkthrough)** from the beginning.
+  </Step>
+</Steps>
+
+<Info>
+  **Full video walkthrough:** [**Watch on YouTube**](https://youtu.be/3cc4uvtF7AY) (same embedded video above).
+</Info>
+
+---
+
+## Step-by-step walkthrough
+
+### 1. Install WhatsAble on monday
+
+In the [monday marketplace](https://monday.com/marketplace), click **Install WhatsAble**. This opens monday and asks for permission to install.
+
+<Accordion title="Step 1 — Give permission to install">
+<Frame caption="Give permission to install WhatsAble">
+  <img src="/images/monday/onboarding/permission.png" alt="monday marketplace install permission dialog for WhatsAble" className="rounded-xl w-full" />
+</Frame>
+
+There is a **second step** right after: click **Authorize**. Both steps are needed—if you skip authorization, the integration will not work.
+</Accordion>
+
+<Accordion title="Step 2 — Authorize">
+Continue through the authorize flow until it completes.
+
+<Frame caption="Authorize WhatsAble to connect with monday">
+  <img src="/images/monday/onboarding/authoized.png" alt="Authorize WhatsAble Notifyer integration in monday.com" className="rounded-xl w-full" />
+</Frame>
+
+**What you’ll see if authorization is still pending:** When you open the **WhatsAble Live Chat** tab on any board item, you may see a screen asking you to **Connect WhatsAble Notifyer**. Click **Open authorization** to finish. If a new tab does not open, click **Retry session**.
+
+<Frame caption="Connected successfully to monday">
+  <img src="/images/monday/onboarding/custom_thumbnail_large.png" alt="WhatsAble successfully connected confirmation in monday.com" className="rounded-xl w-full" />
+</Frame>
+
+Once authorized, you’ll see a confirmation such as **“Connected successfully to monday.”**
+</Accordion>
+
+### 2. Connect your WhatsApp Business number with Meta (through WhatsAble)
+
+Inside WhatsAble, click [**Connect WhatsApp**](https://notifyer.whatsable.app/onboarding/whatsapp-connection) and follow the flow through **Step 2**.
+
+<Note>
+  You can skip or ignore prompts to **subscribe** at first—keep going until **Step 2**, where you’ll see the green **Connect your WhatsApp number** [**button**](https://notifyer.whatsable.app/onboarding/whatsapp-connection).
+</Note>
+
+**If your number is not connected yet:** The **WhatsAble Live Chat** tab can show a WhatsApp setup screen with a green **Open WhatsApp connection** button. Click it to start the Meta connection flow; if nothing opens in a new tab, use **Retry session**.
+
+<Frame caption="Connect WhatsApp before Meta onboarding">
+  <img src="/images/monday/onboarding/connect-whatsapp-image.png" alt="WhatsAble Connect WhatsApp step before redirect to Meta" className="rounded-xl w-full" />
+</Frame>
+
+When you click it, you’ll be sent to Meta to log into your Facebook Business portfolio. From there:
+
+1. **Select your business portfolio**.
+2. **Choose** your existing WhatsApp Business Account, or **create** a new one.
+3. **Select (or create) a Facebook page**—you don't need to actively use it, it just needs to exist
+4. **Select an ad account**.
+5. **Choose how to attach a number:**
+   - **Option A:** Use a number WhatsApp provides for you (no number of your own needed) 
+   - **Option B:** **Connect your existing WhatsApp Business number**—either select it if it's already linked, or enter it manually and scan the QR code.
+
+### 3. Add a payment method (do not skip)
+
+WhatsApp messaging from the Cloud API normally requires a **billing method on the WhatsApp side**. Many people skip this—and then sends fail.
+
+<Frame caption="Add a payment method for WhatsApp in Meta">
+  <img src="/images/monday/onboarding/add-ppayment-method.png" alt="Meta Business settings—add payment method for WhatsApp account" className="rounded-xl w-full" />
+</Frame>
+
+Typical places to add payment in Meta:
+
+- Open [**business.facebook.com**](https://business.facebook.com/), go to **Settings** (often bottom-left) → **Accounts** → **WhatsApp accounts** → select your **Phone number** → open **Summary** and scroll to **Payment settings** → **Add payment method**.
+- Alternatively, explore **Billing** / **Payments** sections in Meta Business Suite or Business Settings until you locate **payment method for WhatsApp** (UI labels change over time).
+
+<Warning>
+  If Meta **rejects your card**, contact [**team@whatsable.app**](mailto:team@whatsable.app)—we’ll help troubleshoot.
+</Warning>
+
+Even if you already have a payment method for **Ads**, you may still need one **explicitly tied to WhatsApp** / conversation-based billing depending on how your Meta account was set up.
+
+<Frame caption="Meta payment settings menu for WhatsApp">
+  <img src="/images/monday/onboarding/meta-payment-add-menu.png" alt="Meta Business payment menu for WhatsApp conversation-based billing" className="rounded-xl w-full" />
+</Frame>
+
+### 4. Create your first template
+
+A template is the message format WhatsApp uses when you send something from monday. For example: a welcome message when a lead’s status changes to "Qualified."
+
+To create one:
+
+1. Go to the template area ([**click here**](https://notifyer.whatsable.app/create-template)).
+2. Give your template a name.
+3. Leave the category as **Marketing** (unless it’s a transactional notification, then use **“Utility”**).
+4. Write your message. To insert dynamic fields like a contact’s name, click **Add variable** — for example: `Hi {{1}}, thank you for your interest in {{2}}.`
+5. Add **example values** so Meta understands what the variables represent (e.g. **“Alex”** for name, **“Product Name”** for product).
+6. Optionally add **buttons** — quick replies like **“Yes, I want info”** or URL buttons that can be static or dynamic per contact.
+7. Click **Submit for approval**.
+
+<Frame caption="WhatsApp template creation">
+  <img src="/images/monday/onboarding/template-creation-menu.png" alt="Notifyer WhatsApp template creation menu" className="rounded-xl w-full" />
+</Frame>
+
+Meta usually approves templates in under a minute. After being approved, the template will appear in your Monday workflow.
+
+### 5. Set up your AI agent (optional)
+
+WhatsAble can run an AI agent beside human replies:
+
+- Give it a **name** (for example **“Lead qualifier”**).
+- Describe your **business mission** and paste **product / FAQ knowledge**.
+- Define **human handoff** rules—for example *“If a customer mentions a deal over \$5 000, notify a human.”*
+
+When handoff fires, Notifyer/WhatsAble can notify you (**Notifyer by WhatsAble** mobile apps on [**iOS**](https://apps.apple.com/es/app/notifyer-by-whatsable/id6743722183?l=en-GB) and [**Android**](https://play.google.com/store/apps/details?id=com.chatmobile.chat_mobile)).
+
+The agent can also **follow up proactively** when a conversation goes quiet—within the rules you set.
+
+### 6. Invite your team
+
+You can [**add team members and control what they see**](https://notifyer.whatsable.app/role-management):
+
+| Access type | Meaning |
+| --- | --- |
+| **All labels** | Sees every conversation you grant them. |
+| **Specific labels** | Only conversations with certain labels—useful when routing by region, product line, or role. Conversations can be **auto-assigned** by label rules according to how you configure the product. |
+
+Access can be changed at any time.
+
+[**Video tutorial here**](https://youtu.be/3cc4uvtF7AY)
+
+### 7. Build your monday workflows
+
+Inside any board, click **+** on the workflows area and compose automations.
+
+#### Outbound: send WhatsApp when monday changes
+
+**Example:** when a lead’s **status** becomes **Qualified**:
+
+1. **Trigger:** Status changes to → **Qualified**.
+2. **Action:** Search for **WhatsAble** → **Send WhatsApp message** (or equivalent).
+3. Pick your **approved template**.
+4. **Map columns:** name variable ← name column; **recipient / phone** ← phone column (field names vary by recipe).
+5. **Publish.**
+
+<Frame caption="monday workflow – publish WhatsAble send action">
+  <img src="/images/monday/onboarding/action-workflow.png" alt="monday automation workflow Publish step with WhatsAble send message" className="rounded-xl w-full" />
+</Frame>
+
+#### Inbound: Update monday when WhatsApp activity happens
+
+WhatsAble gives you three inbound triggers:
+
+| Trigger | Use case |
+| --- | --- |
+| When you send a message to a new WhatsApp contact | You messaged someone new (e.g. a Facebook Lead Ads contact). Use this to create a new monday item. |
+| When you send or receive any WhatsApp message | Use this to log every message into the activity tab of the matching monday item. Pair it with Find matching item (by phone number) to update the right record. |
+| When you receive a WhatsApp message from a new number | An inbound lead messages you and isn't in monday yet. Use this to auto-create a new item. |
+
+For "find matching item," select your board and use the phone field to match. Then choose what happens if the item is found or not found.
+
+<Frame caption="Inbound trigger — find matching monday item by phone">
+  <img src="/images/monday/onboarding/trigger-workflow.png" alt="monday WhatsAble inbound workflow with find matching item by phone field" className="rounded-xl w-full" />
+</Frame>
+
+### 8. See WhatsApp messages directly inside any monday item
+
+This is one of the most useful parts of WhatsAble. Every WhatsApp message your team sends or receives gets logged into the Updates section of the matching monday item — so you have full conversation history right next to the lead's details.
+
+When you open any item, you'll see entries like "Last message by Axel Meta: hi" or "Last message by: Delivery Feedback Request — Hi Joe Harris, could you please give us a feedback…" — with the exact date, time, and the team member or template that sent it. You can like, reply, and mention teammates on each message just like any other monday update.
+
+<Frame caption="WhatsApp messages in monday Updates / activity">
+  <img src="/images/monday/onboarding/monday-updates-activity.png" alt="monday item Updates section showing WhatsAble WhatsApp message history" className="rounded-xl w-full" />
+</Frame>
+
+### 9. Use the Live Chat view inside monday
+
+For active, two-way conversations, go to **My Work** in monday and expand the sidebar. You'll see **WhatsAble Live Chat** as a tab.
+
+Click it — no extra login needed — and you can read and reply to every WhatsApp conversation right inside monday. AI replies are labeled as AI; human replies show which team member sent them.
+
+You can also open the Live Chat as a tab on any individual item (next to Updates, Files, and Activity Log) to see only that contact's conversation.
+
+<Frame caption="WhatsAble Live Chat tab on a monday item">
+  <img src="/images/monday/onboarding/live-chat.png" alt="monday board item WhatsAble Live Chat tab next to Updates and Files" className="rounded-xl w-full" />
+</Frame>
+
+---
+
+## What you can do
+
+- Send **WhatsApp messages automatically from monday boards**
+- Get notified when a contact replies
+- **Sync contacts & messages** between WhatsApp and monday
+- View full WhatsApp conversations inside any board item — no extra login needed
+- See every WhatsApp message logged in the Updates section of each item, with full team attribution
+- Run an AI agent that qualifies leads and follows up automatically
+- Bulk-message contacts by uploading a CSV (broadcasting)
+- Reply on the go with our iOS and Android apps
+- Connect with Zapier, Make, or n8n for deeper workflows
+- See message analytics and access API keys for custom integrations
+
+---
+
+## Helpful Resources
+
+📖 Documentation: [docs.whatsable.app](https://docs.whatsable.app)
+
+🎬 YouTube tutorials: [youtube.com/@TheWhatsAutomator](https://www.youtube.com/@TheWhatsAutomator)
+
+📧 Support: [team@whatsable.app](mailto:team@whatsable.app)
+
+📅 Free setup call: [Book a session](https://tidycal.com/axelmeta/whatsapp-notifications-by-whatsable)
+
+---
+
+## Need help?
+
+Chat with us directly on [whatsable.app](https://www.whatsable.app) — click the green button in the bottom right corner.
+
+Setup help is completely free for all customers, including during your free trial. If you'd rather have us configure your templates and workflows for you, just [book a call](https://tidycal.com/axelmeta/whatsapp-notifications-by-whatsable).
