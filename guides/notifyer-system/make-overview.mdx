@@ -2,11 +2,12 @@
 title: 'Make'
 description: 'Notifyer System modules in Make — triggers for incoming and outgoing WhatsApp messages (including the WhatsApp Business app), actions, and search. Coexistence is supported.'
 icon: 'lines-leaning'
-keywords: ['Make', 'webhook', 'outgoing messages', 'incoming_message', 'send_by', 'was_message_by_human', 'coexistence']
+keywords: ['Make', 'webhook', 'outgoing messages', 'incoming_message', 'send_by', 'was_message_by_human', 'coexistence', 'click-to-whatsapp', 'ctwa', 'referral']
 ---
 
 import Coexistence from "/snippets/coexistence.mdx";
 import WebhookOutgoing from "/snippets/webhook-outgoing.mdx";
+import CtwaReferral from "/snippets/ctwa-referral.mdx";
 
 # Notifyer System Integration with Make
 
@@ -286,6 +287,9 @@ Fires every time an **incoming message** arrives in your Notifyer console. This 
     <ResponseField name="is_scheduled" type="boolean">
       `true` if triggered by a scheduled message being delivered; `false` for real-time messages
     </ResponseField>
+    <ResponseField name="referral" type="object">
+      Present when the inbound message came from a Click-to-WhatsApp ad or post. Includes `source_type`, `source_id`, `source_url` (platform), `headline`, `body`, `media_type`, creative URLs, and `ctwa_clid`. Omitted on ordinary chats and on most follow-up messages. See [Click-to-WhatsApp ads](/guides/notifyer-system/api/incoming-message#click-to-whatsapp-ads).
+    </ResponseField>
   </Accordion>
   <Accordion title="Conversation history">
     <ResponseField name="last_messages" type="text">
@@ -357,6 +361,8 @@ Fires on **both incoming and outgoing** messages — every message sent or recei
 </Note>
 
 <WebhookOutgoing />
+
+<CtwaReferral />
 
 ---
 
@@ -739,6 +745,9 @@ Here is a practical end-to-end example: **New lead from a form → AI context se
   </Accordion>
   <Accordion title="Use Incoming & Outgoing trigger for full logging" icon="list">
     If you need to log every message exchange to a CRM or database, use **Incoming & Outgoing Messages from console** and filter by `incoming_message` to handle both directions with separate scenario branches.
+  </Accordion>
+  <Accordion title="Capture Click-to-WhatsApp referral on the first message" icon="bullhorn">
+    When `referral` is present, store `source_id`, `source_url`, `headline`, and `ctwa_clid` on the contact immediately. Later messages in the same chat usually omit `referral`. Use `source_url` to see Instagram vs Facebook, and `source_id` to compare creatives.
   </Accordion>
   <Accordion title="Phone number format" icon="phone">
     Always provide phone numbers in full international format — digits only, no `+`, spaces, or dashes (e.g. `14155550187` for US, `447911123456` for UK, `966501234567` for Saudi Arabia).

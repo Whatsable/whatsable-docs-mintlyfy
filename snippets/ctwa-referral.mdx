@@ -1,0 +1,38 @@
+### Click-to-WhatsApp ad attribution
+
+When a contact messages you after tapping a **Click-to-WhatsApp** ad (Facebook, Instagram, or WhatsApp Status), Meta includes a `referral` object on that inbound event. Notifyer forwards it in [webhook](/guides/notifyer-system/api/incoming-message#click-to-whatsapp-ads) and trigger data (n8n, Make, Zapier).
+
+Use it to see **which ad, creative, and platform** produced the lead — then label the chat, route it, or send `ctwa_clid` back to Meta for campaign optimization.
+
+<Note>
+`referral` is typically present on the **first inbound message** after the ad click. Later messages in the same conversation usually omit it. Persist `ctwa_clid` and `source_id` as soon as you see them.
+</Note>
+
+| Field | What it tells you |
+|---|---|
+| `source_type` | `"ad"` for an ad, `"post"` for an organic post |
+| `source_id` | Ad or post ID — use this to group leads by creative |
+| `source_url` | Where they tapped (Instagram permalink, Facebook/ad URL) |
+| `headline` / `body` | Ad copy the lead saw |
+| `media_type` | `"image"` or `"video"` |
+| `image_url` / `video_url` | Creative asset URL |
+| `ctwa_clid` | Click ID for Meta Conversions API attribution |
+
+```json
+{
+  "incoming_message": true,
+  "last_message_of_user": "Quiero información",
+  "referral": {
+    "source_type": "ad",
+    "source_id": "52540693396957",
+    "source_url": "https://www.instagram.com/p/DZiVBz7gAF9/",
+    "headline": "Expo Nissan",
+    "body": "Aprovechá la EXPONISSAN y llevate tu nuevo Nissan Kicks Play Sense MT.",
+    "media_type": "image",
+    "image_url": "https://scontent.xx.fbcdn.net/v/t45.1600-4/example.jpg",
+    "ctwa_clid": "AfhN-JKvx8HeFTmfB-Tu11zktQRJ-MNdMV1mwvDNxHnpYrGl-jVf3OEFhLva_MP41zYRe5ErUteWFn3v4gkkjzfIEVr9J_u8GAo3-o6DqShykM4Zsl14FcU5MyThsCoQ"
+  }
+}
+```
+
+If your delivery includes the Cloud API envelope instead of a flattened Notifyer payload, the same object lives at `entry[].changes[].value.messages[].referral`. Full field reference and a complete example: [Message webhooks — Click-to-WhatsApp ads](/guides/notifyer-system/api/incoming-message#click-to-whatsapp-ads).
