@@ -1,9 +1,9 @@
 ---
 title: 'Message webhooks'
 sidebarTitle: 'Message webhooks'
-description: 'Receive incoming and outgoing WhatsApp messages via webhooks — including replies typed in the WhatsApp Business app. Payload fields cover direction, sending system, and which teammate sent the message.'
+description: 'Receive incoming and outgoing WhatsApp messages via webhooks — including replies typed in the WhatsApp Business app and Click-to-WhatsApp ad referral data (creative, platform, ctwa_clid).'
 icon: 'inbox'
-keywords: ['webhook', 'outgoing messages', 'incoming messages', 'send_by', 'was_message_by_human', 'incoming_message', 'WhatsApp Business app', 'coexistence', 'n8n']
+keywords: ['webhook', 'outgoing messages', 'incoming messages', 'send_by', 'was_message_by_human', 'incoming_message', 'WhatsApp Business app', 'coexistence', 'n8n', 'click-to-whatsapp', 'ctwa', 'referral', 'ads']
 ---
 
 import Coexistence from "/snippets/coexistence.mdx";
@@ -26,8 +26,9 @@ Webhooks are HTTP callbacks that Notifyer sends to your server when a message ev
   - Hand-typed replies in the **WhatsApp Business app** on a phone
   - Messages sent from the **Notifyer chat inbox** (with the teammate's name)
   - Messages sent by **Make, Zapier, n8n, the API, or a bot**
+- **Click-to-WhatsApp ads** — when the inbound message came from a Facebook, Instagram, or WhatsApp Status ad, a `referral` object identifies the creative, platform, and click (`ctwa_clid`)
 
-Use this to trigger automations, sync CRMs, and log full conversation history — not only inbound chat.
+Use this to trigger automations, sync CRMs, attribute ad leads, and log full conversation history — not only inbound chat.
 
 {/* <Card title="Try it in the API Reference" icon="arrow-right" href="https://docs.whatsable.app/api-reference/notifier-system/webhooks/manage-webhooks">
   Explore the Webhook Management API and start receiving incoming messages
@@ -182,6 +183,45 @@ When a message is received or sent on your connected number, Notifyer sends a `P
   "was_message_by_human": true
 }
 ```
+
+```json Incoming — Click-to-WhatsApp ad
+{
+  "last_messages": [
+    {
+      "type": "user",
+      "content": "Quiero información",
+      "timestamp": "2026-08-15T18:18:36.000Z",
+      "content_type": "text"
+    }
+  ],
+  "conversation_paragraph": "User (6:18:36 PM): Quiero información",
+  "phone_number": "50655550100",
+  "recipient_name": "Maria Lopez",
+  "user_id": "9232fcef-a570-4a2c-b46b-6cab53aec304",
+  "last_message_of_user": "Quiero información",
+  "last_message_of_bot": "",
+  "message_type": "text",
+  "user_last_message_time": 1781734716,
+  "bot_last_message_time": 0,
+  "attachment_url": null,
+  "note": "",
+  "note_automation": "",
+  "labels": "",
+  "incoming_message": true,
+  "send_by": "",
+  "was_message_by_human": true,
+  "referral": {
+    "source_type": "ad",
+    "source_id": "52540693396957",
+    "source_url": "https://www.instagram.com/p/DZiVBz7gAF9/",
+    "headline": "Expo Nissan",
+    "body": "Aprovechá la EXPONISSAN y llevate tu nuevo Nissan Kicks Play Sense MT con condiciones que juegan a tu favor.",
+    "media_type": "image",
+    "image_url": "https://scontent.xx.fbcdn.net/v/t45.1600-4/example.jpg",
+    "ctwa_clid": "AfhN-JKvx8HeFTmfB-Tu11zktQRJ-MNdMV1mwvDNxHnpYrGl-jVf3OEFhLva_MP41zYRe5ErUteWFn3v4gkkjzfIEVr9J_u8GAo3-o6DqShykM4Zsl14FcU5MyThsCoQ"
+  }
+}
+```
 </CodeGroup>
 
 ### Payload Fields
@@ -274,6 +314,175 @@ When a message is received or sent on your connected number, Notifyer sends a `P
 <ResponseField name="was_message_by_human" type="boolean">
   `true` when a person sent the message (WhatsApp Business app or Notifyer chat inbox). `false` when a bot or automation sent it.
 </ResponseField>
+
+<ResponseField name="referral" type="object">
+  Present on **incoming** events that originated from a Click-to-WhatsApp ad or post. Omitted on ordinary chats and on most follow-up messages after the first ad-attributed inbound. See [Click-to-WhatsApp ads](#click-to-whatsapp-ads).
+  <Expandable title="referral object">
+    <ResponseField name="source_type" type="string">
+      `"ad"` or `"post"`
+    </ResponseField>
+    <ResponseField name="source_id" type="string">
+      Meta ad or post ID
+    </ResponseField>
+    <ResponseField name="source_url" type="string">
+      URL of the ad or post (platform is in the host)
+    </ResponseField>
+    <ResponseField name="headline" type="string">
+      Ad or post headline
+    </ResponseField>
+    <ResponseField name="body" type="string">
+      Ad or post body copy
+    </ResponseField>
+    <ResponseField name="media_type" type="string">
+      `"image"` or `"video"`
+    </ResponseField>
+    <ResponseField name="image_url" type="string">
+      Image creative URL
+    </ResponseField>
+    <ResponseField name="video_url" type="string">
+      Video creative URL
+    </ResponseField>
+    <ResponseField name="thumbnail_url" type="string">
+      Video thumbnail URL
+    </ResponseField>
+    <ResponseField name="ctwa_clid" type="string">
+      Click ID for Meta Conversions API attribution
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Click-to-WhatsApp ads
+
+When someone taps **Send message** on a Click-to-WhatsApp ad (Facebook, Instagram, or WhatsApp Status) and writes to your number, Meta attaches a `referral` object to that inbound message. Notifyer passes it through to your [custom webhook](#webhook-payload) and to [n8n](/guides/notifyer-system/n8n-overview), [Make](/guides/notifyer-system/make-overview), and [Zapier](/guides/notifyer-system/zapier-overview) triggers.
+
+Use it to optimize campaigns: see **which creative**, **which platform**, and **which ad** produced the lead, then label the conversation, route it to the right team, or send `ctwa_clid` to Meta's Conversions API.
+
+<Note>
+`referral` is typically present only on the **first inbound message** after the ad click. Later messages in the same chat usually omit it. Persist `ctwa_clid` and `source_id` (keyed on the contact's phone) as soon as they arrive.
+</Note>
+
+<Info>
+WhatsApp Status ad placements may omit `ctwa_clid`. Organic posts use `source_type: "post"` instead of `"ad"`.
+</Info>
+
+### What each field is for
+
+| Goal | Fields |
+|---|---|
+| Group leads by campaign or creative | `source_id`, `headline` |
+| See Facebook vs Instagram vs other | `source_url` (host is `instagram.com`, `facebook.com`, `fb.me`, …) |
+| Show agents the ad the lead saw | `headline`, `body`, `image_url` / `video_url`, `media_type` |
+| Send conversions back to Meta | `ctwa_clid` |
+
+### Referral object
+
+Look for `referral` as a top-level field on the Notifyer payload, or at `entry[].changes[].value.messages[].referral` if the delivery includes the Cloud API envelope.
+
+<ResponseField name="source_type" type="string">
+  `"ad"` when the lead tapped an ad. `"post"` when they came from an organic post.
+</ResponseField>
+
+<ResponseField name="source_id" type="string">
+  Meta ID of the ad or post. Use this to group and compare creatives.
+</ResponseField>
+
+<ResponseField name="source_url" type="string">
+  URL of the ad or post the contact tapped. The host tells you the platform (for example Instagram permalink vs Facebook/ad link).
+</ResponseField>
+
+<ResponseField name="headline" type="string">
+  Headline shown on the ad or post.
+</ResponseField>
+
+<ResponseField name="body" type="string">
+  Body copy of the ad or post. May include emoji shortcodes such as `:fire:`.
+</ResponseField>
+
+<ResponseField name="media_type" type="string">
+  Creative type: `"image"` or `"video"`.
+</ResponseField>
+
+<ResponseField name="image_url" type="string">
+  URL of the image creative when `media_type` is `"image"`. These URLs can expire — copy any asset you need to keep.
+</ResponseField>
+
+<ResponseField name="video_url" type="string">
+  URL of the video creative when `media_type` is `"video"`.
+</ResponseField>
+
+<ResponseField name="thumbnail_url" type="string">
+  Thumbnail URL for video creatives.
+</ResponseField>
+
+<ResponseField name="ctwa_clid" type="string">
+  Click-to-WhatsApp click ID. Pass this to Meta Conversions API for Business Messaging (`action_source: "business_messaging"`, `messaging_channel: "whatsapp"`) so purchases and qualified leads attribute back to the ad.
+</ResponseField>
+
+<ResponseField name="welcome_message" type="object">
+  Optional. Welcome message configured on the ad, when Meta includes it.
+</ResponseField>
+
+### Cloud API envelope example
+
+This is the Meta WhatsApp Business Account shape. The attribution lives on `messages[].referral`. Contact identifiers in this example are anonymized; the referral fields match a real Instagram Click-to-WhatsApp ad.
+
+```json
+{
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1824807628200899",
+      "changes": [
+        {
+          "field": "messages",
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "50660039931",
+              "phone_number_id": "1070485179471457"
+            },
+            "contacts": [
+              {
+                "profile": {
+                  "name": "Maria Lopez"
+                },
+                "wa_id": "50655550100",
+                "user_id": "CR.10162597228035267"
+              }
+            ],
+            "messages": [
+              {
+                "from": "50655550100",
+                "id": "wamid.HBgLNTA2NTU1NTAxMDAVAgASGBQzEXAMPLE",
+                "timestamp": "1781734716",
+                "type": "text",
+                "text": {
+                  "body": "Quiero información"
+                },
+                "from_user_id": "CR.10162597228035267",
+                "referral": {
+                  "source_type": "ad",
+                  "source_id": "52540693396957",
+                  "source_url": "https://www.instagram.com/p/DZiVBz7gAF9/",
+                  "headline": "Expo Nissan",
+                  "body": ":soccer::fire: ¡Llegó el momento de hacer la mejor jugada! :fire:Aprovechá la EXPONISSAN y llevate tu nuevo Nissan Kicks Play Sense MT con condiciones que juegan a tu favor:\n\n:car: Precio de fábrica: $23,900\n:moneybag: Ahorro de $3,000\n:package: Entrega inmediata\n:zap: Financiamiento especial disponible\n\n:hourglass_flowing_sand: Promoción por tiempo limitado.\n\nReservá y cotizá a través de nuestro punto de venta digital:\n:point_right: www.nissancr.com/servicios/solicitar-cotizacion.html\nO contactános por WhatsApp:\n:point_right: https://wa.me/50660039931",
+                  "media_type": "image",
+                  "image_url": "https://scontent.xx.fbcdn.net/v/t45.1600-4/example.jpg",
+                  "ctwa_clid": "AfhN-JKvx8HeFTmfB-Tu11zktQRJ-MNdMV1mwvDNxHnpYrGl-jVf3OEFhLva_MP41zYRe5ErUteWFn3v4gkkjzfIEVr9J_u8GAo3-o6DqShykM4Zsl14FcU5MyThsCoQ"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+<Tip>
+In n8n, Make, or Zapier, add a filter or router: only treat the event as ad-attributed when `referral` exists (or `referral.source_type` is `"ad"`). Map `referral.headline`, `referral.source_url`, and `referral.source_id` into your CRM so reporting matches Meta Ads Manager.
+</Tip>
 
 ## Webhook Management API
 
@@ -531,6 +740,12 @@ Never log or expose your `signature_secret` in client-side code or public reposi
     - Verify your webhook is enabled in the dashboard
     - Confirm **outgoing** is enabled if you expect events for messages you send (including the WhatsApp Business app)
   </Accordion>
+  <Accordion title="No referral / Click-to-WhatsApp fields on the payload">
+    - `referral` is usually only on the **first inbound message** after the ad click. Store `ctwa_clid` and `source_id` immediately.
+    - Organic messages (not from an ad or post) have no `referral` object.
+    - WhatsApp Status ad placements may omit `ctwa_clid` even when other referral fields are present.
+    - Confirm you are looking at `referral` (Notifyer payload) or `messages[].referral` (Cloud API envelope), not a Facebook Lead Ad form submission — that is a different Meta product.
+  </Accordion>
   <Accordion title='"Same webhook exist" error when creating a webhook'>
     Each endpoint URL must be unique. If you submit a `webhooks` URL that is already registered, the API will return a **"Same webhook exist"** error.
 
@@ -544,6 +759,9 @@ Never log or expose your `signature_secret` in client-side code or public reposi
 ## FAQs
 
 <AccordionGroup>
+  <Accordion title="Do webhooks include Click-to-WhatsApp ad details?">
+    Yes. When the contact's message comes from a Click-to-WhatsApp ad, the payload includes a `referral` object (`source_id`, `source_url`, `source_type`, `headline`, `body`, `media_type`, creative URLs, and `ctwa_clid`). Use it to see which creative and platform produced the lead. Full reference: [Click-to-WhatsApp ads](#click-to-whatsapp-ads).
+  </Accordion>
   <Accordion title="Do webhooks include messages typed in the WhatsApp Business app?">
     Yes. With [Meta WhatsApp Coexistence](/guides/notifyer-system/embedding-process#whatsapp-coexistence) you keep the WhatsApp Business app on your phone. Enable the **outgoing** trigger. Those messages arrive with `incoming_message: false`, `send_by: "WhatsApp App"`, and `was_message_by_human: true`. They are POSTed to your webhook — they are not limited to the Notifyer web UI.
   </Accordion>

@@ -2,11 +2,12 @@
 title: 'n8n'
 description: 'Connect Notifyer System with n8n. Trigger workflows on incoming and outgoing WhatsApp messages — including replies typed in the WhatsApp Business app. Coexistence is supported; you do not delete the app on your phone.'
 icon: 'diagram-project'
-keywords: ['n8n', 'webhook', 'outgoing messages', 'incoming_message', 'send_by', 'was_message_by_human', 'coexistence', 'WhatsApp Business app']
+keywords: ['n8n', 'webhook', 'outgoing messages', 'incoming_message', 'send_by', 'was_message_by_human', 'coexistence', 'WhatsApp Business app', 'click-to-whatsapp', 'ctwa', 'referral']
 ---
 
 import Coexistence from "/snippets/coexistence.mdx";
 import WebhookOutgoing from "/snippets/webhook-outgoing.mdx";
+import CtwaReferral from "/snippets/ctwa-referral.mdx";
 
 # Notifyer System Integration with n8n
 
@@ -15,7 +16,7 @@ import WebhookOutgoing from "/snippets/webhook-outgoing.mdx";
 </Frame>
 
 <Tip>
-  This guide walks you through connecting Notifyer System with n8n to create automated WhatsApp workflows — including triggers that fire when someone types a reply in the WhatsApp Business app.
+  This guide walks you through connecting Notifyer System with n8n to create automated WhatsApp workflows — including triggers that fire when someone types a reply in the WhatsApp Business app, and Click-to-WhatsApp ad referral data (`source_id`, `source_url`, `ctwa_clid`) on inbound leads.
 </Tip>
 
 <Coexistence />
@@ -362,6 +363,8 @@ Before getting started, make sure you have:
 
 <WebhookOutgoing />
 
+<CtwaReferral />
+
 ## Example use cases
 
 <CardGroup cols={3}>
@@ -371,8 +374,8 @@ Before getting started, make sure you have:
   <Card title="Appointment reminders" icon="calendar">
     Schedule reminders before upcoming appointments
   </Card>
-  <Card title="Lead notifications" icon="user-plus">
-    Alert your sales team when new leads come in
+  <Card title="Click-to-WhatsApp ads" icon="bullhorn">
+    Read `referral.source_id`, `source_url`, and `headline` to label leads by creative and platform
   </Card>
   <Card title="Customer support" icon="headset">
     Route support inquiries to the appropriate team member
