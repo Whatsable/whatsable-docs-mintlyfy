@@ -157,5 +157,27 @@
     "telemetry": {
       "enabled": false
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/guides/notifier-system/embedding-process",
+      "destination": "/guides/notifyer-system/embedding-process",
+      "permanent": true
+    },
+    {
+      "source": "/guides/notifier-system/make-overview",
+      "destination": "/guides/notifyer-system/make-overview",
+      "permanent": true
+    },
+    {
+      "source": "/guides/notifier-system/zapier-overview",
+      "destination": "/guides/notifyer-system/zapier-overview",
+      "permanent": true
+    },
+    {
+      "source": "/guides/notifier-system/n8n-overview",
+      "destination": "/guides/notifyer-system/n8n-overview",
+      "permanent": true
+    }
+  ]
 }
