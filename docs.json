@@ -86,6 +86,16 @@
               "guides/whatsable/api-documentation",
               "guides/whatsable/webhooks"
             ]
+          },
+          {
+            "group": "WhatsApp Cloud API errors",
+            "pages": [
+              "whatsapp-error-131026",
+              "whatsapp-error-131047",
+              "whatsapp-error-131049",
+              "whatsapp-error-132001",
+              "whatsapp-error-130429"
+            ]
           }
         ]
       },

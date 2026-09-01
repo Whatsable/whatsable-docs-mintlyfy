@@ -1,0 +1,40 @@
+---
+title: "WhatsApp Cloud API error 131049"
+description: "WhatsApp Cloud API error 131049. Message not delivered to maintain healthy ecosystem engagement. Match on code and details, not on titles."
+---
+
+# WhatsApp Cloud API error 131049
+
+This page documents WhatsApp Cloud API error `131049`.
+
+Meta will deprecate error titles. Match on `code` and `details`, not on the title in `message`.
+
+Official table: [WhatsApp Cloud API error codes](https://developers.facebook.com/docs/whatsapp/cloud-api/support/error-codes/).
+
+## Match these fields
+
+| Field | Value |
+| --- | --- |
+| `code` | `131049` |
+| `error_data.details` | This message was not delivered to maintain healthy ecosystem engagement. |
+
+Do not build handlers on titles such as `(#131049) …`. Those titles live inside `message` and will be deprecated.
+
+## Official `details`
+
+This message was not delivered to maintain healthy ecosystem engagement.
+
+## Official next step
+
+If you receive this error and suspect it is due to the limit, wait at least 24 hours before resending the template message.
+
+An immediate retry can return the same error. The limit may stay in effect for differing periods of time.
+
+See [Per-User Marketing Template Message Limits](https://developers.facebook.com/documentation/business-messaging/whatsapp/templates/marketing-templates/per-user-limits).
+
+## Related codes
+
+- [131026](/whatsapp-error-131026) — unable to deliver message.
+- [131047](/whatsapp-error-131047) — more than 24 hours since the recipient last replied.
+- [132001](/whatsapp-error-132001) — template missing in that language or not approved.
+- [130429](/whatsapp-error-130429) — Cloud API throughput reached.

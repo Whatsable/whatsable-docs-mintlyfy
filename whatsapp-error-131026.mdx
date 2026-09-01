@@ -1,0 +1,56 @@
+---
+title: "WhatsApp Cloud API error 131026"
+description: "WhatsApp Cloud API error 131026. Unable to deliver message. Match on code and details, not on titles."
+---
+
+# WhatsApp Cloud API error 131026
+
+This page documents WhatsApp Cloud API error `131026`.
+
+Meta will deprecate error titles. Match on `code` and `details`, not on the title in `message`.
+
+Official table: [WhatsApp Cloud API error codes](https://developers.facebook.com/docs/whatsapp/cloud-api/support/error-codes/).
+
+## Match these fields
+
+| Field | Value |
+| --- | --- |
+| `code` | `131026` |
+| `error_data.details` | Unable to deliver message. Reasons can include the cases below. |
+
+Do not build handlers on titles such as `(#131026) …`. Those titles live inside `message` and will be deprecated.
+
+## Official `details`
+
+Unable to deliver message. Reasons can include:
+
+- The recipient phone number is not a WhatsApp phone number.
+- Recipient has not accepted the new Terms of Service and Privacy Policy.
+- Recipient using an old WhatsApp version. The recipient must use this WhatsApp version or greater:
+  - Android: 2.21.15.15
+  - SMBA: 2.21.15.15
+  - iOS: 2.21.170.4
+  - SMBI: 2.21.170.4
+  - KaiOS: 2.2130.10
+  - Web: 2.2132.6
+
+## Official next step
+
+Use a non-WhatsApp channel. Ask the WhatsApp user to:
+
+- Confirm that they can send a message to your WhatsApp Business phone number.
+- Confirm that they have accepted the latest Terms of Service. **Settings** > **Help**, or **Settings** > **Application information**, will prompt them if they have not accepted the latest terms.
+- Update to the latest version of the WhatsApp client.
+
+## Fields to read
+
+Read `code` and `error_data.details`.
+
+Ignore the title inside `message`.
+
+## Related codes
+
+- [131047](/whatsapp-error-131047) — more than 24 hours since the recipient last replied.
+- [131049](/whatsapp-error-131049) — not delivered to maintain healthy ecosystem engagement.
+- [132001](/whatsapp-error-132001) — template missing in that language or not approved.
+- [130429](/whatsapp-error-130429) — Cloud API throughput reached.
