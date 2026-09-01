@@ -28,7 +28,7 @@
             ]
           },
           {
-            "group": "Notifyer System",
+            "group": "Whatsable (formerly Notifyer System)",
             "pages": [
               "guides/notifyer-system/embedding-process",
               "guides/notifyer-system/zapier-overview",
@@ -78,16 +78,6 @@
             ]
           },
           {
-            "group": "WhatsAble",
-            "pages": [
-              "guides/whatsable/zapier",
-              "guides/whatsable/make",
-              "guides/whatsable/n8n",
-              "guides/whatsable/api-documentation",
-              "guides/whatsable/webhooks"
-            ]
-          },
-          {
             "group": "WhatsApp Cloud API errors",
             "pages": [
               "whatsapp-error-131026",
@@ -116,7 +106,7 @@
             }
           },
           {
-            "group": "Notifyer System",
+            "group": "Whatsable (formerly Notifyer System)",
             "openapi": {
               "source": "openapi/notifier-system-api.json",
               "directory": "api-reference/notifier-system"
