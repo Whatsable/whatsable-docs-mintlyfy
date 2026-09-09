@@ -72,7 +72,8 @@
                   "guides/notifyer-system/api/get-templates",
                   "guides/notifyer-system/api/template-message",
                   "guides/notifyer-system/api/non-template-message",
-                  "guides/notifyer-system/api/incoming-message"
+                  "guides/notifyer-system/api/incoming-message",
+                  "guides/notifyer-system/api/outbound-whatsapp-app"
                 ]
               }
             ]
