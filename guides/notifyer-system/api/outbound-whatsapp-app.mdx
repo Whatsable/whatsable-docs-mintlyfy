@@ -7,20 +7,18 @@ keywords: ['webhook', 'outgoing messages', 'send_by', 'was_message_by_human', 'i
 ---
 
 <Tip>
-You (or a teammate) can keep replying by hand in the **WhatsApp Business app** on your phone. Notifyer still POSTs that reply to your webhook, so your n8n, Make, or Zapier automation still runs.
+A reply typed by hand in the **WhatsApp Business app** is still POSTed to your webhook. Your n8n, Make, or Zapier automation still runs.
 </Tip>
 
 ## The job
 
-Some businesses answer customers directly on the phone, in the WhatsApp Business app, instead of a chat inbox or a bot. That's fine — you do not need to delete the app or stop using it. [Meta WhatsApp Coexistence](/guides/notifyer-system/embedding-process#whatsapp-coexistence) lets the same number work in the WhatsApp Business app **and** in Notifyer System at the same time.
+You (or a teammate) can keep answering customers directly from the phone, in the WhatsApp Business app — you don't need to delete it. [Meta WhatsApp Coexistence](/guides/notifyer-system/embedding-process#whatsapp-coexistence) keeps that number working in the app and in Notifyer System at once.
 
-The part builders miss: those hand-typed phone replies are **outgoing** messages from your business, and Notifyer still sends them to your webhook or automation trigger if outgoing events are enabled. Your CRM sync, labeling automation, or logging workflow keeps running — even when the reply never touched a bot, a template, or the Notifyer chat inbox.
-
-This page shows the exact fields that identify a WhatsApp Business app reply, and how to filter for (or around) it in n8n, Make, or Zapier.
+Those phone replies are **outgoing** messages, and Notifyer sends them to your webhook or automation trigger when outgoing events are enabled — even though no bot, template, or Notifyer chat inbox was involved. This page shows the exact fields that mark a reply as "typed in the app," and how to filter on them in n8n, Make, or Zapier.
 
 ## The three fields
 
-When a reply is typed by hand in the WhatsApp Business app, the webhook payload carries this exact combination:
+A WhatsApp Business app reply carries this exact combination — `incoming_message: false` (outgoing), `send_by: "WhatsApp App"` (sent from the phone app, not a teammate or an automation), `was_message_by_human: true` (a person typed it, not a bot):
 
 | Field | Value |
 |---|---|
@@ -28,11 +26,9 @@ When a reply is typed by hand in the WhatsApp Business app, the webhook payload 
 | `send_by` | `"WhatsApp App"` |
 | `was_message_by_human` | `true` |
 
-`incoming_message: false` means the message went **from** your business **to** the contact (outgoing), not the other way around. `send_by: "WhatsApp App"` is what distinguishes a phone-typed reply from a Notifyer chat inbox reply (which carries the teammate's name instead) or an automation-sent message (which carries the app or bot name instead). `was_message_by_human` is `true` because a person, not a bot, sent it.
-
 ### Sample payload
 
-This is the same sanitized sample used on the full payload reference — trimmed to the fields you need for filtering:
+Trimmed to the fields you need for filtering — same sanitized sample as the full payload reference:
 
 ```json
 {
@@ -48,29 +44,31 @@ This is the same sanitized sample used on the full payload reference — trimmed
 ```
 
 <Note>
-This is a trimmed excerpt for filtering purposes. The webhook sends more fields than shown here (`conversation_paragraph`, `last_message_of_user`, `note`, `labels`, and others) — see the [full payload reference](/guides/notifyer-system/api/incoming-message#payload-fields) for every field.
+The webhook sends more fields than shown here (`conversation_paragraph`, `last_message_of_user`, `note`, `labels`, and others) — see the [full payload reference](/guides/notifyer-system/api/incoming-message#payload-fields) for every field.
 </Note>
 
 ## How to filter for it
 
 ### n8n
 
-The WhatsAble trigger node's option is labeled **On new Incoming message event**. That label describes the node, not the direction of every event it fires. When your webhook (or the credential named **Notifyer System incoming and outgoing messages**) has outgoing enabled, the same trigger also fires for outgoing messages — including phone-typed replies in the WhatsApp Business app.
+The WhatsAble trigger is labeled **On new Incoming message event** — that's the node's name, not the direction of every event it fires. With outgoing enabled (credential **Notifyer System incoming and outgoing messages**), it also fires for phone-typed replies.
 
 <Steps>
   <Step title="Add the trigger">
-    Add the WhatsAble node and pick **On new Incoming message event** as the trigger. Connect it with the credential that covers **Notifyer System incoming and outgoing messages**, so outgoing events (including phone replies) are included.
+    Add the WhatsAble node, pick **On new Incoming message event**, and connect the credential covering **Notifyer System incoming and outgoing messages** so outgoing events are included.
   </Step>
   <Step title="Add a Filter or IF node right after the trigger">
     Add a **Filter** (or **IF**) node immediately after the trigger.
   </Step>
   <Step title="Filter on the three fields">
-    To run logic **only** for phone-typed replies, filter on:
+    To match **only** phone-typed replies, add these conditions:
 
-    - `incoming_message` is `false`
-    - `send_by` is `WhatsApp App`
+    ```text
+    {{ $json.incoming_message }}         is false
+    {{ $json.send_by }}                  is equal to "WhatsApp App"
+    ```
 
-    To run logic for **any** human-sent message (phone app or Notifyer chat inbox), filter on `was_message_by_human` is `true` instead, and branch further on `send_by` if you need to tell them apart.
+    To match **any** human-sent message (phone app or Notifyer chat inbox), use `{{ $json.was_message_by_human }}` is `true` instead, then branch on `{{ $json.send_by }}` to tell them apart.
   </Step>
 </Steps>
 
@@ -78,15 +76,15 @@ Full walkthrough: [n8n overview](/guides/notifyer-system/n8n-overview).
 
 ### Make and Zapier
 
-Make and Zapier receive the same webhook payload shape as n8n — the same fields, the same values. Add a **Filter** (Zapier) or a **Filter**/**Router** (Make) right after your trigger module, using the same three fields above. See [Make overview](/guides/notifyer-system/make-overview) and [Zapier overview](/guides/notifyer-system/zapier-overview) for how each platform's trigger and filter steps are configured.
+Same payload, same field names. Add a **Filter** (Zapier) or **Filter**/**Router** (Make) right after your trigger module, using the three fields above. See [Make overview](/guides/notifyer-system/make-overview) and [Zapier overview](/guides/notifyer-system/zapier-overview).
 
 ## Full payload reference
 
-This page only covers the fields needed to identify and filter a WhatsApp Business app reply. For every field in the payload (`last_messages`, `conversation_paragraph`, `note`, `labels`, Click-to-WhatsApp `referral`, and more), see [Message webhooks](/guides/notifyer-system/api/incoming-message).
+This page only covers filtering. For every field (`last_messages`, `conversation_paragraph`, `note`, `labels`, Click-to-WhatsApp `referral`, and more), see [Message webhooks](/guides/notifyer-system/api/incoming-message).
 
 ## Agent Skills
 
-If you're automating webhook setup instead of using the dashboard, the `automate-notifyer` skill's `create-webhook.js` script takes `--incoming` and `--outgoing` flags. Enable both so your endpoint also receives WhatsApp Business app replies:
+Automating webhook setup instead of using the dashboard? The `automate-notifyer` skill's `create-webhook.js` takes `--incoming` and `--outgoing` flags — enable both so your endpoint also receives WhatsApp Business app replies:
 
 ```bash
 node scripts/create-webhook.js --type dev \
@@ -100,16 +98,16 @@ See [automate-notifyer](/guides/notifyer-system/agent-skills/automate-notifyer) 
 
 <AccordionGroup>
   <Accordion title='Does "On new Incoming message event" mean the trigger only fires on inbound messages?'>
-    No. That's the node's label in n8n, not a description of every event it can fire. With outgoing enabled on your webhook or credential, the same trigger also fires for outgoing messages — including phone-typed replies in the WhatsApp Business app. Check `incoming_message` in the payload to know the actual direction; don't rely on the trigger name.
+    No — it's just the node's label. See [filtering in n8n](#n8n) above; check `incoming_message` for the actual direction, not the trigger name.
   </Accordion>
   <Accordion title='How do I tell a WhatsApp Business app reply apart from a Notifyer chat inbox reply?'>
-    Read `send_by`. It is `"WhatsApp App"` for a phone-typed reply, and the logged-in teammate's name (for example `"Axel Meta"`) for a reply sent from the Notifyer chat inbox. Both are outgoing (`incoming_message: false`) and both have `was_message_by_human: true` — `send_by` is what separates them.
+    Both are outgoing and human-sent — `send_by` is what separates them: `"WhatsApp App"` for the phone, or the teammate's name (for example `"Axel Meta"`) for the chat inbox.
   </Accordion>
   <Accordion title="Do I need to delete the WhatsApp Business app to use Notifyer System?">
-    No. [Meta WhatsApp Coexistence](/guides/notifyer-system/embedding-process#whatsapp-coexistence) keeps the same number working in the WhatsApp Business app on your phone and in Notifyer System at the same time. Replies typed on the phone still reach your webhook.
+    No. [Meta WhatsApp Coexistence](/guides/notifyer-system/embedding-process#whatsapp-coexistence) keeps the app and Notifyer System working on the same number at once.
   </Accordion>
   <Accordion title="My automation isn't firing for phone-typed replies. What should I check?">
-    Confirm **outgoing** is enabled on the webhook (or the n8n credential covers **Notifyer System incoming and outgoing messages**). Then confirm your filter step isn't excluding `incoming_message: false` events by mistake. See [Message webhooks troubleshooting](/guides/notifyer-system/api/incoming-message#troubleshooting) for more.
+    Confirm **outgoing** is enabled on the webhook or credential, then confirm your filter step isn't excluding `incoming_message: false` events by mistake. See [Message webhooks troubleshooting](/guides/notifyer-system/api/incoming-message#troubleshooting).
   </Accordion>
 </AccordionGroup>
 
