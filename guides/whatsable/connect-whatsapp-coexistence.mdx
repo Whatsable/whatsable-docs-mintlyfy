@@ -1,6 +1,6 @@
 ---
 title: 'Connect WhatsApp Business to WhatsAble (Embedded Signup + Coexistence)'
-description: 'Connect your WhatsApp Business number to WhatsAble with Meta Embedded Signup. Keep the WhatsApp Business app on your phone — Meta Coexistence keeps both working on the same number.'
+description: 'Connect your WhatsApp Business number to WhatsAble with Meta Embedded Signup. Keep the WhatsApp Business app on your phone. Meta Coexistence keeps both working on the same number.'
 icon: 'whatsapp'
 keywords: ['coexistence', 'embedded signup', 'WhatsApp Business app', 'connect WhatsApp', 'Meta Business Portfolio', 'QR code']
 ---
@@ -17,15 +17,16 @@ KEN LOCK D2/L8
 
 # Connect WhatsApp Business to WhatsAble (Embedded Signup + Coexistence)
 
-Keep the WhatsApp Business app on your phone and add WhatsAble on the same number — Meta calls this **Coexistence**. This guide covers what Coexistence actually means, what to check before you start Embedded Signup, the signup flow at a high level, and what changes (and what doesn't) once you're connected.
+Keep the WhatsApp Business app on your phone and add WhatsAble on the same number. Meta calls this **Coexistence**. This guide covers what Coexistence actually means, what to check before you start Embedded Signup, the signup flow at a high level, and what changes (and what doesn't) once you're connected.
 
 ## What Coexistence means
 
 Meta Coexistence lets one WhatsApp number run in two places at the same time: the **WhatsApp Business app** on your phone, and **WhatsAble** in the background.
 
 - You keep the WhatsApp Business app installed and can keep using it. Connecting to WhatsAble does not require removing it.
-- Messages sync **both ways** — a reply typed on your phone reaches WhatsAble, and a message sent from WhatsAble reaches your phone.
-- Your existing chat history, **Status** updates, **Groups**, and **Calls** stay in the WhatsApp Business app. Coexistence doesn't move or duplicate them anywhere else.
+- Messages sync **both ways**. A reply typed on your phone reaches WhatsAble, and a message sent from WhatsAble reaches your phone.
+- **Status** updates, **Groups**, and **Calls** stay on the WhatsApp Business app.
+- Your chat history stays on the WhatsApp Business app too. Choosing to share your chat history at the QR / Coexistence step (see [Embedded Signup, at a high level](#embedded-signup-at-a-high-level)) is what brings your existing conversations into WhatsAble.
 
 <Warning>
 Do not uninstall the WhatsApp Business app after you connect. Coexistence depends on the app staying installed on that number.
@@ -34,7 +35,7 @@ Do not uninstall the WhatsApp Business app after you connect. Coexistence depend
 ## Before you start
 
 <Check>
-A **Meta Business Portfolio**. Embedded Signup requires a Business Portfolio, not a personal Facebook profile. You can create one during the flow, but having one ready first is faster. For the website field, a business website is fine — but an Instagram or Facebook page URL also works if you don't have one yet.
+A **Meta Business Portfolio**. Embedded Signup requires a Business Portfolio, not a personal Facebook profile. You can create one during the flow, but having one ready first is faster. For the website field, a business website is fine, but an Instagram or Facebook page URL also works if you don't have one yet.
 </Check>
 
 <Check>
@@ -47,15 +48,15 @@ Confirm your number's country isn't restricted. See [country restrictions](#coun
 
 ### Country restrictions
 
-Meta doesn't support new WhatsApp Business Platform connections from **Iran, Cuba, North Korea, Syria**, and **some regions of Ukraine**. If your number is registered in one of these, an existing number can't connect — you'd need a different number outside those restrictions.
+Meta doesn't support new WhatsApp Business Platform connections from **Iran, Cuba, North Korea, Syria**, and **some regions of Ukraine**. If your number is registered in one of these, an existing number can't connect. You'd need a different number outside those restrictions.
 
 ### If you're already using an unofficial WhatsApp tool on this number
 
-Turning on Coexistence replaces whatever **unofficial (non-Meta) API tool** was running on that number. Once Coexistence is active, those unofficial tools stop working on it — that's expected.
+Turning on Coexistence replaces whatever **unofficial (non-Meta) API tool** was running on that number. Once Coexistence is active, those unofficial tools stop working on it. That's expected.
 
 ### Pricing
 
-The phone number itself is **free** — Meta doesn't charge for it. What you pay for is your WhatsAble plan; WhatsAble passes Meta's conversation costs through at **0% markup**. See [pricing](https://whatsable.app/pricing) for current plans.
+The phone number itself is **free**. Meta doesn't charge for it. What you pay for is your WhatsAble plan; WhatsAble passes Meta's conversation costs through at **0% markup**. See [pricing](https://whatsable.app/pricing) for current plans.
 
 ## Embedded Signup, at a high level
 
@@ -76,7 +77,7 @@ The phone number itself is **free** — Meta doesn't charge for it. What you pay
     Enter the number you want to connect. If Meta detects that number is already active in the WhatsApp Business app, it offers Coexistence instead of a fresh registration.
   </Step>
   <Step title="Scan the QR code and choose Coexistence">
-    Confirm you want to keep the number in the WhatsApp Business app. When asked about your chat history, **share your chat history** — that's the recommended choice at this step, and it's what keeps your existing conversations visible once WhatsAble is connected.
+    Confirm you want to keep the number in the WhatsApp Business app. When asked about your chat history, **share your chat history**. That's the recommended choice at this step, and it's what brings your existing conversations into WhatsAble.
   </Step>
   <Step title="Finish verification">
     Complete any remaining verification Meta asks for (business verification, payment method) and wait for confirmation.
@@ -84,7 +85,7 @@ The phone number itself is **free** — Meta doesn't charge for it. What you pay
 </Steps>
 
 <Note>
-Embedded Signup runs inside your WhatsAble account. Technical footnote: the underlying console lives at `notifyer.whatsable.app` — you may see that domain during signup; it's WhatsAble, not a separate product.
+Embedded Signup runs inside your WhatsAble account. Technical footnote: the underlying console lives at `notifyer.whatsable.app`. You may see that domain during signup; it's WhatsAble, not a separate product.
 </Note>
 
 ## After you connect
@@ -92,13 +93,13 @@ Embedded Signup runs inside your WhatsAble account. Technical footnote: the unde
 - If your Meta Business Portfolio is already verified, expect to be able to send your first message in about **20 minutes**.
 - Both sides stay live: keep replying from the WhatsApp Business app, and send and receive through WhatsAble at the same time.
 - Any unofficial API tool that used to run on this number stops working once Coexistence turns on.
-- Phone replies typed in the WhatsApp Business app still reach your automations — see [Phone replies in the WhatsApp Business app still hit your webhook](/guides/notifyer-system/api/outbound-whatsapp-app).
+- Phone replies typed in the WhatsApp Business app still reach your automations. See [Phone replies in the WhatsApp Business app still hit your webhook](/guides/notifyer-system/api/outbound-whatsapp-app).
 
 ## Limits & honesty
 
-- **Throughput is set by Meta, not WhatsAble.** Meta enforces a messages-per-second limit on the Cloud API side for every connected number. WhatsAble doesn't control or raise this limit — it's the same one any Cloud API number gets from Meta.
+- **Throughput is set by Meta, not WhatsAble.** Meta enforces a messages-per-second limit on the Cloud API side for every connected number. WhatsAble doesn't control or raise this limit. It's the same one any Cloud API number gets from Meta.
 - **Country restrictions are Meta's, not WhatsAble's.** Numbers registered in Iran, Cuba, North Korea, Syria, or some regions of Ukraine can't complete Embedded Signup today.
-- **Each number connects on its own.** Coexistence, and the connection itself, apply per number — there is no cross-number setup step in this guide.
+- **Each number connects on its own.** Coexistence, and the connection itself, apply per number. There is no cross-number setup step in this guide.
 
 ## Troubleshoot
 
@@ -124,7 +125,7 @@ Embedded Signup runs inside your WhatsAble account. Technical footnote: the unde
     Coexistence means WhatsApp Business app replies keep flowing to your automation. See the exact fields to filter on.
   </Card>
   <Card title="Pricing" icon="tag" href="https://whatsable.app/pricing">
-    The phone number is free — see current WhatsAble plans.
+    The phone number is free. See current WhatsAble plans.
   </Card>
   <Card title="Start your free trial" icon="rocket" href="https://console.notifyer-systems.com/sign-in">
     Create a WhatsAble account and start Connect WhatsApp.
