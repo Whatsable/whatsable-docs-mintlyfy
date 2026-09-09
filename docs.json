@@ -30,6 +30,7 @@
           {
             "group": "Whatsable (formerly Notifyer System)",
             "pages": [
+              "guides/whatsable/connect-whatsapp-coexistence",
               "guides/notifyer-system/embedding-process",
               "guides/notifyer-system/zapier-overview",
               "guides/notifyer-system/make-overview",
