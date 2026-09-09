@@ -1,0 +1,116 @@
+---
+title: 'Phone replies in WhatsApp Business app still hit your webhook'
+sidebarTitle: 'Outbound: WhatsApp App'
+description: 'Keep answering on your phone in the WhatsApp Business app — your n8n, Make, or Zapier webhook still receives the message. Learn the three fields that identify it and how to filter for it.'
+icon: 'mobile'
+keywords: ['webhook', 'outgoing messages', 'send_by', 'was_message_by_human', 'incoming_message', 'WhatsApp Business app', 'coexistence', 'n8n', 'outbound']
+---
+
+<Tip>
+A reply typed by hand in the **WhatsApp Business app** is still POSTed to your webhook. Your n8n, Make, or Zapier automation still runs.
+</Tip>
+
+## The job
+
+You (or a teammate) can keep answering customers directly from the phone, in the WhatsApp Business app — you don't need to delete it. [Meta WhatsApp Coexistence](/guides/notifyer-system/embedding-process#whatsapp-coexistence) keeps that number working in the app and in Notifyer System at once.
+
+Those phone replies are **outgoing** messages, and Notifyer sends them to your webhook or automation trigger when outgoing events are enabled — even though no bot, template, or Notifyer chat inbox was involved. This page shows the exact fields that mark a reply as "typed in the app," and how to filter on them in n8n, Make, or Zapier.
+
+## The three fields
+
+A WhatsApp Business app reply carries this exact combination — `incoming_message: false` (outgoing), `send_by: "WhatsApp App"` (sent from the phone app, not a teammate or an automation), `was_message_by_human: true` (a person typed it, not a bot):
+
+| Field | Value |
+|---|---|
+| `incoming_message` | `false` |
+| `send_by` | `"WhatsApp App"` |
+| `was_message_by_human` | `true` |
+
+### Sample payload
+
+Trimmed to the fields you need for filtering — same sanitized sample as the full payload reference:
+
+```json
+{
+  "last_messages": "[{\"type\":\"bot\",\"content\":\"Hello n8n\",\"timestamp\":\"2026-08-15T12:24:47.000Z\",\"content_type\":\"text\"},{\"type\":\"user\",\"content\":\"hi\",\"timestamp\":\"2026-08-12T12:27:42.746Z\",\"content_type\":\"text\"}]",
+  "phone_number": 14155552671,
+  "recipient_name": "Alex Martinez",
+  "user_id": "158c59e1-ea85-4d0b-b70c-65328ba67a8e",
+  "message_type": "text",
+  "incoming_message": false,
+  "send_by": "WhatsApp App",
+  "was_message_by_human": true
+}
+```
+
+<Note>
+The webhook sends more fields than shown here (`conversation_paragraph`, `last_message_of_user`, `note`, `labels`, and others) — see the [full payload reference](/guides/notifyer-system/api/incoming-message#payload-fields) for every field.
+</Note>
+
+## How to filter for it
+
+### n8n
+
+The WhatsAble trigger is labeled **On new Incoming message event** — that's the node's name, not the direction of every event it fires. With outgoing enabled (credential **Notifyer System incoming and outgoing messages**), it also fires for phone-typed replies.
+
+<Steps>
+  <Step title="Add the trigger">
+    Add the WhatsAble node, pick **On new Incoming message event**, and connect the credential covering **Notifyer System incoming and outgoing messages** so outgoing events are included.
+  </Step>
+  <Step title="Add a Filter or IF node right after the trigger">
+    Add a **Filter** (or **IF**) node immediately after the trigger.
+  </Step>
+  <Step title="Filter on the three fields">
+    To match **only** phone-typed replies, add these conditions:
+
+    ```text
+    {{ $json.incoming_message }}         is false
+    {{ $json.send_by }}                  is equal to "WhatsApp App"
+    ```
+
+    To match **any** human-sent message (phone app or Notifyer chat inbox), use `{{ $json.was_message_by_human }}` is `true` instead, then branch on `{{ $json.send_by }}` to tell them apart.
+  </Step>
+</Steps>
+
+Full walkthrough: [n8n overview](/guides/notifyer-system/n8n-overview).
+
+### Make and Zapier
+
+Same payload, same field names. Add a **Filter** (Zapier) or **Filter**/**Router** (Make) right after your trigger module, using the three fields above. See [Make overview](/guides/notifyer-system/make-overview) and [Zapier overview](/guides/notifyer-system/zapier-overview).
+
+## Full payload reference
+
+This page only covers filtering. For every field (`last_messages`, `conversation_paragraph`, `note`, `labels`, Click-to-WhatsApp `referral`, and more), see [Message webhooks](/guides/notifyer-system/api/incoming-message).
+
+## Agent Skills
+
+Automating webhook setup instead of using the dashboard? The `automate-notifyer` skill's `create-webhook.js` takes `--incoming` and `--outgoing` flags — enable both so your endpoint also receives WhatsApp Business app replies:
+
+```bash
+node scripts/create-webhook.js --type dev \
+  --url "https://your-endpoint.example.com/webhook" \
+  --incoming --outgoing --signature
+```
+
+See [automate-notifyer](/guides/notifyer-system/agent-skills/automate-notifyer) for the full script reference.
+
+## FAQs
+
+<AccordionGroup>
+  <Accordion title='Does "On new Incoming message event" mean the trigger only fires on inbound messages?'>
+    No — it's just the node's label. See [filtering in n8n](#n8n) above; check `incoming_message` for the actual direction, not the trigger name.
+  </Accordion>
+  <Accordion title='How do I tell a WhatsApp Business app reply apart from a Notifyer chat inbox reply?'>
+    Both are outgoing and human-sent — `send_by` is what separates them: `"WhatsApp App"` for the phone, or the teammate's name (for example `"Axel Meta"`) for the chat inbox.
+  </Accordion>
+  <Accordion title="Do I need to delete the WhatsApp Business app to use Notifyer System?">
+    No. [Meta WhatsApp Coexistence](/guides/notifyer-system/embedding-process#whatsapp-coexistence) keeps the app and Notifyer System working on the same number at once.
+  </Accordion>
+  <Accordion title="My automation isn't firing for phone-typed replies. What should I check?">
+    Confirm **outgoing** is enabled on the webhook or credential, then confirm your filter step isn't excluding `incoming_message: false` events by mistake. See [Message webhooks troubleshooting](/guides/notifyer-system/api/incoming-message#troubleshooting).
+  </Accordion>
+</AccordionGroup>
+
+<Card title="Need assistance?" icon="headset" href="mailto:support@whatsable.app">
+  Our technical support team is available to assist with webhook configuration, payload handling, and integration questions.
+</Card>
