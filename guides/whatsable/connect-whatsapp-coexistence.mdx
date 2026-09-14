@@ -10,9 +10,10 @@ KEN LOCK D2/L8
 - Coexistence = keep WhatsApp Business app + API
 - Throughput = Meta-side
 - No shared pool / no unified multi-number inbox as live
-- Share chat history at QR step
+- Share chat history at QR step = ~6mo of 1:1 chats only (Meta docs: most recent 6 months). Groups/Status/Calls never sync.
 - Public brand WhatsAble
 - Deep Meta partner-reset = support docs only
+- Ken lock 2026-09-09: thin Meta errors (Pending/not Registered, vague Embedded Signup error, portfolio mismatch, partner lock). No invented error codes, no heroing the wipe ritual.
 */}
 
 # Connect WhatsApp Business to WhatsAble (Embedded Signup + Coexistence)
@@ -25,8 +26,9 @@ Meta Coexistence lets one WhatsApp number run in two places at the same time: th
 
 - You keep the WhatsApp Business app installed and can keep using it. Connecting to WhatsAble does not require removing it.
 - Messages sync **both ways**. A reply typed on your phone reaches WhatsAble, and a message sent from WhatsAble reaches your phone.
-- **Status** updates, **Groups**, and **Calls** stay on the WhatsApp Business app.
-- Your chat history stays on the WhatsApp Business app too. Choosing to share your chat history at the QR / Coexistence step (see [Embedded Signup, at a high level](#embedded-signup-at-a-high-level)) is what brings your existing conversations into WhatsAble.
+- At the QR / Coexistence step, you'll get the option to **share chat history**. Meta may label it **"From last 6 months"**. Choosing it can bring roughly the **last 6 months** of your **1:1** chats into WhatsAble (about 180 days), per Meta's own docs.
+- **Groups**, **Status**, and **Calls** stay on the WhatsApp Business app. They are **not** synced to WhatsAble, no matter what you choose at the chat history step.
+- If you skip sharing chat history, that's fine too. Only new messages sync from that point forward.
 
 <Warning>
 Do not uninstall the WhatsApp Business app after you connect. Coexistence depends on the app staying installed on that number.
@@ -77,7 +79,7 @@ The phone number itself is **free**. Meta doesn't charge for it. What you pay fo
     Enter the number you want to connect. If Meta detects that number is already active in the WhatsApp Business app, it offers Coexistence instead of a fresh registration.
   </Step>
   <Step title="Scan the QR code and choose Coexistence">
-    Confirm you want to keep the number in the WhatsApp Business app. When asked about your chat history, **share your chat history**. That's the recommended choice at this step, and it's what brings your existing conversations into WhatsAble.
+    Confirm you want to keep the number in the WhatsApp Business app. When asked about your chat history, choose to **share chat history** (Meta may show this as **"From last 6 months"**). That brings roughly the last 6 months of your 1:1 chats into WhatsAble. Groups, Status, and Calls stay on the WhatsApp Business app either way. Skipping this step just means only new messages sync from here on.
   </Step>
   <Step title="Finish verification">
     Complete any remaining verification Meta asks for (business verification, payment method) and wait for confirmation.
@@ -104,6 +106,18 @@ Embedded Signup runs inside your WhatsAble account. Technical footnote: the unde
 ## Troubleshoot
 
 <AccordionGroup>
+  <Accordion title="Status is stuck on Pending or shows as not Registered">
+    Run Embedded Signup again from WhatsAble, using the same number. That clears it most of the time. If it's still stuck after a second attempt, [contact support](mailto:team@whatsable.app).
+  </Accordion>
+  <Accordion title="Embedded Signup fails with a vague error">
+    Messages like *"temporarily prevented..."* or a generic *"An error occurred. Please try again."* don't say what actually went wrong. To see more detail, go to `business.facebook.com`, open **Settings** (bottom left), then **WhatsApp**, and check your **WhatsApp Accounts**. Click the small white arrow next to **Add** (not the Add button itself), then choose **Add WhatsApp Business App**. That path on Meta's side usually surfaces the real error Embedded Signup was hiding, often a Business Portfolio mismatch or a partner lock (see the two items below). It doesn't always spell out which portfolio is the problem, so you may still need to check your portfolios by hand.
+  </Accordion>
+  <Accordion title="Your Instagram or Facebook page sits on a different Business Portfolio">
+    If the Instagram or Facebook page tied to your account belongs to a different Meta Business Portfolio than the one you're using for WhatsApp, Embedded Signup can fail without a clear reason. Connect using the Business Portfolio that actually owns that page, or move the page into the right portfolio first.
+  </Accordion>
+  <Accordion title="Number is already connected to a partner, or Meta says it's not eligible">
+    If this number was previously set up through another Meta Business Partner (BSP), that partner link can block Embedded Signup. Go to `business.facebook.com`, then **Settings**, then **WhatsApp**, then the **Partners** tab. Remove the partner tied to this number and wait a few minutes before retrying. While you're there, also confirm you're using the right Business Portfolio and that Business verification isn't the actual holdup.
+  </Accordion>
   <Accordion title="Coexistence isn't offered for my number">
     Confirm the number is registered on the WhatsApp Business app (not the consumer WhatsApp app) and has some recent activity. A brand-new number sometimes needs a day or two of normal use before Meta offers Coexistence.
   </Accordion>
