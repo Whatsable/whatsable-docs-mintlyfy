@@ -1,0 +1,104 @@
+---
+title: 'Shared Team Inbox'
+description: 'The 2-way live WhatsApp inbox for Pro and Agency: reply as your business, keep full conversation history, and collaborate with your team on the same chats.'
+icon: 'inbox'
+keywords: ['shared inbox', 'team inbox', 'Notifyer Chat', 'live chat', '2-way inbox', 'WhatsApp inbox', 'reply as business', 'conversation history', 'teammate collaboration']
+---
+
+{/*
+  DRAFT — soft-unpublished. Not wired into docs.json navigation.
+  Linear: GTM-654 (child of GTM-410/411). Ken-locked facts only — see
+  gtm-411-feature-docs-inventory (row `team-inbox`) and the GTM-410 gap-lock
+  addendum. Do not add to docs.json until Bobby SEO + Theo publish gate.
+*/}
+
+<Warning>
+The shared team inbox is available on the **Pro** and **Agency** plans. **Bulk Message does not include a 2-way inbox** — it sends one-way broadcasts and campaigns only. Upgrade on the [Pricing](https://whatsable.app/pricing) page to unlock it.
+</Warning>
+
+## What is the shared team inbox?
+
+The shared team inbox is the **2-way, real-time WhatsApp conversation view** inside WhatsAble — called **Notifyer Chat** in the product (`chat.notifyer-systems.com`). It is where your team reads incoming customer messages and replies **as your connected WhatsApp number**, side by side with your teammates.
+
+| Plan | Shared team inbox |
+|------|--------------------|
+| Bulk Message | ✗ Not included — broadcast/CSV sending only |
+| Pro | ✓ Full 2-way inbox |
+| Agency | ✓ Full 2-way inbox |
+
+<Note>
+On Agency, connecting more than one WhatsApp number creates a **separate account** for each number, each with its own login and its own inbox. There is currently no single unified inbox that shows conversations from multiple connected numbers at once.
+</Note>
+
+## 2-way live inbox
+
+Unlike a one-way broadcast list, every conversation in the shared inbox is live in both directions:
+
+- **Incoming** — a customer's WhatsApp message appears in the inbox in real time, next to their full conversation.
+- **Outgoing** — anyone on your team can open that conversation and reply immediately, with the reply delivered over WhatsApp as your business.
+
+This 2-way behaviour is exactly what the [message webhook payload](/guides/notifyer-system/api/incoming-message) mirrors outside the UI: `incoming_message: true` for customer messages, `incoming_message: false` for anything your business sends back — whether that reply came from the inbox, the WhatsApp Business app, or an automation.
+
+## Reply as the business
+
+When a teammate replies from the shared inbox, the message goes out from your connected WhatsApp Business number — the customer sees a reply from your business, not from an individual's personal WhatsApp number.
+
+The same conversation stays consistent no matter which surface your team uses to reply:
+
+<CardGroup cols={2}>
+  <Card title="Shared inbox (Notifyer Chat)" icon="inbox">
+    A teammate types a reply in the browser inbox. The webhook payload records `send_by` as that teammate's name (for example `"Axel Meta"`), with `was_message_by_human: true`.
+  </Card>
+  <Card title="WhatsApp Business app" icon="mobile">
+    With [Meta WhatsApp Coexistence](/guides/notifyer-system/embedding-process#whatsapp-coexistence), a hand-typed reply from the phone app also lands in the same conversation. The payload records `send_by: "WhatsApp App"`.
+  </Card>
+</CardGroup>
+
+<Info>
+You do not have to choose one surface. Coexistence means the inbox, the WhatsApp Business app on a phone, and automations (Make, Zapier, n8n, the API) can all reply on the same connected number, and every reply shows up in the same conversation history.
+</Info>
+
+## Conversation history
+
+Every conversation in the shared inbox keeps a running history regardless of which surface sent or received each message:
+
+- The inbox shows the full back-and-forth for a contact, including messages sent from the inbox itself, the WhatsApp Business app, bots, and automations.
+- Outside the UI, the same history is available as `last_messages` (recent messages, newest activity included) and `conversation_paragraph` (a readable transcript) on the [message webhook payload](/guides/notifyer-system/api/incoming-message#payload-fields).
+- **Notes** (`note`, `note_automation`) and **labels** (`labels`) attached to a contact travel with the conversation and are visible in the inbox alongside the history — see **Update a Contact** in [Zapier](/guides/notifyer-system/zapier-overview#update-a-contact) or [Make](/guides/notifyer-system/make-overview#update-a-contact) for how notes and labels get set from outside the inbox.
+
+## Teammate collaboration
+
+The shared inbox is built for more than one person to work the same set of conversations:
+
+- **AI ↔ human handoff.** If you use the [AI chatbot](/guides/notifyer-system/ai-chatbot/overview), each conversation has a **Human Agent ↔ AI Assistant** toggle in the inbox contact panel. Flip it to take over a conversation from the bot, or back to let the bot resume.
+- **Labels and notes.** Teammates can tag conversations with labels and leave contact notes directly from the inbox to organize work and give the AI more context.
+- **Chat assignment.** A conversation can be assigned to a specific teammate so the right person owns the thread. Today this is done through automation — [Zapier](/guides/notifyer-system/zapier-overview#update-a-contact), [Make](/guides/notifyer-system/make-overview), the API, keyword rules, or AI-based content matching — rather than a manual "assign" button inside the inbox itself.
+
+<Note>
+Chat assignment and labels have their own automation field references (Zapier and Make's **Update a Contact** action). This page covers how the shared inbox uses assignment and labels for collaboration; it is not the full assignment/labels reference.
+</Note>
+
+## What the shared inbox is not
+
+To avoid confusion when comparing plans or automation options:
+
+- It is **not** a broadcast tool. Bulk Message's CSV/broadcast sending is one-way and does not include this 2-way inbox.
+- It does **not** currently unify multiple connected WhatsApp numbers into one inbox on Agency — see the note above.
+- It does **not** hide unassigned conversations from teammates. Assignment routes ownership; it does not remove other chats from view.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Connect a WhatsApp number" icon="whatsapp" href="/guides/notifyer-system/embedding-process">
+    Complete Embedded Signup (with Coexistence support) before the shared inbox has any conversations to show.
+  </Card>
+  <Card title="AI Chatbots" icon="message-bot" href="/guides/notifyer-system/ai-chatbot/overview">
+    See how AI Assistant / Human Agent handoff works inside the same inbox.
+  </Card>
+  <Card title="Message webhooks" icon="inbox" href="/guides/notifyer-system/api/incoming-message">
+    Full payload reference for incoming and outgoing messages, including `send_by`, `note`, and `labels`.
+  </Card>
+  <Card title="Zapier integration" icon="bolt" href="/guides/notifyer-system/zapier-overview">
+    Automate labels, notes, and conversation updates that show up in the shared inbox.
+  </Card>
+</CardGroup>
