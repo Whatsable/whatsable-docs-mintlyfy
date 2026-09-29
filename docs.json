@@ -31,6 +31,7 @@
             "group": "Notifyer System",
             "pages": [
               "guides/notifyer-system/embedding-process",
+              "guides/notifyer-system/team-inbox",
               "guides/notifyer-system/zapier-overview",
               "guides/notifyer-system/make-overview",
               "guides/notifyer-system/n8n-overview",
