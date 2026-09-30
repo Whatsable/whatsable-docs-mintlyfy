@@ -1,0 +1,226 @@
+---
+title: "How do I create and approve WhatsApp templates in WhatsAble?"
+description: "Create and approve WhatsApp message templates in the WhatsAble console: super-admin submit, variables, languages, Meta review, and recreate instead of edit."
+---
+
+{/*
+  Linear: GTM-696 P0 #7 (templates-console) · GTM-411 templates-console
+  Soft draft — Ken soft PASS-with-fences (GTM-711 / ken-soft-message-templates-20260930.md) folded 2026-09-30.
+  SoT until Ken soft: product-bible-latest (super-admin create, Meta review range, no edit, preview, number change) · GTM-411 inventory + stewart gap locks · gtm180 automate-notifyer templates-reference (console create payload) · live API pages for cross-link only.
+  PRE-LIVE OMIT: GTM-686 Save draft / typed display name / Ireland (+353) test-send until Axel LIVE. GTM-700 Meta-imported AUTHENTICATION send path until LIVE. GTM-703 Templates page-10 chrome until LIVE.
+  HOLD Bobby soft SEO skim until Ken soft PASS.
+  Do NOT wire docs.json / nav. No GitHub PR / no live edit in this pack.
+  Target path: guides/notifyer-system/message-templates.mdx
+  Brand: WhatsAble only in customer copy. Path may say notifyer-system.
+  Mintlify H1 = frontmatter title only — NO body # heading.
+  Do NOT send core customers to /guides/notifier/advanced/templates (mid-layer; named-variable examples there are not this console).
+*/}
+
+Yes. A **super-admin** creates a WhatsApp message template in the WhatsAble console, submits it to Meta, and can send it only after Meta marks it **approved**. Use this page for the operator path: who is allowed to create, which fields you fill, how status moves from pending to approved or rejected, and what to do when the text must change or you connect a new number.
+
+Creating a template is **not** broadcasting, and it is **not** the send-template API. Those flows only use a template that already exists and is approved. Outside the 24-hour customer-service window, WhatsApp only allows approved templates for business-initiated messages.
+
+## Prerequisites
+
+- **WhatsAble account** on **Bulk Message**, **Pro**, or **Agency**. Template management is on all three. Sign in at [dashboard.whatsable.app/signin](https://dashboard.whatsable.app/signin).
+- **Super-admin role** on that account. Only super-admins can create templates. A normal admin does not have that access. If create is missing, this is the usual cause. The rest of the role matrix is not documented here.
+- **WhatsApp Business number connected** through WhatsAble (Embedded Signup / Coexistence — keep the WhatsApp Business app; do not uninstall it after connect). Submit uses that number’s WhatsApp credentials.
+- **Meta Business Portfolio** (business.facebook.com), not a personal Facebook profile. Embedded Signup may ask for a website; an Instagram profile link or Facebook page link is enough if you have no site.
+- **Meta payment method** before you **send** template messages. Meta charges per template message. A missing card is a send failure, not proof the template was rejected.
+- You do **not** need Make, Zapier, n8n, or the API to create a template in the console.
+
+<Info>
+How-to video (EN): [How to create a WhatsApp message template](https://youtu.be/QvnNp47txe8). Templates and broadcasts are different topics — do not swap the videos. ES / PT / FR versions exist on the same topic.
+</Info>
+
+---
+
+## Operator path — create and submit
+
+Exact button and sidebar strings can vary. The destination below is locked; other chrome is **UNVERIFIED** unless noted. Do not treat a Save draft control, a separate typed display name, or an Ireland (+353) test-send as documented product until those are live.
+
+### 1. Open templates
+
+In the WhatsAble console, open **Settings → Templates**. That is where you check status. Only **Meta-approved** templates appear in send dropdowns (broadcasts, chat, monday.com Send Template, and similar).
+
+### 2. Start a new template (super-admin)
+
+A normal admin cannot create. There is no documented “edit and resubmit.” If you need different text, you create another template (you can delete the old one).
+
+### 3. Fill the fields and submit to Meta
+
+WhatsAble sends the template to Meta for review. It is stored for the workspace only if Meta accepts the submission. A duplicate **name** already on the workspace is rejected (you cannot create a second template with the same name).
+
+### 4. Read status
+
+After submit, status is **pending** until Meta finishes review. Open **Settings → Templates** again to refresh pending items against Meta (the console list updates pending templates when it loads). You do not approve the template yourself.
+
+- **Approved** — ready for broadcasts, inbox/API sends, and integration dropdowns.
+- **Rejected** — Meta declined it. Create a new template. You cannot edit the rejected one and resubmit it. Where a rejection reason appears in the console is **UNVERIFIED**; if the console does not show one, check Meta Business Manager.
+
+### 5. Use it only when approved
+
+Pending templates do not send reliably. A test or template send that returns WhatsApp error (100), “Unsupported post request… object with ID 'messages'…”, is often **this template still pending**, not a disconnected number. If status is already approved and the error remains, then check that the number is still connected.
+
+Copying an old template’s text: open **preview** on the old template, then paste into the new one. That is the supported shortcut when you change numbers or recreate. There is no transfer of approved templates onto a different WhatsApp number.
+
+---
+
+## Field inventory
+
+Treat the names below as the create payload and the rules the console enforces. On-screen labels may differ — marked **UNVERIFIED** where we have not locked the chrome string.
+
+### Template name
+
+One name per template, unique in the workspace.
+
+- Lowercase letters, digits, and underscores. The console forces lowercase.
+- Must start with a letter, not a digit.
+- No spaces (use underscores).
+- Maximum **512** characters.
+- Examples that pass: `order_confirmation`, `invoice_en`. Examples that fail: `OrderConfirmation`, `2fa_code`, `promo banner`.
+
+This is the template **name**, not a separate display name. A typed display-name field is not documented on this page.
+
+### Category
+
+One of:
+
+| Category | Typical use |
+| --- | --- |
+| **Marketing** | Promotions, offers, announcements |
+| **Utility** | Order updates, confirmations, service notices |
+| **Authentication** | One-time verification codes |
+
+Meta prices template conversations by category. WhatsAble does not add a markup on Meta fees. Pick the category that matches the content. A mismatch is a common rejection reason; this page does not invent Meta’s policy text.
+
+**Authentication** does not use a free-form body you write. The create payload builds a verification-code message, with an optional security line (“do not share this code”) and a code expiry in minutes (payload default **10**). An OTP button label exists on that payload (default copy is “Copy Code”). Exact console controls for those options are **UNVERIFIED**. Do not document importing an authentication template that was created in Meta’s own manager — that send path is not live in these docs yet.
+
+### Language
+
+Each template has **one** language code (examples: `en`, `es`, `fr`). Another language is **another template** (its own name, its own Meta review). There is no documented switch that adds a language onto an existing approved template.
+
+### Body and variables
+
+For Marketing and Utility, you write the body. Personalization uses numbered placeholders, in order, starting at `{{1}}`:
+
+`Hello {{1}}, your order #{{2}} is confirmed.`
+
+Every placeholder needs an **example value** for Meta’s review (realistic dummy data, not empty). Those examples are for the reviewer. Real values are supplied later, per recipient, when you send or broadcast (`body1`, `body2`, … on the send API and on broadcast CSVs).
+
+Do not document named placeholders such as `{{company}}` or `{{name}}` for this console. That syntax appears on an older mid-layer templates article and is not the WhatsAble create payload.
+
+Header **text** variables and a free-text footer on Marketing/Utility templates are **UNVERIFIED** as console fields. Do not invent them here. The authentication security line above is the footer this create payload actually sets.
+
+### Header media type
+
+| Type | Header | What you supply |
+| --- | --- | --- |
+| Text | None | Body only |
+| Image | Image | PNG or JPG, uploaded from a URL before submit |
+| Video | Video | MP4, uploaded before submit |
+| Document | Document | PDF, uploaded before submit |
+
+The console uploads the file and stores a media handle on the template. At **send** time, a public media URL can still be passed per message when the template expects media — that is the [template message API](/guides/notifyer-system/api/template-message) and the broadcast CSV `media` column, not a second create step. Broader file types and size caps on that send page are send rules, not extra create formats.
+
+### Buttons (optional)
+
+The create payload accepts these kinds. Console wording is **UNVERIFIED**; limits are from the console create path:
+
+| Kind | Payload shape | Max |
+| --- | --- | --- |
+| Quick reply | Button label text | 10 |
+| Visit website | Button text, static URL, or a base URL plus a dynamic suffix | 2 |
+| Call phone number | Button text and phone number | 1 |
+| Copy offer code | The code to copy | 1 |
+
+Total buttons on one template: **10**. A dynamic website URL is a fixed base plus a per-recipient suffix (broadcast column `button_dynamic_url_value`, or the send API’s dynamic website flag).
+
+### Status values you will see
+
+Pending, approved, or rejected. Casing in API payloads varies (`PENDING` vs `approved`); do not treat letter case as a customer-facing label. Only approved templates are offered when sending.
+
+---
+
+## Limits and what this is not
+
+<Warning>
+**Only super-admins create templates.** A normal admin cannot. **You cannot edit** a submitted template. Recreate, resubmit, and delete the old one if you no longer need it. Approved templates **do not move** to a new WhatsApp number.
+</Warning>
+
+- **Meta review time is not a guarantee.** Meta usually approves within a few minutes and can take up to about 24 hours. Do not promise a minute, and do not promise 24–48 hours. If it is still pending, wait and recheck **Settings → Templates** rather than creating duplicates (duplicate names are blocked anyway).
+- **No in-console edit.** Rejected or outdated copy means a new template. Use **preview** on the old one to copy the text.
+- **New number:** recreate and resubmit every template. Old approvals do not apply.
+- **Sends need an approved template** when you are outside the 24-hour window, or when you are opening the conversation. Inside 24 hours of the contact’s last message, free-form (non-template) messages are allowed. Business-initiated template conversations also follow Meta’s portfolio tiers (unverified about 250/day, then higher tiers after verification). Those caps are Meta’s, not a WhatsAble messages-per-minute number. This page does not invent a WhatsAble RPM.
+- **No native drip builder** and **no typing-indicator dots.** Sequences of templates over days run in Make, Zapier, or n8n.
+- **Template management is not a plan upsell.** Bulk Message, Pro, and Agency all include it. Broadcasting those templates is a different page. Scheduled broadcasts are Pro and Agency only.
+- **ProactiveBot** (Pro and Agency) can generate a follow-up template when none fits. That does not replace this create flow, and it is not documented as a way around the super-admin rule.
+- **Do not use** the older Notifier “advanced templates” article as the how-to for this console.
+- Full permission matrix, exact Settings sidebar, and character caps beyond the **512**-character name are **not** locked. Follow Meta’s template policies for content. WhatsAble does not publish a separate body character cap on this page.
+
+---
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Broadcasts (CSV)" href="/guides/notifyer-system/broadcasts">
+    Send an approved template to a list. Not the create flow.
+  </Card>
+  <Card title="API: get templates" href="/guides/notifyer-system/api/get-templates">
+    List templates and status for the connected number.
+  </Card>
+  <Card title="API: send a template" href="/guides/notifyer-system/api/template-message">
+    One recipient, with body variables, after approval.
+  </Card>
+  <Card title="API: non-template message" href="/guides/notifyer-system/api/non-template-message">
+    Free-form send inside the 24-hour window only.
+  </Card>
+  <Card title="Plans" href="/guides/notifyer-system/plans-bulk-message-pro-agency">
+    Bulk Message, Pro, and Agency. Template management is on all three.
+  </Card>
+  <Card title="monday.com" href="/guides/notifyer-system/monday-overview">
+    Send Template lists approved templates only.
+  </Card>
+  <Card title="Connect WhatsApp (Coexistence)" href="/guides/whatsable/connect-whatsapp-coexistence">
+    Connect the number before you submit templates.
+  </Card>
+  <Card title="Pricing" href="https://whatsable.app/pricing">
+    Plan price and unique contacts. Meta fees are separate, at 0% markup.
+  </Card>
+</CardGroup>
+
+---
+
+## FAQ
+
+### Who can create a template in WhatsAble?
+
+Only a **super-admin**. A normal admin cannot. Template management itself is on **Bulk Message**, **Pro**, and **Agency**; the block is the role, not the plan.
+
+### Where do I create and check templates?
+
+**Settings → Templates** in the WhatsAble console. Send dropdowns list **approved** templates only.
+
+### How long does Meta approval take?
+
+Usually a few minutes, sometimes up to about **24 hours**. That is the usual range, not an SLA. Recheck **Settings → Templates**. Do not keep submitting the same name while you wait.
+
+### Can I edit a template after I submit it?
+
+No. Create a new template and submit that. You can delete the old one. Open **preview** on the old template to copy its text. The same rule applies when Meta **rejects** one.
+
+### Why did my template disappear from the send list?
+
+It is not **approved** yet, or you are looking at a **different WhatsApp number**. Approvals belong to the number they were submitted on. Changing numbers means recreating every template.
+
+### What variables can I put in the body?
+
+Numbered placeholders `{{1}}`, `{{2}}`, … in order, each with an example for review. At send time those map to `body1`, `body2`, and so on. Do not use `{{name}}`-style names for this console.
+
+### Why does a test send say “unsupported post request”?
+
+Most often that **this** template is still pending. Confirm status under **Settings → Templates**. If it is approved and the error continues, treat it as a disconnected number and reconnect.
+
+### Can I save a draft or test-send to an Ireland number from this page?
+
+Not documented here. Use an **approved** template in broadcasts, the inbox, or the API when you need to see a real send.
