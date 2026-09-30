@@ -1,0 +1,209 @@
+---
+title: "What Click-to-WhatsApp fields appear on WhatsAble webhooks?"
+description: "Map Click-to-WhatsApp referral on WhatsAble webhooks: source_type, source_id, source_url, headline, body, media, ctwa_clid, and first-message context fields."
+---
+
+{/*
+  Linear: GTM-696 P0 #10 (ctwa-referral) · GTM-411 ctwa-referral / api-incoming-webhook
+  Soft draft — Ken soft PASS-with-fences (GTM-714 / ken-soft-ctwa-referral-20260930.md) folded 2026-09-30.
+  Folded SoT: gold-sop ctwa-fields.md (Ken CTWA field lock) · live incoming-message CTWA section · Ken plan P0 #10 + Bobby stamp (dedicated URL).
+  Ready for Bobby soft SEO skim.
+  Do NOT wire docs.json / nav. No GitHub PR / no live edit in this pack.
+  Target path: guides/notifyer-system/api/ctwa-referral-fields.mdx
+  Brand: WhatsAble only in customer copy. Path may say notifyer-system (legacy hrefs only).
+  Mintlify H1 = frontmatter title only — NO body # heading.
+  welcome_message = object only (nested keys UNVERIFIED). No invent pixel/CAPI beyond ctwa_clid.
+  PRE-LIVE omit: GTM-670/686/691/697/700/701/703/704/705.
+*/}
+
+When someone taps **Send message** on a Click-to-WhatsApp ad (Facebook, Instagram, or WhatsApp Status) and writes to your number, Meta attaches a `referral` object to that inbound event. WhatsAble forwards it on your custom webhook and on n8n, Make, and Zapier triggers — so you can see which creative, platform, and click produced the lead.
+
+This page is the **dedicated field dictionary** for that `referral` object (and the first-message fields that ride alongside it). For the full inbound/outbound webhook payload, signature verification, and management API, use [Message webhooks](/guides/notifyer-system/api/incoming-message) — including the live [Click-to-WhatsApp ads](/guides/notifyer-system/api/incoming-message#click-to-whatsapp-ads) section.
+
+## Prerequisites
+
+- **WhatsAble account** with a connected WhatsApp Business number (Embedded Signup / Coexistence supported — keep the WhatsApp Business app; do not uninstall it after connect).
+- **Incoming** webhook or automation trigger enabled so contact → business messages reach your endpoint (custom HTTPS webhook, or [n8n](/guides/notifyer-system/n8n-overview) / [Make](/guides/notifyer-system/make-overview) / [Zapier](/guides/notifyer-system/zapier-overview)).
+- **HTTPS endpoint** that accepts `POST` JSON and returns 2xx within ~10 seconds (same requirements as [Message webhooks](/guides/notifyer-system/api/incoming-message)).
+- Optional: a CRM or Conversions API destination ready to store `ctwa_clid` and `source_id` as soon as they arrive (they usually appear **once**).
+
+<Info>
+Integrations (Zapier / Make / n8n) require **Pro** or **Agency**. Custom webhooks follow your Developer settings. This page does not invent plan gates beyond that — see plans docs when live.
+</Info>
+
+---
+
+## What `referral` is for
+
+| Goal | Fields to use |
+|------|----------------|
+| Group leads by campaign or creative | `source_id`, `headline` |
+| See Facebook vs Instagram vs other | `source_url` (host is `instagram.com`, `facebook.com`, `fb.me`, …) |
+| Show agents the ad the lead saw | `headline`, `body`, `image_url` / `video_url`, `media_type` |
+| Send conversions back to Meta | `ctwa_clid` |
+
+<Note>
+`referral` is typically present only on the **first inbound message** after the ad click. Later messages in the same chat usually omit it. Persist `ctwa_clid` and `source_id` (keyed on the contact's phone) as soon as they arrive.
+</Note>
+
+<Info>
+WhatsApp Status ad placements may omit `ctwa_clid`. Organic posts use `source_type: "post"` instead of `"ad"`.
+</Info>
+
+---
+
+## Referral object — field dictionary
+
+Look for `referral` as a **top-level** field on the WhatsAble webhook payload, or at `entry[].changes[].value.messages[].referral` if the delivery includes the Meta Cloud API envelope.
+
+| Exact key | Type | Meaning |
+|-----------|------|---------|
+| `referral` | object | Present on incoming CTWA / post events; omitted on ordinary chats and most follow-ups |
+| `referral.source_type` | string | `"ad"` or `"post"` |
+| `referral.source_id` | string | Meta ad or post ID |
+| `referral.source_url` | string | URL of the ad or post (platform is in the host) |
+| `referral.headline` | string | Ad or post headline |
+| `referral.body` | string | Ad or post body copy (may include emoji shortcodes such as `:fire:`) |
+| `referral.media_type` | string | `"image"` or `"video"` |
+| `referral.image_url` | string | Image creative URL when `media_type` is `"image"` (URLs can expire — copy assets you need to keep) |
+| `referral.video_url` | string | Video creative URL when `media_type` is `"video"` |
+| `referral.thumbnail_url` | string | Thumbnail URL for video creatives |
+| `referral.ctwa_clid` | string | Click ID for Meta Conversions API attribution (`action_source: "business_messaging"`, `messaging_channel: "whatsapp"`) |
+| `referral.welcome_message` | object | Optional. Welcome message configured on the ad, when Meta includes it. **Nested keys are not documented** — treat as an opaque object until product publishes children |
+
+<Warning>
+Do **not** invent nested keys under `welcome_message` (for example `text` or `type`). Docs name the object only. Do **not** invent Meta-only names (`ads_context_data`, `source_app`, …) as WhatsAble webhook fields. Do **not** confuse Facebook Lead Ads form webhooks with WhatsApp CTWA `referral`.
+</Warning>
+
+---
+
+## First-message fields on the same event
+
+Creative and attribution live under `referral.*`. The contact's first text rides on the **same** inbound payload in the usual message fields — useful for CRM notes and routing, not a separate inbox creative UI schema.
+
+| Exact key | Role alongside `referral` |
+|-----------|---------------------------|
+| `incoming_message` | `true` on contact → business |
+| `last_message_of_user` | Latest user text (sample: `"Quiero información"`) |
+| `last_messages` | Recent thread (array or JSON string — parse before iterating) |
+| `message_type` | e.g. `text` |
+| `phone_number` | Contact digits (string or number) |
+| `recipient_name` | Display name if available |
+| `conversation_paragraph` | Human-readable summary |
+
+Do **not** invent inbox-only creative field names. WhatsAble documents webhook / trigger forwarding of `referral`; it does not publish a separate inbox “creative card” field list.
+
+---
+
+## Sample payload (WhatsAble flattened shape)
+
+```json
+{
+  "last_messages": [
+    {
+      "type": "user",
+      "content": "Quiero información",
+      "timestamp": "2026-08-15T18:18:36.000Z",
+      "content_type": "text"
+    }
+  ],
+  "conversation_paragraph": "User (6:18:36 PM): Quiero información",
+  "phone_number": "50655550100",
+  "recipient_name": "Maria Lopez",
+  "user_id": "9232fcef-a570-4a2c-b46b-6cab53aec304",
+  "last_message_of_user": "Quiero información",
+  "last_message_of_bot": "",
+  "message_type": "text",
+  "incoming_message": true,
+  "send_by": "",
+  "was_message_by_human": true,
+  "referral": {
+    "source_type": "ad",
+    "source_id": "52540693396957",
+    "source_url": "https://www.instagram.com/p/DZiVBz7gAF9/",
+    "headline": "Expo Nissan",
+    "body": "Aprovechá la EXPONISSAN y llevate tu nuevo Nissan Kicks Play Sense MT con condiciones que juegan a tu favor.",
+    "media_type": "image",
+    "image_url": "https://scontent.xx.fbcdn.net/v/t45.1600-4/example.jpg",
+    "ctwa_clid": "AfhN-JKvx8HeFTmfB-Tu11zktQRJ-MNdMV1mwvDNxHnpYrGl-jVf3OEFhLva_MP41zYRe5ErUteWFn3v4gkkjzfIEVr9J_u8GAo3-o6DqShykM4Zsl14FcU5MyThsCoQ"
+  }
+}
+```
+
+`video_url`, `thumbnail_url`, and `welcome_message` are documented LIVE keys; they may be absent from a given sample when Meta did not send them.
+
+---
+
+## Delivery paths
+
+| Destination | How `referral` arrives |
+|-------------|------------------------|
+| Custom HTTPS webhook | WhatsAble POSTs the payload including `referral` when present |
+| n8n / Make / Zapier triggers | Same object on the trigger; filter when `referral` exists |
+| Agent Skills `create-webhook.js --incoming` | Creates a webhook that receives incoming (and `--outgoing` if set) — payload reference stays on Message webhooks |
+
+Field companions when mapping in each tool: [Zapier fields](/guides/notifyer-system/zapier-fields) · [Make fields](/guides/notifyer-system/make-fields) · [n8n fields](/guides/notifyer-system/n8n-fields) (when live).
+
+<Tip>
+In n8n, Make, or Zapier, add a filter or router: only treat the event as ad-attributed when `referral` exists (or `referral.source_type` is `"ad"`). Map `referral.headline`, `referral.source_url`, and `referral.source_id` into your CRM so reporting matches Meta Ads Manager.
+</Tip>
+
+---
+
+## Limits and what this does NOT do
+
+<Warning>
+**First inbound only (typical).** Do not expect `referral` on every message in the thread. Store `ctwa_clid` and `source_id` immediately.
+</Warning>
+
+<Warning>
+**Status ads may omit `ctwa_clid`.** Other referral fields can still be present. Organic posts use `source_type: "post"`.
+</Warning>
+
+- **No invent nested `welcome_message` children** — object only until verified.
+- **No invent inbox creative UI schema** beyond webhook forwarding of `referral.*`.
+- **No Facebook Lead Ads form** payload as CTWA — different Meta product.
+- **No legacy Bot / legacy `/guides/webhooks`** envelope as the CTWA shape — use [Message webhooks](/guides/notifyer-system/api/incoming-message).
+- **No pixel / CAPI claims beyond** documented use of `ctwa_clid` with Meta Conversions API for Business Messaging.
+- Typing-indicator dots, native drip builder, and PRE-LIVE tickets are out of scope for this page.
+
+---
+
+## Related features and next steps
+
+<CardGroup cols={2}>
+  <Card title="Message webhooks" icon="webhook" href="/guides/notifyer-system/api/incoming-message">
+    Full inbound/outbound payload, signatures, and CTWA section
+  </Card>
+  <Card title="Zapier fields" icon="bolt" href="/guides/notifyer-system/zapier-fields">
+    Trigger output dictionary including nested `referral`
+  </Card>
+  <Card title="Make fields" icon="diagram-project" href="/guides/notifyer-system/make-fields">
+    Module field dictionary for Make
+  </Card>
+  <Card title="n8n fields" icon="gear" href="/guides/notifyer-system/n8n-fields">
+    Node field dictionary for n8n
+  </Card>
+</CardGroup>
+
+Also: [n8n overview](/guides/notifyer-system/n8n-overview) · [Make overview](/guides/notifyer-system/make-overview) · [Zapier overview](/guides/notifyer-system/zapier-overview) · [Click-to-WhatsApp ads (anchor)](/guides/notifyer-system/api/incoming-message#click-to-whatsapp-ads).
+
+---
+
+## FAQ
+
+### Do WhatsAble webhooks include Click-to-WhatsApp ad details?
+
+Yes. When the contact's message comes from a Click-to-WhatsApp ad (or organic post with referral), the payload includes a `referral` object (`source_id`, `source_url`, `source_type`, `headline`, `body`, `media_type`, creative URLs, and usually `ctwa_clid`). Full field list is on this page; parent payload reference: [Message webhooks](/guides/notifyer-system/api/incoming-message#click-to-whatsapp-ads).
+
+### Why is `referral` missing on later messages?
+
+Meta / WhatsAble typically attach `referral` only on the **first** inbound after the tap. Persist `ctwa_clid` and `source_id` keyed on `phone_number` when you first see them.
+
+### Where do I look in a Cloud API–shaped delivery?
+
+Use `entry[].changes[].value.messages[].referral`. On the flattened WhatsAble webhook body, look for top-level `referral`.
+
+### Can I send `ctwa_clid` to Meta Conversions API?
+
+Yes — that is the documented purpose of `ctwa_clid` (Business Messaging / WhatsApp). Status placements may omit the click ID; do not invent other pixel fields on this webhook.
