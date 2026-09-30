@@ -24,7 +24,8 @@
             "pages": [
               "introduction",
               "quickstart",
-              "n8n-overview"
+              "n8n-overview",
+              "guides/rate-limits"
             ]
           },
           {
@@ -33,9 +34,16 @@
               "guides/whatsable/connect-whatsapp-coexistence",
               "guides/notifyer-system/embedding-process",
               "guides/notifyer-system/team-inbox",
+              "guides/notifyer-system/chat-assignment",
+              "guides/notifyer-system/broadcasts",
+              "guides/notifyer-system/message-templates",
+              "guides/notifyer-system/plans-bulk-message-pro-agency",
               "guides/notifyer-system/zapier-overview",
+              "guides/notifyer-system/zapier-fields",
               "guides/notifyer-system/make-overview",
+              "guides/notifyer-system/make-fields",
               "guides/notifyer-system/n8n-overview",
+              "guides/notifyer-system/n8n-fields",
               "guides/notifyer-system/pipedrive-overview",
               "guides/notifyer-system/monday-overview",
               "guides/notifyer-system/attio-overview",
@@ -75,6 +83,7 @@
                   "guides/notifyer-system/api/template-message",
                   "guides/notifyer-system/api/non-template-message",
                   "guides/notifyer-system/api/incoming-message",
+                  "guides/notifyer-system/api/ctwa-referral-fields",
                   "guides/notifyer-system/api/outbound-whatsapp-app"
                 ]
               }
@@ -84,6 +93,7 @@
             "group": "WhatsApp Cloud API errors",
             "pages": [
               "whatsapp-error-131026",
+              "whatsapp-error-131037",
               "whatsapp-error-131047",
               "whatsapp-error-131049",
               "whatsapp-error-132001",
