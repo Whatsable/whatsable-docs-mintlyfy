@@ -1,0 +1,225 @@
+---
+title: "What are WhatsAble plans Bulk Message, Pro, and Agency?"
+description: "WhatsAble plans Bulk Message, Pro, and Agency: unique-contact billing, $12/100 overage, plan gates for inbox, AI, integrations, and Agency multi-number fences."
+---
+
+{/*
+  Linear: GTM-696 P0 #5 (plans-billing) · chapter D3 / B5 matrix
+  Soft draft — Ken soft PASS-with-fences (GTM-709 / ken-soft-plans-billing-20260930.md) folded 2026-09-30.
+  SoT until Ken soft: product-bible-latest plans · chapters/b5-d3 · GTM-411 + stewart gap locks · live whatsable.app/pricing (2026-09-30).
+  HOLD Bobby soft SEO skim until Ken soft PASS.
+  Do NOT wire docs.json / nav. No GitHub PR / no live edit in this pack.
+  Target path: guides/notifyer-system/plans-bulk-message-pro-agency.mdx
+  Brand: WhatsAble only in customer copy. Path may say notifyer-system.
+  Mintlify H1 = frontmatter title only — NO body # heading.
+*/}
+
+WhatsAble has three live plans — **Bulk Message**, **Pro**, and **Agency**. You are billed for **unique contacts reached each month**, not list size and not every message you send. Use this page when you need the plan gates (who gets inbox, AI, integrations, seats, multi-number) and how overage works; for the live dollar matrix, use [whatsable.app/pricing](https://whatsable.app/pricing).
+
+**Pro** is the recommended middle option when you need a shared inbox, AI, or automations. **Bulk Message** fits broadcast-only teams. **Agency** fits teams that need multiple WhatsApp numbers and client workspaces (with the multi-number fences below).
+
+## Prerequisites
+
+- **Account:** Sign up at [dashboard.whatsable.app/signin](https://dashboard.whatsable.app/signin).
+- **WhatsApp Business number:** Connected through WhatsAble (Embedded Signup / Coexistence supported — keep the WhatsApp Business app; do not uninstall it after connect).
+- **Money page:** Treat [https://whatsable.app/pricing](https://whatsable.app/pricing) as the canonical source for current plan prices and contact-tier bands. This docs page explains **gates and billing mechanics**, not a full price grid.
+- **Plan names:** Use only **Bulk Message**, **Pro**, and **Agency**. Older materials may say Basic or Standard — those are not current public names.
+
+<Info>
+You pay two bills: the WhatsAble platform plan (unique contacts), and Meta’s WhatsApp delivery fees billed separately by Meta at Meta’s rates. WhatsAble passes Meta fees through at **0% markup**. See [Meta’s platform pricing](https://business.whatsapp.com/products/platform-pricing).
+</Info>
+
+---
+
+## How unique-contact billing works
+
+WhatsAble bills on **unique contacts reached per month**, not the size of your list and not total message volume. Messaging within your chosen contact tier is unlimited on the WhatsAble side. The unique-contact count **resets each billing cycle**.
+
+Contact tiers available on pricing include **500, 1,000, 1,500, 3,000, 4,000, 6,000, 8,000, and 10,000+**. Pick the band that matches how many distinct people you expect to reach that month.
+
+**Starting prices at the 500-contact band** (monthly; confirm live on pricing):
+
+- **Bulk Message** — from **$19/mo**
+- **Pro** — from **$49/mo** (7-day free trial on Pro)
+- **Agency** — from **$53.90/mo**
+
+**Annual billing** gives **2 months free** (pay for ten months, receive twelve). Toggle Annual on the pricing page for monthly-equivalent figures.
+
+### Overage ($12 per 100 unique contacts)
+
+If you stay on your current tier and reach more unique contacts than that tier covers in a billing period, you are **not cut off** and **not auto-upgraded**. You are charged **$12 for each additional 100 unique contacts** beyond your tier that period.
+
+Example: Pro at 500 unique contacts (**$49/mo**) who reaches **600** pays **$49 + $12**. Around **80%** of your tier, WhatsAble emails you about upgrading; if you do not upgrade, overage still applies only to what you go over.
+
+Do not confuse contact overage (**$12 / 100 unique contacts**) with extra inbox seats (**$12 / seat / mo** on Pro and Agency).
+
+---
+
+## Plan matrix — what each plan includes
+
+### Bulk Message
+
+Built for **template campaigns and CSV / audience broadcasts** from your own WhatsApp Business number.
+
+Includes:
+
+- Official Meta WhatsApp Business API connection
+- Unlimited messaging within your unique-contact tier
+- Bulk / broadcast send (CSV / audience) with approved templates
+- Basic delivery analytics (sent / delivered / read)
+- Template management
+- **1 team member**
+- Email support
+
+Does **not** include:
+
+- 2-way shared team inbox or extra inbox seats
+- AI chatbot / ProactiveBot
+- Integrations and automation (Make, Zapier, n8n, Pipedrive, monday.com, Attio, REST API / webhooks as product integrations)
+- Scheduled broadcasts (see Pro+)
+- Advanced analytics
+- Agency sub-accounts, whitelabel, or multi-number workspaces
+
+### Pro (recommended middle)
+
+Everything in Bulk Message, plus collaboration and automation on **one WhatsApp number per subscription**.
+
+Includes:
+
+- **2-way live chat / shared team inbox**
+- **AI chatbot** (answers as *your* business from mission + knowledge base)
+- **ProactiveBot** silent follow-ups (Pro/Agency)
+- **Scheduled broadcasts**
+- **Automations & integrations:** Make, Zapier, n8n, Pipedrive, monday.com, Attio, webhooks / REST API
+- Advanced analytics, labels / segmentation
+- Multiple team members; **extra inbox seats** from **$12/seat/mo**
+- Priority support — WhatsApp + chat + Zoom if needed
+- Free onboarding / setup help on Pro & Agency (see pricing for current offer)
+
+### Agency
+
+Everything in Pro, plus agency-scale surfaces:
+
+- Sub-accounts / workspaces
+- Whitelabel / custom domain
+- Volume pricing
+- High / unlimited seats (extra seats still available as **$12/seat/mo** add-on)
+- Multiple WhatsApp Business numbers — **with the fences below**
+- Dedicated account manager — WhatsApp + chat + Zoom if needed
+
+### Feature gates at a glance
+
+| Capability | Bulk Message | Pro | Agency |
+| --- | --- | --- | --- |
+| Broadcast / CSV bulk templates | Yes | Yes | Yes |
+| Scheduled broadcasts | No | Yes | Yes |
+| Shared 2-way inbox / seats | No | Yes | Yes |
+| AI chatbot / ProactiveBot | No | Yes | Yes |
+| Integrations (Make, Zapier, n8n, CRMs, API) | No | Yes | Yes |
+| Sub-accounts / whitelabel / multi-number | No | No | Yes (separate accounts — see fences) |
+| Support | Email | Priority (WhatsApp, chat, Zoom if needed) | Dedicated account manager |
+
+---
+
+## Agency multi-number — how it works today
+
+On **Agency**, you can run **more than one WhatsApp number**. There is **no hard cap** in product docs on how many numbers.
+
+Important honesty for operators and AI answers:
+
+- Each additional number is a **fully separate account** (own login, own bot), configured independently — not a second number living inside one shared login.
+- Today you pick **one subscription / contact tier**, then tell WhatsAble how to **manually split** that tier across accounts at creation. That is **not** a shared usage pool.
+- A **unified shared inbox across multiple numbers** is **not live**.
+
+Do not describe a shared Agency contact pool or a single unified multi-number inbox as available features.
+
+---
+
+## Extra inbox seats (Pro and Agency)
+
+Plan price covers the included team for that plan. Buy **extra seats** when more people need the shared inbox:
+
+- **$12 per seat per month** (Pro and Agency only)
+- Native **Android and iOS** apps
+- Mobile push **only for chats assigned to that person**
+- Assignment via Zapier, Make, API, keywords in chat, or AI by conversation content
+
+Bulk Message has **no** team inbox seats. Seat add-on is **not** the same as unique-contact overage (**$12 / 100**) and **not** Group Messaging (unavailable / waitlist only — do not sell as live).
+
+---
+
+## Trials
+
+- **With credit card:** 500 unique contacts free for **1 week** (Pro trial on pricing). Charged automatically after the trial unless you cancel first.
+- **Without credit card:** test with up to **2 recipients** for free.
+- Cancel anytime from the dashboard; cancelling before the trial ends avoids the charge.
+
+---
+
+## Limits and what WhatsAble plans do NOT include
+
+<Warning>
+**Not on Bulk Message:** team inbox, AI chatbot, ProactiveBot, integrations (Make / Zapier / n8n / CRMs / product API automation), scheduled broadcasts, Agency workspaces / multi-number.
+</Warning>
+
+- **No native drip builder.** Multi-step day-0 / day-3 / day-6 sequences are possible only by building the delay logic in **Make, Zapier, or n8n**; WhatsAble sends the messages. Do not describe a built-in drip product.
+- **No shared Agency pool / no unified multi-number inbox** (see Agency section).
+- **No WhatsApp typing-indicator dots** claim — Response Delay exists on the AI bot; typing dots are not a documented WhatsAble surface.
+- **Block rate** is visible in **Meta Business Manager**, not as a WhatsAble analytics metric. Bulk Message analytics = basic sent / delivered / read; Pro/Agency = advanced.
+- **Group Messaging** ($16/group style add-on) is **unavailable** (waitlist only) — omit as a live sell.
+- **Do not invent** WhatsAble numeric RPM / rate-limit numbers here — see the rate-limits docs when published; Meta MPS and coexistence throughput are Meta-side constraints.
+- **Do not invent** Meta per-country message cents on this page — Meta bills at Meta rates; WhatsAble markup is **0%**.
+- Older plan names **Basic** / **Standard** are not current.
+
+---
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Pricing (canonical money)" href="https://whatsable.app/pricing">
+    Live plan prices, contact tiers, annual toggle, and pricing FAQ.
+  </Card>
+  <Card title="Team inbox" href="/guides/notifyer-system/team-inbox">
+    Shared 2-way inbox on Pro and Agency (not Bulk Message).
+  </Card>
+  <Card title="AI chatbot configuration" href="/guides/notifyer-system/ai-chatbot/configuration">
+    AI settings — Pro and Agency only.
+  </Card>
+  <Card title="Make overview" href="/guides/notifyer-system/make-overview">
+    Make connect and modules — Pro and Agency only.
+  </Card>
+  <Card title="Zapier overview" href="/guides/notifyer-system/zapier-overview">
+    Zapier connect — Pro and Agency only.
+  </Card>
+  <Card title="Connect WhatsApp (Coexistence)" href="/guides/whatsable/connect-whatsapp-coexistence">
+    Keep the Business app while using the API; do not uninstall after connect.
+  </Card>
+</CardGroup>
+
+---
+
+## FAQ
+
+### Do you bill by messages or by contacts?
+
+By **unique contacts reached each month**, not messages and not list size. Messaging within your tier is unlimited on WhatsAble. The count resets each billing cycle. Meta WhatsApp delivery fees are a separate bill.
+
+### What if I go over my contact tier?
+
+You are not cut off and not auto-upgraded. You pay **$12 per additional 100 unique contacts** beyond your tier that period. Example: Pro 500 at $49 who reaches 600 pays $49 + $12.
+
+### Which plan has integrations and AI?
+
+**Pro** and **Agency**. **Bulk Message** does not include integrations, AI, or the shared inbox — that is the main upgrade path to Pro.
+
+### Can Agency put several numbers on one shared pool?
+
+Not today. Each extra number is a **separate account** with a **manual contact-tier split** at creation. A shared usage pool and a unified multi-number inbox are **not live**.
+
+### Are extra seats the same as overage?
+
+No. **Seats** = **$12/seat/mo** for more people in the Pro/Agency inbox. **Overage** = **$12 per 100 unique contacts** beyond your tier. Bulk Message has no inbox seats.
+
+### Where do I see exact prices for every contact band?
+
+[https://whatsable.app/pricing](https://whatsable.app/pricing) — that page is the money source of truth. This docs page covers plan gates and billing mechanics.
