@@ -1,0 +1,221 @@
+---
+title: "Can I send WhatsApp template broadcasts with WhatsAble?"
+description: "Send WhatsApp template broadcasts with WhatsAble: CSV bulk recipients, delivery modes, scheduled send on Pro+, basic stats, and Meta cold-outreach fences."
+---
+
+{/*
+  Linear: GTM-696 P0 #6 (broadcasts / scheduled-broadcasts) · GTM-411 broadcasts
+  Soft draft — Ken soft PASS-with-fences (GTM-710 / ken-soft-broadcasts-20260930.md) folded 2026-09-30; pause/resume/cancel softened.
+  SoT until Ken soft: product-bible-latest (broadcast / CSV / cold US) · GTM-411 inventory + stewart gap locks · gtm180 automate-notifyer broadcasts reference + create-broadcast (LIVE API/CSV) · thin live mentions (onboarding bullet only).
+  PRE-LIVE OMIT: GTM-277 redesign chrome (Drafts/Upcoming/Craft wizard UI labels) until Axel LIVE; GTM-703 page-10 / Upcoming wrap / Switch / Numbers Meta reports chrome until LIVE.
+  Ready for Bobby soft SEO skim after pause/resume/cancel soften.
+  Do NOT wire docs.json / nav. No GitHub PR / no live edit in this pack.
+  Target path: guides/notifyer-system/broadcasts.mdx
+  Brand: WhatsAble only in customer copy. Path may say notifyer-system.
+  Mintlify H1 = frontmatter title only — NO body # heading.
+*/}
+
+Yes. WhatsAble sends **Meta-approved WhatsApp template broadcasts** to a CSV (or audience) list from your connected WhatsApp Business number. Broadcasting is the main job of the **Bulk Message** plan and is also on **Pro** and **Agency**. Use this page when you need the operator path: prepare the CSV, test, choose a delivery mode, launch or schedule, and read basic delivery stats.
+
+Broadcasting is **not** the same as creating templates, and it is **not** a native multi-day drip builder. Templates are a separate topic; day-0 / day-3 / day-6 sequences run only through **Make, Zapier, or n8n**.
+
+## Prerequisites
+
+- **WhatsAble account** on **Bulk Message**, **Pro**, or **Agency** — sign in at [dashboard.whatsable.app/signin](https://dashboard.whatsable.app/signin).
+- **WhatsApp Business number connected** through WhatsAble (Embedded Signup / Coexistence supported — keep the WhatsApp Business app; do not uninstall it after connect).
+- **At least one Meta-approved message template** for that number. Only **super-admins** create templates; Meta must approve before the template appears in send flows. Editing an existing template is not supported — recreate and resubmit if you need changes.
+- **Meta payment method** on the WhatsApp / Business Manager side. Template sends fail when Meta has no billing method for the number.
+- **Active plan** (or trial) with enough **unique-contact** headroom for the recipient list. WhatsAble bills unique contacts per month; Meta bills delivery fees separately at Meta rates (WhatsAble **0% markup**).
+- **CSV ready** (or list you will export): phone numbers with country code. Exact column rules are below.
+
+<Info>
+How-to video (EN): [How to broadcast](https://youtu.be/_upLw2kKxLo). Broadcasting and templates are different topics — do not swap the videos.
+</Info>
+
+---
+
+## Operator path — send a template broadcast
+
+Exact console menu labels can vary by workspace chrome. Prefer the flow below; treat sidebar wording as **UNVERIFIED** unless you see it live. Do **not** treat PRE-LIVE redesign tabs (Drafts / Upcoming / Ongoing / Previous library chrome, Craft wizard labels) as documented LIVE UI until Axel marks that redesign LIVE.
+
+### 1. Open Broadcasts and pick an approved template
+
+In the WhatsAble console, open the **Broadcasts** area (often under messaging / campaigns — **UNVERIFIED** exact nav label). Start a new broadcast and select a **Meta-approved** template only. Pending templates will not send reliably; Graph “unsupported post request” on test send is often an unapproved template, not a disconnected number.
+
+If the template uses body variables (`{{1}}`, `{{2}}`, …), you will map them from CSV columns in the next step.
+
+### 2. Prepare the recipient CSV
+
+WhatsAble expects a CSV whose **phone column is named exactly `phone_number`**. Include the country code. Support troubleshooting locks this name; if the broadcast fails after upload, check formatting first.
+
+**Required**
+
+| Column | Rule |
+| --- | --- |
+| `phone_number` | Exact header. Digits with country code. In the LIVE upload path used by console/API tooling, omit the `+` prefix (example: `14155550101`, not `+14155550101`). |
+
+**Optional (when the template needs them)**
+
+| Column | Maps to |
+| --- | --- |
+| `body1`, `body2`, `body3`, … | Template body variables `{{1}}`, `{{2}}`, `{{3}}`, … per recipient |
+| `media` | Public URL for per-recipient media when the template has a media header (**verified** on the console CSV/API path) |
+| `button_dynamic_url_value` | Per-recipient URL suffix for dynamic CTA buttons (**verified** on the same path) |
+
+Example:
+
+```csv
+phone_number,body1,body2
+14155550101,John,12345
+14155550102,Jane,67890
+```
+
+After you select a template in the console, download the **template CSV** from the broadcast UI when available — that file matches the variables Meta approved for that template.
+
+**Upload behavior (LIVE backend):**
+
+- Duplicate phone numbers in the same CSV are **deduplicated** (kept once).
+- Re-uploading recipients for the same broadcast **replaces** the previous list.
+- The system returns **unique recipient count** and an estimated **cost of broadcast** (Meta-side country pricing) before you finalize.
+
+Do **not** invent alternate LIVE column names such as camelCase `phoneNumber` in customer docs until a redesign is Axel-LIVE and Ken soft locks the new header.
+
+### 3. Send a test message
+
+Before the full list, send a **test** to a number you control. Confirm the template renders (variables, media, buttons). Fix CSV or template issues here — not after a 10k launch.
+
+### 4. Upload recipients and review counts
+
+Upload the CSV. Confirm:
+
+- Unique numbers match expectations (duplicates dropped).
+- Estimated cost looks sane for the countries on the list.
+- Unique count fits your WhatsAble **unique-contact** tier (or accept overage — see plans page).
+
+Audience / label scoping may appear in some console flows. Treat exact **Labels** control copy as **UNVERIFIED** for this soft page; do not invent a label-picker UX beyond “you can scope with labels when the product exposes it.”
+
+### 5. Choose delivery mode
+
+WhatsAble paces outbound template traffic with three LIVE delivery modes (API/console values):
+
+| Mode | Behavior | When to use |
+| --- | --- | --- |
+| **smart** | Sends in batches; paces toward a target **read rate** before advancing | Default for larger lists — safer warm-up |
+| **regular** | Fixed batch size at a steady pace (batch size is an integer on the LIVE path; console may expose a per-minute range — treat exact slider bounds as **UNVERIFIED** unless confirmed live) | Predictable pace without read-rate feedback |
+| **risk** | No batching — sends the list as a blast (confirm when prompted) | Tiny urgent lists only — large blasts can trigger Meta spam detection and temporarily disable the number |
+
+Do **not** invent a WhatsAble numeric RPM or “messages per second” product limit on this page. Meta messaging tier caps (business-initiated conversations per 24 hours) still apply — see rate-limits docs when published and Meta’s own tier rules.
+
+### 6. Launch now or schedule (Pro+)
+
+- **Send / launch** is available on **Bulk Message**, **Pro**, and **Agency**.
+- **Scheduled broadcasts** (future send time) are **Pro and Agency only**. Bulk Message does **not** include schedule. Scheduling is **not** the same as a native drip delay chain.
+
+Schedule strings on the LIVE finalize path use `DD/MM/YYYY HH:mm`. Timezone resolution can follow the caller’s environment — **always verify the resulting time in the console** after you save.
+
+### 7. Monitor basic delivery stats
+
+After launch, WhatsAble shows **basic delivery analytics**: **sent / delivered / read** (Bulk Message and up). **Block rate** is **not** a WhatsAble dashboard metric — check **Meta Business Manager**. Advanced analytics are a **Pro / Agency** surface, not Bulk Message.
+
+Pause, resume, and cancel controls for an **ongoing** broadcast are **not** documented as LIVE here — they belong to a PRE-LIVE console redesign (GTM-277) until Axel marks them LIVE. On the current product path, track basic **sent / delivered / read** stats and download results when your role allows (export permission matrix is an Axel gap — do not invent who can export). Upcoming scheduled sends can be removed on the API path when that endpoint is in use; do not invent redesign monitor chrome.
+
+---
+
+## Plan gates (broadcast-related)
+
+| Capability | Bulk Message | Pro | Agency |
+| --- | --- | --- | --- |
+| Broadcast / CSV bulk with approved templates | Yes | Yes | Yes |
+| Basic sent / delivered / read | Yes | Yes | Yes |
+| Scheduled broadcast (future send) | **No** | Yes | Yes |
+| Shared 2-way inbox / seats / AI / integrations | No | Yes | Yes |
+
+Canonical money and full unique-contact tiers: [whatsable.app/pricing](https://whatsable.app/pricing). Plan matrix docs: [plans Bulk Message / Pro / Agency](/guides/notifyer-system/plans-bulk-message-pro-agency).
+
+---
+
+## Cold outreach and deliverability (Meta)
+
+For **cold** lists (contacts who have never messaged the business), **especially US numbers**, Meta may choose **not** to deliver if the recipient has not engaged before. Ideally the contact has messaged first. European numbers often fare somewhat better than US for cold reach, but **any** fully cold list still risks poor deliverability or flags.
+
+**Warm gradually:** for cold or new-number campaigns, prefer **smart** (or modest **regular**) pacing over **risk** blasts. Gradual send helps warm the number and reduces throttling / block risk. This is Meta deliverability behavior — not a WhatsAble “US block” product toggle.
+
+---
+
+## Limits and what broadcasts are NOT
+
+<Warning>
+**Scheduled broadcasts = Pro and Agency only.** Bulk Message can broadcast now; it cannot schedule future sends. Multi-day drip delays are **not** “schedule” — see below.
+</Warning>
+
+- **No native drip builder.** Day-0 / day-3 / day-6 (or similar) sequences are built in **Make, Zapier, or n8n**; WhatsAble sends each template when the automation fires. Do not describe an in-product drip / delay campaign builder.
+- **No typing-indicator dots** claim for broadcast (or product-wide as a WhatsAble surface).
+- **Do not invent WhatsAble RPM** numbers here.
+- **Do not invent UI chrome** from PRE-LIVE work: GTM-277 library redesign tabs / Craft wizard labels, and **GTM-703** Broadcasts/Templates page-10 + Upcoming wrap + Switch + Numbers Meta reports chrome — omit until Axel LIVE.
+- **Broadcast ≠ templates.** Creating / approving templates is a separate operator page. Only approved templates send.
+- **Bulk Message** has no team inbox, AI, or integrations — replies to broadcast recipients are not a Bulk Message inbox workflow.
+- **Group Messaging** is unavailable / waitlist only — not a live broadcast substitute.
+- **Competitor comparisons** and Meta per-country cent tables are out of scope; Meta fees pass through at **0%** markup.
+
+---
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Plans: Bulk Message, Pro, Agency" href="/guides/notifyer-system/plans-bulk-message-pro-agency">
+    Who gets broadcast, schedule, inbox, AI, and unique-contact billing.
+  </Card>
+  <Card title="Pricing (canonical money)" href="https://whatsable.app/pricing">
+    Live prices, contact tiers, overage, and annual toggle.
+  </Card>
+  <Card title="Message templates" href="/guides/notifyer-system/message-templates">
+    Create and approve WhatsApp templates (separate from broadcasting).
+  </Card>
+  <Card title="API: send template message" href="/guides/notifyer-system/api/template-message">
+    Programmatic single-recipient template send (not the CSV broadcast wizard).
+  </Card>
+  <Card title="Make overview" href="/guides/notifyer-system/make-overview">
+    External sequences / drips — Pro and Agency.
+  </Card>
+  <Card title="Zapier overview" href="/guides/notifyer-system/zapier-overview">
+    External sequences / drips — Pro and Agency.
+  </Card>
+  <Card title="Connect WhatsApp (Coexistence)" href="/guides/whatsable/connect-whatsapp-coexistence">
+    Keep the Business app while using the API.
+  </Card>
+  <Card title="Team inbox" href="/guides/notifyer-system/team-inbox">
+    Shared 2-way inbox on Pro and Agency (not Bulk Message).
+  </Card>
+</CardGroup>
+
+---
+
+## FAQ
+
+### Which plans can send CSV / template broadcasts?
+
+**Bulk Message**, **Pro**, and **Agency**. Broadcasting is the main Bulk Message use case. **Scheduled** future sends need **Pro** or **Agency**.
+
+### What CSV columns does WhatsAble require?
+
+The phone column must be named exactly **`phone_number`** (country code; omit `+` on the LIVE upload path). Add **`body1`**, **`body2`**, … for template variables, plus **`media`** or **`button_dynamic_url_value`** when the template needs them. Prefer the downloadable template CSV from the broadcast UI after you pick a template.
+
+### Why did my broadcast fail after I uploaded a CSV?
+
+Almost always **CSV formatting**: wrong header (not `phone_number`), missing country code, or variable columns not named `body1`, `body2`, …. Also confirm the template is **approved** and Meta has a **payment method**.
+
+### Can I build a day-0 / day-3 / day-6 drip inside WhatsAble?
+
+**No native drip builder.** Build the delays in **Make, Zapier, or n8n**; WhatsAble sends each message. Scheduled broadcast (Pro+) is a **single** future send time, not a drip chain.
+
+### Will Meta deliver cold US campaigns?
+
+Meta **may not deliver** cold outreach to US numbers when recipients have never engaged. Warm gradually (prefer **smart** / modest **regular** over **risk** blasts). Ideally contacts message you first.
+
+### Where do I see block rate?
+
+In **Meta Business Manager**, not as a WhatsAble analytics metric. WhatsAble basic stats = **sent / delivered / read**.
+
+### Is broadcasting the same as the template API?
+
+No. The console **CSV broadcast** flow uploads a list and paces delivery. The [template message API](/guides/notifyer-system/api/template-message) sends to one recipient per request. Agent-skills / automation scripts can orchestrate the same three backend steps the console uses; that is advanced automation, not a substitute for reading this operator page.
