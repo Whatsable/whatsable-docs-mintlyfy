@@ -1,0 +1,451 @@
+---
+title: "What Make modules and fields does WhatsAble expose?"
+description: "Every WhatsAble Make module and field: Incoming and Incoming & Outgoing triggers, Send, Schedule a follow-up, Update a Contact, and Get delivery status."
+---
+
+{/*
+  Linear: GTM-707 / GTM-696 P0 #3 (int-make companion)
+  Soft draft — Ken soft PASS-with-fences folded 2026-09-30.
+  SoT: ken-soft-make-fields-20260930.md — publish ONLY unlocked keys.
+  Ready for Bobby soft SEO skim. Do NOT wire docs.json / nav.
+  Target path: guides/notifyer-system/make-fields.mdx (branch api-reference).
+  Brand: WhatsAble only in customer copy. Path may say notifyer-system.
+*/}
+
+This page is the **field dictionary** for the WhatsAble for WhatsApp Business app on Make — every unlocked trigger, action, and search module input/output you can map in a scenario. Use it when you already know you want Make and need exact labels, types, and requiredness.
+
+For connect steps, coexistence walkthrough, examples, and troubleshooting, use [Make overview](/guides/notifyer-system/make-overview).
+
+## Prerequisites
+
+- **Plan:** Make requires **Pro** or **Agency** (Bulk Message does not include integrations).
+- **WhatsApp number:** Connected in WhatsAble. Coexistence is supported — keep the WhatsApp Business app; phone replies can fire the dual-direction trigger.
+- **Make app:** Public marketplace listing **WhatsAble for WhatsApp Business** ([make.com/en/integrations/whatsable-message](https://www.make.com/en/integrations/whatsable-message)). Search **WhatsAble** in the Make scenario editor.
+- **API key:** From the WhatsAble console API Keys page. Create a **Notifyer only** connection in Make and paste that key (core product key — not a Meta Graph token).
+
+<Info>
+Install via the WhatsAble console **Connect to Make** flow or the public Make listing. You need Admin, Owner, or App Developer role in your Make organization to install apps.
+</Info>
+
+---
+
+## At a glance
+
+| Kind | Exact name in Make |
+|------|--------------------|
+| Trigger (instant) | **Incoming Messages from console (Notifyer System)** |
+| Trigger (instant) | **Incoming & Outgoing Messages from console (Notifyer System)** |
+| Action | **Send WhatsApp Message** |
+| Action | **Schedule a follow-up Message** |
+| Action | **Update a Contact** |
+| Search | **Get delivery status of a message** |
+
+All modules use the WhatsAble for WhatsApp Business app and a Notifyer API key connection.
+
+---
+
+## Trigger: Incoming Messages from console (Notifyer System)
+
+**Type:** Instant · **Connection:** Notifyer only
+
+Fires every time an incoming message arrives in your WhatsAble console. Full-featured trigger for AI chatbot workflows, lead qualification, CRM updates, and real-time automations — includes AI note, conversation history, and scheduling data.
+
+### Configure inputs
+
+<ResponseField name="Webhook" type="webhook" required>
+  Create or select a Make webhook bound to your Notifyer only connection (API key).
+</ResponseField>
+
+### Output fields — contact identity
+
+<ResponseField name="phone_number" type="text / number">
+  The contact’s phone number (for example `14155550187`). May arrive as a number rather than a string.
+</ResponseField>
+
+<ResponseField name="user_id" type="text">
+  Unique internal ID for this contact (UUID).
+</ResponseField>
+
+<ResponseField name="recipient_name" type="text">
+  Display name used by the AI to address this contact.
+</ResponseField>
+
+<ResponseField name="labels" type="text">
+  Comma-separated labels on the conversation (for example `Hot Lead, Buyer Qualified`).
+</ResponseField>
+
+### Output fields — message data
+
+<ResponseField name="message_type" type="text">
+  Documented values: `text`, `audio`, `image`, or `document`.
+</ResponseField>
+
+<ResponseField name="incoming_message" type="boolean">
+  `true` for this trigger — confirms an inbound message from the contact.
+</ResponseField>
+
+<ResponseField name="send_by" type="text">
+  Empty on this incoming-only trigger. On the dual-direction trigger, identifies the sending system or teammate.
+</ResponseField>
+
+<ResponseField name="was_message_by_human" type="boolean">
+  `true` when a person sent the message.
+</ResponseField>
+
+<ResponseField name="attachment_url" type="text">
+  Public URL of any attached file, or empty when there is none.
+</ResponseField>
+
+<ResponseField name="is_scheduled" type="boolean">
+  `true` when this event is a scheduled delivery; `false` for real-time messages.
+</ResponseField>
+
+<ResponseField name="referral" type="object">
+  Present when the inbound message came from a Click-to-WhatsApp ad or post. Typically on the **first** inbound after the tap; later messages usually omit it. Nested keys:
+
+  | Key | Meaning |
+  |-----|---------|
+  | `source_type` | `"ad"` or `"post"` |
+  | `source_id` | Ad or post ID |
+  | `source_url` | Where they tapped |
+  | `headline` / `body` | Ad copy |
+  | `media_type` | `"image"` or `"video"` |
+  | `image_url` / `video_url` | Creative URLs |
+  | `ctwa_clid` | Click ID for Meta Conversions API |
+
+  Persist `ctwa_clid` and `source_id` as soon as you see them. See also [Incoming message — Click-to-WhatsApp ads](/guides/notifyer-system/api/incoming-message#click-to-whatsapp-ads).
+</ResponseField>
+
+### Output fields — conversation history
+
+<ResponseField name="last_messages" type="text">
+  JSON string (or array representation) of recent messages. Each item includes `type` (`user` / `bot`), `content`, `timestamp`, and `content_type`. Parse before iterating.
+</ResponseField>
+
+<ResponseField name="last_message_of_user" type="text">
+  The most recent message from the contact — the message that triggered this run.
+</ResponseField>
+
+<ResponseField name="last_message_of_bot" type="text">
+  The most recent message your business sent (human or automation).
+</ResponseField>
+
+<ResponseField name="user_last_message_time" type="number">
+  Unix timestamp (milliseconds) of the contact’s last message.
+</ResponseField>
+
+<ResponseField name="bot_last_message_time" type="number">
+  Unix timestamp (milliseconds) of your business’s last message to this contact.
+</ResponseField>
+
+<ResponseField name="conversation_paragraph" type="text">
+  Flat, readable conversation history — useful for LLM prompts without parsing `last_messages`.
+</ResponseField>
+
+### Output fields — AI context and automation
+
+<ResponseField name="note" type="text">
+  AI context note stored on this contact. Update it with **Update a Contact**.
+</ResponseField>
+
+<ResponseField name="note_automation" type="text">
+  Automation instructions for the AI based on conversation events.
+</ResponseField>
+
+<ResponseField name="scheduled_messages" type="text">
+  Description of messages currently scheduled to this contact. **Available on this Incoming-only trigger** — not on the Incoming & Outgoing trigger.
+</ResponseField>
+
+---
+
+## Trigger: Incoming & Outgoing Messages from console (Notifyer System)
+
+**Type:** Instant · **Connection:** Notifyer only
+
+Fires on both incoming and outgoing messages — every message sent or received in your WhatsAble console, including replies typed in the WhatsApp Business app. Use it for conversation logging, CRM sync, or automations that must react when a teammate replies on their phone.
+
+Description in Make: "Get your sent and incoming messages data through a single webhook."
+
+### Configure inputs
+
+Same webhook + Notifyer only connection setup as the Incoming-only trigger.
+
+### Output fields
+
+Identical to **Incoming Messages from console** above, with these differences:
+
+<ResponseField name="incoming_message" type="boolean">
+  `true` when the contact sent a message; `false` when your business sent a message. Add a Router or Filter after this trigger to branch by direction.
+</ResponseField>
+
+<ResponseField name="send_by" type="text">
+  On outgoing messages: `"WhatsApp App"` (phone app), a teammate’s name (inbox), or an automation/app name (Make, Zapier, n8n, API, bot). Empty or omitted on incoming messages.
+</ResponseField>
+
+<ResponseField name="was_message_by_human" type="boolean">
+  `true` when a person sent the message (phone app or inbox); `false` when a bot or automation sent it.
+</ResponseField>
+
+<Warning>
+The `scheduled_messages` field is only available on the **Incoming Messages from console** trigger — not on this dual-direction trigger.
+</Warning>
+
+<Tip>
+Use a Make Filter or Router on `incoming_message`, `send_by`, and `was_message_by_human` to split incoming vs outgoing and human phone-app replies vs automations.
+</Tip>
+
+---
+
+## Action: Send WhatsApp Message
+
+**Connection:** Notifyer only
+
+Sends a WhatsApp message using the official WhatsApp API. You can add labels and write notes that appear in WhatsAble’s chat interface. Choose **Configuration**: template (start a conversation / proactive) or non-template (inside the customer service window).
+
+### Mode A — Send WhatsApp Template (to start conversation)
+
+Use this to initiate a new conversation or reach out proactively. Requires a Meta-approved template.
+
+<ResponseField name="Phone Number" type="text" required>
+  Recipient in international format — digits only, no `+` or spaces (for example `14155550187`).
+</ResponseField>
+
+<ResponseField name="Template" type="dropdown" required>
+  Select from your approved templates. The dropdown shows a live preview of body, language, and category.
+</ResponseField>
+
+<ResponseField name="Body 1, Body 2, … (variables)" type="text" required>
+  One field per template variable (`{{1}}`, `{{2}}`, …). Required when the template has variables.
+</ResponseField>
+
+<ResponseField name="Media URL" type="text">
+  Public URL for a media header (image, video, or document). Only when the selected template has a media header.
+</ResponseField>
+
+<ResponseField name="Visit Website URL / dynamic URL button" type="text">
+  Full URL including the dynamic portion, when the template has a dynamic URL button.
+</ResponseField>
+
+<ResponseField name="Note" type="text" optional>
+  AI context about this contact. Stored on the contact — **not** sent to the recipient.
+</ResponseField>
+
+<ResponseField name="Labels" type="multiselect" optional>
+  Labels to apply to this conversation. Labels appear in your WhatsAble console.
+</ResponseField>
+
+### Mode B — Non-template message (person must write to you first)
+
+Only inside Meta’s customer service window after the contact’s last inbound message. Outside that window, use an approved template.
+
+<ResponseField name="Phone Number" type="text" required>
+  Same digit format as Phone Number above.
+</ResponseField>
+
+<ResponseField name="Message Type" type="dropdown" required>
+  **Text Message**, **Image Message**, **Video Message**, **Document Message**, or **Audio Message**. Nested fields:
+
+  | Message Type | Nested fields |
+  |--------------|---------------|
+  | Text Message | **Message Content** (text, required); **Enable Link Preview** (boolean, optional, default false) |
+  | Image Message | **Image URL** (url, required); **Caption** (text, optional) |
+  | Video Message | **Video URL** (url, required); **Caption** (text, optional) |
+  | Document Message | **Document URL** (url, required); **Caption** (text, optional); **Filename** (text) |
+  | Audio Message | **Audio URL** (url, required) |
+</ResponseField>
+
+<ResponseField name="Labels" type="multiselect" optional>
+  Labels to apply to this conversation.
+</ResponseField>
+
+<ResponseField name="Note" type="text" optional>
+  AI context note for this contact.
+</ResponseField>
+
+<Warning>
+Testing this action sends a **real** WhatsApp message. Use a personal test number during setup.
+</Warning>
+
+---
+
+## Action: Schedule a follow-up Message
+
+**Connection:** Notifyer only
+
+Schedules a WhatsApp message for later, with optional reply and label conditions so it can cancel or skip when the lead is already engaged.
+
+Message fields are the same as **Send WhatsApp Message** (template or non-template, including phone, template/variables or message type, Note, and labels), **plus** the schedule and condition fields below.
+
+### When to send — Relative (delay from now)
+
+<ResponseField name="Delay Value" type="select" required>
+  Choose only: **1, 2, 3, 4, 5, 10, 15, 20, 30, 60, 90, or 120**.
+</ResponseField>
+
+<ResponseField name="Delay Unit" type="select" required>
+  **Minutes**, **Hours**, or **Days**.
+</ResponseField>
+
+### When to send — Specific date and time
+
+<ResponseField name="Date & Time" type="datetime" required>
+  Exact send time.
+</ResponseField>
+
+<ResponseField name="Timezone" type="select" required>
+  Timezone for the scheduled time (full global list in Make — GMT-11 through GMT+12).
+</ResponseField>
+
+### Reply Condition
+
+Optional but recommended. Cancels the scheduled send if the contact replies within the chosen rule.
+
+| Condition label |
+|-----------------|
+| Recipient did not reply after my last message *(recommended default)* |
+| Recipient never replied to any of my messages |
+| Recipient did not reply within 20 minutes |
+| Recipient did not reply within 45 minutes |
+| Recipient did not reply within 3 hours |
+| Recipient did not reply within 6 hours |
+| Recipient did not reply within 12 hours |
+| Recipient did not reply within 24 hours |
+| Recipient did not reply within 48 hours |
+| Recipient did not reply within 72 hours |
+
+### Label condition (optional)
+
+<ResponseField name="Label Condition" type="select" optional>
+  **Include** — only send if the contact has this label at send time. **Does Not Include** — only send if they do not.
+</ResponseField>
+
+<ResponseField name="Label" type="select" optional>
+  Label evaluated when the scheduled send time arrives.
+</ResponseField>
+
+Scheduled messages are visible in the WhatsAble console under the contact’s conversation — you can view or cancel them there.
+
+<Warning>
+This is **not** a native drip builder inside WhatsAble. Day-0 / day-3 / day-6 sequences are multiple Make modules (or routers) that each schedule one message. WhatsAble sends each scheduled message; the sequence logic lives in Make.
+</Warning>
+
+---
+
+## Action: Update a Contact
+
+**Connection:** Notifyer only
+
+Updates a contact in WhatsAble — display name, AI note, and labels. The Make action description also states you can **assign the conversation to a teammate**.
+
+### Documented fields
+
+<ResponseField name="Phone Number" type="text" required>
+  Lookup key in international digit format. Creates a contact if none exists yet.
+</ResponseField>
+
+<ResponseField name="Display Name" type="text" optional>
+  Display name in the WhatsAble chat interface.
+</ResponseField>
+
+<ResponseField name="Note" type="text" optional>
+  AI context note for this contact (name, email, preferences, language, and so on).
+</ResponseField>
+
+<ResponseField name="Add Labels" type="multiselect" optional>
+  Labels to add. WhatsAble conversation labels are the source of truth inside WhatsAble.
+</ResponseField>
+
+<ResponseField name="Remove Labels" type="multiselect" optional>
+  Labels to remove. **Remove All** clears every label on this contact.
+</ResponseField>
+
+<Info>
+**Assign a teammate:** Update a Contact can assign the conversation to a teammate (Make action description + product lock via Zapier / Make / API). Documented fields on this page today are Phone Number, Display Name, Note, and Add/Remove Labels. Confirm any assignee control in your live Make module sample — do not rely on an undocumented field name. Operator how-to: [Chat assignment](/guides/notifyer-system/chat-assignment) (when live) and [Team inbox](/guides/notifyer-system/team-inbox).
+</Info>
+
+---
+
+## Search: Get delivery status of a message
+
+**Connection:** Notifyer only
+
+Checks whether a previously sent WhatsApp message was delivered — useful for fallback paths (for example email) when a number may be wrong or inactive.
+
+<ResponseField name="Message ID" type="text" required>
+  Map from the output of a prior **Send WhatsApp Message** or **Schedule a follow-up Message** module in the same scenario.
+</ResponseField>
+
+Connect a Router after this search to handle delivered vs not-delivered paths (for example send a fallback Gmail or Outlook email).
+
+<Note>
+If a lookup fails in scenario history, re-check the mapped Message ID and contact support if needed. Do not assume every Message ID always resolves in every environment.
+</Note>
+
+---
+
+## Limits and what this does NOT do
+
+<Warning>
+**No native drip builder.** Multi-day sequences use Make (or Zapier / n8n) schedule modules plus reply conditions — not a built-in drip product inside WhatsAble.
+</Warning>
+
+<Warning>
+**No CRM ↔ WhatsAble bidirectional label mirror.** Add/Remove labels update WhatsAble conversation labels. They do not sync Monday/Pipedrive (or other) CRM tags as one shared store.
+</Warning>
+
+<Warning>
+**Coexistence:** Do **not** uninstall the WhatsApp Business app to “enable” API or Make. Keep using the phone; those replies can still start scenarios via the Incoming & Outgoing trigger.
+</Warning>
+
+- **Bulk Message** plan: no Make / integrations — upgrade to Pro or Agency.
+- **Non-template** sends only inside the customer service window after the contact’s last inbound; otherwise use a template.
+- **Phone format:** digits only, full international, no `+`, spaces, or dashes.
+- **Group Messaging** is **unavailable** as a product add-on and is **not** a documented Make module on this fields page.
+- Do not invent trigger `message_type` values beyond `text`, `audio`, `image`, and `document`.
+- Typing-indicator dots are not a documented WhatsAble automation claim.
+- Do not invent location or sticker send types on Make modules.
+
+---
+
+## Related features and next steps
+
+<CardGroup cols={2}>
+  <Card title="Make overview" icon="diagram-project" href="/guides/notifyer-system/make-overview">
+    Connect, coexistence, examples, troubleshooting
+  </Card>
+  <Card title="Zapier fields" icon="bolt" href="/guides/notifyer-system/zapier-fields">
+    Parallel Zapier trigger/action field dictionary
+  </Card>
+  <Card title="Team inbox" icon="inbox" href="/guides/notifyer-system/team-inbox">
+    Shared inbox and human replies alongside automations
+  </Card>
+  <Card title="Chat assignment" icon="user-check" href="/guides/notifyer-system/chat-assignment">
+    Assign chats via Make, Zapier, API, keywords, or AI
+  </Card>
+</CardGroup>
+
+Also: [Incoming message / CTWA](/guides/notifyer-system/api/incoming-message) · [n8n overview](/guides/notifyer-system/n8n-overview) · [Plans](/guides/notifyer-system/plans-bulk-message-pro-agency) (when live).
+
+---
+
+## FAQ
+
+### Does the Make trigger fire when someone replies in the WhatsApp Business app?
+
+Yes, when coexistence is enabled and you use **Incoming & Outgoing Messages from console**. Filter on `incoming_message` (`false`), `send_by` (for example `"WhatsApp App"`), and `was_message_by_human`.
+
+### Which trigger should I use for AI chatbot scenarios?
+
+Prefer **Incoming Messages from console** when you only need inbound events and want `scheduled_messages` in the payload. Use the dual-direction trigger when you must also react to outgoing phone-app or inbox replies.
+
+### Can I build day-0 / day-3 / day-6 WhatsApp drips with WhatsAble and Make?
+
+Yes, by chaining **Schedule a follow-up Message** modules (and reply conditions) in Make. WhatsAble is not a native drip builder — the sequence logic lives in Make.
+
+### Does Bulk Message include Make?
+
+No. Make and other integrations require **Pro** or **Agency**.
+
+### Which fields does Update a Contact document today?
+
+**Phone Number**, **Display Name**, **Note**, **Add Labels**, and **Remove Labels**. Assigning a teammate is supported as a product capability via Make; confirm the live module for any assignee control rather than inventing a field name.
