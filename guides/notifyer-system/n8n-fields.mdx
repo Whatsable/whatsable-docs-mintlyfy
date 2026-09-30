@@ -1,0 +1,404 @@
+---
+title: "What can the WhatsAble n8n node send and receive?"
+description: "Every WhatsAble n8n node field: On new Incoming message event outputs, Send template and non-template inputs, Schedule conditions, and Update Contact."
+---
+
+{/*
+  Linear: GTM-708 / GTM-696 P0 #4 (int-n8n companion)
+  Soft draft — Ken soft PASS-with-fences folded 2026-09-30.
+  SoT: ken-soft-n8n-fields-20260930.md — Audio unlocked from node v2.5.0; Document Filename required.
+  Ready for Bobby soft SEO skim. Do NOT wire docs.json / nav.
+  Target path: guides/notifyer-system/n8n-fields.mdx (branch api-reference).
+  Brand: WhatsAble only in customer copy. Path may say notifyer-system.
+*/}
+
+This page is the **field dictionary** for the WhatsAble community node on n8n — every unlocked trigger and action input/output you can map in a workflow. Use it when you already know you want n8n and need exact labels, types, and requiredness.
+
+For connect steps, coexistence walkthrough, examples, and troubleshooting, use [n8n overview](/guides/notifyer-system/n8n-overview).
+
+## Prerequisites
+
+- **Plan:** n8n requires **Pro** or **Agency** (Bulk Message does not include integrations).
+- **WhatsApp number:** Connected in WhatsAble. Coexistence is supported — keep the WhatsApp Business app; phone replies can fire the trigger when outgoing is enabled.
+- **n8n node:** Verified community package [`n8n-nodes-whatsable`](https://www.npmjs.com/package/n8n-nodes-whatsable) (listing: [n8n.io/integrations/whatsable](https://n8n.io/integrations/whatsable/)). Search **WhatsAble** in the n8n node library, or install with `npm install n8n-nodes-whatsable` on self-hosted.
+- **API key:** From the WhatsAble console API Keys page. Paste that key into the WhatsAble credential (core product key — not a Meta Graph token).
+
+<Info>
+Use the **Notifyer System Incoming & Outgoing Message** credential type on the trigger when you need phone-app and inbox outgoing events, not only inbound.
+</Info>
+
+---
+
+## At a glance
+
+| Kind | Exact name in n8n / console |
+|------|-----------------------------|
+| Trigger (instant) | **On new Incoming message event** (node: Incoming/outgoing WhatsApp message Trigger) |
+| Action · Resource **Send Message** | **Send WhatsApp Message** → product ops **Send Message Template** / **Send Non Template Message** (console: Send template via Notifyer / Send non-template via Notifyer) |
+| Action · Resource **Send Message** | **Schedule WhatsApp Message** → same product ops (template or non-template) |
+| Action · Resource **Send Message** | **Manage Contact** → product op **Update Contact** (console: Update recipient) |
+
+All Notifyer/core paths use a WhatsAble API key credential. When outgoing is enabled, the same trigger also fires for outgoing messages — filter with `incoming_message`.
+
+---
+
+## Trigger: On new Incoming message event
+
+**Type:** Instant · **Node display name:** Incoming/outgoing WhatsApp message Trigger · **App:** WhatsAble
+
+Fires when WhatsApp messages are received — and, with the incoming-and-outgoing credential, when they are sent. Outgoing events include replies typed in the WhatsApp Business app, the WhatsAble inbox, and automations.
+
+### Configure inputs
+
+<ResponseField name="Credential Type" type="dropdown" required>
+  For core WhatsAble (Notifyer System):
+
+  | Option | When to use |
+  |--------|-------------|
+  | **Notifyer System Incoming Message** | Inbound only |
+  | **Notifyer System Incoming & Outgoing Message** | Inbound **and** outgoing (phone app, inbox, automations) |
+
+  Legacy Bot / Notifier credential types exist on the node for other products — this fields page documents the Notifyer System options only.
+</ResponseField>
+
+<ResponseField name="HTTP Method" type="dropdown" required>
+  **POST** (only option).
+</ResponseField>
+
+<ResponseField name="Respond" type="dropdown" required>
+  **Immediately** — respond as soon as the trigger fires. **When Last Node Finishes** — wait for the workflow to complete before responding.
+</ResponseField>
+
+<Info>
+Copy the trigger **Production URL** into the credential’s Production URL field when creating the Notifyer System credential (see [n8n overview](/guides/notifyer-system/n8n-overview)).
+</Info>
+
+### Output fields — contact identity
+
+<ResponseField name="phone_number" type="text / number">
+  The contact’s phone number (for example `14155552671`). May arrive as a number rather than a string.
+</ResponseField>
+
+<ResponseField name="user_id" type="text">
+  Unique internal ID for this contact (UUID).
+</ResponseField>
+
+<ResponseField name="recipient_name" type="text">
+  Display name for this contact in WhatsAble.
+</ResponseField>
+
+<ResponseField name="labels" type="text">
+  Comma-separated labels on the conversation (for example `n8n, webhook-test`).
+</ResponseField>
+
+### Output fields — message data
+
+<ResponseField name="message_type" type="text">
+  Documented values on this page: `text`, `audio`, `image`, or `document`.
+</ResponseField>
+
+<ResponseField name="incoming_message" type="boolean">
+  `true` when the contact sent a message to your business; `false` when your business sent a message to the contact.
+</ResponseField>
+
+<ResponseField name="send_by" type="text">
+  On outgoing messages: `"WhatsApp App"` (phone app), a teammate’s name (inbox), or an automation/app name (n8n, Make, Zapier, API, bot). Empty or omitted on incoming messages.
+</ResponseField>
+
+<ResponseField name="was_message_by_human" type="boolean">
+  `true` when a person sent the message (phone app or inbox); `false` when a bot or automation sent it.
+</ResponseField>
+
+<ResponseField name="attachment_url" type="text">
+  Public URL of any attached file, or empty/`null` when there is none.
+</ResponseField>
+
+<ResponseField name="referral" type="object">
+  Present when the inbound message came from a Click-to-WhatsApp ad or post. Typically on the **first** inbound after the tap; later messages usually omit it. Nested keys:
+
+  | Key | Meaning |
+  |-----|---------|
+  | `source_type` | `"ad"` or `"post"` |
+  | `source_id` | Ad or post ID |
+  | `source_url` | Where they tapped |
+  | `headline` / `body` | Ad copy |
+  | `media_type` | `"image"` or `"video"` |
+  | `image_url` / `video_url` | Creative URLs |
+  | `ctwa_clid` | Click ID for Meta Conversions API |
+
+  Persist `ctwa_clid` and `source_id` as soon as you see them. See also [Incoming message — Click-to-WhatsApp ads](/guides/notifyer-system/api/incoming-message#click-to-whatsapp-ads).
+</ResponseField>
+
+### Output fields — conversation history
+
+<ResponseField name="last_messages" type="text">
+  JSON string of recent messages (about the last 20). Each item includes `type` (`user` / `bot`), `content`, `timestamp`, and `content_type`. Parse before iterating.
+</ResponseField>
+
+<ResponseField name="last_message_of_user" type="text">
+  The most recent message from the contact.
+</ResponseField>
+
+<ResponseField name="last_message_of_bot" type="text">
+  The most recent message your business sent (human or automation).
+</ResponseField>
+
+<ResponseField name="user_last_message_time" type="number">
+  Timestamp of the contact’s last message.
+</ResponseField>
+
+<ResponseField name="bot_last_message_time" type="number">
+  Timestamp of your business’s last message to this contact.
+</ResponseField>
+
+<ResponseField name="conversation_paragraph" type="text">
+  Flat, readable conversation history — useful for LLM prompts without parsing `last_messages`.
+</ResponseField>
+
+### Output fields — AI context and automation
+
+<ResponseField name="note" type="text">
+  AI context note stored on this contact. Update it with **Update Contact**.
+</ResponseField>
+
+<ResponseField name="note_automation" type="text">
+  Automation instructions for the AI based on conversation events.
+</ResponseField>
+
+<Tip>
+Use an IF or Switch node on `incoming_message`, `send_by`, and `was_message_by_human` to split incoming vs outgoing and human phone-app replies vs automations. For rapid multi-message bursts before an AI step, add a short **Wait** node so n8n can coalesce messages from the same number into one coherent run.
+</Tip>
+
+---
+
+## Action: Send WhatsApp Message (template or non-template)
+
+**App:** WhatsAble · **Resource:** Send Message · **Operation:** Send WhatsApp Message
+
+Sends a WhatsApp message using the official WhatsApp API. After you pick the operation, choose **Product Operation**: **Send Message Template** (console / overview: **Send template via Notifyer**) or **Send Non Template Message** (console / overview: **Send non-template via Notifyer**).
+
+### Mode A — Send Message Template (to start conversation)
+
+Use this to initiate a new conversation or reach out proactively. Requires a Meta-approved template.
+
+<ResponseField name="Phone Number" type="text" required>
+  Recipient with country code (for example `+14155552671`) or map from a previous node. Prefer digits with country code as shown in the live editor.
+</ResponseField>
+
+<ResponseField name="Template Name or ID" type="dropdown" required>
+  Select from your approved templates. If n8n switches the field to Expression mode on first open, click **Fixed** to return to the dropdown.
+</ResponseField>
+
+<ResponseField name="Template Variables / Body N" type="text" required>
+  One field per template variable (`{{1}}`, `{{2}}`, … / Body 1, Body 2, …). Required when the template has variables. Media header URL and Visit Website URL appear when the selected template needs them.
+</ResponseField>
+
+<ResponseField name="Note" type="text" optional>
+  AI / internal context about this contact. Stored on the contact — **not** sent to the recipient.
+</ResponseField>
+
+<ResponseField name="Label Names or IDs" type="multiselect" optional>
+  Labels to apply to this conversation.
+</ResponseField>
+
+### Mode B — Send Non Template Message (person must write to you first)
+
+Only inside Meta’s customer service window after the contact’s last inbound message. Outside that window, use an approved template.
+
+<ResponseField name="Recipient Phone Number" type="text" required>
+  Phone number with country code.
+</ResponseField>
+
+<ResponseField name="Message Type" type="dropdown" required>
+  **Text Message**, **Image Message**, **Video Message**, **Document Message**, or **Audio Message**. Nested fields:
+
+  | Message Type | Nested fields |
+  |--------------|---------------|
+  | Text Message | **Message Content** (text, required); **Enable Link Preview** (boolean, optional) |
+  | Image Message | **Image URL** (url, required); **Caption** (text, optional) |
+  | Video Message | **Video URL** (url, required); **Caption** (text, optional) |
+  | Document Message | **Document URL** (url, required); **Caption** (text, optional); **Filename** (text, **required**) |
+  | Audio Message | **Audio URL** (url, required) |
+</ResponseField>
+
+<ResponseField name="Label Names or IDs" type="multiselect" optional>
+  Labels to apply to this conversation.
+</ResponseField>
+
+<ResponseField name="Note" type="text" optional>
+  AI context note for this contact.
+</ResponseField>
+
+<Warning>
+Testing this action sends a **real** WhatsApp message. Use a personal test number during setup. Media URLs must be publicly accessible.
+</Warning>
+
+---
+
+## Action: Schedule WhatsApp Message
+
+**App:** WhatsAble · **Resource:** Send Message · **Operation:** Schedule WhatsApp Message
+
+Schedules a WhatsApp message for later (template or non-template product operation), with optional reply and label conditions so it can cancel or skip when the lead is already engaged.
+
+Message fields are the same as **Send WhatsApp Message** (template or non-template, including phone, template/variables or message type, Note, and labels), **plus** the schedule and condition fields below.
+
+### When to send — Relative (delay from now)
+
+Set **Schedule Type : Relative or Specific** to relative (off / false).
+
+<ResponseField name="Number" type="select" required>
+  Choose only: **1, 2, 3, 4, 5, 10, 15, 20, 30, 60, 90, or 120**.
+</ResponseField>
+
+<ResponseField name="Unit of Time" type="select" required>
+  **Minutes**, **Hours**, or **Days**.
+</ResponseField>
+
+### When to send — Specific date and time
+
+Set **Schedule Type : Relative or Specific** to specific (on / true).
+
+<ResponseField name="Scheduled Date and Time" type="datetime" required>
+  Exact send time — map from a previous step or enter a fixed value.
+</ResponseField>
+
+<ResponseField name="Timezone" type="select" required>
+  Timezone for the scheduled time (global list in the n8n node).
+</ResponseField>
+
+### Recipient Reply Status : Send Only If
+
+Optional but recommended. Cancels or skips the scheduled send if the contact replies within the chosen rule.
+
+| Condition label |
+|-----------------|
+| Recipient Did Not Reply After My Last Message *(recommended default)* |
+| Recipient Never Replied to Any of My Messages |
+| Recipient Did Not Reply Within 20 Minutes After My Last Message |
+| Recipient Did Not Reply Within 45 Minutes After My Last Message |
+| Recipient Did Not Reply Within 3 Hours After My Last Message |
+| Recipient Did Not Reply Within 6 Hours After My Last Message |
+| Recipient Did Not Reply Within 12 Hours After My Last Message |
+| Recipient Did Not Reply Within 24 Hours After My Last Message |
+| Recipient Did Not Reply Within 48 Hours After My Last Message |
+| Recipient Did Not Reply Within 72 Hours After My Last Message |
+
+### Label Status : Include or Exclude (optional)
+
+<ResponseField name="Label Status : Include or Exclude" type="select" optional>
+  **Include** — only send if the contact has this label at send time. **Does Not Include** — only send if they do not.
+</ResponseField>
+
+<ResponseField name="Label Names or IDs" type="multiselect" optional>
+  Label(s) evaluated when the scheduled send time arrives.
+</ResponseField>
+
+<Warning>
+This is **not** a native drip builder inside WhatsAble. Day-0 / day-3 / day-6 sequences are multiple n8n steps that each schedule one message. WhatsAble sends each scheduled message; the sequence logic lives in n8n.
+</Warning>
+
+<Note>
+The live overview also shows an optional **Schedule Message** control on immediate Send flows. Prefer the dedicated **Schedule WhatsApp Message** operation when you need relative delay, reply conditions, or label conditions.
+</Note>
+
+---
+
+## Action: Manage Contact → Update Contact
+
+**App:** WhatsAble · **Resource:** Send Message · **Operation:** Manage Contact · **Product Operation:** Update Contact  
+(Console module name: **Update recipient**)
+
+Updates a contact in WhatsAble — AI note and labels. Lookup is by phone.
+
+### Documented fields
+
+<ResponseField name="Phone Number Name or ID" type="dropdown" required>
+  Lookup key — choose from the loaded phone list or map an ID/expression. Creates or updates the contact for that number.
+</ResponseField>
+
+<ResponseField name="Add a Note" type="text" optional>
+  AI context note for this contact (name, email, preferences, language, and so on).
+</ResponseField>
+
+<ResponseField name="Add Label Names or IDs" type="multiselect" optional>
+  Labels to add. WhatsAble conversation labels are the source of truth inside WhatsAble.
+</ResponseField>
+
+<ResponseField name="Remove Label Names or IDs" type="multiselect" optional>
+  Labels to remove. **Remove All** (when present in the remove list) clears every label on this contact.
+</ResponseField>
+
+<Info>
+**Assign a teammate:** Chat assignment is a product capability via Zapier / Make / API / keywords / AI. The n8n **Update Contact** fields documented on this page today are Phone Number Name or ID, Add a Note, and Add/Remove Label Names or IDs — **do not invent an Assign ResponseField**. Operator how-to: [Chat assignment](/guides/notifyer-system/chat-assignment) (when live) and [Team inbox](/guides/notifyer-system/team-inbox).
+</Info>
+
+---
+
+## Limits and what this does NOT do
+
+<Warning>
+**No native drip builder.** Multi-day sequences use n8n (or Make / Zapier) schedule steps plus reply conditions — not a built-in drip product inside WhatsAble.
+</Warning>
+
+<Warning>
+**No CRM ↔ WhatsAble bidirectional label mirror.** Add/Remove labels update WhatsAble conversation labels. They do not sync Monday/Pipedrive (or other) CRM tags as one shared store.
+</Warning>
+
+<Warning>
+**Coexistence:** Do **not** uninstall the WhatsApp Business app to “enable” API or n8n. Keep using the phone; those replies can still start workflows when outgoing is enabled.
+</Warning>
+
+- **Bulk Message** plan: no n8n / integrations — upgrade to Pro or Agency.
+- **Non-template** sends only inside the customer service window after the contact’s last inbound; otherwise use a template.
+- **Group messaging** via the Notifyer/core n8n path is **not** documented as LIVE on this fields page (group send on the node is a separate WhatsAble Bot product path — omit as core LIVE).
+- Do not invent trigger `message_type` values beyond `text`, `audio`, `image`, and `document`.
+- Do not invent location or sticker send types on n8n Notifyer operations.
+- Typing-indicator dots are not a documented WhatsAble automation claim.
+- No documented **Get delivery status** search/action on the n8n node (unlike Zapier/Make) — do not invent one.
+- Do not invent WhatsAble numeric RPM on this page.
+
+---
+
+## Related features and next steps
+
+<CardGroup cols={2}>
+  <Card title="n8n overview" icon="diagram-project" href="/guides/notifyer-system/n8n-overview">
+    Connect, coexistence, examples, troubleshooting
+  </Card>
+  <Card title="Zapier fields" icon="bolt" href="/guides/notifyer-system/zapier-fields">
+    Parallel Zapier trigger/action field dictionary
+  </Card>
+  <Card title="Make fields" icon="diagram-nested" href="/guides/notifyer-system/make-fields">
+    Parallel Make module field dictionary
+  </Card>
+  <Card title="Incoming message / CTWA" icon="webhook" href="/guides/notifyer-system/api/incoming-message">
+    Webhook payload and Click-to-WhatsApp referral object
+  </Card>
+</CardGroup>
+
+Also: [Team inbox](/guides/notifyer-system/team-inbox) · [Chat assignment](/guides/notifyer-system/chat-assignment) (when live) · [Plans](/guides/notifyer-system/plans-bulk-message-pro-agency) (when live).
+
+---
+
+## FAQ
+
+### Does the n8n trigger fire when someone replies in the WhatsApp Business app?
+
+Yes, when coexistence is enabled and you use **Notifyer System Incoming & Outgoing Message**. The node may still be labelled **On new Incoming message event**. Filter on `incoming_message` (`false`), `send_by` (for example `"WhatsApp App"`), and `was_message_by_human`.
+
+### Can I build day-0 / day-3 / day-6 WhatsApp drips with WhatsAble and n8n?
+
+Yes, by chaining **Schedule WhatsApp Message** steps (and reply conditions) in n8n. WhatsAble is not a native drip builder — the sequence logic lives in n8n.
+
+### Does Bulk Message include n8n?
+
+No. n8n and other integrations require **Pro** or **Agency**.
+
+### Which fields does Update Contact document today?
+
+**Phone Number Name or ID**, **Add a Note**, **Add Label Names or IDs**, and **Remove Label Names or IDs**. Do not invent an Assign field label for n8n.
+
+### Is there a Get delivery status action in n8n?
+
+Not on the documented WhatsAble n8n node surface for Notifyer/core. Use Zapier **Get Delivery Status** or Make **Get delivery status** if you need that lookup, or handle delivery via webhooks/API — do not invent an n8n delivery-status operation.
