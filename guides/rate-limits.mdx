@@ -6,6 +6,7 @@ description: "Meta WhatsApp MPS (80 default; 20 on Coexistence), messaging caps 
 {/*
   Linear: GTM-696 P0 #8 (api-rate-limits) · GTM-411 api-rate-limits
   Soft draft — Ken soft PASS-with-fences (GTM-712 / ken-soft-rate-limits-20260930.md) folded 2026-09-30.
+  Customer jargon scrub 2026-09-30: removed UNVERIFIED/PRE-LIVE/Axel gap/soft page/Ken/Bobby process jargon from body.
   SoT: Meta Throughput (80/1000/20) · bible Coexistence · GTM-411 · live 130429 + coexistence · RPM unpublished.
   Path lock: /guides/rate-limits (existing stub fix; OK not under notifyer-system).
   Ready for Bobby soft SEO skim.
@@ -15,9 +16,9 @@ description: "Meta WhatsApp MPS (80 default; 20 on Coexistence), messaging caps 
   NEVER invent WhatsAble numeric RPM — say unpublished / unknown.
 */}
 
-WhatsApp throughput and messaging caps are set by **Meta**, not by a WhatsAble plan slider. This page covers Meta **messages-per-second (MPS)** limits, the lower MPS fence on **Coexistence** numbers, Meta **messaging limits** outside the 24-hour customer-service window, and what WhatsAble does **not** publish as a numeric API rate (RPM).
+WhatsApp throughput and messaging caps are set by **Meta**, not by a WhatsAble plan slider. This page covers Meta **messages-per-second (MPS)** limits, the lower Coexistence MPS cap, Meta **messaging limits** outside the 24-hour customer-service window, and what WhatsAble does **not** publish as a numeric API rate (RPM).
 
-If you need how to connect a number, start with [Connect WhatsApp (Embedded Signup + Coexistence)](/guides/whatsable/connect-whatsapp-coexistence). For plan gates and unique-contact billing, see the plans page when live under Limits & billing.
+If you need how to connect a number, start with [Connect WhatsApp (Embedded Signup + Coexistence)](/guides/whatsable/connect-whatsapp-coexistence). For plan gates and unique-contact billing, see [plans Bulk Message / Pro / Agency](/guides/notifyer-system/plans-bulk-message-pro-agency).
 
 ---
 
@@ -52,11 +53,11 @@ Meta notes that throughput counts **inbound and outbound** traffic and all messa
 
 ---
 
-## Coexistence fence (20 MPS)
+## Coexistence throughput (20 MPS)
 
 Most WhatsAble customers keep the **WhatsApp Business app** on the phone while using Cloud API (**Coexistence**). Meta fixes Coexistence numbers at **20 MPS** so the app and API stay compatible. That cap is a **Meta-side** constraint.
 
-WhatsAble product locks that match this page:
+WhatsAble notes that match this page:
 
 - Coexistence throughput is **Meta’s**, not a WhatsAble product limit you can raise in Settings.
 - Do **not** uninstall the WhatsApp Business app after connect — that breaks Coexistence.
@@ -72,13 +73,13 @@ Separate from MPS: Meta caps how many **unique** customer numbers a business can
 
 Exact tier values and scaling rules change on Meta’s side. Treat [Meta Messaging Limits](https://developers.facebook.com/docs/whatsapp/messaging-limits/) and WhatsApp Manager as the live source — do not hard-code a WhatsAble “daily RPM.”
 
-WhatsAble product bible alignment (for operators, not a substitute for Meta’s page):
+Operator notes (not a substitute for Meta’s page):
 
 - Outside the 24-hour window, only **approved templates** start business-initiated conversations.
 - Unverified Meta Business Portfolios start with a low daily unique-recipient cap; verified portfolios scale through Meta’s messaging-limit tiers up to unlimited.
 - Customer replies that open or refresh the service window are not “using up” that business-initiated unique-recipient ladder the same way.
 
-A dedicated 24-hour window + Meta tiers ask-page is on the Ken P1 list; this rate-limits page only separates **messaging limits** from **MPS** so AI/GEO does not invent a single invented number.
+This rate-limits page only separates **messaging limits** from **MPS** so you do not mix them into one invented number.
 
 ---
 
@@ -86,19 +87,15 @@ A dedicated 24-hour window + Meta tiers ask-page is on the Ken P1 list; this rat
 
 **Unpublished / unknown.** WhatsAble does **not** currently publish a numeric requests-per-minute (RPM) figure for its own HTTP APIs in customer docs.
 
-GTM-411 and the Ken P0 #8 lock treat numeric WhatsAble RPM as an **Axel gap** until product locks a number. Until then:
-
-- Do **not** invent a WhatsAble RPM, “generous rate limit,” or plan-based API quota for this page.
-- Document **Meta MPS + Coexistence + known fences** only (this soft pack).
+- Do **not** invent a WhatsAble RPM, “generous rate limit,” or plan-based API quota.
+- Use the **Meta MPS**, **Coexistence**, and **messaging limits** sections on this page.
 - If a send fails with Meta throughput details, treat it as Meta `130429` / Throughput — not as a missing WhatsAble RPM table.
-
-When Axel/Ken lock a WhatsAble RPM, Ken soft should add it here; Bobby soft SEO can then skim.
 
 ---
 
 ## Pair rate and burst behavior (Meta)
 
-Meta also applies **pair** rate limits when you send too many messages to the **same** WhatsApp user too quickly (separate from phone-number MPS). Meta documents this on Cloud API overview / error materials (for example throttling around error **`131056`**). Campaigns that spray many different recipients are what MPS is sized for; hammering one user is a different Meta fence.
+Meta also applies **pair** rate limits when you send too many messages to the **same** WhatsApp user too quickly (separate from phone-number MPS). Meta documents this on Cloud API overview / error materials (for example throttling around error **`131056`**). Campaigns that spray many different recipients are what MPS is sized for; hammering one user is a different Meta pair limit.
 
 WhatsAble does not override Meta pair limits.
 
@@ -110,7 +107,7 @@ WhatsAble does not override Meta pair limits.
 2. **Check Coexistence.** If the number still uses the WhatsApp Business app, Meta MPS is **20**, not the default 80 / 1000 ladder.
 3. **Separate MPS from messaging limits.** A green throughput number can still fail business-initiated templates if Meta messaging limits / quality / cold outreach rules apply.
 4. **Warm gradually on cold lists** (especially US). Meta may withhold delivery for healthy-ecosystem reasons — related codes live under WhatsAble’s Meta error pages (for example [131049](/whatsapp-error-131049)).
-5. **Do not uninstall** the Business app to “raise” throughput. That breaks Coexistence; Meta’s Coexistence MPS fence remains the documented path for dual-app numbers.
+5. **Do not uninstall** the Business app to “raise” throughput. That breaks Coexistence; Meta’s Coexistence MPS cap remains the documented path for dual-app numbers.
 
 ---
 
@@ -120,7 +117,7 @@ WhatsAble does not override Meta pair limits.
 - No marketing comparisons to other BSPs.
 - No typing-indicator / “dots” product claims.
 - No native drip builder (sequences stay in Make / Zapier / n8n).
-- No PRE-LIVE console chrome for rate dashboards that are not locked live.
+- No rate-dashboard UI that is not present in your console.
 - Exact Meta messaging-limit tier integers are **not** copied here as everlasting WhatsAble facts — use Meta’s Messaging Limits page and WhatsApp Manager.
 
 ---
@@ -131,13 +128,9 @@ WhatsAble does not override Meta pair limits.
 
 No. Coexistence MPS is fixed by Meta for app + API numbers. WhatsAble does not control or raise it.
 
-### Is the empty live Rate limits stub fixed by this page?
-
-This soft MDX is the replacement draft for `/guides/rate-limits`. It is **not** live until Ken soft PASS → Bobby soft SEO → on-demand PR / Theo publish.
-
 ### Where do plan unique-contact limits fit?
 
-Those are **WhatsAble billing** (unique contacts / overage), not Meta MPS. See the plans / billing soft page under Limits & billing when published; money stays on [pricing](https://whatsable.app/pricing).
+Those are **WhatsAble billing** (unique contacts / overage), not Meta MPS. See [plans Bulk Message / Pro / Agency](/guides/notifyer-system/plans-bulk-message-pro-agency); money stays on [pricing](https://whatsable.app/pricing).
 
 ---
 

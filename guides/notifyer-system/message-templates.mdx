@@ -6,6 +6,7 @@ description: "Create and approve WhatsApp message templates in the WhatsAble con
 {/*
   Linear: GTM-696 P0 #7 (templates-console) · GTM-411 templates-console
   Soft draft — Ken soft PASS-with-fences (GTM-711 / ken-soft-message-templates-20260930.md) folded 2026-09-30.
+  Customer jargon scrub 2026-09-30: removed customer-visible UNVERIFIED / PRE-LIVE fencing labels from body.
   SoT until Ken soft: product-bible-latest (super-admin create, Meta review range, no edit, preview, number change) · GTM-411 inventory + stewart gap locks · gtm180 automate-notifyer templates-reference (console create payload) · live API pages for cross-link only.
   PRE-LIVE OMIT: GTM-686 Save draft / typed display name / Ireland (+353) test-send until Axel LIVE. GTM-700 Meta-imported AUTHENTICATION send path until LIVE. GTM-703 Templates page-10 chrome until LIVE.
   HOLD Bobby soft SEO skim until Ken soft PASS.
@@ -37,7 +38,7 @@ How-to video (EN): [How to create a WhatsApp message template](https://youtu.be/
 
 ## Operator path — create and submit
 
-Exact button and sidebar strings can vary. The destination below is locked; other chrome is **UNVERIFIED** unless noted. Do not treat a Save draft control, a separate typed display name, or an Ireland (+353) test-send as documented product until those are live.
+Open **Settings → Templates** and follow the steps below. Button and sidebar labels can vary by workspace. This page documents the create and submit path that is available today — not every optional console control.
 
 ### 1. Open templates
 
@@ -56,7 +57,7 @@ WhatsAble sends the template to Meta for review. It is stored for the workspace 
 After submit, status is **pending** until Meta finishes review. Open **Settings → Templates** again to refresh pending items against Meta (the console list updates pending templates when it loads). You do not approve the template yourself.
 
 - **Approved** — ready for broadcasts, inbox/API sends, and integration dropdowns.
-- **Rejected** — Meta declined it. Create a new template. You cannot edit the rejected one and resubmit it. Where a rejection reason appears in the console is **UNVERIFIED**; if the console does not show one, check Meta Business Manager.
+- **Rejected** — Meta declined it. Create a new template. You cannot edit the rejected one and resubmit it. If the console does not show a rejection reason, check Meta Business Manager.
 
 ### 5. Use it only when approved
 
@@ -68,7 +69,7 @@ Copying an old template’s text: open **preview** on the old template, then pas
 
 ## Field inventory
 
-Treat the names below as the create payload and the rules the console enforces. On-screen labels may differ — marked **UNVERIFIED** where we have not locked the chrome string.
+The names below match the create payload and the rules the console enforces. On-screen labels may differ slightly from these payload names.
 
 ### Template name
 
@@ -94,7 +95,7 @@ One of:
 
 Meta prices template conversations by category. WhatsAble does not add a markup on Meta fees. Pick the category that matches the content. A mismatch is a common rejection reason; this page does not invent Meta’s policy text.
 
-**Authentication** does not use a free-form body you write. The create payload builds a verification-code message, with an optional security line (“do not share this code”) and a code expiry in minutes (payload default **10**). An OTP button label exists on that payload (default copy is “Copy Code”). Exact console controls for those options are **UNVERIFIED**. Do not document importing an authentication template that was created in Meta’s own manager — that send path is not live in these docs yet.
+**Authentication** does not use a free-form body you write. The create payload builds a verification-code message, with an optional security line (“do not share this code”) and a code expiry in minutes (payload default **10**). An OTP button label exists on that payload (default copy is “Copy Code”). Use the authentication options shown in your console. Importing an authentication template that was created in Meta’s own manager is not covered on this page.
 
 ### Language
 
@@ -110,7 +111,7 @@ Every placeholder needs an **example value** for Meta’s review (realistic dumm
 
 Do not document named placeholders such as `{{company}}` or `{{name}}` for this console. That syntax appears on an older mid-layer templates article and is not the WhatsAble create payload.
 
-Header **text** variables and a free-text footer on Marketing/Utility templates are **UNVERIFIED** as console fields. Do not invent them here. The authentication security line above is the footer this create payload actually sets.
+Header **text** variables and a free-text footer on Marketing/Utility templates are not documented as console fields on this page. The authentication security line above is the footer this create payload actually sets.
 
 ### Header media type
 
@@ -125,7 +126,7 @@ The console uploads the file and stores a media handle on the template. At **sen
 
 ### Buttons (optional)
 
-The create payload accepts these kinds. Console wording is **UNVERIFIED**; limits are from the console create path:
+The create payload accepts these kinds. Limits are from the console create path:
 
 | Kind | Payload shape | Max |
 | --- | --- | --- |
@@ -153,7 +154,7 @@ Pending, approved, or rejected. Casing in API payloads varies (`PENDING` vs `app
 - **New number:** recreate and resubmit every template. Old approvals do not apply.
 - **Sends need an approved template** when you are outside the 24-hour window, or when you are opening the conversation. Inside 24 hours of the contact’s last message, free-form (non-template) messages are allowed. Business-initiated template conversations also follow Meta’s portfolio tiers (unverified about 250/day, then higher tiers after verification). Those caps are Meta’s, not a WhatsAble messages-per-minute number. This page does not invent a WhatsAble RPM.
 - **No native drip builder** and **no typing-indicator dots.** Sequences of templates over days run in Make, Zapier, or n8n.
-- **Template management is not a plan upsell.** Bulk Message, Pro, and Agency all include it. Broadcasting those templates is a different page. Scheduled broadcasts are Pro and Agency only.
+- **Template management is not a plan upsell.** Bulk Message, Pro, and Agency all include it. Broadcasting those templates is a different page. Scheduled broadcasts are available on Bulk Message, Pro, and Agency.
 - **ProactiveBot** (Pro and Agency) can generate a follow-up template when none fits. That does not replace this create flow, and it is not documented as a way around the super-admin rule.
 - **Do not use** the older Notifier “advanced templates” article as the how-to for this console.
 - Full permission matrix, exact Settings sidebar, and character caps beyond the **512**-character name are **not** locked. Follow Meta’s template policies for content. WhatsAble does not publish a separate body character cap on this page.

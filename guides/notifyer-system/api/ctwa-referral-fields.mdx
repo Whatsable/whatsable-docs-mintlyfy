@@ -6,6 +6,7 @@ description: "Map Click-to-WhatsApp referral on WhatsAble webhooks: source_type,
 {/*
   Linear: GTM-696 P0 #10 (ctwa-referral) · GTM-411 ctwa-referral / api-incoming-webhook
   Soft draft — Ken soft PASS-with-fences (GTM-714 / ken-soft-ctwa-referral-20260930.md) folded 2026-09-30.
+  Customer jargon scrub 2026-09-30: removed PRE-LIVE / when-live process jargon from body.
   Folded SoT: gold-sop ctwa-fields.md (Ken CTWA field lock) · live incoming-message CTWA section · Ken plan P0 #10 + Bobby stamp (dedicated URL).
   Ready for Bobby soft SEO skim.
   Do NOT wire docs.json / nav. No GitHub PR / no live edit in this pack.
@@ -28,7 +29,7 @@ This page is the **dedicated field dictionary** for that `referral` object (and 
 - Optional: a CRM or Conversions API destination ready to store `ctwa_clid` and `source_id` as soon as they arrive (they usually appear **once**).
 
 <Info>
-Integrations (Zapier / Make / n8n) require **Pro** or **Agency**. Custom webhooks follow your Developer settings. This page does not invent plan gates beyond that — see plans docs when live.
+Integrations (Zapier / Make / n8n) require **Pro** or **Agency**. Custom webhooks follow your Developer settings. This page does not invent plan gates beyond that — see [plans Bulk Message / Pro / Agency](/guides/notifyer-system/plans-bulk-message-pro-agency).
 </Info>
 
 ---
@@ -142,7 +143,7 @@ Do **not** invent inbox-only creative field names. WhatsAble documents webhook /
 | n8n / Make / Zapier triggers | Same object on the trigger; filter when `referral` exists |
 | Agent Skills `create-webhook.js --incoming` | Creates a webhook that receives incoming (and `--outgoing` if set) — payload reference stays on Message webhooks |
 
-Field companions when mapping in each tool: [Zapier fields](/guides/notifyer-system/zapier-fields) · [Make fields](/guides/notifyer-system/make-fields) · [n8n fields](/guides/notifyer-system/n8n-fields) (when live).
+Field companions when mapping in each tool: [Zapier fields](/guides/notifyer-system/zapier-fields) · [Make fields](/guides/notifyer-system/make-fields) · [n8n fields](/guides/notifyer-system/n8n-fields).
 
 <Tip>
 In n8n, Make, or Zapier, add a filter or router: only treat the event as ad-attributed when `referral` exists (or `referral.source_type` is `"ad"`). Map `referral.headline`, `referral.source_url`, and `referral.source_id` into your CRM so reporting matches Meta Ads Manager.
@@ -165,7 +166,7 @@ In n8n, Make, or Zapier, add a filter or router: only treat the event as ad-attr
 - **No Facebook Lead Ads form** payload as CTWA — different Meta product.
 - **No legacy Bot / legacy `/guides/webhooks`** envelope as the CTWA shape — use [Message webhooks](/guides/notifyer-system/api/incoming-message).
 - **No pixel / CAPI claims beyond** documented use of `ctwa_clid` with Meta Conversions API for Business Messaging.
-- Typing-indicator dots, native drip builder, and PRE-LIVE tickets are out of scope for this page.
+- Typing-indicator dots and a native drip builder are out of scope for this page.
 
 ---
 
