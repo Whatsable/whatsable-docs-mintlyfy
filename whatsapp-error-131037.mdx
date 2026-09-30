@@ -1,0 +1,152 @@
+---
+title: "WhatsApp Cloud API error 131037"
+description: "WhatsApp Cloud API error 131037: the 555 business phone needs an approved display name before send. Match on code and details, not titles."
+---
+
+{/*
+  SOFT DRAFT — GTM-690. Box-only soft; not wired into docs.json.
+  Source pack: /workspace/whatsable/gold-sop-2026-09-08/meta-131037-555-source-20260930.md
+  Ken soft PASS-with-fences: gtm-688-meta-131037-555-20260930/ken-soft-gtm-688-690-20260930.md
+  Fences: five/day + 1–2 day "reflect" = Meta support only; exact reset HOLD;
+  do not claim 555 never scales; fence WhatsAble sender/UI invent;
+  prefer live Meta messaging limits; messaging_limit_tier = Observed/legacy.
+  HOLD publish / docs.json until Bobby SEO + Axel LIVE. Align with Jerry GTM-689.
+*/}
+
+This page documents WhatsApp Cloud API error `131037`.
+
+Meta will deprecate error titles. Match on `code` and `details`, not on the title in `message`.
+
+Official table: [WhatsApp Cloud API error codes](https://developers.facebook.com/documentation/business-messaging/whatsapp/support/error-codes).
+
+## Match these fields
+
+| Field | Value |
+| --- | --- |
+| `code` | `131037` |
+| `error_data.details` | The 555 business phone number used to send the request does not have an approved display name. |
+
+Do not build handlers on titles such as `(#131037) …`. Those titles live inside `message` and will be deprecated.
+
+## What 131037 means
+
+Official `details`: The 555 business phone number used to send the request does not have an approved display name.
+
+Official next step from Meta: change or approve the 555 business phone number’s display name. See Meta’s [display names](https://developers.facebook.com/documentation/business-messaging/whatsapp/display-names) documentation and [How to change your WhatsApp Business display name](https://www.facebook.com/business/help/338047025165344).
+
+`131037` is a **refusal**. The message is not sent.
+
+In one Observed case, the same code refused both free-form text replies inside an open customer service window and template sends on that number.
+
+Always check account health (and billing) before acting on the code alone. A send error code can be the wrong place to start if the account is unhealthy for another reason. Payment-method failures are typically surfaced under other codes (for example `131042`); do not treat `131037` as a payment error by default.
+
+## Reading `health_status`
+
+Query the **phone-number** node (not the account node; the account node omits the phone-number entity):
+
+```bash
+GET /{phone-number-id}?fields=health_status
+```
+
+The response has one rollup, `can_send_message`, and a list of entities: `PHONE_NUMBER`, `WABA`, `BUSINESS`, and `APP`.
+
+- The rollup takes the worst entity. A healthy account behind an unverified business shows `LIMITED` overall. Read the entities to see which one is at fault.
+- `can_send_message` values: `AVAILABLE`, `LIMITED`, `BLOCKED`. `LIMITED` is a steady state for businesses that have not passed verification — not an outage by itself.
+- The explanation can be free text. Read both `errors` and `additional_info`. In one Observed case, the `PHONE_NUMBER` entity had no error code; `additional_info` said the display name was not approved yet and that the message limit would increase after approval.
+- An `AVAILABLE` entity can still list other errors that do not stop messaging. Treat messaging readiness from `can_send_message` and the phone-number / display-name entities, not from every code on the payload.
+
+## Phone-number node traps
+
+Query (current Meta fields plus one legacy field seen in the case):
+
+```bash
+GET /{phone-number-id}?fields=status,name_status,new_name_status,code_verification_status,quality_rating,whatsapp_business_manager_messaging_limit,messaging_limit_tier,platform_type,verified_name,is_pin_enabled,account_mode
+```
+
+`messaging_limit_tier` is a **legacy** field (Observed in the case table below). Prefer `whatsapp_business_manager_messaging_limit` for current reads.
+
+These fields can look healthy while sends still fail with `131037`. Values Observed on a problem +1 555 number at the same time:
+
+| Field | Example value | Meaning |
+| --- | --- | --- |
+| `status` | `CONNECTED` | registered and online |
+| `code_verification_status` | `VERIFIED` | |
+| `platform_type` | `CLOUD_API` | Cloud API number |
+| `is_pin_enabled` | `true` | two-step PIN set at registration |
+| `name_status` | `AVAILABLE_WITHOUT_REVIEW` | no name review shown as pending |
+| `new_name_status` | `AVAILABLE_WITHOUT_REVIEW` | no newer name request waiting |
+| `messaging_limit_tier` | `TIER_250` | legacy displayed tier (Observed) |
+| `quality_rating` | `GREEN` | |
+| `verified_name` | an older name | a newly approved name may not be applied yet |
+
+Signals that can disagree for hours or days on the same account (Observed case; lag timing from Meta support):
+
+- The phone-number node says no review is pending (`AVAILABLE_WITHOUT_REVIEW`).
+- `health_status` says the display name is not approved.
+- WhatsApp Manager’s Phone numbers tab says “Pending review”.
+- Meta emails that a display name was approved.
+- The displayed messaging limit looks like a normal tier while the effective cap on that +1 555 number is still tiny.
+
+Meta support’s explanation for the lag in that case: the approval must be “reflected”, which can take **1 to 2 business days**. Treat the approval email, Manager, phone-number node, and health endpoint as independent views until they agree. Confirm on the number you send from: `verified_name` matches the approved name, and health no longer flags an unapproved display name.
+
+The messaging limit Meta displays for a normal number is a ceiling, not a guarantee of the effective limit on a +1 555 number whose display name is still unapproved.
+
+## Meta-provided +1 555 numbers
+
+Meta can provide **+1 555** business phone numbers through Embedded Signup. Per Meta’s Embedded Signup docs, these numbers use a US +1 / 555 pattern, are auto-verified, are limited in how many a business can claim, **must have an approved display name before they can send**, and otherwise behave like standard Cloud API numbers once that gate clears. They are not migratable off the platform the way a number you bring yourself is.
+
+For production and portability, use a **real phone number** you control. Keep a +1 555 number for evaluation if you want, or remove it.
+
+For a specific +1 555 number whose display name was not approved, **Meta support** (this case) stated the WABA remained subject to a messaging limit of **five messages per day**, and that the limit would lift once the display name was approved and reflected (often 1 to 2 business days). That five-per-day figure and the reflect timing are **not** documented in Meta’s public error or 555 pages checked for this guide — attribute them to Meta support. Meta’s own docs say a 555 number can send after display-name approval (subject to normal quality, pricing, and messaging limits). Do not treat “never scales” third-party claims as Meta fact.
+
+Observed pattern that fits a tiny cap: five messages went out on day one, then later sends failed with `131037`. The exact reset rule for that five-message limit (calendar day, rolling window, or total) was **not confirmed**.
+
+## Traps
+
+1. **Two accounts with the same name.** The account selector can show two WhatsApp Business Accounts with the same display name and different IDs. An approval email that names the account by name alone does not tell you which ID it applies to. Compare account IDs.
+2. **The approval email names the account, not the number.** Display names are tracked per phone number. Confirm on the number you are actually sending from.
+3. **A pending display name can block sends** on some numbers after an earlier period of successful sends.
+4. **Tell Meta support the number starts with +1 555.** Give the phone number ID in the first message.
+5. **Paste IDs and timestamps when you cannot attach screenshots.** If you cannot attach files, paste the exact error text, the phone number ID, the account ID, and each failure’s timestamp. A Graph API `fbtrace_id` helps when your sending tool still has it; Meta can often locate failures from the phone number ID and timestamps without it.
+
+## What to do
+
+1. **For anything customer-facing, use your own real phone number.** Any number that can receive a verification call or SMS works. Keep the +1 555 number for evaluation, or remove it.
+2. **Submit a display name early** (on the 555 while you evaluate, and on the real number before you go live). Meta support described approval and reflection as taking one to two business days in the case above.
+3. **Complete business verification** if you need higher messaging limits than Meta’s starting unverified tier. Prefer Meta’s current messaging-limits documentation over older tier ladders.
+4. **Before scaling, confirm the effective limit**, not only the displayed tier. Send a small batch and check for failures.
+5. **Confirm beyond the approval email.** On the phone-number node, check that `verified_name` is the approved name, and that `health_status` no longer says the name is unapproved.
+
+## Reproduce outside your software
+
+To see whether a refusal comes from Meta or from your sending tool, replay one send with a tool you control (Postman, or Meta’s Graph API Explorer).
+
+```bash
+POST https://graph.facebook.com/v21.0/{phone-number-id}/messages
+Authorization: Bearer {token}
+Content-Type: application/json
+```
+
+```json
+{
+  "messaging_product": "whatsapp",
+  "recipient_type": "individual",
+  "to": "<recipient number, digits only>",
+  "type": "text",
+  "text": { "preview_url": false, "body": "test" }
+}
+```
+
+In Graph API Explorer: choose your app, User Token, add `whatsapp_business_management` and `whatsapp_business_messaging`, generate an access token, and allow the correct WhatsApp Business Account when asked. Keep the token out of support chats.
+
+If the call fails with `131037`, the refusal is Meta’s for that number. The response includes a trace ID. If it succeeds, the difference lies in the original sender.
+
+On a capped +1 555 number, each test message spends the allowance.
+
+## Related codes
+
+- [131026](/whatsapp-error-131026) — unable to deliver message.
+- [131047](/whatsapp-error-131047) — more than 24 hours since the recipient last replied.
+- [131049](/whatsapp-error-131049) — not delivered to maintain healthy ecosystem engagement.
+- [132001](/whatsapp-error-132001) — template missing in that language or not approved.
+- [130429](/whatsapp-error-130429) — Cloud API throughput reached.
