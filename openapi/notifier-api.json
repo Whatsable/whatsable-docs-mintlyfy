@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Notifier by WhatsAble API",
-    "description": "Notifier by WhatsAble API Documentation - A comprehensive API for sending WhatsApp messages programmatically",
+    "title": "Notifier by Whatsable API",
+    "description": "Notifier by Whatsable API Documentation - A comprehensive API for sending WhatsApp messages programmatically",
     "version": "1.0.0"
   },
   "servers": [
