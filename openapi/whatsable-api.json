@@ -8,7 +8,7 @@
   "servers": [
     {
       "url": "https://dashboard.whatsable.app/api/whatsapp/messages/v2.0.0",
-      "description": "WhatsAble API v2"
+      "description": "Whatsable API v2"
     }
   ],
   "paths": {
