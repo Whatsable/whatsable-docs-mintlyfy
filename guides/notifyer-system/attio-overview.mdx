@@ -9,7 +9,7 @@ keywords:
     'Attio CRM',
     'WhatsApp sync',
     'Notifyer System',
-    'WhatsAble',
+    'Whatsable',
     'CRM integration',
     'Live Chat Link',
     'attribute mapping',
@@ -87,7 +87,7 @@ Before getting started, make sure you have:
 </Steps>
 
 <Note>
-  Unlike the Pipedrive and Monday.com integrations, the Attio integration does not currently include an action to send WhatsApp template messages from inside Attio. Attio is a sync-in integration today: WhatsApp conversations flow into Attio automatically, but sending messages still happens from the Notifyer chat console, Zapier, Make, n8n, or the WhatsAble API. You do not need to set up message templates specifically for Attio.
+  Unlike the Pipedrive and Monday.com integrations, the Attio integration does not currently include an action to send WhatsApp template messages from inside Attio. Attio is a sync-in integration today: WhatsApp conversations flow into Attio automatically, but sending messages still happens from the Notifyer chat console, Zapier, Make, n8n, or the Whatsable API. You do not need to set up message templates specifically for Attio.
 </Note>
 
 ## Connect Notifyer System to Attio
@@ -181,7 +181,7 @@ Once connected, scroll to **Sync Settings**. This is where you tell Notifyer whi
 ### Auto-create person
 
 <Frame caption="New contact or existing, your CRM stays current — when Auto-create is on, an unmatched incoming WhatsApp message can create a new Attio record">
-  <img src="/images/attio/auto-create-contact.png" alt="Attio Person profile showing WhatsAble automatically creating a Person and WhatsApp Conversation note" className="rounded-xl" />
+  <img src="/images/attio/auto-create-contact.png" alt="Attio Person profile showing Whatsable automatically creating a Person and WhatsApp Conversation note" className="rounded-xl" />
 </Frame>
 
 Turn this toggle **on** if you want Notifyer to create a new record on your matched object whenever a WhatsApp number that doesn't exist in Attio messages you for the first time. Notifyer fills in the recipient's name (or "Unnamed person" if WhatsApp doesn't provide one) and their phone number, then logs the first message as a note.
@@ -307,7 +307,7 @@ Beyond the conversation note, these mapped fields update on the matched (or newl
 ## The Live Chat Link
 
 <Frame caption="One click from Attio to the full conversation — the Live Chat Link opens the WhatsApp thread in Notifyer's live console">
-  <img src="/images/attio/live-chat-link.png" alt="Promotional overview of Live Chat Link opening WhatsAble Live Chat from Attio" className="rounded-xl" />
+  <img src="/images/attio/live-chat-link.png" alt="Promotional overview of Live Chat Link opening Whatsable Live Chat from Attio" className="rounded-xl" />
 </Frame>
 
 Every synced record can include a **Live chat link** attribute — a clickable link that opens that contact's full WhatsApp conversation in Notifyer's live chat console.
@@ -337,7 +337,7 @@ Every synced record can include a **Live chat link** attribute — a clickable l
 
 ## Automation and workflows
 
-Unlike the Monday.com integration, Attio does not yet expose native WhatsAble triggers or actions inside Attio's Workflow Builder.
+Unlike the Monday.com integration, Attio does not yet expose native Whatsable triggers or actions inside Attio's Workflow Builder.
 
 <Warning>
   **Coming soon.** Attio's Workflows SDK does not currently pass authentication context (such as a user or account ID) to workflow-triggered actions — only an API key is available, with no way to tie the run back to a specific Notifyer account. Until that is supported, we cannot ship the equivalent of Monday's "when a new WhatsApp message arrives → do something in Attio" workflow triggers and actions.
@@ -349,7 +349,7 @@ Today, build automation around Attio + WhatsApp through:
   <Card title="Zapier, Make, or n8n" icon="diagram-project">
     Connect Attio and Notifyer System through your automation platform — see the [Zapier](/guides/notifyer-system/zapier-overview), [Make](/guides/notifyer-system/make-overview), and [n8n](/guides/notifyer-system/n8n-overview) guides
   </Card>
-  <Card title="The WhatsAble API" icon="code">
+  <Card title="The Whatsable API" icon="code">
     Call the [Notifyer System API](/guides/notifyer-system/api/template-message) from your backend or from an Attio automation that can reach external webhooks
   </Card>
 </CardGroup>
@@ -358,7 +358,7 @@ Today, build automation around Attio + WhatsApp through:
 
 <AccordionGroup>
   <Accordion title="No native Attio Workflow triggers or actions yet" icon="diagram-project">
-    WhatsAble triggers and actions inside Attio Workflows are not available yet because Attio's workflow runtime does not provide the user/account authentication context Notifyer needs. Use Zapier, Make, n8n, or the WhatsAble API for automation today.
+    Whatsable triggers and actions inside Attio Workflows are not available yet because Attio's workflow runtime does not provide the user/account authentication context Notifyer needs. Use Zapier, Make, n8n, or the Whatsable API for automation today.
   </Accordion>
 
   <Accordion title="No embedded chat panel inside Attio" icon="window-restore">
@@ -424,7 +424,7 @@ To reconnect, repeat the [connection steps](#connect-notifyer-system-to-attio). 
         Notifyer matches by phone number and should not create duplicates for the same number. If you see duplicates, check whether the same contact exists twice in Attio with different phone formats (with and without country code, for example).
       </Step>
       <Step title="Contact support">
-        If duplicates persist, contact WhatsAble support with both record IDs so we can investigate.
+        If duplicates persist, contact Whatsable support with both record IDs so we can investigate.
       </Step>
     </Steps>
   </Accordion>

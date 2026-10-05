@@ -1,6 +1,6 @@
 ---
-title: "What Make modules and fields does WhatsAble expose?"
-description: "Every WhatsAble Make module and field: Incoming and Incoming & Outgoing triggers, Send, Schedule a follow-up, Update a Contact, and Get delivery status."
+title: "What Make modules and fields does Whatsable expose?"
+description: "Every Whatsable Make module and field: Incoming and Incoming & Outgoing triggers, Send, Schedule a follow-up, Update a Contact, and Get delivery status."
 ---
 
 {/*
@@ -13,19 +13,19 @@ description: "Every WhatsAble Make module and field: Incoming and Incoming & Out
   Brand: WhatsAble only in customer copy. Path may say notifyer-system.
 */}
 
-This page is the **field dictionary** for the WhatsAble for WhatsApp Business app on Make — every unlocked trigger, action, and search module input/output you can map in a scenario. Use it when you already know you want Make and need exact labels, types, and requiredness.
+This page is the **field dictionary** for the Whatsable for WhatsApp Business app on Make — every unlocked trigger, action, and search module input/output you can map in a scenario. Use it when you already know you want Make and need exact labels, types, and requiredness.
 
 For connect steps, coexistence walkthrough, examples, and troubleshooting, use [Make overview](/guides/notifyer-system/make-overview).
 
 ## Prerequisites
 
 - **Plan:** Make requires **Pro** or **Agency** (Bulk Message does not include integrations).
-- **WhatsApp number:** Connected in WhatsAble. Coexistence is supported — keep the WhatsApp Business app; phone replies can fire the dual-direction trigger.
-- **Make app:** Public marketplace listing **WhatsAble for WhatsApp Business** ([make.com/en/integrations/whatsable-message](https://www.make.com/en/integrations/whatsable-message)). Search **WhatsAble** in the Make scenario editor.
-- **API key:** From the WhatsAble console API Keys page. Create a **Notifyer only** connection in Make and paste that key (core product key — not a Meta Graph token).
+- **WhatsApp number:** Connected in Whatsable. Coexistence is supported — keep the WhatsApp Business app; phone replies can fire the dual-direction trigger.
+- **Make app:** Public marketplace listing **Whatsable for WhatsApp Business** ([make.com/en/integrations/whatsable-message](https://www.make.com/en/integrations/whatsable-message)). Search **Whatsable** in the Make scenario editor.
+- **API key:** From the Whatsable console API Keys page. Create a **Notifyer only** connection in Make and paste that key (core product key — not a Meta Graph token).
 
 <Info>
-Install via the WhatsAble console **Connect to Make** flow or the public Make listing. You need Admin, Owner, or App Developer role in your Make organization to install apps.
+Install via the Whatsable console **Connect to Make** flow or the public Make listing. You need Admin, Owner, or App Developer role in your Make organization to install apps.
 </Info>
 
 ---
@@ -41,7 +41,7 @@ Install via the WhatsAble console **Connect to Make** flow or the public Make li
 | Action | **Update a Contact** |
 | Search | **Get delivery status of a message** |
 
-All modules use the WhatsAble for WhatsApp Business app and a Notifyer API key connection.
+All modules use the Whatsable for WhatsApp Business app and a Notifyer API key connection.
 
 ---
 
@@ -49,7 +49,7 @@ All modules use the WhatsAble for WhatsApp Business app and a Notifyer API key c
 
 **Type:** Instant · **Connection:** Notifyer only
 
-Fires every time an incoming message arrives in your WhatsAble console. Full-featured trigger for AI chatbot workflows, lead qualification, CRM updates, and real-time automations — includes AI note, conversation history, and scheduling data.
+Fires every time an incoming message arrives in your Whatsable console. Full-featured trigger for AI chatbot workflows, lead qualification, CRM updates, and real-time automations — includes AI note, conversation history, and scheduling data.
 
 ### Configure inputs
 
@@ -163,7 +163,7 @@ Fires every time an incoming message arrives in your WhatsAble console. Full-fea
 
 **Type:** Instant · **Connection:** Notifyer only
 
-Fires on both incoming and outgoing messages — every message sent or received in your WhatsAble console, including replies typed in the WhatsApp Business app. Use it for conversation logging, CRM sync, or automations that must react when a teammate replies on their phone.
+Fires on both incoming and outgoing messages — every message sent or received in your Whatsable console, including replies typed in the WhatsApp Business app. Use it for conversation logging, CRM sync, or automations that must react when a teammate replies on their phone.
 
 Description in Make: "Get your sent and incoming messages data through a single webhook."
 
@@ -201,7 +201,7 @@ Use a Make Filter or Router on `incoming_message`, `send_by`, and `was_message_b
 
 **Connection:** Notifyer only
 
-Sends a WhatsApp message using the official WhatsApp API. You can add labels and write notes that appear in WhatsAble’s chat interface. Choose **Configuration**: template (start a conversation / proactive) or non-template (inside the customer service window).
+Sends a WhatsApp message using the official WhatsApp API. You can add labels and write notes that appear in Whatsable’s chat interface. Choose **Configuration**: template (start a conversation / proactive) or non-template (inside the customer service window).
 
 ### Mode A — Send WhatsApp Template (to start conversation)
 
@@ -232,7 +232,7 @@ Use this to initiate a new conversation or reach out proactively. Requires a Met
 </ResponseField>
 
 <ResponseField name="Labels" type="multiselect" optional>
-  Labels to apply to this conversation. Labels appear in your WhatsAble console.
+  Labels to apply to this conversation. Labels appear in your Whatsable console.
 </ResponseField>
 
 ### Mode B — Non-template message (person must write to you first)
@@ -324,10 +324,10 @@ Optional but recommended. Cancels the scheduled send if the contact replies with
   Label evaluated when the scheduled send time arrives.
 </ResponseField>
 
-Scheduled messages are visible in the WhatsAble console under the contact’s conversation — you can view or cancel them there.
+Scheduled messages are visible in the Whatsable console under the contact’s conversation — you can view or cancel them there.
 
 <Warning>
-This is **not** a native drip builder inside WhatsAble. Day-0 / day-3 / day-6 sequences are multiple Make modules (or routers) that each schedule one message. WhatsAble sends each scheduled message; the sequence logic lives in Make.
+This is **not** a native drip builder inside Whatsable. Day-0 / day-3 / day-6 sequences are multiple Make modules (or routers) that each schedule one message. Whatsable sends each scheduled message; the sequence logic lives in Make.
 </Warning>
 
 ---
@@ -336,7 +336,7 @@ This is **not** a native drip builder inside WhatsAble. Day-0 / day-3 / day-6 se
 
 **Connection:** Notifyer only
 
-Updates a contact in WhatsAble — display name, AI note, and labels. The Make action description also states you can **assign the conversation to a teammate**.
+Updates a contact in Whatsable — display name, AI note, and labels. The Make action description also states you can **assign the conversation to a teammate**.
 
 ### Documented fields
 
@@ -345,7 +345,7 @@ Updates a contact in WhatsAble — display name, AI note, and labels. The Make a
 </ResponseField>
 
 <ResponseField name="Display Name" type="text" optional>
-  Display name in the WhatsAble chat interface.
+  Display name in the Whatsable chat interface.
 </ResponseField>
 
 <ResponseField name="Note" type="text" optional>
@@ -353,7 +353,7 @@ Updates a contact in WhatsAble — display name, AI note, and labels. The Make a
 </ResponseField>
 
 <ResponseField name="Add Labels" type="multiselect" optional>
-  Labels to add. WhatsAble conversation labels are the source of truth inside WhatsAble.
+  Labels to add. Whatsable conversation labels are the source of truth inside Whatsable.
 </ResponseField>
 
 <ResponseField name="Remove Labels" type="multiselect" optional>
@@ -387,11 +387,11 @@ If a lookup fails in scenario history, re-check the mapped Message ID and contac
 ## Limits and what this does NOT do
 
 <Warning>
-**No native drip builder.** Multi-day sequences use Make (or Zapier / n8n) schedule modules plus reply conditions — not a built-in drip product inside WhatsAble.
+**No native drip builder.** Multi-day sequences use Make (or Zapier / n8n) schedule modules plus reply conditions — not a built-in drip product inside Whatsable.
 </Warning>
 
 <Warning>
-**No CRM ↔ WhatsAble bidirectional label mirror.** Add/Remove labels update WhatsAble conversation labels. They do not sync Monday/Pipedrive (or other) CRM tags as one shared store.
+**No CRM ↔ Whatsable bidirectional label mirror.** Add/Remove labels update Whatsable conversation labels. They do not sync Monday/Pipedrive (or other) CRM tags as one shared store.
 </Warning>
 
 <Warning>
@@ -403,7 +403,7 @@ If a lookup fails in scenario history, re-check the mapped Message ID and contac
 - **Phone format:** digits only, full international, no `+`, spaces, or dashes.
 - **Group Messaging** is **unavailable** as a product add-on and is **not** a documented Make module on this fields page.
 - Do not invent trigger `message_type` values beyond `text`, `audio`, `image`, and `document`.
-- Typing-indicator dots are not a documented WhatsAble automation claim.
+- Typing-indicator dots are not a documented Whatsable automation claim.
 - Do not invent location or sticker send types on Make modules.
 
 ---
@@ -439,9 +439,9 @@ Yes, when coexistence is enabled and you use **Incoming & Outgoing Messages from
 
 Prefer **Incoming Messages from console** when you only need inbound events and want `scheduled_messages` in the payload. Use the dual-direction trigger when you must also react to outgoing phone-app or inbox replies.
 
-### Can I build day-0 / day-3 / day-6 WhatsApp drips with WhatsAble and Make?
+### Can I build day-0 / day-3 / day-6 WhatsApp drips with Whatsable and Make?
 
-Yes, by chaining **Schedule a follow-up Message** modules (and reply conditions) in Make. WhatsAble is not a native drip builder — the sequence logic lives in Make.
+Yes, by chaining **Schedule a follow-up Message** modules (and reply conditions) in Make. Whatsable is not a native drip builder — the sequence logic lives in Make.
 
 ### Does Bulk Message include Make?
 

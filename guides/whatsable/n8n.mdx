@@ -1,17 +1,17 @@
 ---
 title: 'n8n'
-description: 'Learn how to automate WhatsApp messaging through n8n with WhatsAble'
+description: 'Learn how to automate WhatsApp messaging through n8n with Whatsable'
 icon: 'diagram-project'
 ---
 
-# WhatsAble Integration with n8n
+# Whatsable Integration with n8n
 
-<Frame caption="Automate your WhatsApp messaging workflows with n8n and WhatsAble">
+<Frame caption="Automate your WhatsApp messaging workflows with n8n and Whatsable">
   <img src="/images/whatsable_n8n_svg.svg" className="rounded-xl" />
 </Frame>
 
 <Info>
-  This page is the **WhatsAble Bot** integration (messages to WhatsAble's number). If you need your **own WhatsApp Business number**, including Meta WhatsApp Coexistence (keep the WhatsApp Business app) and webhooks for **outgoing** messages typed on the phone (`incoming_message`, `send_by`, `was_message_by_human`), use [Notifyer System with n8n](/guides/notifyer-system/n8n-overview).
+  This page is the **Whatsable Bot** integration (messages to Whatsable's number). If you need your **own WhatsApp Business number**, including Meta WhatsApp Coexistence (keep the WhatsApp Business app) and webhooks for **outgoing** messages typed on the phone (`incoming_message`, `send_by`, `was_message_by_human`), use [Notifyer System with n8n](/guides/notifyer-system/n8n-overview).
 </Info>
 
 ## Prerequisites
@@ -19,8 +19,8 @@ icon: 'diagram-project'
 Before getting started, make sure you have:
 
 <CardGroup cols={2}>
-  <Card title="WhatsAble Account" icon="user">
-    An active subscription with WhatsAble
+  <Card title="Whatsable Account" icon="user">
+    An active subscription with Whatsable
   </Card>
   <Card title="n8n Account" icon="user">
     Access to [n8n](https://app.n8n.cloud/login) workflow automation platform
@@ -28,16 +28,16 @@ Before getting started, make sure you have:
 </CardGroup>
 
 <Tip>
-  New to WhatsAble? [Sign up here](https://dashboard.whatsable.app/signin)
+  New to Whatsable? [Sign up here](https://dashboard.whatsable.app/signin)
 </Tip>
 
-## Get started with WhatsAble
+## Get started with Whatsable
 
 <Steps>
-  <Step title="Subscribe to WhatsAble">
-    To use the WhatsAble API, you'll need an active subscription:
+  <Step title="Subscribe to Whatsable">
+    To use the Whatsable API, you'll need an active subscription:
     
-    1. Log in to your WhatsAble dashboard
+    1. Log in to your Whatsable dashboard
     2. Click the **Subscribe** button
     3. Start your 7-day free trial
     
@@ -47,16 +47,16 @@ Before getting started, make sure you have:
   </Step>
   
   <Step title="Add and verify your phone number">
-    For WhatsAble to send messages through your WhatsApp account:
+    For Whatsable to send messages through your WhatsApp account:
     
-    1. In your WhatsAble dashboard, navigate to **Verified Numbers**
+    1. In your Whatsable dashboard, navigate to **Verified Numbers**
     2. Click **Add New Number**
     3. Enter your phone number (with country code)
     4. You'll receive a WhatsApp verification code
-    5. Enter the verification code in the WhatsAble dashboard
+    5. Enter the verification code in the Whatsable dashboard
     
     <Frame caption="Adding and verifying a phone number">
-      <img src="/images/verify_number1.gif" alt="WhatsAble node selection" />
+      <img src="/images/verify_number1.gif" alt="Whatsable node selection" />
     </Frame>
     
     <Note>
@@ -65,9 +65,9 @@ Before getting started, make sure you have:
   </Step>
   
   <Step title="Get your API key">
-    To connect WhatsAble with n8n, you'll need your API key:
+    To connect Whatsable with n8n, you'll need your API key:
     
-    1. In your WhatsAble dashboard, go to **API Keys**
+    1. In your Whatsable dashboard, go to **API Keys**
     2. Copy your unique API key
     3. Store it securely—you'll need it for the integration
 
@@ -82,9 +82,9 @@ Before getting started, make sure you have:
   </Step>
 </Steps>
 
-## Connect WhatsAble to n8n
+## Connect Whatsable to n8n
 
-Now that you have WhatsAble set up, let's connect it to n8n to automate your workflows.
+Now that you have Whatsable set up, let's connect it to n8n to automate your workflows.
 
 <Steps>
   <Step title="Set up your n8n workflow">
@@ -94,22 +94,22 @@ Now that you have WhatsAble set up, let's connect it to n8n to automate your wor
        - Popular triggers include Google Forms, Jotform, ClickUp, or a Schedule trigger
        - Connect and configure your trigger according to your use case
 
-<Accordion title="WhatsAble trigger node (optional)">
+<Accordion title="Whatsable trigger node (optional)">
   <Info>
-    The WhatsAble trigger node enables your workflow to respond automatically to incoming WhatsApp messages. This setup is optional but recommended for building reactive communication flows.
+    The Whatsable trigger node enables your workflow to respond automatically to incoming WhatsApp messages. This setup is optional but recommended for building reactive communication flows.
   </Info>
 
   <Steps>
-    <Step title="Add WhatsAble trigger node">
-      Follow these steps to add the WhatsAble trigger node to your workflow:
+    <Step title="Add Whatsable trigger node">
+      Follow these steps to add the Whatsable trigger node to your workflow:
 
       1. Click the **+** button in your workflow canvas to add a new node
-      2. Search for "WhatsAble" in the node library search bar
-      3. Select the node displaying the official WhatsAble logo
+      2. Search for "Whatsable" in the node library search bar
+      3. Select the node displaying the official Whatsable logo
       4. From the available trigger options, choose **On new Incoming message event**
 
-      <Frame caption="Adding WhatsAble trigger node with 'On new Incoming message event' selection">
-        <img src="/images/trigger-node.png" alt="WhatsAble node selection showing trigger options" />
+      <Frame caption="Adding Whatsable trigger node with 'On new Incoming message event' selection">
+        <img src="/images/trigger-node.png" alt="Whatsable node selection showing trigger options" />
       </Frame>
 
       <Tip>
@@ -118,10 +118,10 @@ Now that you have WhatsAble set up, let's connect it to n8n to automate your wor
     </Step>
 
     <Step title="Configure authentication credentials">
-      Set up your WhatsAble API credentials to establish a secure connection:
+      Set up your Whatsable API credentials to establish a secure connection:
 
       **Webhook URL Configuration:**
-      1. In the WhatsAble Trigger node parameters, locate the **Webhook URLs** section at the top
+      1. In the Whatsable Trigger node parameters, locate the **Webhook URLs** section at the top
       2. Select **Production URL** and copy the generated URL by clicking on it
       3. Store this URL securely as you'll need it for the credential setup
 
@@ -131,14 +131,14 @@ Now that you have WhatsAble set up, let's connect it to n8n to automate your wor
 
       **Credential Creation:**
       1. In the **Credential to connect with** dropdown, click **+ Create new credential**
-      2. Select **WhatsAble Trigger API** as your connection method
-      3. Enter your WhatsAble API key in the **API Key** field
+      2. Select **Whatsable Trigger API** as your connection method
+      3. Enter your Whatsable API key in the **API Key** field
       4. Paste the Production URL you copied earlier into the **Production URL** field
-      5. Assign a descriptive name to your credential (e.g., "WhatsAble Production")
+      5. Assign a descriptive name to your credential (e.g., "Whatsable Production")
       6. Click **Save** to securely store your credentials
 
-      <Frame caption="Credential configuration for WhatsAble Trigger node">
-        <img src="/images/whatsable-trigger-node.png" alt="WhatsAble credential configuration interface" />
+      <Frame caption="Credential configuration for Whatsable Trigger node">
+        <img src="/images/whatsable-trigger-node.png" alt="Whatsable credential configuration interface" />
       </Frame>
 
       <Note>
@@ -155,7 +155,7 @@ Now that you have WhatsAble set up, let's connect it to n8n to automate your wor
          - **When Last Node Finishes**: Waits for the entire workflow to complete before responding
 
       **Testing:**
-      1. Click **Execute step** on the WhatsAble node to run a test
+      1. Click **Execute step** on the Whatsable node to run a test
       2. Verify the connection is working by checking for a success confirmation
       3. Review any error messages if the test fails and adjust your configuration accordingly
 
@@ -172,34 +172,34 @@ Now that you have WhatsAble set up, let's connect it to n8n to automate your wor
 </Accordion>
   </Step>
   
-  <Step title="Add the WhatsAble node">
+  <Step title="Add the Whatsable node">
     1. Click the **+** button to add a new node
-    2. Search for "WhatsAble" in the node library
-    3. Select the node with the official WhatsAble logo
-    4. After selecting the WhatsAble node, choose 'Send message via whatsAble' from the available actions menu
+    2. Search for "Whatsable" in the node library
+    3. Select the node with the official Whatsable logo
+    4. After selecting the Whatsable node, choose 'Send message via whatsAble' from the available actions menu
 
-    <Frame caption="WhatsAble node: Send message via WhatsAble action selection">
-      <img src="/images/whatsable-node-action.png" alt="WhatsAble node selection" />
+    <Frame caption="Whatsable node: Send message via Whatsable action selection">
+      <img src="/images/whatsable-node-action.png" alt="Whatsable node selection" />
     </Frame>
 
   </Step>
   
-  <Step title="Configure WhatsAble credentials">
+  <Step title="Configure Whatsable credentials">
     **Credential Setup:**
-    1. In the WhatsAble node settings, find the **Credential to connect with** dropdown
+    1. In the Whatsable node settings, find the **Credential to connect with** dropdown
     2. Select **+ Create new credential**
-    3. Enter your WhatsAble API key that you copied earlier
-    4. Name your credential (e.g., "WhatsAble Production")
+    3. Enter your Whatsable API key that you copied earlier
+    4. Name your credential (e.g., "Whatsable Production")
     5. Click **Save** to store your credential
   </Step>
   
   <Step title="Configure your message">
     1. In **Resource** dropdown, select **Send Message**
-    2. In the **Operation** dropdown, select **Send message via WhatsAble**
+    2. In the **Operation** dropdown, select **Send message via Whatsable**
     3. Complete the required fields:
     
     <ResponseField name="Recipient Name or ID" type="string" required>
-      Select the recipient's phone number (with country code) previously added in WhatsAble
+      Select the recipient's phone number (with country code) previously added in Whatsable
     </ResponseField>
     
     <ResponseField name="Text" type="string" required>
@@ -218,7 +218,7 @@ Now that you have WhatsAble set up, let's connect it to n8n to automate your wor
   </Step>
   
   <Step title="Test and activate your workflow">
-    1. Click **Test Step** on the WhatsAble node to verify it's working correctly
+    1. Click **Test Step** on the Whatsable node to verify it's working correctly
     2. If the test is successful, you'll see a confirmation message
     3. Click **Done** to return to your workflow
     4. Click **Save** to save your entire workflow
@@ -252,7 +252,7 @@ Now that you have WhatsAble set up, let's connect it to n8n to automate your wor
 
 ## Workflow Diagram
 
-**Sample WhatsAble n8n Workflow:**
+**Sample Whatsable n8n Workflow:**
 
 ```mermaid
 flowchart LR
@@ -271,7 +271,7 @@ flowchart LR
   <Accordion title="Message not being sent?" icon="circle-exclamation">
     **Steps to resolve:**
     
-    1. **Verify Account Active:** Verify that your WhatsAble account is active.
+    1. **Verify Account Active:** Verify that your Whatsable account is active.
     2. **Phone Number Verification:** Check that your phone number is properly verified.
     3. **API Key in n8n:** Ensure your API key is entered correctly in n8n.
     4. **Recipient Number Format:** Confirm that the recipient's phone number is in the correct format (including country code).
@@ -298,7 +298,7 @@ Our support team is ready to assist you:
     Book a personalized walkthrough
   </Card>
   <Card title="Live chat" icon="message-dots" href="https://dashboard.whatsable.app/signin">
-    Click the chat button in the bottom right corner of the WhatsAble dashboard
+    Click the chat button in the bottom right corner of the Whatsable dashboard
   </Card>
 </CardGroup>
 

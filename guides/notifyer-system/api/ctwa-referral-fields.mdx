@@ -1,6 +1,6 @@
 ---
-title: "What Click-to-WhatsApp fields appear on WhatsAble webhooks?"
-description: "Map Click-to-WhatsApp referral on WhatsAble webhooks: source_type, source_id, source_url, headline, body, media, ctwa_clid, and first-message context fields."
+title: "What Click-to-WhatsApp fields appear on Whatsable webhooks?"
+description: "Map Click-to-WhatsApp referral on Whatsable webhooks: source_type, source_id, source_url, headline, body, media, ctwa_clid, and first-message context fields."
 ---
 
 {/*
@@ -17,13 +17,13 @@ description: "Map Click-to-WhatsApp referral on WhatsAble webhooks: source_type,
   PRE-LIVE omit: GTM-670/686/691/697/700/701/703/704/705.
 */}
 
-When someone taps **Send message** on a Click-to-WhatsApp ad (Facebook, Instagram, or WhatsApp Status) and writes to your number, Meta attaches a `referral` object to that inbound event. WhatsAble forwards it on your custom webhook and on n8n, Make, and Zapier triggers — so you can see which creative, platform, and click produced the lead.
+When someone taps **Send message** on a Click-to-WhatsApp ad (Facebook, Instagram, or WhatsApp Status) and writes to your number, Meta attaches a `referral` object to that inbound event. Whatsable forwards it on your custom webhook and on n8n, Make, and Zapier triggers — so you can see which creative, platform, and click produced the lead.
 
 This page is the **dedicated field dictionary** for that `referral` object (and the first-message fields that ride alongside it). For the full inbound/outbound webhook payload, signature verification, and management API, use [Message webhooks](/guides/notifyer-system/api/incoming-message) — including the live [Click-to-WhatsApp ads](/guides/notifyer-system/api/incoming-message#click-to-whatsapp-ads) section.
 
 ## Prerequisites
 
-- **WhatsAble account** with a connected WhatsApp Business number (Embedded Signup / Coexistence supported — keep the WhatsApp Business app; do not uninstall it after connect).
+- **Whatsable account** with a connected WhatsApp Business number (Embedded Signup / Coexistence supported — keep the WhatsApp Business app; do not uninstall it after connect).
 - **Incoming** webhook or automation trigger enabled so contact → business messages reach your endpoint (custom HTTPS webhook, or [n8n](/guides/notifyer-system/n8n-overview) / [Make](/guides/notifyer-system/make-overview) / [Zapier](/guides/notifyer-system/zapier-overview)).
 - **HTTPS endpoint** that accepts `POST` JSON and returns 2xx within ~10 seconds (same requirements as [Message webhooks](/guides/notifyer-system/api/incoming-message)).
 - Optional: a CRM or Conversions API destination ready to store `ctwa_clid` and `source_id` as soon as they arrive (they usually appear **once**).
@@ -55,7 +55,7 @@ WhatsApp Status ad placements may omit `ctwa_clid`. Organic posts use `source_ty
 
 ## Referral object — field dictionary
 
-Look for `referral` as a **top-level** field on the WhatsAble webhook payload, or at `entry[].changes[].value.messages[].referral` if the delivery includes the Meta Cloud API envelope.
+Look for `referral` as a **top-level** field on the Whatsable webhook payload, or at `entry[].changes[].value.messages[].referral` if the delivery includes the Meta Cloud API envelope.
 
 | Exact key | Type | Meaning |
 |-----------|------|---------|
@@ -73,7 +73,7 @@ Look for `referral` as a **top-level** field on the WhatsAble webhook payload, o
 | `referral.welcome_message` | object | Optional. Welcome message configured on the ad, when Meta includes it. **Nested keys are not documented** — treat as an opaque object until product publishes children |
 
 <Warning>
-Do **not** invent nested keys under `welcome_message` (for example `text` or `type`). Docs name the object only. Do **not** invent Meta-only names (`ads_context_data`, `source_app`, …) as WhatsAble webhook fields. Do **not** confuse Facebook Lead Ads form webhooks with WhatsApp CTWA `referral`.
+Do **not** invent nested keys under `welcome_message` (for example `text` or `type`). Docs name the object only. Do **not** invent Meta-only names (`ads_context_data`, `source_app`, …) as Whatsable webhook fields. Do **not** confuse Facebook Lead Ads form webhooks with WhatsApp CTWA `referral`.
 </Warning>
 
 ---
@@ -92,11 +92,11 @@ Creative and attribution live under `referral.*`. The contact's first text rides
 | `recipient_name` | Display name if available |
 | `conversation_paragraph` | Human-readable summary |
 
-Do **not** invent inbox-only creative field names. WhatsAble documents webhook / trigger forwarding of `referral`; it does not publish a separate inbox “creative card” field list.
+Do **not** invent inbox-only creative field names. Whatsable documents webhook / trigger forwarding of `referral`; it does not publish a separate inbox “creative card” field list.
 
 ---
 
-## Sample payload (WhatsAble flattened shape)
+## Sample payload (Whatsable flattened shape)
 
 ```json
 {
@@ -139,7 +139,7 @@ Do **not** invent inbox-only creative field names. WhatsAble documents webhook /
 
 | Destination | How `referral` arrives |
 |-------------|------------------------|
-| Custom HTTPS webhook | WhatsAble POSTs the payload including `referral` when present |
+| Custom HTTPS webhook | Whatsable POSTs the payload including `referral` when present |
 | n8n / Make / Zapier triggers | Same object on the trigger; filter when `referral` exists |
 | Agent Skills `create-webhook.js --incoming` | Creates a webhook that receives incoming (and `--outgoing` if set) — payload reference stays on Message webhooks |
 
@@ -193,17 +193,17 @@ Also: [n8n overview](/guides/notifyer-system/n8n-overview) · [Make overview](/g
 
 ## FAQ
 
-### Do WhatsAble webhooks include Click-to-WhatsApp ad details?
+### Do Whatsable webhooks include Click-to-WhatsApp ad details?
 
 Yes. When the contact's message comes from a Click-to-WhatsApp ad (or organic post with referral), the payload includes a `referral` object (`source_id`, `source_url`, `source_type`, `headline`, `body`, `media_type`, creative URLs, and usually `ctwa_clid`). Full field list is on this page; parent payload reference: [Message webhooks](/guides/notifyer-system/api/incoming-message#click-to-whatsapp-ads).
 
 ### Why is `referral` missing on later messages?
 
-Meta / WhatsAble typically attach `referral` only on the **first** inbound after the tap. Persist `ctwa_clid` and `source_id` keyed on `phone_number` when you first see them.
+Meta / Whatsable typically attach `referral` only on the **first** inbound after the tap. Persist `ctwa_clid` and `source_id` keyed on `phone_number` when you first see them.
 
 ### Where do I look in a Cloud API–shaped delivery?
 
-Use `entry[].changes[].value.messages[].referral`. On the flattened WhatsAble webhook body, look for top-level `referral`.
+Use `entry[].changes[].value.messages[].referral`. On the flattened Whatsable webhook body, look for top-level `referral`.
 
 ### Can I send `ctwa_clid` to Meta Conversions API?
 

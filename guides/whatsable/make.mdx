@@ -1,17 +1,17 @@
 ---
 title: 'Make'
-description: 'Learn how to automate WhatsApp messaging through Make with WhatsAble'
+description: 'Learn how to automate WhatsApp messaging through Make with Whatsable'
 icon: 'lines-leaning'
 ---
 
-# WhatsAble Integration with Make
+# Whatsable Integration with Make
 
-<Frame caption="Automate your WhatsApp messaging scenarios with Make and WhatsAble">
+<Frame caption="Automate your WhatsApp messaging scenarios with Make and Whatsable">
   <img src="/images/whatsable_make_svg.svg" className="rounded-xl" />
 </Frame>
 
 <Info>
-  This page is the **WhatsAble Bot** integration (messages to WhatsAble's number). If you need your **own WhatsApp Business number**, including Meta WhatsApp Coexistence (keep the WhatsApp Business app) and webhooks for **outgoing** messages typed on the phone (`incoming_message`, `send_by`, `was_message_by_human`), use [Notifyer System with Make](/guides/notifyer-system/make-overview).
+  This page is the **Whatsable Bot** integration (messages to Whatsable's number). If you need your **own WhatsApp Business number**, including Meta WhatsApp Coexistence (keep the WhatsApp Business app) and webhooks for **outgoing** messages typed on the phone (`incoming_message`, `send_by`, `was_message_by_human`), use [Notifyer System with Make](/guides/notifyer-system/make-overview).
 </Info>
 
 ## Prerequisites
@@ -19,8 +19,8 @@ icon: 'lines-leaning'
 Before getting started, make sure you have:
 
 <CardGroup cols={2}>
-  <Card title="WhatsAble Account" icon="user">
-    An active subscription with WhatsAble
+  <Card title="Whatsable Account" icon="user">
+    An active subscription with Whatsable
   </Card>
   <Card title="Make" icon="user">
     Access to [Make](https://www.make.com/en/register/) scenario automation platform
@@ -28,16 +28,16 @@ Before getting started, make sure you have:
 </CardGroup>
 
 <Tip>
-  New to WhatsAble? [Sign up here](https://dashboard.whatsable.app/signin)
+  New to Whatsable? [Sign up here](https://dashboard.whatsable.app/signin)
 </Tip>
 
-## Get started with WhatsAble
+## Get started with Whatsable
 
 <Steps>
-  <Step title="Subscribe to WhatsAble">
-    To use the WhatsAble API, you'll need an active subscription:
+  <Step title="Subscribe to Whatsable">
+    To use the Whatsable API, you'll need an active subscription:
     
-    1. Log in to your WhatsAble dashboard
+    1. Log in to your Whatsable dashboard
     2. Click the **Subscribe** button
     3. Start your 7-day free trial
     
@@ -47,16 +47,16 @@ Before getting started, make sure you have:
   </Step>
   
   <Step title="Add and verify your phone number">
-    For WhatsAble to send messages through your WhatsApp account:
+    For Whatsable to send messages through your WhatsApp account:
     
-    1. In your WhatsAble dashboard, navigate to **Verified Numbers**
+    1. In your Whatsable dashboard, navigate to **Verified Numbers**
     2. Click **Add New Number**
     3. Enter your phone number (with country code)
     4. You'll receive a WhatsApp verification code
-    5. Enter the verification code in the WhatsAble dashboard
+    5. Enter the verification code in the Whatsable dashboard
     
     <Frame caption="Adding and verifying a phone number">
-      <img src="/images/verify_number1.gif" alt="WhatsAble node selection" />
+      <img src="/images/verify_number1.gif" alt="Whatsable node selection" />
     </Frame>
     
     <Note>
@@ -65,9 +65,9 @@ Before getting started, make sure you have:
   </Step>
   
   <Step title="Get your API key">
-    To connect WhatsAble with Make, you'll need your API key:
+    To connect Whatsable with Make, you'll need your API key:
     
-    1. In your WhatsAble dashboard, go to **API Keys**
+    1. In your Whatsable dashboard, go to **API Keys**
     2. Copy your unique API key
     3. Store it securely—you'll need it for the integration
     <Warning>
@@ -75,14 +75,14 @@ Before getting started, make sure you have:
     </Warning>
     
     <Frame>
-      <img src="/images/whatsable_apikey.png" alt="WhatsAble Api Keys" />
+      <img src="/images/whatsable_apikey.png" alt="Whatsable Api Keys" />
     </Frame>
   </Step>
 </Steps>
 
-## Connect WhatsAble to Make
+## Connect Whatsable to Make
 
-Now that you have WhatsAble set up, let's connect it to Make to automate your scenarios.
+Now that you have Whatsable set up, let's connect it to Make to automate your scenarios.
 
 <Steps>
   <Step title="Set up your Make Scenario">
@@ -97,26 +97,26 @@ Now that you have WhatsAble set up, let's connect it to Make to automate your sc
     </Frame>
   </Step>
   
-  <Step title="Add the WhatsAble module">
+  <Step title="Add the Whatsable module">
     1. Click the **+** button to add a new module
-    2. Search for "WhatsAble Message" in the apps or modules library
-    3. Select the app with the official WhatsAble logo
+    2. Search for "Whatsable Message" in the apps or modules library
+    3. Select the app with the official Whatsable logo
 
-    <Frame caption="Adding the WhatsAble module">
-      <img src="/images/whatsable_make2.gif" alt="Adding the WhatsAble module" />
+    <Frame caption="Adding the Whatsable module">
+      <img src="/images/whatsable_make2.gif" alt="Adding the Whatsable module" />
     </Frame>
   </Step>
   
-  <Step title="Configure WhatsAble credentials">
+  <Step title="Configure Whatsable credentials">
     <Accordion title="Credential Setup" defaultOpen>
-      1. Once you click on WhatsAble module, select **Send a WhatsApp Message** from the **ACTIONS** list
-      2. Click **Create a connection** in the **Connection** section of WhatsAble module and you will be prompted to enter your API Key
-      3. Enter your WhatsAble API key that you copied earlier
+      1. Once you click on Whatsable module, select **Send a WhatsApp Message** from the **ACTIONS** list
+      2. Click **Create a connection** in the **Connection** section of Whatsable module and you will be prompted to enter your API Key
+      3. Enter your Whatsable API key that you copied earlier
       4. Rename your connection name if needed
       4. Click **Save** to store your credential
 
-    <Frame caption="Configuring WhatsAble credentials">
-      <img src="/images/whatsable_make3.gif" alt="Configuring WhatsAble credentials" />
+    <Frame caption="Configuring Whatsable credentials">
+      <img src="/images/whatsable_make3.gif" alt="Configuring Whatsable credentials" />
     </Frame>
     </Accordion>
   </Step>
@@ -125,7 +125,7 @@ Now that you have WhatsAble set up, let's connect it to Make to automate your sc
     Complete the required fields:
     
     <ResponseField name="Phone" type="string" required>
-      Select the recipient's phone number (In **Your verified WhatsApp number exactly as listed in the dashboard** dropdown, you'll see all phone numbers added in your WhatsAble dashboard's **Verified Numbers** menu.)
+      Select the recipient's phone number (In **Your verified WhatsApp number exactly as listed in the dashboard** dropdown, you'll see all phone numbers added in your Whatsable dashboard's **Verified Numbers** menu.)
     </ResponseField>    
     <ResponseField name="Message Body" type="string" required>
       Type your message text or use variables from previous steps
@@ -156,7 +156,7 @@ Now that you have WhatsAble set up, let's connect it to Make to automate your sc
   
   <Step title="Test and activate your scenario">
     1. Click **Save** to save your message configuration
-    2. Right click on the WhatsAble module and select **Run this module only** to verify the module is working correctly
+    2. Right click on the Whatsable module and select **Run this module only** to verify the module is working correctly
         - or click **Run once** in the bottom-left corner of the screen to test the entire scenario
     3. If the test is successful, you'll see a confirmation message
     4. Click **Save** icon in the bottom-left corner to save your scenario (You can also set timer intarval for the scenario)
@@ -193,7 +193,7 @@ Now that you have WhatsAble set up, let's connect it to Make to automate your sc
 
 ## Scenario Diagram
 
-<Frame caption="Sample WhatsAble Make Scenario">
+<Frame caption="Sample Whatsable Make Scenario">
   ```mermaid
   flowchart LR
     A[Trigger Module] --> B[Data Transformation]
@@ -212,7 +212,7 @@ Now that you have WhatsAble set up, let's connect it to Make to automate your sc
   <Accordion title="Message not being sent?" icon="circle-exclamation">
     <Steps>
       <Step title="Verify Account Active">
-      Verify that your WhatsAble account is active.
+      Verify that your Whatsable account is active.
       </Step>
       <Step title="Phone Number Verification">
       Check that your phone number is properly verified.
@@ -253,7 +253,7 @@ Our support team is ready to assist you:
     Book a personalized walkthrough
   </Card>
   <Card title="Live chat" icon="message-dots" href="https://dashboard.whatsable.app/signin">
-    Click the chat button in the bottom right corner of the WhatsAble dashboard
+    Click the chat button in the bottom right corner of the Whatsable dashboard
   </Card>
 </CardGroup>
 

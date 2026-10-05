@@ -6,20 +6,20 @@ keywords: ["webhook", "outgoing messages", "coexistence", "Notifyer System"]
 ---
 
 <Warning>
-**This page is WhatsAble Bot** (messages sent to WhatsAble's number). The payload table below is incoming-only.
+**This page is Whatsable Bot** (messages sent to Whatsable's number). The payload table below is incoming-only.
 
 If you use **your own WhatsApp Business number** (Notifyer System): [Meta WhatsApp Coexistence](/guides/notifyer-system/embedding-process#whatsapp-coexistence) is supported — you do **not** delete the WhatsApp Business app. Webhooks fire for **incoming and outgoing** messages, including replies typed on the phone. Fields: `incoming_message`, `send_by` (`WhatsApp App` or teammate name), `was_message_by_human`. Full reference: [Message webhooks](/guides/notifyer-system/api/incoming-message).
 </Warning>
 
 <Tip>
-Webhooks let your external server react to WhatsApp activity the moment it happens — no polling required. Register an HTTPS endpoint once and WhatsAble pushes a JSON payload to it automatically.
+Webhooks let your external server react to WhatsApp activity the moment it happens — no polling required. Register an HTTPS endpoint once and Whatsable pushes a JSON payload to it automatically.
 </Tip>
 <Frame>
   <iframe
     width="100%"
     style={{ aspectRatio: "16/9" }}
     src="https://www.youtube.com/embed/B4clTratT_w"
-    title="Getting Started with WhatsAble Webhooks"
+    title="Getting Started with Whatsable Webhooks"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowFullScreen
   />
@@ -27,15 +27,15 @@ Webhooks let your external server react to WhatsApp activity the moment it happe
 
 ---
 
-## WhatsAble Bot vs Notifier System
+## Whatsable Bot vs Notifier System
 
 Before setting up a webhook, make sure you're using the right product for your use case.
 
-| | **WhatsAble Bot (this page)** | **Notifier System** |
+| | **Whatsable Bot (this page)** | **Notifier System** |
 |---|---|---|
-| **How it works** | You (or a customer) sends a WhatsApp message **to WhatsAble's number** → triggers your n8n / Make / Zapier scenario | You send WhatsApp messages **from your own WhatsApp Business number** to your leads or customers |
+| **How it works** | You (or a customer) sends a WhatsApp message **to Whatsable's number** → triggers your n8n / Make / Zapier scenario | You send WhatsApp messages **from your own WhatsApp Business number** to your leads or customers |
 | **Best for** | Building AI agents, personal automation triggers, developer workflows | Customer outreach, marketing, CRM notifications |
-| **Webhook direction** | Inbound — WhatsAble calls your endpoint | Inbound and **outgoing** — including replies typed in the WhatsApp Business app |
+| **Webhook direction** | Inbound — Whatsable calls your endpoint | Inbound and **outgoing** — including replies typed in the WhatsApp Business app |
 
 <Info>
 If you want to **send** messages to leads or customers from your own WhatsApp Business number, use the [Notifier System](/guides/notifyer-system/embedding-process) instead. Notifyer supports [Meta WhatsApp Coexistence](/guides/notifyer-system/embedding-process#whatsapp-coexistence) — you do **not** delete the WhatsApp Business app. Outgoing events (phone app, team inbox, automations) are documented in [Message webhooks](/guides/notifyer-system/api/incoming-message), with `incoming_message`, `send_by`, and `was_message_by_human`.
@@ -45,11 +45,11 @@ If you want to **send** messages to leads or customers from your own WhatsApp Bu
 
 ## What are Webhooks?
 
-A webhook is an HTTP endpoint you host that WhatsAble calls every time a relevant event occurs in your account. Instead of repeatedly asking *"did anything happen?"*, your server receives a real-time `POST` request with the full event payload the instant the event fires.
+A webhook is an HTTP endpoint you host that Whatsable calls every time a relevant event occurs in your account. Instead of repeatedly asking *"did anything happen?"*, your server receives a real-time `POST` request with the full event payload the instant the event fires.
 
-Common things you can do with WhatsAble webhooks:
+Common things you can do with Whatsable webhooks:
 
-- Trigger n8n, Make, or Zapier scenarios the moment someone messages your WhatsAble bot number
+- Trigger n8n, Make, or Zapier scenarios the moment someone messages your Whatsable bot number
 - Build AI agents that react to WhatsApp messages in real time
 - Pipe incoming customer messages into your CRM or support desk
 - Log chat history to your own database
@@ -58,7 +58,7 @@ Common things you can do with WhatsAble webhooks:
 
 ## The Webhooks Dashboard
 
-Navigate to **Operations → Webhooks** (`/operations/webhook`) in your WhatsAble dashboard to manage all your registered endpoints.
+Navigate to **Operations → Webhooks** (`/operations/webhook`) in your Whatsable dashboard to manage all your registered endpoints.
 
 | Action | How |
 |--------|-----|
@@ -82,7 +82,7 @@ The **Active Webhooks** counter in the toolbar shows how many endpoints are curr
     The URL must begin with `http://` or `https://`. HTTPS is strongly recommended for production.
   </Step>
   <Step title="Save">
-    Click **Create Webhook**. WhatsAble stores the endpoint and begins routing eligible events to it immediately.
+    Click **Create Webhook**. Whatsable stores the endpoint and begins routing eligible events to it immediately.
   </Step>
 </Steps>
 
@@ -115,11 +115,11 @@ Every webhook you register is stored with the following fields.
 </ResponseField>
 
 <ResponseField name="webhook" type="string" required>
-  The full endpoint URL WhatsAble POSTs events to (e.g. `https://api.example.com/whatsapp/events`). Must be a valid HTTP or HTTPS URL.
+  The full endpoint URL Whatsable POSTs events to (e.g. `https://api.example.com/whatsapp/events`). Must be a valid HTTP or HTTPS URL.
 </ResponseField>
 
 <ResponseField name="user_id" type="string" required>
-  UUID of the WhatsAble account that owns this webhook. Set automatically at creation — you cannot assign a webhook to a different account.
+  UUID of the Whatsable account that owns this webhook. Set automatically at creation — you cannot assign a webhook to a different account.
 </ResponseField>
 
 <ResponseField name="created_at" type="string" required>
@@ -130,7 +130,7 @@ Every webhook you register is stored with the following fields.
 
 ## Incoming Webhook Payload
 
-When an event fires, WhatsAble sends an HTTP `POST` to your endpoint with a `Content-Type: application/json` body.
+When an event fires, Whatsable sends an HTTP `POST` to your endpoint with a `Content-Type: application/json` body.
 
 ### Incoming message payload
 
@@ -208,7 +208,7 @@ When an event fires, WhatsAble sends an HTTP `POST` to your endpoint with a `Con
 
   <Expandable title="last_messages item">
     <ResponseField name="type" type="string" required>
-      Sender of this message — `"user"` for the customer or `"bot"` for your WhatsAble assistant.
+      Sender of this message — `"user"` for the customer or `"bot"` for your Whatsable assistant.
     </ResponseField>
 
     <ResponseField name="content" type="string">
@@ -242,7 +242,7 @@ When an event fires, WhatsAble sends an HTTP `POST` to your endpoint with a `Con
 </ResponseField>
 
 <ResponseField name="user_id" type="string" required>
-  UUID of the WhatsAble account that received this message. Matches the `user_id` stored on the webhook registration.
+  UUID of the Whatsable account that received this message. Matches the `user_id` stored on the webhook registration.
 </ResponseField>
 
 <ResponseField name="last_message_of_user" type="string">
@@ -285,7 +285,7 @@ When an event fires, WhatsAble sends an HTTP `POST` to your endpoint with a `Con
 
 ## Internal API Reference
 
-The WhatsAble dashboard manages webhooks through three authenticated internal endpoints. All requests require a valid **Bearer** token from the active session.
+The Whatsable dashboard manages webhooks through three authenticated internal endpoints. All requests require a valid **Bearer** token from the active session.
 
 ### List webhooks
 
@@ -401,7 +401,7 @@ When you're done testing and ready to go live, follow these steps to switch from
     In your automation platform, switch to the **Production** URL for your trigger node and copy it.
   </Step>
   <Step title="Create a new credential — do not edit the existing one">
-    In WhatsAble, go to **Operations → Webhooks** and click **New Webhook**. Paste the production URL and save.
+    In Whatsable, go to **Operations → Webhooks** and click **New Webhook**. Paste the production URL and save.
 
     In your automation tool, create a **new credential** (e.g. `WhatsAble Bot – Production`) rather than overwriting the test credential. Enter the production webhook URL and your API key, then save.
   </Step>
@@ -436,7 +436,7 @@ Your webhook server must:
 
 <AccordionGroup>
   <Accordion title="Use HTTPS in production">
-    Always verify webhook signatures and use HTTPS endpoints. HTTP may be acceptable for local development only. WhatsAble shows a reminder banner on the webhook page: *"Always verify webhook signatures and use HTTPS endpoints for secure communication."*
+    Always verify webhook signatures and use HTTPS endpoints. HTTP may be acceptable for local development only. Whatsable shows a reminder banner on the webhook page: *"Always verify webhook signatures and use HTTPS endpoints for secure communication."*
   </Accordion>
   <Accordion title="Respond fast, process async">
     Return `200 OK` immediately, then process the payload in a background job or queue. Long-running synchronous handlers risk timing out before the work is done.
@@ -493,7 +493,7 @@ app.listen(3000);
 
 <AccordionGroup>
   <Accordion title="n8n / Make trigger not firing at all" defaultOpen={true}>
-    This is the **most common issue** when setting up the WhatsAble bot trigger. When configuring the WhatsApp trigger node in n8n or Make, you must explicitly select **Incoming Messages** as the event type. The option can be easy to miss, especially if the interface has changed recently.
+    This is the **most common issue** when setting up the Whatsable bot trigger. When configuring the WhatsApp trigger node in n8n or Make, you must explicitly select **Incoming Messages** as the event type. The option can be easy to miss, especially if the interface has changed recently.
 
     **What to check:**
     1. Open the trigger node settings in your automation tool
@@ -504,7 +504,7 @@ app.listen(3000);
     If it still doesn't fire after sending a test message, move on to the duplicate webhook check below.
   </Accordion>
   <Accordion title="Already tried everything and it still doesn't work">
-    Before spending more time debugging, open **Operations → Webhooks** in the WhatsAble dashboard and check how many webhooks you have registered. It's easy to accumulate duplicate entries from previous test attempts. Multiple webhooks registered to different URLs (or stale test URLs) can cause unexpected behaviour.
+    Before spending more time debugging, open **Operations → Webhooks** in the Whatsable dashboard and check how many webhooks you have registered. It's easy to accumulate duplicate entries from previous test attempts. Multiple webhooks registered to different URLs (or stale test URLs) can cause unexpected behaviour.
 
     **Fix:** Delete any old or duplicate webhook entries, keep only the one that matches your current trigger URL, then test again.
   </Accordion>
@@ -521,7 +521,7 @@ app.listen(3000);
     The `DELETE` endpoint enforces ownership checks. You can only delete webhooks that belong to the currently authenticated user. Make sure you are using the correct account session token.
   </Accordion>
   <Accordion title="Duplicate events arriving">
-    WhatsAble may redeliver events if your server did not respond with a `2xx` in time. Build idempotency into your handler using `phone_number` + `user_last_message_time` as a composite key.
+    Whatsable may redeliver events if your server did not respond with a `2xx` in time. Build idempotency into your handler using `phone_number` + `user_last_message_time` as a composite key.
   </Accordion>
 </AccordionGroup>
 
@@ -535,13 +535,13 @@ app.listen(3000);
     icon="code"
     href="/guides/whatsable/api-documentation"
   >
-    Explore the full WhatsAble REST API for sending messages, managing contacts, and more.
+    Explore the full Whatsable REST API for sending messages, managing contacts, and more.
   </Card>
   <Card
     title="Integrations"
     icon="plug"
     href="/guides/whatsable/integrations"
   >
-    Connect WhatsAble to Zapier, Make, n8n, and other automation platforms.
+    Connect Whatsable to Zapier, Make, n8n, and other automation platforms.
   </Card>
 </CardGroup>

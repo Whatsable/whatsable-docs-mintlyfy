@@ -1,6 +1,6 @@
 ---
-title: "Can I assign WhatsApp chats to teammates in WhatsAble?"
-description: "Assign WhatsApp chats to teammates in WhatsAble via Zapier, Make, API, keywords, or AI content. Pro/Agency seats, assigned-only push, and limits."
+title: "Can I assign WhatsApp chats to teammates in Whatsable?"
+description: "Assign WhatsApp chats to teammates in Whatsable via Zapier, Make, API, keywords, or AI content. Pro/Agency seats, assigned-only push, and limits."
 ---
 
 {/*
@@ -15,7 +15,7 @@ description: "Assign WhatsApp chats to teammates in WhatsAble via Zapier, Make, 
   Mintlify H1 = frontmatter title only — NO body # heading.
 */}
 
-Yes. On **Pro** and **Agency**, WhatsAble lets you **assign a WhatsApp conversation to a teammate** so the right person owns the thread. Assignment is available through **Zapier**, **Make**, the **API**, **keyword rules** on labels, and **AI** that routes by conversation content. Use this page when you need the inventory of those assign paths — not a rewrite of the shared inbox UI.
+Yes. On **Pro** and **Agency**, Whatsable lets you **assign a WhatsApp conversation to a teammate** so the right person owns the thread. Assignment is available through **Zapier**, **Make**, the **API**, **keyword rules** on labels, and **AI** that routes by conversation content. Use this page when you need the inventory of those assign paths — not a rewrite of the shared inbox UI.
 
 **Bulk Message** has **no** shared 2-way inbox and **no** team seats, so chat assignment does not apply there. Extra inbox seats (when you need more people than the plan includes) are **$12 per seat per month** on Pro and Agency and include native Android/iOS apps plus **mobile push only for chats assigned to that person**.
 
@@ -23,10 +23,10 @@ For how the shared inbox looks day to day (who sees what, labels vs notes, AI �
 
 ## Prerequisites
 
-- **WhatsAble plan:** **Pro** or **Agency** (shared inbox, seats, AI, and integrations). **Bulk Message** = broadcast-only — no inbox / seats / assign.
-- **Connected WhatsApp Business number** through WhatsAble (Embedded Signup / Coexistence supported — keep the WhatsApp Business app; do not uninstall it after connect).
+- **Whatsable plan:** **Pro** or **Agency** (shared inbox, seats, AI, and integrations). **Bulk Message** = broadcast-only — no inbox / seats / assign.
+- **Connected WhatsApp Business number** through Whatsable (Embedded Signup / Coexistence supported — keep the WhatsApp Business app; do not uninstall it after connect).
 - **Teammates on the account** (or extra seats added when you need more people in the inbox). Plan price covers the included team; buy seats when you need more.
-- **For automation assign:** a **Zapier**, **Make**, **n8n**, or **API** connection authenticated with your WhatsAble / Notifyer API key — integrations are Pro/Agency only.
+- **For automation assign:** a **Zapier**, **Make**, **n8n**, or **API** connection authenticated with your Whatsable / Notifyer API key — integrations are Pro/Agency only.
 - **For keyword / AI assign:** labels (and AI chatbot / handoff settings) configured in the console so routing rules and the bot have something to act on.
 
 <Info>
@@ -37,17 +37,17 @@ Canonical seat money: **$12 / seat / mo** on Pro and Agency. Do not confuse seat
 
 ## Assign paths — full inventory
 
-WhatsAble does **not** document a separate named “Assign to” control on every surface the same way. What is locked: you **can** assign a chat to a teammate via the paths below, and you can **add or remove labels** from the same automation partners. Inbox operators often route work with **labels** (for example a teammate name label or a routing label your automations watch). Treat labels and teammate assignment as related ownership tools — not as inventing a CRM tag mirror.
+Whatsable does **not** document a separate named “Assign to” control on every surface the same way. What is locked: you **can** assign a chat to a teammate via the paths below, and you can **add or remove labels** from the same automation partners. Inbox operators often route work with **labels** (for example a teammate name label or a routing label your automations watch). Treat labels and teammate assignment as related ownership tools — not as inventing a CRM tag mirror.
 
 ### 1. Zapier — Update a Contact
 
-From a Zap, use WhatsAble **Update a Contact**. The Zapier action description states you can **assign the conversation to someone on your team**, add notes, and **add/remove labels**.
+From a Zap, use Whatsable **Update a Contact**. The Zapier action description states you can **assign the conversation to someone on your team**, add notes, and **add/remove labels**.
 
 **Documented fields on this page’s field dictionary:** Phone Number, Display Name, Add a Note, Add Label Names or IDs, Remove Label Names or IDs.
 
 Update a Contact can assign the conversation to a teammate — confirm any assignee control in your live Zap editor. Do not invent a field key from this page.
 
-Typical pattern: a form, CRM stage change, or Lead Ad trigger decides the owner in Zapier, then Update a Contact assigns (and optionally labels) the WhatsApp chat in WhatsAble.
+Typical pattern: a form, CRM stage change, or Lead Ad trigger decides the owner in Zapier, then Update a Contact assigns (and optionally labels) the WhatsApp chat in Whatsable.
 
 ### 2. Make — Update a Contact
 
@@ -59,7 +59,7 @@ Confirm any assignee control in your live Make module — do not invent a field 
 
 ### 3. API and Agent Skills
 
-Assignment via **API** works alongside Zapier and Make. Operator scripts under **chat-notifyer** Agent Skills update conversation **labels** on the recipient (`assign-label.js` / `remove-label.js`) and can drive handoff by applying the bot’s **handoff label**. Labels on the WhatsAble chat are string names on the recipient record.
+Assignment via **API** works alongside Zapier and Make. Operator scripts under **chat-notifyer** Agent Skills update conversation **labels** on the recipient (`assign-label.js` / `remove-label.js`) and can drive handoff by applying the bot’s **handoff label**. Labels on the Whatsable chat are string names on the recipient record.
 
 Use Agent Skills when you are building or operating from code / an IDE agent — not as a substitute customer mobile app. Point developers to [chat-notifyer](/guides/notifyer-system/agent-skills/chat-notifyer) for script-level label and handoff operations.
 
@@ -71,7 +71,7 @@ From an n8n workflow you can **add/remove labels** and **assign the chat to a te
 
 ### 5. Keywords in chat
 
-**Assignment by keywords in chat** rides on **label keyword rules**: when you create a label with keyword rules, WhatsAble can automatically apply that label when an incoming message matches. Teams use keyword labels (and teammate / routing labels) so the right people see and own the thread — including label-scoped Team Member visibility in the inbox.
+**Assignment by keywords in chat** rides on **label keyword rules**: when you create a label with keyword rules, Whatsable can automatically apply that label when an incoming message matches. Teams use keyword labels (and teammate / routing labels) so the right people see and own the thread — including label-scoped Team Member visibility in the inbox.
 
 Manual label assign from automations or Agent Skills can override auto-applied labels; keyword auto-labelling continues on later messages.
 
@@ -89,13 +89,13 @@ Distinguish carefully:
 
 ### 7. Partner-flow owner routing (examples only)
 
-You can **build** owner routing in Zapier, Make, or n8n — for example **round-robin across sales**, or map a **Facebook Lead Ad / form / ad source** to the right teammate — then **assign and label** the WhatsApp chat in WhatsAble.
+You can **build** owner routing in Zapier, Make, or n8n — for example **round-robin across sales**, or map a **Facebook Lead Ad / form / ad source** to the right teammate — then **assign and label** the WhatsApp chat in Whatsable.
 
-WhatsAble does **not** ship a native “round-robin engine” or built-in Lead-Ad→teammate UI — build that routing in the partner tool, then assign in WhatsAble.
+Whatsable does **not** ship a native “round-robin engine” or built-in Lead-Ad→teammate UI — build that routing in the partner tool, then assign in Whatsable.
 
 ### 8. Inbox + mobile (how assignment shows up)
 
-- **Shared team inbox** (Pro/Agency): teammates collaborate in the WhatsAble inbox. Labels organize and scope visibility; see [Team inbox](/guides/notifyer-system/team-inbox) for access layers (number · Admin vs chat-only · label scope).
+- **Shared team inbox** (Pro/Agency): teammates collaborate in the Whatsable inbox. Labels organize and scope visibility; see [Team inbox](/guides/notifyer-system/team-inbox) for access layers (number · Admin vs chat-only · label scope).
 - **Native Android / iOS apps** (with extra seats): **push notifications only for chats assigned to that person**. Push-only does **not** mean the app hides other chats.
 
 ---
@@ -107,14 +107,14 @@ WhatsAble does **not** ship a native “round-robin engine” or built-in Lead-A
 </Warning>
 
 - **No invented Assign field name** for Zapier / Make / n8n — capability yes; confirm the control in your live editor.
-- **No CRM ↔ WhatsAble bidirectional label / tag mirror** product. Labels live on the WhatsAble chat; Monday, Pipedrive, Zapier, Make, n8n, Agent Skills, and the AI can read or write WhatsAble labels so inbox + mobile + automations stay aligned — that is **not** a two-way sync of CRM tags as one store.
+- **No CRM ↔ Whatsable bidirectional label / tag mirror** product. Labels live on the Whatsable chat; Monday, Pipedrive, Zapier, Make, n8n, Agent Skills, and the AI can read or write Whatsable labels so inbox + mobile + automations stay aligned — that is **not** a two-way sync of CRM tags as one store.
 - **No shared Agency usage pool / unified multi-number billing inbox.** Extra WhatsApp numbers on Agency are **separate accounts** with a manual contact-tier split. Filtering a shared inbox view by number (when your workspace exposes it) is a UI convenience — not a merged subscription pool.
 - **Push-only ≠ app hides other chats.** Assigned-only push notifies for owned work; it does not claim a visibility lockdown that removes unassigned chats from the app.
-- **No invented WhatsAble RPM** on this page.
+- **No invented Whatsable RPM** on this page.
 - **No WhatsApp typing-indicator dots** claim. Response Delay 5–60s is a separate AI setting — not assignment.
 - A full roles / permissions matrix beyond the locked facts on this page (super-admin creates templates; Admin vs chat-only / label scope on team-inbox) is not documented here.
 - **Bot Assign ≠ teammate assign.** Do not conflate AI bot attachment with human ownership.
-- **Native round-robin / Lead-Ad router** requires naming Zapier, Make, or n8n — WhatsAble does not ship that router UI.
+- **Native round-robin / Lead-Ad router** requires naming Zapier, Make, or n8n — Whatsable does not ship that router UI.
 - **Group Messaging $16** is unavailable — not a team-assign substitute.
 
 ---
@@ -154,7 +154,7 @@ Also: [Pricing](https://whatsable.app/pricing) · [n8n overview](/guides/notifye
 
 ## FAQ
 
-### Can I assign WhatsApp chats to teammates in WhatsAble?
+### Can I assign WhatsApp chats to teammates in Whatsable?
 
 **Yes — on Pro and Agency.** Assign via **Zapier**, **Make**, the **API**, **keyword** label rules, or **AI** by conversation content. Bulk Message has no shared inbox or seats.
 
@@ -174,13 +174,13 @@ Also: [Pricing](https://whatsable.app/pricing) · [n8n overview](/guides/notifye
 
 **No.** **Bot Assign** picks which AI bot is attached to a conversation. **Teammate assignment** decides which human owns the thread. Both can matter on the same chat.
 
-### Can WhatsAble round-robin chats natively?
+### Can Whatsable round-robin chats natively?
 
-**Not as a built-in WhatsAble router UI.** Build round-robin (or Lead Ad → owner) in **Zapier, Make, or n8n**, then assign and label the chat in WhatsAble.
+**Not as a built-in Whatsable router UI.** Build round-robin (or Lead Ad → owner) in **Zapier, Make, or n8n**, then assign and label the chat in Whatsable.
 
-### Do CRM tags stay in two-way sync with WhatsAble labels?
+### Do CRM tags stay in two-way sync with Whatsable labels?
 
-**No bidirectional CRM↔WhatsAble label mirror product.** Labels live on the WhatsAble conversation; partners and the AI can read/write those WhatsAble labels so inbox, mobile, and automations stay aligned.
+**No bidirectional CRM↔Whatsable label mirror product.** Labels live on the Whatsable conversation; partners and the AI can read/write those Whatsable labels so inbox, mobile, and automations stay aligned.
 
 ### How much is an extra inbox seat?
 

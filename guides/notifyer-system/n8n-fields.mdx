@@ -1,6 +1,6 @@
 ---
-title: "What can the WhatsAble n8n node send and receive?"
-description: "Every WhatsAble n8n node field: On new Incoming message event outputs, Send template and non-template inputs, Schedule conditions, and Update Contact."
+title: "What can the Whatsable n8n node send and receive?"
+description: "Every Whatsable n8n node field: On new Incoming message event outputs, Send template and non-template inputs, Schedule conditions, and Update Contact."
 ---
 
 {/*
@@ -13,16 +13,16 @@ description: "Every WhatsAble n8n node field: On new Incoming message event outp
   Brand: WhatsAble only in customer copy. Path may say notifyer-system.
 */}
 
-This page is the **field dictionary** for the WhatsAble community node on n8n — every unlocked trigger and action input/output you can map in a workflow. Use it when you already know you want n8n and need exact labels, types, and requiredness.
+This page is the **field dictionary** for the Whatsable community node on n8n — every unlocked trigger and action input/output you can map in a workflow. Use it when you already know you want n8n and need exact labels, types, and requiredness.
 
 For connect steps, coexistence walkthrough, examples, and troubleshooting, use [n8n overview](/guides/notifyer-system/n8n-overview).
 
 ## Prerequisites
 
 - **Plan:** n8n requires **Pro** or **Agency** (Bulk Message does not include integrations).
-- **WhatsApp number:** Connected in WhatsAble. Coexistence is supported — keep the WhatsApp Business app; phone replies can fire the trigger when outgoing is enabled.
-- **n8n node:** Verified community package [`n8n-nodes-whatsable`](https://www.npmjs.com/package/n8n-nodes-whatsable) (listing: [n8n.io/integrations/whatsable](https://n8n.io/integrations/whatsable/)). Search **WhatsAble** in the n8n node library, or install with `npm install n8n-nodes-whatsable` on self-hosted.
-- **API key:** From the WhatsAble console API Keys page. Paste that key into the WhatsAble credential (core product key — not a Meta Graph token).
+- **WhatsApp number:** Connected in Whatsable. Coexistence is supported — keep the WhatsApp Business app; phone replies can fire the trigger when outgoing is enabled.
+- **n8n node:** Verified community package [`n8n-nodes-whatsable`](https://www.npmjs.com/package/n8n-nodes-whatsable) (listing: [n8n.io/integrations/whatsable](https://n8n.io/integrations/whatsable/)). Search **Whatsable** in the n8n node library, or install with `npm install n8n-nodes-whatsable` on self-hosted.
+- **API key:** From the Whatsable console API Keys page. Paste that key into the Whatsable credential (core product key — not a Meta Graph token).
 
 <Info>
 Use the **Notifyer System Incoming & Outgoing Message** credential type on the trigger when you need phone-app and inbox outgoing events, not only inbound.
@@ -39,20 +39,20 @@ Use the **Notifyer System Incoming & Outgoing Message** credential type on the t
 | Action · Resource **Send Message** | **Schedule WhatsApp Message** → same product ops (template or non-template) |
 | Action · Resource **Send Message** | **Manage Contact** → product op **Update Contact** (console: Update recipient) |
 
-All Notifyer/core paths use a WhatsAble API key credential. When outgoing is enabled, the same trigger also fires for outgoing messages — filter with `incoming_message`.
+All Notifyer/core paths use a Whatsable API key credential. When outgoing is enabled, the same trigger also fires for outgoing messages — filter with `incoming_message`.
 
 ---
 
 ## Trigger: On new Incoming message event
 
-**Type:** Instant · **Node display name:** Incoming/outgoing WhatsApp message Trigger · **App:** WhatsAble
+**Type:** Instant · **Node display name:** Incoming/outgoing WhatsApp message Trigger · **App:** Whatsable
 
-Fires when WhatsApp messages are received — and, with the incoming-and-outgoing credential, when they are sent. Outgoing events include replies typed in the WhatsApp Business app, the WhatsAble inbox, and automations.
+Fires when WhatsApp messages are received — and, with the incoming-and-outgoing credential, when they are sent. Outgoing events include replies typed in the WhatsApp Business app, the Whatsable inbox, and automations.
 
 ### Configure inputs
 
 <ResponseField name="Credential Type" type="dropdown" required>
-  For core WhatsAble (Notifyer System):
+  For core Whatsable (Notifyer System):
 
   | Option | When to use |
   |--------|-------------|
@@ -85,7 +85,7 @@ Copy the trigger **Production URL** into the credential’s Production URL field
 </ResponseField>
 
 <ResponseField name="recipient_name" type="text">
-  Display name for this contact in WhatsAble.
+  Display name for this contact in Whatsable.
 </ResponseField>
 
 <ResponseField name="labels" type="text">
@@ -174,7 +174,7 @@ Use an IF or Switch node on `incoming_message`, `send_by`, and `was_message_by_h
 
 ## Action: Send WhatsApp Message (template or non-template)
 
-**App:** WhatsAble · **Resource:** Send Message · **Operation:** Send WhatsApp Message
+**App:** Whatsable · **Resource:** Send Message · **Operation:** Send WhatsApp Message
 
 Sends a WhatsApp message using the official WhatsApp API. After you pick the operation, choose **Product Operation**: **Send Message Template** (console / overview: **Send template via Notifyer**) or **Send Non Template Message** (console / overview: **Send non-template via Notifyer**).
 
@@ -238,7 +238,7 @@ Testing this action sends a **real** WhatsApp message. Use a personal test numbe
 
 ## Action: Schedule WhatsApp Message
 
-**App:** WhatsAble · **Resource:** Send Message · **Operation:** Schedule WhatsApp Message
+**App:** Whatsable · **Resource:** Send Message · **Operation:** Schedule WhatsApp Message
 
 Schedules a WhatsApp message for later (template or non-template product operation), with optional reply and label conditions so it can cancel or skip when the lead is already engaged.
 
@@ -296,7 +296,7 @@ Optional but recommended. Cancels or skips the scheduled send if the contact rep
 </ResponseField>
 
 <Warning>
-This is **not** a native drip builder inside WhatsAble. Day-0 / day-3 / day-6 sequences are multiple n8n steps that each schedule one message. WhatsAble sends each scheduled message; the sequence logic lives in n8n.
+This is **not** a native drip builder inside Whatsable. Day-0 / day-3 / day-6 sequences are multiple n8n steps that each schedule one message. Whatsable sends each scheduled message; the sequence logic lives in n8n.
 </Warning>
 
 <Note>
@@ -307,10 +307,10 @@ The live overview also shows an optional **Schedule Message** control on immedia
 
 ## Action: Manage Contact → Update Contact
 
-**App:** WhatsAble · **Resource:** Send Message · **Operation:** Manage Contact · **Product Operation:** Update Contact  
+**App:** Whatsable · **Resource:** Send Message · **Operation:** Manage Contact · **Product Operation:** Update Contact  
 (Console module name: **Update recipient**)
 
-Updates a contact in WhatsAble — AI note and labels. Lookup is by phone.
+Updates a contact in Whatsable — AI note and labels. Lookup is by phone.
 
 ### Documented fields
 
@@ -323,7 +323,7 @@ Updates a contact in WhatsAble — AI note and labels. Lookup is by phone.
 </ResponseField>
 
 <ResponseField name="Add Label Names or IDs" type="multiselect" optional>
-  Labels to add. WhatsAble conversation labels are the source of truth inside WhatsAble.
+  Labels to add. Whatsable conversation labels are the source of truth inside Whatsable.
 </ResponseField>
 
 <ResponseField name="Remove Label Names or IDs" type="multiselect" optional>
@@ -339,11 +339,11 @@ Updates a contact in WhatsAble — AI note and labels. Lookup is by phone.
 ## Limits and what this does NOT do
 
 <Warning>
-**No native drip builder.** Multi-day sequences use n8n (or Make / Zapier) schedule steps plus reply conditions — not a built-in drip product inside WhatsAble.
+**No native drip builder.** Multi-day sequences use n8n (or Make / Zapier) schedule steps plus reply conditions — not a built-in drip product inside Whatsable.
 </Warning>
 
 <Warning>
-**No CRM ↔ WhatsAble bidirectional label mirror.** Add/Remove labels update WhatsAble conversation labels. They do not sync Monday/Pipedrive (or other) CRM tags as one shared store.
+**No CRM ↔ Whatsable bidirectional label mirror.** Add/Remove labels update Whatsable conversation labels. They do not sync Monday/Pipedrive (or other) CRM tags as one shared store.
 </Warning>
 
 <Warning>
@@ -352,12 +352,12 @@ Updates a contact in WhatsAble — AI note and labels. Lookup is by phone.
 
 - **Bulk Message** plan: no n8n / integrations — upgrade to Pro or Agency.
 - **Non-template** sends only inside the customer service window after the contact’s last inbound; otherwise use a template.
-- **Group messaging** via the Notifyer/core n8n path is **not** documented as LIVE on this fields page (group send on the node is a separate WhatsAble Bot product path — omit as core LIVE).
+- **Group messaging** via the Notifyer/core n8n path is **not** documented as LIVE on this fields page (group send on the node is a separate Whatsable Bot product path — omit as core LIVE).
 - Do not invent trigger `message_type` values beyond `text`, `audio`, `image`, and `document`.
 - Do not invent location or sticker send types on n8n Notifyer operations.
-- Typing-indicator dots are not a documented WhatsAble automation claim.
+- Typing-indicator dots are not a documented Whatsable automation claim.
 - No documented **Get delivery status** search/action on the n8n node (unlike Zapier/Make) — do not invent one.
-- Do not invent WhatsAble numeric RPM on this page.
+- Do not invent Whatsable numeric RPM on this page.
 
 ---
 
@@ -388,9 +388,9 @@ Also: [Team inbox](/guides/notifyer-system/team-inbox) · [Chat assignment](/gui
 
 Yes, when coexistence is enabled and you use **Notifyer System Incoming & Outgoing Message**. The node may still be labelled **On new Incoming message event**. Filter on `incoming_message` (`false`), `send_by` (for example `"WhatsApp App"`), and `was_message_by_human`.
 
-### Can I build day-0 / day-3 / day-6 WhatsApp drips with WhatsAble and n8n?
+### Can I build day-0 / day-3 / day-6 WhatsApp drips with Whatsable and n8n?
 
-Yes, by chaining **Schedule WhatsApp Message** steps (and reply conditions) in n8n. WhatsAble is not a native drip builder — the sequence logic lives in n8n.
+Yes, by chaining **Schedule WhatsApp Message** steps (and reply conditions) in n8n. Whatsable is not a native drip builder — the sequence logic lives in n8n.
 
 ### Does Bulk Message include n8n?
 
@@ -402,4 +402,4 @@ No. n8n and other integrations require **Pro** or **Agency**.
 
 ### Is there a Get delivery status action in n8n?
 
-Not on the documented WhatsAble n8n node surface for Notifyer/core. Use Zapier **Get Delivery Status** or Make **Get delivery status** if you need that lookup, or handle delivery via webhooks/API — do not invent an n8n delivery-status operation.
+Not on the documented Whatsable n8n node surface for Notifyer/core. Use Zapier **Get Delivery Status** or Make **Get delivery status** if you need that lookup, or handle delivery via webhooks/API — do not invent an n8n delivery-status operation.

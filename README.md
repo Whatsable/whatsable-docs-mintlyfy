@@ -1,18 +1,18 @@
-# WhatsAble Documentation
+# Whatsable Documentation
 
 > Enterprise-grade WhatsApp automation solutions documentation built with [Mintlify](https://mintlify.com)
 
-This repository contains the complete documentation for the WhatsAble suite of products—a comprehensive WhatsApp automation platform that enables businesses to automate their communication workflows through multiple integration options.
+This repository contains the complete documentation for the Whatsable suite of products—a comprehensive WhatsApp automation platform that enables businesses to automate their communication workflows through multiple integration options.
 
-## 📚 About WhatsAble
+## 📚 About Whatsable
 
-WhatsAble provides enterprise-grade WhatsApp automation solutions for business communication. The platform offers two specialized products designed to meet different business needs:
+Whatsable provides enterprise-grade WhatsApp automation solutions for business communication. The platform offers two specialized products designed to meet different business needs:
 
-### 🟢 WhatsAble
+### 🟢 Whatsable
 **Internal Communication Solution**
 - **Best For**: Internal teams and small businesses
 - **Features**: Unlimited messaging, team notifications, business alerts
-- **Identity**: WhatsAble branding
+- **Identity**: Whatsable branding
 - **Pricing**: Subscription-based
 - **Dashboard**: [https://dashboard.whatsable.app](https://dashboard.whatsable.app/signin)
 
@@ -134,7 +134,7 @@ The documentation is organized into the following sections:
    - Quickstart
    - n8n Overview
 
-2. **WhatsAble**
+2. **Whatsable**
    - Zapier Integration
    - Make Integration
    - n8n Integration
@@ -154,7 +154,7 @@ The documentation is organized into the following sections:
 
 ### API Reference Tab
 
-- **WhatsAble API**: Complete OpenAPI documentation
+- **Whatsable API**: Complete OpenAPI documentation
 - **Notifyer System API**: Complete OpenAPI documentation
 
 ## 🔧 Configuration
@@ -253,7 +253,7 @@ If you encounter unexpected errors:
 
 ### Official Links
 
-- **WhatsAble Website**: [https://www.whatsable.app](https://www.whatsable.app)
+- **Whatsable Website**: [https://www.whatsable.app](https://www.whatsable.app)
 - **Pricing**: [https://www.whatsable.app/pricing](https://www.whatsable.app/pricing)
 - **Documentation**: [https://docs.whatsable.app](https://docs.whatsable.app)
 
@@ -261,7 +261,7 @@ If you encounter unexpected errors:
 
 - **X (Twitter)**: [@whatsable](https://x.com/whatsable)
 - **GitHub**: [@whatsable](https://github.com/whatsable)
-- **LinkedIn**: [WhatsAble](https://linkedin.com/company/whatsable)
+- **LinkedIn**: [Whatsable](https://linkedin.com/company/whatsable)
 
 ### Support
 
@@ -271,7 +271,7 @@ If you encounter unexpected errors:
 
 ## 📄 License
 
-This documentation is proprietary and belongs to WhatsAble. All rights reserved.
+This documentation is proprietary and belongs to Whatsable. All rights reserved.
 
 ## 🤝 Contributing
 

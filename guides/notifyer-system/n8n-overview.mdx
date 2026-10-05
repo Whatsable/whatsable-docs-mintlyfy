@@ -164,22 +164,22 @@ Before getting started, make sure you have:
     3. Add a trigger node of your choice:
        - Popular triggers include Google Forms, Jotform, ClickUp, or a Schedule trigger
        - Connect and configure your trigger according to your use case 
-      <Accordion title="WhatsAble trigger node (incoming and outgoing)">
+      <Accordion title="Whatsable trigger node (incoming and outgoing)">
   <Info>
-    Use the WhatsAble trigger so n8n runs when WhatsApp messages are **received or sent** — including replies typed in the WhatsApp Business app on your phone. Select the **incoming and outgoing** credential type so those events reach n8n, not only the Notifyer inbox.
+    Use the Whatsable trigger so n8n runs when WhatsApp messages are **received or sent** — including replies typed in the WhatsApp Business app on your phone. Select the **incoming and outgoing** credential type so those events reach n8n, not only the Notifyer inbox.
   </Info>
 
   <Steps>
-    <Step title="Add WhatsAble trigger node">
-      Follow these steps to add the WhatsAble trigger node to your workflow:
+    <Step title="Add Whatsable trigger node">
+      Follow these steps to add the Whatsable trigger node to your workflow:
 
       1. Click the **+** button in your workflow canvas to add a new node
-      2. Search for "WhatsAble" in the node library search bar
-      3. Select the node displaying the official WhatsAble logo
+      2. Search for "Whatsable" in the node library search bar
+      3. Select the node displaying the official Whatsable logo
       4. From the available trigger options, choose **On new Incoming message event**. That is the node's label — when outgoing is enabled (credential **Notifyer System incoming and outgoing messages**), the same trigger also fires for outgoing messages, including replies typed in the WhatsApp Business app. Filter with `incoming_message`.
 
-      <Frame caption="Adding the WhatsAble trigger labelled On new Incoming message event">
-        <img src="/images/trigger-node.png" alt="WhatsAble node selection showing trigger options" />
+      <Frame caption="Adding the Whatsable trigger labelled On new Incoming message event">
+        <img src="/images/trigger-node.png" alt="Whatsable node selection showing trigger options" />
       </Frame>
 
       <Tip>
@@ -188,10 +188,10 @@ Before getting started, make sure you have:
     </Step>
 
     <Step title="Configure authentication credentials">
-      Set up your WhatsAble API credentials to establish a secure connection:
+      Set up your Whatsable API credentials to establish a secure connection:
 
       **Webhook URL Configuration:**
-      1. In the WhatsAble Trigger node parameters, locate the **Webhook URLs** section at the top
+      1. In the Whatsable Trigger node parameters, locate the **Webhook URLs** section at the top
       2. Select **Production URL** and copy the generated URL by clicking on it
       3. Store this URL securely as you'll need it for the credential setup
 
@@ -201,14 +201,14 @@ Before getting started, make sure you have:
 
       **Credential Creation:**
       1. In the **Credential to connect with** dropdown, click **+ Create new credential**
-      2. Select **WhatsAble Notifyer System API** as your connection method. For phone-app and inbox replies, choose the credential that covers **Notifyer System incoming and outgoing messages**
+      2. Select **Whatsable Notifyer System API** as your connection method. For phone-app and inbox replies, choose the credential that covers **Notifyer System incoming and outgoing messages**
       3. Enter your Notifyer System API key in the **API Key** field
       4. Paste the Production URL you copied earlier into the **Production URL** field
-      5. Assign a descriptive name to your credential (e.g., "WhatsAble Production")
+      5. Assign a descriptive name to your credential (e.g., "Whatsable Production")
       6. Click **Save** to securely store your credentials
 
-      <Frame caption="Credential configuration for WhatsAble Trigger node">
-        <img src="/images/notifyer-trigger-node.png" alt="WhatsAble credential configuration interface" />
+      <Frame caption="Credential configuration for Whatsable Trigger node">
+        <img src="/images/notifyer-trigger-node.png" alt="Whatsable credential configuration interface" />
       </Frame>
 
       <Note>
@@ -225,7 +225,7 @@ Before getting started, make sure you have:
          - **When Last Node Finishes**: Waits for the entire workflow to complete before responding
 
       **Testing:**
-      1. Click **Execute step** on the WhatsAble node to run a test
+      1. Click **Execute step** on the Whatsable node to run a test
       2. Verify the connection is working by checking for a success confirmation
       3. Review any error messages if the test fails and adjust your configuration accordingly
 
@@ -244,18 +244,18 @@ Before getting started, make sure you have:
   
   <Step title="Add the Notifyer System node">
     1. Click the **+** button after your trigger node
-    2. Search for "WhatsAble" in the nodes panel
-    3. Select the node with the official WhatsAble logo
-    4. After selecting the WhatsAble node, choose 'Send template via Notifyer' or 'Send non-template via Notifyer' as needed.
+    2. Search for "Whatsable" in the nodes panel
+    3. Select the node with the official Whatsable logo
+    4. After selecting the Whatsable node, choose 'Send template via Notifyer' or 'Send non-template via Notifyer' as needed.
 
-    <Frame caption="WhatsAble Node: Send Message via Send template via Notifyer / Send non-template via Notifyer">
-      <img src="/images/notifyer-node-action.png" alt="WhatsAble node selection" />
+    <Frame caption="Whatsable Node: Send Message via Send template via Notifyer / Send non-template via Notifyer">
+      <img src="/images/notifyer-node-action.png" alt="Whatsable node selection" />
     </Frame>
 
   </Step>
   
   <Step title="Configure Notifyer System credential">
-    1. In the WhatsAble node **Parameters**, find the **Credential to connect with** dropdown
+    1. In the Whatsable node **Parameters**, find the **Credential to connect with** dropdown
     2. Select **+ Create new credential**
     3. Enter your Notifyer System API key that you copied earlier
     4. Name your credential (e.g., "Notifyer Production")

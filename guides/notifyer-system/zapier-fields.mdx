@@ -1,6 +1,6 @@
 ---
-title: "What Zapier triggers and actions does WhatsAble expose?"
-description: "Every WhatsAble Zapier trigger and action field: New Incoming or Outgoing WhatsApp Message, Send, Schedule Follow-Up, Update a Contact, and Get Delivery Status."
+title: "What Zapier triggers and actions does Whatsable expose?"
+description: "Every Whatsable Zapier trigger and action field: New Incoming or Outgoing WhatsApp Message, Send, Schedule Follow-Up, Update a Contact, and Get Delivery Status."
 ---
 
 {/*
@@ -13,16 +13,16 @@ description: "Every WhatsAble Zapier trigger and action field: New Incoming or O
   Brand: WhatsAble only in customer copy. Path may say notifyer-system.
 */}
 
-This page is the **field dictionary** for the WhatsAble app on Zapier — every unlocked trigger and action input/output you can map in a Zap. Use it when you already know you want Zapier and need exact labels, types, and requiredness.
+This page is the **field dictionary** for the Whatsable app on Zapier — every unlocked trigger and action input/output you can map in a Zap. Use it when you already know you want Zapier and need exact labels, types, and requiredness.
 
 For connect steps, coexistence walkthrough, examples, and troubleshooting, use [Zapier overview](/guides/notifyer-system/zapier-overview).
 
 ## Prerequisites
 
 - **Plan:** Zapier requires **Pro** or **Agency** (Bulk Message does not include integrations).
-- **WhatsApp number:** Connected in WhatsAble. Coexistence is supported — keep the WhatsApp Business app; phone replies can fire the trigger.
-- **Zapier app:** Public listing **WhatsAble**, slug [`whatsable-ca185063`](https://zapier.com/apps/whatsable-ca185063/integrations). Search **WhatsAble** in the Zap editor.
-- **API key:** From the WhatsAble console API Keys page. In the Zap editor, set **Credential Type** to **Notifyer** and paste that key (core product key — not a Meta Graph token).
+- **WhatsApp number:** Connected in Whatsable. Coexistence is supported — keep the WhatsApp Business app; phone replies can fire the trigger.
+- **Zapier app:** Public listing **Whatsable**, slug [`whatsable-ca185063`](https://zapier.com/apps/whatsable-ca185063/integrations). Search **Whatsable** in the Zap editor.
+- **API key:** From the Whatsable console API Keys page. In the Zap editor, set **Credential Type** to **Notifyer** and paste that key (core product key — not a Meta Graph token).
 
 <Info>
 The marketplace app is **public**. A console “Connect to Zapier” deep link is onboarding only — it does not mean the app is invite-only.
@@ -44,9 +44,9 @@ The marketplace app is **public**. A console “Connect to Zapier” deep link i
 
 ## Trigger: New Incoming or Outgoing WhatsApp Message
 
-**Type:** Instant · **App:** WhatsAble · Internal key: `whatsable_message_trigger`
+**Type:** Instant · **App:** Whatsable · Internal key: `whatsable_message_trigger`
 
-Fires when you receive or send a WhatsApp message. You can act on incoming only, outgoing only, or both by filtering after the trigger. Outgoing events include replies typed in the WhatsApp Business app, the WhatsAble inbox, and automations.
+Fires when you receive or send a WhatsApp message. You can act on incoming only, outgoing only, or both by filtering after the trigger. Outgoing events include replies typed in the WhatsApp Business app, the Whatsable inbox, and automations.
 
 ### Configure inputs
 
@@ -69,7 +69,7 @@ Fires when you receive or send a WhatsApp message. You can act on incoming only,
 </ResponseField>
 
 <ResponseField name="recipient_name" type="text">
-  Display name for this contact in WhatsAble.
+  Display name for this contact in Whatsable.
 </ResponseField>
 
 <ResponseField name="labels" type="text">
@@ -166,9 +166,9 @@ Use a Zapier Filter on `incoming_message`, `send_by`, and `was_message_by_human`
 
 ## Action: Send WhatsApp Message
 
-**App:** WhatsAble · Internal key: `send_whatsapp_message`
+**App:** Whatsable · Internal key: `send_whatsapp_message`
 
-Sends a WhatsApp message using the official WhatsApp API. You can add labels and write notes that appear in WhatsAble’s chat interface. Choose **Configuration**: template (start a conversation / proactive) or non-template (inside the customer service window).
+Sends a WhatsApp message using the official WhatsApp API. You can add labels and write notes that appear in Whatsable’s chat interface. Choose **Configuration**: template (start a conversation / proactive) or non-template (inside the customer service window).
 
 ### Mode A — Send WhatsApp Template (to start conversation)
 
@@ -236,7 +236,7 @@ Testing this action sends a **real** WhatsApp message. Use a personal test numbe
 
 ## Action: Schedule a Follow-Up Message
 
-**App:** WhatsAble · Internal key: `schedule_follow_up_message`
+**App:** Whatsable · Internal key: `schedule_follow_up_message`
 
 Schedules a WhatsApp message for later, with optional reply and label conditions so it can cancel or skip when the lead is already engaged.
 
@@ -290,16 +290,16 @@ Optional but recommended. Cancels the scheduled send if the contact replies with
 </ResponseField>
 
 <Warning>
-This is **not** a native drip builder inside WhatsAble. Day-0 / day-3 / day-6 sequences are multiple Zap steps (or Paths) that each schedule one message. WhatsAble sends each scheduled message; the sequence logic lives in Zapier.
+This is **not** a native drip builder inside Whatsable. Day-0 / day-3 / day-6 sequences are multiple Zap steps (or Paths) that each schedule one message. Whatsable sends each scheduled message; the sequence logic lives in Zapier.
 </Warning>
 
 ---
 
 ## Action: Update a Contact
 
-**App:** WhatsAble · Internal key: `update_contact`
+**App:** Whatsable · Internal key: `update_contact`
 
-Updates a contact in WhatsAble — display name, AI note, and labels. The Zapier action description also states you can **assign the conversation to a teammate**.
+Updates a contact in Whatsable — display name, AI note, and labels. The Zapier action description also states you can **assign the conversation to a teammate**.
 
 ### Documented fields
 
@@ -308,7 +308,7 @@ Updates a contact in WhatsAble — display name, AI note, and labels. The Zapier
 </ResponseField>
 
 <ResponseField name="Display Name" type="text" optional>
-  Display name in the WhatsAble chat interface.
+  Display name in the Whatsable chat interface.
 </ResponseField>
 
 <ResponseField name="Add a Note" type="text" optional>
@@ -316,7 +316,7 @@ Updates a contact in WhatsAble — display name, AI note, and labels. The Zapier
 </ResponseField>
 
 <ResponseField name="Add Label Names or IDs" type="multiselect" optional>
-  Labels to add. WhatsAble conversation labels are the source of truth inside WhatsAble.
+  Labels to add. Whatsable conversation labels are the source of truth inside Whatsable.
 </ResponseField>
 
 <ResponseField name="Remove Label Names or IDs" type="multiselect" optional>
@@ -331,7 +331,7 @@ Updates a contact in WhatsAble — display name, AI note, and labels. The Zapier
 
 ## Action: Get Delivery Status of a Message
 
-**App:** WhatsAble · Internal key: `get_message_delivery_status`
+**App:** Whatsable · Internal key: `get_message_delivery_status`
 
 Checks whether a previously sent WhatsApp message was delivered — useful for fallback paths (for example email) when a number may be wrong or inactive.
 
@@ -350,11 +350,11 @@ If a lookup fails in Zap History, re-check the mapped Message ID and contact sup
 ## Limits and what this does NOT do
 
 <Warning>
-**No native drip builder.** Multi-day sequences use Zapier (or Make / n8n) schedule steps plus reply conditions — not a built-in drip product inside WhatsAble.
+**No native drip builder.** Multi-day sequences use Zapier (or Make / n8n) schedule steps plus reply conditions — not a built-in drip product inside Whatsable.
 </Warning>
 
 <Warning>
-**No CRM ↔ WhatsAble bidirectional label mirror.** Add/Remove labels update WhatsAble conversation labels. They do not sync Monday/Pipedrive (or other) CRM tags as one shared store.
+**No CRM ↔ Whatsable bidirectional label mirror.** Add/Remove labels update Whatsable conversation labels. They do not sync Monday/Pipedrive (or other) CRM tags as one shared store.
 </Warning>
 
 <Warning>
@@ -366,7 +366,7 @@ If a lookup fails in Zap History, re-check the mapped Message ID and contact sup
 - **Phone format:** digits only, full international, no `+`, spaces, or dashes.
 - **Group messaging** via Zapier is **not** documented on this fields page (not an unlocked Official API docs surface here).
 - Do not invent trigger `message_type` values beyond `text`, `audio`, `image`, and `document`.
-- Typing-indicator dots are not a documented WhatsAble automation claim.
+- Typing-indicator dots are not a documented Whatsable automation claim.
 
 ---
 
@@ -397,9 +397,9 @@ Also: [Make overview](/guides/notifyer-system/make-overview) · [n8n overview](/
 
 Yes, when coexistence is enabled and outgoing events are included. Filter on `incoming_message`, `send_by` (for example `"WhatsApp App"`), and `was_message_by_human`.
 
-### Can I build day-0 / day-3 / day-6 WhatsApp drips with WhatsAble and Zapier?
+### Can I build day-0 / day-3 / day-6 WhatsApp drips with Whatsable and Zapier?
 
-Yes, by chaining **Schedule a Follow-Up Message** steps (and reply conditions) in Zapier. WhatsAble is not a native drip builder — the sequence logic lives in Zapier.
+Yes, by chaining **Schedule a Follow-Up Message** steps (and reply conditions) in Zapier. Whatsable is not a native drip builder — the sequence logic lives in Zapier.
 
 ### Does Bulk Message include Zapier?
 

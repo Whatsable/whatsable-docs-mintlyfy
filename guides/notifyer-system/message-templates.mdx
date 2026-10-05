@@ -1,6 +1,6 @@
 ---
-title: "How do I create and approve WhatsApp templates in WhatsAble?"
-description: "Create and approve WhatsApp message templates in the WhatsAble console: super-admin submit, variables, languages, Meta review, and recreate instead of edit."
+title: "How do I create and approve WhatsApp templates in Whatsable?"
+description: "Create and approve WhatsApp message templates in the Whatsable console: super-admin submit, variables, languages, Meta review, and recreate instead of edit."
 ---
 
 {/*
@@ -17,15 +17,15 @@ description: "Create and approve WhatsApp message templates in the WhatsAble con
   Do NOT send core customers to /guides/notifier/advanced/templates (mid-layer; named-variable examples there are not this console).
 */}
 
-Yes. A **super-admin** creates a WhatsApp message template in the WhatsAble console, submits it to Meta, and can send it only after Meta marks it **approved**. Use this page for the operator path: who is allowed to create, which fields you fill, how status moves from pending to approved or rejected, and what to do when the text must change or you connect a new number.
+Yes. A **super-admin** creates a WhatsApp message template in the Whatsable console, submits it to Meta, and can send it only after Meta marks it **approved**. Use this page for the operator path: who is allowed to create, which fields you fill, how status moves from pending to approved or rejected, and what to do when the text must change or you connect a new number.
 
 Creating a template is **not** broadcasting, and it is **not** the send-template API. Those flows only use a template that already exists and is approved. Outside the 24-hour customer-service window, WhatsApp only allows approved templates for business-initiated messages.
 
 ## Prerequisites
 
-- **WhatsAble account** on **Bulk Message**, **Pro**, or **Agency**. Template management is on all three. Sign in at [dashboard.whatsable.app/signin](https://dashboard.whatsable.app/signin).
+- **Whatsable account** on **Bulk Message**, **Pro**, or **Agency**. Template management is on all three. Sign in at [dashboard.whatsable.app/signin](https://dashboard.whatsable.app/signin).
 - **Super-admin role** on that account. Only super-admins can create templates. A normal admin does not have that access. If create is missing, this is the usual cause. The rest of the role matrix is not documented here.
-- **WhatsApp Business number connected** through WhatsAble (Embedded Signup / Coexistence — keep the WhatsApp Business app; do not uninstall it after connect). Submit uses that number’s WhatsApp credentials.
+- **WhatsApp Business number connected** through Whatsable (Embedded Signup / Coexistence — keep the WhatsApp Business app; do not uninstall it after connect). Submit uses that number’s WhatsApp credentials.
 - **Meta Business Portfolio** (business.facebook.com), not a personal Facebook profile. Embedded Signup may ask for a website; an Instagram profile link or Facebook page link is enough if you have no site.
 - **Meta payment method** before you **send** template messages. Meta charges per template message. A missing card is a send failure, not proof the template was rejected.
 - You do **not** need Make, Zapier, n8n, or the API to create a template in the console.
@@ -42,7 +42,7 @@ Open **Settings → Templates** and follow the steps below. Button and sidebar l
 
 ### 1. Open templates
 
-In the WhatsAble console, open **Settings → Templates**. That is where you check status. Only **Meta-approved** templates appear in send dropdowns (broadcasts, chat, monday.com Send Template, and similar).
+In the Whatsable console, open **Settings → Templates**. That is where you check status. Only **Meta-approved** templates appear in send dropdowns (broadcasts, chat, monday.com Send Template, and similar).
 
 ### 2. Start a new template (super-admin)
 
@@ -50,7 +50,7 @@ A normal admin cannot create. There is no documented “edit and resubmit.” If
 
 ### 3. Fill the fields and submit to Meta
 
-WhatsAble sends the template to Meta for review. It is stored for the workspace only if Meta accepts the submission. A duplicate **name** already on the workspace is rejected (you cannot create a second template with the same name).
+Whatsable sends the template to Meta for review. It is stored for the workspace only if Meta accepts the submission. A duplicate **name** already on the workspace is rejected (you cannot create a second template with the same name).
 
 ### 4. Read status
 
@@ -93,7 +93,7 @@ One of:
 | **Utility** | Order updates, confirmations, service notices |
 | **Authentication** | One-time verification codes |
 
-Meta prices template conversations by category. WhatsAble does not add a markup on Meta fees. Pick the category that matches the content. A mismatch is a common rejection reason; this page does not invent Meta’s policy text.
+Meta prices template conversations by category. Whatsable does not add a markup on Meta fees. Pick the category that matches the content. A mismatch is a common rejection reason; this page does not invent Meta’s policy text.
 
 **Authentication** does not use a free-form body you write. The create payload builds a verification-code message, with an optional security line (“do not share this code”) and a code expiry in minutes (payload default **10**). An OTP button label exists on that payload (default copy is “Copy Code”). Use the authentication options shown in your console. Importing an authentication template that was created in Meta’s own manager is not covered on this page.
 
@@ -109,7 +109,7 @@ For Marketing and Utility, you write the body. Personalization uses numbered pla
 
 Every placeholder needs an **example value** for Meta’s review (realistic dummy data, not empty). Those examples are for the reviewer. Real values are supplied later, per recipient, when you send or broadcast (`body1`, `body2`, … on the send API and on broadcast CSVs).
 
-Do not document named placeholders such as `{{company}}` or `{{name}}` for this console. That syntax appears on an older mid-layer templates article and is not the WhatsAble create payload.
+Do not document named placeholders such as `{{company}}` or `{{name}}` for this console. That syntax appears on an older mid-layer templates article and is not the Whatsable create payload.
 
 Header **text** variables and a free-text footer on Marketing/Utility templates are not documented as console fields on this page. The authentication security line above is the footer this create payload actually sets.
 
@@ -152,12 +152,12 @@ Pending, approved, or rejected. Casing in API payloads varies (`PENDING` vs `app
 - **Meta review time is not a guarantee.** Meta usually approves within a few minutes and can take up to about 24 hours. Do not promise a minute, and do not promise 24–48 hours. If it is still pending, wait and recheck **Settings → Templates** rather than creating duplicates (duplicate names are blocked anyway).
 - **No in-console edit.** Rejected or outdated copy means a new template. Use **preview** on the old one to copy the text.
 - **New number:** recreate and resubmit every template. Old approvals do not apply.
-- **Sends need an approved template** when you are outside the 24-hour window, or when you are opening the conversation. Inside 24 hours of the contact’s last message, free-form (non-template) messages are allowed. Business-initiated template conversations also follow Meta’s portfolio tiers (unverified about 250/day, then higher tiers after verification). Those caps are Meta’s, not a WhatsAble messages-per-minute number. This page does not invent a WhatsAble RPM.
+- **Sends need an approved template** when you are outside the 24-hour window, or when you are opening the conversation. Inside 24 hours of the contact’s last message, free-form (non-template) messages are allowed. Business-initiated template conversations also follow Meta’s portfolio tiers (unverified about 250/day, then higher tiers after verification). Those caps are Meta’s, not a Whatsable messages-per-minute number. This page does not invent a Whatsable RPM.
 - **No native drip builder** and **no typing-indicator dots.** Sequences of templates over days run in Make, Zapier, or n8n.
 - **Template management is not a plan upsell.** Bulk Message, Pro, and Agency all include it. Broadcasting those templates is a different page. Scheduled broadcasts are available on Bulk Message, Pro, and Agency.
 - **ProactiveBot** (Pro and Agency) can generate a follow-up template when none fits. That does not replace this create flow, and it is not documented as a way around the super-admin rule.
 - **Do not use** the older Notifier “advanced templates” article as the how-to for this console.
-- Full permission matrix, exact Settings sidebar, and character caps beyond the **512**-character name are **not** locked. Follow Meta’s template policies for content. WhatsAble does not publish a separate body character cap on this page.
+- Full permission matrix, exact Settings sidebar, and character caps beyond the **512**-character name are **not** locked. Follow Meta’s template policies for content. Whatsable does not publish a separate body character cap on this page.
 
 ---
 
@@ -194,13 +194,13 @@ Pending, approved, or rejected. Casing in API payloads varies (`PENDING` vs `app
 
 ## FAQ
 
-### Who can create a template in WhatsAble?
+### Who can create a template in Whatsable?
 
 Only a **super-admin**. A normal admin cannot. Template management itself is on **Bulk Message**, **Pro**, and **Agency**; the block is the role, not the plan.
 
 ### Where do I create and check templates?
 
-**Settings → Templates** in the WhatsAble console. Send dropdowns list **approved** templates only.
+**Settings → Templates** in the Whatsable console. Send dropdowns list **approved** templates only.
 
 ### How long does Meta approval take?
 

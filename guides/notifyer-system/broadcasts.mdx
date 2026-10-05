@@ -1,6 +1,6 @@
 ---
-title: "Can I send WhatsApp template broadcasts with WhatsAble?"
-description: "Send WhatsApp template broadcasts with WhatsAble: CSV bulk recipients, delivery modes, scheduled send, basic stats, and Meta cold-outreach fences."
+title: "Can I send WhatsApp template broadcasts with Whatsable?"
+description: "Send WhatsApp template broadcasts with Whatsable: CSV bulk recipients, delivery modes, scheduled send, basic stats, and Meta cold-outreach fences."
 ---
 
 {/*
@@ -16,17 +16,17 @@ description: "Send WhatsApp template broadcasts with WhatsAble: CSV bulk recipie
   Axel lock 2026-09-30: Bulk Message includes scheduled broadcasts — do not say schedule is Pro-only.
 */}
 
-Yes. WhatsAble sends **Meta-approved WhatsApp template broadcasts** to a CSV (or audience) list from your connected WhatsApp Business number. Broadcasting is the main job of the **Bulk Message** plan and is also on **Pro** and **Agency**. Use this page when you need the operator path: prepare the CSV, test, choose a delivery mode, launch or schedule, and read basic delivery stats.
+Yes. Whatsable sends **Meta-approved WhatsApp template broadcasts** to a CSV (or audience) list from your connected WhatsApp Business number. Broadcasting is the main job of the **Bulk Message** plan and is also on **Pro** and **Agency**. Use this page when you need the operator path: prepare the CSV, test, choose a delivery mode, launch or schedule, and read basic delivery stats.
 
 Broadcasting is **not** the same as creating templates, and it is **not** a native multi-day drip builder. Templates are a separate topic; day-0 / day-3 / day-6 sequences run only through **Make, Zapier, or n8n**.
 
 ## Prerequisites
 
-- **WhatsAble account** on **Bulk Message**, **Pro**, or **Agency** — sign in at [dashboard.whatsable.app/signin](https://dashboard.whatsable.app/signin).
-- **WhatsApp Business number connected** through WhatsAble (Embedded Signup / Coexistence supported — keep the WhatsApp Business app; do not uninstall it after connect).
+- **Whatsable account** on **Bulk Message**, **Pro**, or **Agency** — sign in at [dashboard.whatsable.app/signin](https://dashboard.whatsable.app/signin).
+- **WhatsApp Business number connected** through Whatsable (Embedded Signup / Coexistence supported — keep the WhatsApp Business app; do not uninstall it after connect).
 - **At least one Meta-approved message template** for that number. Only **super-admins** create templates; Meta must approve before the template appears in send flows. Editing an existing template is not supported — recreate and resubmit if you need changes.
 - **Meta payment method** on the WhatsApp / Business Manager side. Template sends fail when Meta has no billing method for the number.
-- **Active plan** (or trial) with enough **unique-contact** headroom for the recipient list. WhatsAble bills unique contacts per month; Meta bills delivery fees separately at Meta rates (WhatsAble **0% markup**).
+- **Active plan** (or trial) with enough **unique-contact** headroom for the recipient list. Whatsable bills unique contacts per month; Meta bills delivery fees separately at Meta rates (Whatsable **0% markup**).
 - **CSV ready** (or list you will export): phone numbers with country code. Exact column rules are below.
 
 <Info>
@@ -37,17 +37,17 @@ How-to video (EN): [How to broadcast](https://youtu.be/_upLw2kKxLo). Broadcastin
 
 ## Operator path — send a template broadcast
 
-Open **Broadcasts** in the WhatsAble console and follow the steps below. Menu labels can vary by workspace; use the Broadcasts area you see in the console.
+Open **Broadcasts** in the Whatsable console and follow the steps below. Menu labels can vary by workspace; use the Broadcasts area you see in the console.
 
 ### 1. Open Broadcasts and pick an approved template
 
-In the WhatsAble console, open **Broadcasts**. Start a new broadcast and select a **Meta-approved** template only. Pending templates will not send reliably; Graph “unsupported post request” on test send is often an unapproved template, not a disconnected number.
+In the Whatsable console, open **Broadcasts**. Start a new broadcast and select a **Meta-approved** template only. Pending templates will not send reliably; Graph “unsupported post request” on test send is often an unapproved template, not a disconnected number.
 
 If the template uses body variables (`{{1}}`, `{{2}}`, …), you will map them from CSV columns in the next step.
 
 ### 2. Prepare the recipient CSV
 
-WhatsAble expects a CSV whose **phone column is named exactly `phone_number`**. Include the country code. Support troubleshooting locks this name; if the broadcast fails after upload, check formatting first.
+Whatsable expects a CSV whose **phone column is named exactly `phone_number`**. Include the country code. Support troubleshooting locks this name; if the broadcast fails after upload, check formatting first.
 
 **Required**
 
@@ -91,13 +91,13 @@ Upload the CSV. Confirm:
 
 - Unique numbers match expectations (duplicates dropped).
 - Estimated cost looks sane for the countries on the list.
-- Unique count fits your WhatsAble **unique-contact** tier (or accept overage — see plans page).
+- Unique count fits your Whatsable **unique-contact** tier (or accept overage — see plans page).
 
 Some console flows let you scope recipients with labels when that control is present. Use the labels UI in your console when available.
 
 ### 5. Choose delivery mode
 
-WhatsAble paces outbound template traffic with three delivery modes (API/console values):
+Whatsable paces outbound template traffic with three delivery modes (API/console values):
 
 | Mode | Behavior | When to use |
 | --- | --- | --- |
@@ -105,7 +105,7 @@ WhatsAble paces outbound template traffic with three delivery modes (API/console
 | **regular** | Fixed batch size at a steady pace (batch size is an integer; the console may expose a per-minute range — use the bounds shown in your console) | Predictable pace without read-rate feedback |
 | **risk** | No batching — sends the list as a blast (confirm when prompted) | Tiny urgent lists only — large blasts can trigger Meta spam detection and temporarily disable the number |
 
-Do **not** invent a WhatsAble numeric RPM or “messages per second” product limit on this page. Meta messaging tier caps (business-initiated conversations per 24 hours) still apply — see rate-limits docs when published and Meta’s own tier rules.
+Do **not** invent a Whatsable numeric RPM or “messages per second” product limit on this page. Meta messaging tier caps (business-initiated conversations per 24 hours) still apply — see rate-limits docs when published and Meta’s own tier rules.
 
 ### 6. Launch now or schedule
 
@@ -116,7 +116,7 @@ Schedule strings on the finalize path use `DD/MM/YYYY HH:mm`. Timezone resolutio
 
 ### 7. Monitor basic delivery stats
 
-After launch, WhatsAble shows **basic delivery analytics**: **sent / delivered / read** (Bulk Message and up). **Block rate** is **not** a WhatsAble dashboard metric — check **Meta Business Manager**. Advanced analytics are a **Pro / Agency** surface, not Bulk Message.
+After launch, Whatsable shows **basic delivery analytics**: **sent / delivered / read** (Bulk Message and up). **Block rate** is **not** a Whatsable dashboard metric — check **Meta Business Manager**. Advanced analytics are a **Pro / Agency** surface, not Bulk Message.
 
 Pause, resume, and cancel for an **ongoing** broadcast are **not** available in the current console path. Track basic **sent / delivered / read** stats and download results when your role allows. Upcoming scheduled sends can be removed on the API path when that endpoint is in use.
 
@@ -139,7 +139,7 @@ Canonical money and full unique-contact tiers: [whatsable.app/pricing](https://w
 
 For **cold** lists (contacts who have never messaged the business), **especially US numbers**, Meta may choose **not** to deliver if the recipient has not engaged before. Ideally the contact has messaged first. European numbers often fare somewhat better than US for cold reach, but **any** fully cold list still risks poor deliverability or flags.
 
-**Warm gradually:** for cold or new-number campaigns, prefer **smart** (or modest **regular**) pacing over **risk** blasts. Gradual send helps warm the number and reduces throttling / block risk. This is Meta deliverability behavior — not a WhatsAble “US block” product toggle.
+**Warm gradually:** for cold or new-number campaigns, prefer **smart** (or modest **regular**) pacing over **risk** blasts. Gradual send helps warm the number and reduces throttling / block risk. This is Meta deliverability behavior — not a Whatsable “US block” product toggle.
 
 ---
 
@@ -149,9 +149,9 @@ For **cold** lists (contacts who have never messaged the business), **especially
 **Scheduled broadcast ≠ drip.** Future send time is available on broadcast plans; multi-day drip delays are **not** “schedule” — see below.
 </Warning>
 
-- **No native drip builder.** Day-0 / day-3 / day-6 (or similar) sequences are built in **Make, Zapier, or n8n**; WhatsAble sends each template when the automation fires. Do not describe an in-product drip / delay campaign builder.
-- **No typing-indicator dots** claim for broadcast (or product-wide as a WhatsAble surface).
-- **Do not invent WhatsAble RPM** numbers here.
+- **No native drip builder.** Day-0 / day-3 / day-6 (or similar) sequences are built in **Make, Zapier, or n8n**; Whatsable sends each template when the automation fires. Do not describe an in-product drip / delay campaign builder.
+- **No typing-indicator dots** claim for broadcast (or product-wide as a Whatsable surface).
+- **Do not invent Whatsable RPM** numbers here.
 - **Do not invent UI chrome** (library redesign tabs, Craft wizard labels, Upcoming wrap, Switch, Numbers Meta reports) that is not present in your console.
 - **Broadcast ≠ templates.** Creating / approving templates is a separate operator page. Only approved templates send.
 - **Bulk Message** has no team inbox, AI, or integrations — replies to broadcast recipients are not a Bulk Message inbox workflow.
@@ -197,7 +197,7 @@ For **cold** lists (contacts who have never messaged the business), **especially
 
 **Bulk Message**, **Pro**, and **Agency**. Broadcasting is the main Bulk Message use case. **Scheduled** future sends are included on those plans.
 
-### What CSV columns does WhatsAble require?
+### What CSV columns does Whatsable require?
 
 The phone column must be named exactly **`phone_number`** (country code; omit `+` on the upload path). Add **`body1`**, **`body2`**, … for template variables, plus **`media`** or **`button_dynamic_url_value`** when the template needs them. Prefer the downloadable template CSV from the broadcast UI after you pick a template.
 
@@ -205,9 +205,9 @@ The phone column must be named exactly **`phone_number`** (country code; omit `+
 
 Almost always **CSV formatting**: wrong header (not `phone_number`), missing country code, or variable columns not named `body1`, `body2`, …. Also confirm the template is **approved** and Meta has a **payment method**.
 
-### Can I build a day-0 / day-3 / day-6 drip inside WhatsAble?
+### Can I build a day-0 / day-3 / day-6 drip inside Whatsable?
 
-**No native drip builder.** Build the delays in **Make, Zapier, or n8n**; WhatsAble sends each message. Scheduled broadcast is a **single** future send time, not a drip chain.
+**No native drip builder.** Build the delays in **Make, Zapier, or n8n**; Whatsable sends each message. Scheduled broadcast is a **single** future send time, not a drip chain.
 
 ### Will Meta deliver cold US campaigns?
 
@@ -215,7 +215,7 @@ Meta **may not deliver** cold outreach to US numbers when recipients have never 
 
 ### Where do I see block rate?
 
-In **Meta Business Manager**, not as a WhatsAble analytics metric. WhatsAble basic stats = **sent / delivered / read**.
+In **Meta Business Manager**, not as a Whatsable analytics metric. Whatsable basic stats = **sent / delivered / read**.
 
 ### Is broadcasting the same as the template API?
 
