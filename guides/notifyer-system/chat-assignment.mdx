@@ -26,7 +26,7 @@ For how the shared inbox looks day to day (who sees what, labels vs notes, AI �
 - **Whatsable plan:** **Pro** or **Agency** (shared inbox, seats, AI, and integrations). **Bulk Message** = broadcast-only — no inbox / seats / assign.
 - **Connected WhatsApp Business number** through Whatsable (Embedded Signup / Coexistence supported — keep the WhatsApp Business app; do not uninstall it after connect).
 - **Teammates on the account** (or extra seats added when you need more people in the inbox). Plan price covers the included team; buy seats when you need more.
-- **For automation assign:** a **Zapier**, **Make**, **n8n**, or **API** connection authenticated with your Whatsable / Notifyer API key — integrations are Pro/Agency only.
+- **For automation assign:** a **Zapier**, **Make**, **n8n**, or **API** connection authenticated with your Whatsable API key — integrations are Pro/Agency only.
 - **For keyword / AI assign:** labels (and AI chatbot / handoff settings) configured in the console so routing rules and the bot have something to act on.
 
 <Info>
@@ -37,7 +37,7 @@ Canonical seat money: **\$12 / seat / mo** on Pro and Agency. Do not confuse sea
 
 ## Assign paths — full inventory
 
-Whatsable does **not** document a separate named “Assign to” control on every surface the same way. What is locked: you **can** assign a chat to a teammate via the paths below, and you can **add or remove labels** from the same automation partners. Inbox operators often route work with **labels** (for example a teammate name label or a routing label your automations watch). Treat labels and teammate assignment as related ownership tools — not as inventing a CRM tag mirror.
+Whatsable does **not** document a separate named “Assign to” control on every surface the same way. You **can** assign a chat to a teammate via the paths below, and you can **add or remove labels** from the same automation partners. Inbox operators often route work with **labels** (for example a teammate name label or a routing label your automations watch). Treat labels and teammate assignment as related ownership tools.
 
 ### 1. Zapier — Update a Contact
 
@@ -45,7 +45,7 @@ From a Zap, use Whatsable **Update a Contact**. The Zapier action description st
 
 **Documented fields on this page’s field dictionary:** Phone Number, Display Name, Add a Note, Add Label Names or IDs, Remove Label Names or IDs.
 
-Update a Contact can assign the conversation to a teammate — confirm any assignee control in your live Zap editor. Do not invent a field key from this page.
+Update a Contact can assign the conversation to a teammate — confirm any assignee control in your live Zap editor.
 
 Typical pattern: a form, CRM stage change, or Lead Ad trigger decides the owner in Zapier, then Update a Contact assigns (and optionally labels) the WhatsApp chat in Whatsable.
 
@@ -55,7 +55,7 @@ Make’s Update a Contact description also covers **assign to a teammate**, note
 
 **Documented module fields today:** Phone Number, Display Name, Note, Add Labels, Remove Labels.
 
-Confirm any assignee control in your live Make module — do not invent a field key from this page.
+Confirm any assignee control in your live Make module.
 
 ### 3. API and Agent Skills
 
@@ -63,11 +63,9 @@ Assignment via **API** works alongside Zapier and Make. Operator scripts under *
 
 Use Agent Skills when you are building or operating from code / an IDE agent — not as a substitute customer mobile app. Point developers to [chat-notifyer](/guides/notifyer-system/agent-skills/chat-notifyer) for script-level label and handoff operations.
 
-Do **not** invent undocumented REST field names for a dedicated “assignee user id” beyond what skills and partner docs already show. Prefer: **assign via Zapier, Make, or API**.
-
 ### 4. n8n (partner flow)
 
-From an n8n workflow you can **add/remove labels** and **assign the chat to a teammate** the same way as Zapier and Make. Confirm any assignee control in your live n8n node — do not invent a field key from this page.
+From an n8n workflow you can **add/remove labels** and **assign the chat to a teammate** the same way as Zapier and Make. Confirm any assignee control in your live n8n node.
 
 ### 5. Keywords in chat
 
@@ -106,11 +104,9 @@ Whatsable does **not** ship a native “round-robin engine” or built-in Lead-A
 **Bulk Message = no seats / no shared inbox.** Chat assignment, team seats, and assigned-only push start at **Pro** and **Agency**.
 </Warning>
 
-- **No invented Assign field name** for Zapier / Make / n8n — capability yes; confirm the control in your live editor.
 - **No CRM ↔ Whatsable bidirectional label / tag mirror** product. Labels live on the Whatsable chat; Monday, Pipedrive, Zapier, Make, n8n, Agent Skills, and the AI can read or write Whatsable labels so inbox + mobile + automations stay aligned — that is **not** a two-way sync of CRM tags as one store.
 - **No shared Agency usage pool / unified multi-number billing inbox.** Extra WhatsApp numbers on Agency are **separate accounts** with a manual contact-tier split. Filtering a shared inbox view by number (when your workspace exposes it) is a UI convenience — not a merged subscription pool.
 - **Push-only ≠ app hides other chats.** Assigned-only push notifies for owned work; it does not claim a visibility lockdown that removes unassigned chats from the app.
-- **No invented Whatsable RPM** on this page.
 - **No WhatsApp typing-indicator dots** claim. Response Delay 5–60s is a separate AI setting — not assignment.
 - A full roles / permissions matrix beyond the locked facts on this page (super-admin creates templates; Admin vs chat-only / label scope on team-inbox) is not documented here.
 - **Bot Assign ≠ teammate assign.** Do not conflate AI bot attachment with human ownership.
@@ -132,10 +128,10 @@ Whatsable does **not** ship a native “round-robin engine” or built-in Lead-A
     Update a Contact — labels, notes, assign capability.
   </Card>
   <Card title="Zapier fields" icon="table" href="/guides/notifyer-system/zapier-fields">
-    Field dictionary — assign capability without inventing field keys.
+    Field dictionary — assign capability.
   </Card>
   <Card title="Make fields" icon="table" href="/guides/notifyer-system/make-fields">
-    Field dictionary — assign capability without inventing field keys.
+    Field dictionary — assign capability.
   </Card>
   <Card title="AI chatbot configuration" icon="robot" href="/guides/notifyer-system/ai-chatbot/configuration">
     Bot Assign, knowledge, handoff — distinct from teammate chat assignment.
@@ -164,7 +160,7 @@ Also: [Pricing](https://whatsable.app/pricing) · [n8n overview](/guides/notifye
 
 ### Is there a named “Assign to” field in Zapier or Make?
 
-**Yes, as a capability.** Update a Contact’s product description includes assigning a teammate. Documented dictionary fields today are phone, display name, note, and add/remove labels. Confirm any assignee control in your live editor — do not invent a field key from this page.
+**Yes, as a capability.** Update a Contact’s product description includes assigning a teammate. Documented dictionary fields today are phone, display name, note, and add/remove labels. Confirm any assignee control in your live editor.
 
 ### Do mobile push notifications fire for every chat?
 
