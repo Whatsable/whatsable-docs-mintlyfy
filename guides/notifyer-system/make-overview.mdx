@@ -23,16 +23,16 @@ import CtwaReferral from "/snippets/ctwa-referral.mdx";
 
 ## Available modules at a glance
 
-The Notifyer System is part of the **WhatsAble for WhatsApp Business** app on Make. Once installed, you get access to the following modules using your Notifyer API key:
+The Notifyer System is part of the **Whatsable** app on Make, a public app with the **Verified** badge. Search for **Whatsable** in any scenario to find it. These are the modules that work with your Notifyer API key:
 
 <CardGroup cols={3}>
   <Card title="Triggers (Instant)" icon="bolt">
-    - Incoming Messages from console (Notifyer System)
-    - Incoming & Outgoing Messages from console (Notifyer System)
+    - New message arrived to my WhatsApp Number (Whatsable - Notifyer)
+    - New message Sent or Received from your WhatsApp Number (Whatsable - Notifyer)
   </Card>
   <Card title="Actions" icon="play">
-    - Send WhatsApp Message
-    - Schedule a follow-up Message
+    - Send a WhatsApp Message (New version - Official API)
+    - Schedule a follow-up WhatsApp Message
     - Update a Contact
   </Card>
   <Card title="Search" icon="magnifying-glass">
@@ -41,8 +41,12 @@ The Notifyer System is part of the **WhatsAble for WhatsApp Business** app on Ma
 </CardGroup>
 
 <Info>
-  All modules in this guide are part of the **WhatsAble for WhatsApp Business** app on Make. Notifyer System users connect using their **Notifyer API key**.
+  All modules in this guide are part of the **Whatsable** app on Make. Notifyer System users connect using their **Notifyer API key**.
 </Info>
+
+<Warning>
+  The same **Whatsable** app also lists modules for the legacy WhatsAble bot system, such as **WhatsApp send to a group (beta)**, **Whatsable System: Make an API Call**, and the modules marked *old version* or *legacy*. They do not work with a Notifyer API key. See [Other modules in the Whatsable app](#other-modules-in-the-whatsable-app).
+</Warning>
 
 ---
 
@@ -134,7 +138,9 @@ Before getting started, make sure you have:
 ## Connect Notifyer System to Make
 
 <Steps>
-  <Step title="Install the app in Make">
+  <Step title="Install the app in Make (optional)">
+    The **Whatsable** app is public and verified, so it already appears when you search for **Whatsable** in the scenario editor. You only need this step if you want to install it from your Notifyer dashboard:
+
     1. Log in to your Make account
     2. Navigate to your Notifyer System dashboard and select **Connect to Make** in the side menu
     3. Click **Continue** in the connection guide popup
@@ -145,7 +151,7 @@ Before getting started, make sure you have:
     </Note>
 
     <Check>
-      The **WhatsAble for WhatsApp Business** app is now installed and ready to use in your Make scenarios
+      The **Whatsable** app is now installed and ready to use in your Make scenarios
     </Check>
   </Step>
 
@@ -162,7 +168,7 @@ Before getting started, make sure you have:
 
 ### Triggers
 
-Instant triggers fire in real time whenever a qualifying event occurs in your Notifyer console. Both triggers below use the **WhatsAble for WhatsApp Business** app in Make and require a webhook plus your Notifyer API key connection.
+Instant triggers fire in real time whenever a qualifying event occurs in your Notifyer console. Both triggers below use the **Whatsable** app in Make and require a webhook plus your Notifyer API key connection.
 
 <Info>
   Both triggers are **Instant** — they fire immediately when a message event occurs in your Notifyer console.
@@ -177,20 +183,20 @@ Both Notifyer triggers follow the same 5-step setup in Make. The only difference
 <Steps>
   <Step title="Step 1 — Select your trigger">
     1. In your scenario, click the large **+** button to add a module
-    2. Search for **WhatsAble** or **WhatsAble for WhatsApp Business**
-    3. Open the **WhatsAble for WhatsApp Business** app
+    2. Search for **Whatsable**
+    3. Open the **Whatsable** app with the **Verified** badge
     4. Under **Triggers**, select the trigger you need:
 
     | Trigger | When to use it |
     |---------|----------------|
-    | **Incoming Messages from console (Notifyer System)** | Fires only when a contact sends your business a message |
-    | **Incoming & Outgoing Messages from console (Notifyer System)** | Fires on every message — both incoming and outgoing, including replies typed in the WhatsApp Business app |
+    | **New message arrived to my WhatsApp Number (Whatsable - Notifyer)** | Fires only when a contact sends your business a message |
+    | **New message Sent or Received from your WhatsApp Number (Whatsable - Notifyer)** | Fires on every message — both incoming and outgoing, including replies typed in the WhatsApp Business app |
   </Step>
 
   <Step title="Step 2 — Create a webhook">
     After selecting the trigger, the module configuration window opens. The first required field is **Webhook**.
 
-    1. Click the **Add** button next to the **Webhook** dropdown (the dropdown will show "Choose a hook..." if no webhook exists yet)
+    1. Click **Create a webhook** (if you already have webhooks, click **Add** next to the **Webhook** dropdown instead)
     2. This opens the **Create a webhook** dialog
   </Step>
 
@@ -239,7 +245,7 @@ Both Notifyer triggers follow the same 5-step setup in Make. The only difference
 
 ---
 
-#### Incoming Messages from console (Notifyer System)
+#### New message arrived to my WhatsApp Number (Whatsable - Notifyer)
 
 <Info>
   **Type:** Instant Trigger | **Connection:** Notifyer only
@@ -247,9 +253,13 @@ Both Notifyer triggers follow the same 5-step setup in Make. The only difference
 
 Fires every time an **incoming message** arrives in your Notifyer console. This is the full-featured trigger for building AI chatbot workflows, lead qualification, CRM updates, and real-time automations — it exposes all conversation context fields including the AI note, conversation history, and scheduling data.
 
-**Description in Make:** *"Incoming Messages from console (Notifyer System)"*
+**Description in Make:** *"This will trigger every time you receive a WhatsApp message to your number. It will not trigger if you mark a specific conversation as "human"."*
 
-**How to set up:** Follow the [5-step trigger setup guide](#setting-up-a-notifyer-trigger-in-make) above. In Step 1, select **Incoming Messages from console (Notifyer System)** from the Triggers list.
+<Note>
+  This trigger does not fire for conversations you have marked as **human** in the Notifyer console.
+</Note>
+
+**How to set up:** Follow the [5-step trigger setup guide](#setting-up-a-notifyer-trigger-in-make) above. In Step 1, select **New message arrived to my WhatsApp Number (Whatsable - Notifyer)** from the Triggers list.
 
 **Output fields — everything your scenario receives when triggered:**
 
@@ -326,7 +336,7 @@ Fires every time an **incoming message** arrives in your Notifyer console. This 
 
 ---
 
-#### Incoming & Outgoing Messages from console (Notifyer System)
+#### New message Sent or Received from your WhatsApp Number (Whatsable - Notifyer)
 
 <Info>
   **Type:** Instant Trigger | **Connection:** Notifyer only
@@ -334,15 +344,15 @@ Fires every time an **incoming message** arrives in your Notifyer console. This 
 
 Fires on **both incoming and outgoing** messages — every message sent or received in your Notifyer console triggers this, including messages **typed by hand in the WhatsApp Business app**. Use it for conversation logging, CRM sync, or automations that must react when a teammate replies on their phone.
 
-**Description in Make:** *"Get your sent and incoming messages data through a single webhook."*
+**Description in Make:** *"This triggers every time you send or receive a WhatsApp message, triggers when you send a messages from the WhatsAble system or from your connected WhatsApp Business App"*
 
-**How to set up:** Follow the same [5-step trigger setup guide](#setting-up-a-notifyer-trigger-in-make) above. In Step 1, select **Incoming & Outgoing Messages from console (Notifyer System)** instead.
+**How to set up:** Follow the same [5-step trigger setup guide](#setting-up-a-notifyer-trigger-in-make) above. In Step 1, select **New message Sent or Received from your WhatsApp Number (Whatsable - Notifyer)** instead.
 
 **Key difference:** This trigger also fires when your business sends a message. Use the `incoming_message` field to branch your logic:
 - `incoming_message = true` → a contact sent your business a message
 - `incoming_message = false` → your business sent a message to a contact (phone app, Notifyer inbox, or automation)
 
-**Output fields:** Identical to the **Incoming Messages from console** trigger above, with these differences:
+**Output fields:** Identical to the **New message arrived** trigger above, with these differences:
 
 <ResponseField name="incoming_message" type="boolean">
   `true` when the contact sent a message, `false` when your business sent a message. Add a **Router** or **Filter** module after this trigger to branch logic based on direction
@@ -357,7 +367,7 @@ Fires on **both incoming and outgoing** messages — every message sent or recei
 </ResponseField>
 
 <Note>
-  The `scheduled_messages` field is only available in the **Incoming Messages from console** trigger, not this one.
+  The `scheduled_messages` field is only available in the **New message arrived** trigger, not this one.
 </Note>
 
 <WebhookOutgoing />
@@ -372,7 +382,7 @@ Actions perform operations in Notifyer System — sending messages, scheduling f
 
 ---
 
-#### Send WhatsApp Message
+#### Send a WhatsApp Message (New version - Official API)
 
 <Info>
   **Type:** Action | **Connection:** Notifyer only
@@ -388,7 +398,7 @@ Send a WhatsApp message immediately to any phone number. Supports both **templat
 
 <Steps>
   <Step title="Add the module">
-    Click **+** → search for **WhatsAble** or **WhatsAble for WhatsApp Business** → under **Actions**, select **Send WhatsApp Message**
+    Click **+** → search for **Whatsable**, open the app with the **Verified** badge → under **Actions**, select **Send a WhatsApp Message (New version - Official API)**
   </Step>
   <Step title="Select your connection">
     Choose your existing connection or create a new one with your **Notifyer API key**
@@ -487,7 +497,7 @@ Send a WhatsApp message immediately to any phone number. Supports both **templat
 
 ---
 
-#### Schedule a follow-up Message
+#### Schedule a follow-up WhatsApp Message
 
 <Info>
   **Type:** Action | **Connection:** Notifyer only
@@ -501,42 +511,46 @@ Schedule a WhatsApp message to be sent at a **future time**, with an optional **
 
 <Steps>
   <Step title="Add the module">
-    Click **+** → search for **WhatsAble** or **WhatsAble for WhatsApp Business** → under **Actions**, select **Schedule a follow-up Message**
+    Click **+** → search for **Whatsable**, open the app with the **Verified** badge → under **Actions**, select **Schedule a follow-up WhatsApp Message**
   </Step>
   <Step title="Select your connection">
     Choose your **Notifyer only** connection
   </Step>
   <Step title="Choose your message type">
-    Select from the **Configuration** dropdown — either a template message or a non-template message. The fields are identical to the **Send WhatsApp Message** action above (phone number, template/message type, variables, labels, note).
+    Select from the **Configuration** dropdown — either a template message or a non-template message. The fields are identical to the **Send a WhatsApp Message** action above (phone number, template/message type, variables, labels, note).
   </Step>
   <Step title="Set when to send it">
+    Pick an option in the **Schedule** field:
+
     <Tabs>
-      <Tab title="Relative (Delay)">
+      <Tab title="After a delay">
         Send the message after a delay from the time the scenario runs:
 
-        <ResponseField name="Delay Value" type="select" required>
-          Choose: 1, 2, 3, 4, 5, 10, 15, 20, 30, 60, 90, or 120
+        <ResponseField name="Unit" type="select" required>
+          **Minutes**, **Hours**, or **Days**
         </ResponseField>
-        <ResponseField name="Delay Unit" type="select" required>
-          Choose: **Minutes**, **Hours**, or **Days**
+        <ResponseField name="Value" type="number" required>
+          How many units to wait (e.g. `2` with **Hours** sends the message two hours later)
         </ResponseField>
       </Tab>
-      <Tab title="Specific Date & Time">
+      <Tab title="At a specific date and time">
         Send the message at an exact date and time:
 
-        <ResponseField name="Date & Time" type="datetime" required>
-          The exact date and time to send the message
+        <ResponseField name="Date and time" type="text" required>
+          Local date and time, e.g. `2026-10-06 15:30`. The time zone below applies to this clock time
         </ResponseField>
-        <ResponseField name="Timezone" type="select" required>
-          The timezone for the scheduled time — full global timezone list available (GMT-11 through GMT+12)
+        <ResponseField name="Time zone" type="select" required>
+          The time zone of the date and time above
         </ResponseField>
       </Tab>
     </Tabs>
   </Step>
   <Step title="Set a reply condition (recommended)">
-    The reply condition tells Notifyer to **cancel the scheduled message** if the recipient replies within the specified timeframe — preventing follow-ups to contacts who are already engaged.
+    The reply condition tells Notifyer to **cancel the scheduled message** if the recipient replies within the specified timeframe — preventing follow-ups to contacts who are already engaged. Leave it empty to send regardless of reply status.
 
-    <ResponseField name="Reply Condition" type="select">
+    In Make, the options for timed conditions end with *"after my last message"* (e.g. *Recipient did not reply within 20 minutes after my last message*).
+
+    <ResponseField name="Recipient Reply Status : Send Only If" type="select">
       | Condition | When the message is cancelled |
       |-----------|-------------------------------|
       | Recipient did not reply after my last message | Cancelled if the contact replies at any point before scheduled send |
@@ -558,12 +572,13 @@ Schedule a WhatsApp message to be sent at a **future time**, with an optional **
   <Step title="Set a label condition (optional)">
     Restrict the scheduled message to only send if the contact has (or does not have) a specific label:
 
-    <ResponseField name="Label Condition" type="select" optional>
-      **Include** — only send if the contact has this label  
-      **Does Not Include** — only send if the contact does NOT have this label
+    <ResponseField name="Label condition" type="select" optional>
+      **No label condition** — send regardless of labels  
+      **Contact has any of these labels** — only send if the contact has at least one of the labels below  
+      **Contact has none of these labels** — only send if the contact has none of the labels below
     </ResponseField>
-    <ResponseField name="Label" type="select" optional>
-      The label to evaluate against
+    <ResponseField name="Labels for the condition" type="multiselect" optional>
+      The labels to check. Select from the list or type a label name
     </ResponseField>
   </Step>
 </Steps>
@@ -582,7 +597,7 @@ Schedule a WhatsApp message to be sent at a **future time**, with an optional **
 
 **Description in Make:** *"Assign conversation to someone in your team, Add information in the notes, add/remove labels. Simply put the phone number and what information you want to change. This appears in the chat interface of our system."*
 
-Update a contact's details in your Notifyer console — set their display name, add or remove labels, or update the AI context note on their conversation. Use this to keep Notifyer contacts in sync with your CRM, form responses, or other external data.
+Update a contact's details in your Notifyer console — set their display name, add or remove labels, or update the AI context note on their conversation. (The description in Make also mentions assigning conversations; the module does not have an assignment field today.) Use this to keep Notifyer contacts in sync with your CRM, form responses, or other external data.
 
 **API endpoint:** `https://api.insightssystem.com/api:hFrjh8a1/make/recipient/details/update` (PUT)
 
@@ -590,7 +605,7 @@ Update a contact's details in your Notifyer console — set their display name, 
 
 <Steps>
   <Step title="Add the module">
-    Click **+** → search for **WhatsAble** or **WhatsAble for WhatsApp Business** → under **Actions**, select **Update a Contact**
+    Click **+** → search for **Whatsable**, open the app with the **Verified** badge → under **Actions**, select **Update a Contact**
   </Step>
   <Step title="Select your connection">
     Choose your **Notifyer only** connection
@@ -599,10 +614,10 @@ Update a contact's details in your Notifyer console — set their display name, 
     <ResponseField name="Phone Number" type="text" required>
       The phone number of the contact to update, in international format — digits only (e.g. `14155550187`). This is used to look up the contact in Notifyer
     </ResponseField>
-    <ResponseField name="Display Name" type="text" optional>
+    <ResponseField name="Display name" type="text" optional>
       Update the display name shown for this contact in the Notifyer chat interface
     </ResponseField>
-    <ResponseField name="Add a Note" type="text" optional>
+    <ResponseField name="Note" type="text" optional>
       Set or update the AI context note for this contact. The AI reads this field to personalize conversations. A well-structured note significantly improves AI response quality.
 
       **Recommended note format:**
@@ -613,11 +628,11 @@ Update a contact's details in your Notifyer console — set their display name, 
       Best time to contact: evenings after 6pm
       ```
     </ResponseField>
-    <ResponseField name="Add Label Names or IDs" type="multiselect" optional>
+    <ResponseField name="Labels to add" type="multiselect" optional>
       One or more labels to **add** to this contact. Labels appear in the Notifyer console and can be used for routing, filtering, and automation conditions
     </ResponseField>
-    <ResponseField name="Remove Label Names or IDs" type="multiselect" optional>
-      One or more labels to **remove** from this contact. Select **Remove All** to clear all labels from this contact at once
+    <ResponseField name="Labels to remove" type="multiselect" optional>
+      One or more labels to **remove** from this contact. Choose **Remove all labels** to clear every label on this contact at once
     </ResponseField>
   </Step>
 </Steps>
@@ -648,14 +663,14 @@ Check whether a previously sent WhatsApp message was delivered. Use this to buil
 
 <Steps>
   <Step title="Add the module">
-    Click **+** → search for **WhatsAble** or **WhatsAble for WhatsApp Business** → under **Searches**, select **Get delivery status of a message**
+    Click **+** → search for **Whatsable**, open the app with the **Verified** badge → under **Searches**, select **Get delivery status of a message**
   </Step>
   <Step title="Select your connection">
     Choose your **Notifyer only** connection
   </Step>
   <Step title="Enter the Message ID">
     <ResponseField name="Message ID" type="text" required>
-      The ID of the message to check. This is the ID returned in the output bundle of a previous **Send WhatsApp Message** or **Schedule a follow-up Message** action in the same scenario
+      The WhatsApp message ID to check (e.g. `wamid.HBgN...`). This is the ID returned in the output bundle of a previous **Send a WhatsApp Message** or **Schedule a follow-up WhatsApp Message** action in the same scenario
     </ResponseField>
   </Step>
 </Steps>
@@ -663,6 +678,21 @@ Check whether a previously sent WhatsApp message was delivered. Use this to buil
 <Tip>
   Connect a **Router** module after this search to handle two paths: one for successfully delivered messages, and one for undelivered messages where you trigger a fallback (e.g. send a Gmail or Outlook email).
 </Tip>
+
+---
+
+## Other modules in the Whatsable app
+
+The **Whatsable** app on Make also contains modules for the legacy WhatsAble bot system. They use a WhatsAble (not Notifyer) API key and are kept so existing scenarios keep running. Notifyer System users should not use them.
+
+| Module | Type | Status |
+|--------|------|--------|
+| When new message from Internal Team Bot | Instant trigger | Legacy customers only |
+| Receive Incoming Message from notifier Bot (old version) | Instant trigger | Legacy customers only |
+| Send WhatsApp Notification (old version) | Action | Replaced by **Send a WhatsApp Message (New version - Official API)** |
+| WhatsaApp a team-member - Legacy Version | Action | Older customers who did not update the app |
+| WhatsApp send to a group (beta) | Action | WhatsAble bot system: sends a text message to a group by its name as listed in the WhatsAble dashboard |
+| Whatsable System: Make an API Call | Action | WhatsAble bot system: calls any endpoint under `https://www.dashboard.whatsable.app/api` with your connection's authorization added automatically |
 
 ---
 
@@ -683,11 +713,11 @@ Here is a practical end-to-end example: **New lead from a form → AI context se
 
     This gives the AI complete context before any conversation starts
   </Step>
-  <Step title="Action: Send WhatsApp Message (Template)">
-    Add **Notifyer — Send WhatsApp Message** set to the template configuration. Select your approved welcome template and map the recipient's phone number and any template variables from the form data
+  <Step title="Action: Send a WhatsApp Message (Template)">
+    Add **Whatsable — Send a WhatsApp Message** set to the template configuration. Select your approved welcome template and map the recipient's phone number and any template variables from the form data
   </Step>
-  <Step title="Action: Schedule a follow-up Message">
-    Add **Notifyer — Schedule a follow-up Message**. Configure:
+  <Step title="Action: Schedule a follow-up WhatsApp Message">
+    Add **Whatsable — Schedule a follow-up WhatsApp Message**. Configure:
     - Message: a follow-up template (e.g. `Hi {{1}}, just checking in...`)
     - Schedule: 24 hours (Relative)
     - Reply condition: **Recipient did not reply after my last message**
@@ -707,7 +737,7 @@ Here is a practical end-to-end example: **New lead from a form → AI context se
 
 <CardGroup cols={3}>
   <Card title="AI chatbot lead qualification" icon="robot">
-    Trigger on incoming messages, pass the `conversation_paragraph` and `note` to OpenAI, then send the AI's reply back via Send WhatsApp Message
+    Trigger on incoming messages, pass the `conversation_paragraph` and `note` to OpenAI, then send the AI's reply back via Send a WhatsApp Message
   </Card>
   <Card title="Smart follow-up sequences" icon="calendar-clock">
     Schedule a series of follow-ups with reply conditions — they automatically cancel when the lead engages
@@ -722,7 +752,7 @@ Here is a practical end-to-end example: **New lead from a form → AI context se
     Use Get delivery status after sending a message — if undelivered, route to a fallback email via Gmail or Outlook
   </Card>
   <Card title="Full conversation logging" icon="list">
-    Use Incoming & Outgoing Messages trigger to log every WhatsApp exchange to a Google Sheet, Airtable, or CRM
+    Use **New message Sent or Received** trigger to log every WhatsApp exchange to a Google Sheet, Airtable, or CRM
   </Card>
 </CardGroup>
 
@@ -732,19 +762,19 @@ Here is a practical end-to-end example: **New lead from a form → AI context se
 
 <AccordionGroup>
   <Accordion title="Set the AI Note before sending" icon="robot">
-    Always use **Update a Contact** before **Send WhatsApp Message** in new-lead scenarios. Setting the `note` field with structured lead data (name, email, preferences, language, budget) dramatically improves AI conversation quality and lead qualification accuracy.
+    Always use **Update a Contact** before **Send a WhatsApp Message** in new-lead scenarios. Setting the `note` field with structured lead data (name, email, preferences, language, budget) dramatically improves AI conversation quality and lead qualification accuracy.
   </Accordion>
   <Accordion title="Always use reply conditions on follow-ups" icon="shield-check">
-    Set a reply condition on every **Schedule a follow-up Message**. "Recipient did not reply after my last message" is the safest choice — it ensures no follow-up annoys contacts who are already in an active conversation with you. This also protects your WhatsApp account reputation.
+    Set a reply condition on every **Schedule a follow-up WhatsApp Message**. "Recipient did not reply after my last message" is the safest choice — it ensures no follow-up annoys contacts who are already in an active conversation with you. This also protects your WhatsApp account reputation.
   </Accordion>
   <Accordion title="Use labels and notes on every send" icon="paper-plane">
-    The **Send WhatsApp Message** action lets you attach labels and a note alongside every message. Use labels to tag conversations (e.g. `Hot Lead`, `Form Submission`) and the note field to keep AI context current. Both appear immediately in your Notifyer console.
+    The **Send a WhatsApp Message** action lets you attach labels and a note alongside every message. Use labels to tag conversations (e.g. `Hot Lead`, `Form Submission`) and the note field to keep AI context current. Both appear immediately in your Notifyer console.
   </Accordion>
   <Accordion title="Use conversation_paragraph for AI prompts" icon="paragraph">
     When building AI chatbot scenarios, pass the `conversation_paragraph` field to your AI model. It is a pre-formatted, flat text version of the conversation — much simpler to include in a prompt than parsing the `last_messages` JSON array.
   </Accordion>
-  <Accordion title="Use Incoming & Outgoing trigger for full logging" icon="list">
-    If you need to log every message exchange to a CRM or database, use **Incoming & Outgoing Messages from console** and filter by `incoming_message` to handle both directions with separate scenario branches.
+  <Accordion title="Use the New message Sent or Received trigger for full logging" icon="list">
+    If you need to log every message exchange to a CRM or database, use **New message Sent or Received** and filter by `incoming_message` to handle both directions with separate scenario branches.
   </Accordion>
   <Accordion title="Capture Click-to-WhatsApp referral on the first message" icon="bullhorn">
     When `referral` is present, store `source_id`, `source_url`, `headline`, and `ctwa_clid` on the contact immediately. Later messages in the same chat usually omit `referral`. Use `source_url` to see Instagram vs Facebook, and `source_id` to compare creatives.
